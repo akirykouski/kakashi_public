@@ -10,3 +10,8 @@
 .explain-btn:hover { background: var(--accent-soft); }
 .explain .ex-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .explain .ex-text { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--grey-soft); padding: 10px 12px; border-radius: 6px; font-size: .85rem; max-height: 50vh; overflow: auto; }
+/* design pass (ws/design) */
+.cf-line { border-radius: 0 8px 8px 0; padding: 8px 12px; font-size: .95rem; }
+.cf-tag { font-size: .825rem; padding: 1px 8px; }
+.explain-btn { border-radius: 10px; padding: 8px 16px; font-size: .95rem; }
+.explain .ex-text { font-size: .9rem; }
