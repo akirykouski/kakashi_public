@@ -374,3 +374,18 @@ body.view-meeting .foot { display: none !important; }
 .mt-card.why .mt-whybox { display: block; }
 .mt-whybox p { margin: 4px 0 12px; }
 .mt-transcript, .mt-cards { max-height: calc(100vh - 330px); }
+
+/* blockers: source chips + italic quote */
+.f-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0 104px; }
+.src-chip { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2px 8px; font-size: .82rem; color: var(--ink-2); }
+.finding.blocker .f-quote:not(.mono) { font-style: italic; }
+.finding.blocker .f-source { margin-top: 6px; }
+.finding.blocker .f-title { font-weight: 600; }
+.chip.noted { color: var(--ink-2); }
+.mt-card .f-chips { margin-left: 0; }
+@media (max-width: 640px) { .f-chips { margin-left: 0; } }
+.mt-card:not(.why) .finding.blocker > .f-chips { display: flex; }
+.mt-card:not(.why) .finding.blocker > .f-source { display: block; }
+.mt-card .finding.blocker { padding: 12px 0; }
+.mt-card .finding.blocker .f-source { margin-top: 6px; font-size: .92rem; }
+.mt-card .finding.blocker .f-chips { margin-top: 8px; }

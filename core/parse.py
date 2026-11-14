@@ -132,6 +132,95 @@ def table_entries(registries, table):
     return [(row[0], row[1] if len(row) > 1 else "", aliases.get(row[0], [])) for row in registry.get("rows", [])]
 
 
+# ---- spoken forms: part ids and sound-alike names (speech recognition mishears names) ---------------------------
+
+# Trailing generic nouns after a part id ("BR-220 blanks", "the BR220 brackets").
+PART_TAIL_NOUNS = {"blank", "blanks", "bracket", "brackets", "part", "parts", "piece", "pieces", "item", "items",
+                   "number", "no", "component", "components", "housing", "housings", "clip", "clips"}
+# First words of registry names that are a kind of business, not the distinctive name.
+GENERIC_NAME_WORDS = {"alluminio", "meccanica", "fonderia", "galvanica", "plastiche", "minuterie", "trattamenti",
+                      "termici", "billette", "omogeneizzazione", "plant", "machining", "assembly"}
+SOUND_FUZZY_TABLES = ("suppliers", "sites")
+SOUND_THRESHOLD = 0.6
+SOUND_MARGIN = 0.15
+
+
+def compact(text):
+    return re.sub(r"[^a-z0-9]", "", text.lower())
+
+
+def normalise_part_text(text):
+    """'br 220 blanks' -> 'br220': letters and digits only, trailing generic nouns dropped."""
+    tokens = re.findall(r"[a-z0-9]+", text.lower())
+    while tokens and tokens[0] in {"the", "a", "an", "our", "part"}:
+        tokens.pop(0)
+    while tokens and tokens[-1] in PART_TAIL_NOUNS:
+        tokens.pop()
+    return "".join(tokens)
+
+
+def levenshtein_ratio(a, b):
+    if not a or not b:
+        return 0.0
+    previous = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        row = [i]
+        for j, cb in enumerate(b, 1):
+            row.append(min(previous[j] + 1, row[j - 1] + 1, previous[j - 1] + (ca != cb)))
+        previous = row
+    return 1 - previous[-1] / max(len(a), len(b))
+
+
+_SOUND_CLASSES = (("ck", "k"), ("ch", "k"), ("ph", "f"), ("sch", "sk"), ("c", "k"), ("q", "k"), ("x", "ks"),
+                  ("z", "s"), ("g", "k"), ("b", "p"), ("d", "t"), ("v", "f"), ("w", "v"), ("m", "n"))
+
+
+def sound_key(word):
+    """Consonant skeleton: voiced and unvoiced pairs, c/k/ch, s/z and m/n fall together; vowels and doubles drop."""
+    word = re.sub(r"[^a-z]", "", word.lower())
+    for old, new in _SOUND_CLASSES:
+        word = word.replace(old, new)
+    word = re.sub(r"[aeiouyh]", "", word)
+    return re.sub(r"(.)\1+", r"\1", word)
+
+
+def sound_score(heard, known):
+    """0..1 similarity of a heard word and a registry word: spelling or consonant skeleton, whichever is closer."""
+    spelling = levenshtein_ratio(heard, known)
+    a, b = sound_key(heard), sound_key(known)
+    skeleton = 0.95 * levenshtein_ratio(a, b) if min(len(a), len(b)) >= 3 else 0.0
+    return max(spelling, skeleton)
+
+
+def resolve_sound_alike(registries, table, text):
+    """Unique best sound-alike registry entry for a misheard name, else None. -> (id, registry name) or None."""
+    heard = [w for w in re.findall(r"[a-z]+", text.lower()) if w not in NOISE_WORDS | GENERIC_NAME_WORDS
+             and len(w) >= 3]
+    if not heard:
+        return None
+    scored = []
+    for entity, name, aliases in table_entries(registries, table):
+        known = [w for w in re.findall(r"[a-z]+", " ".join([name, *aliases]).lower())
+                 if w not in NOISE_WORDS | GENERIC_NAME_WORDS and len(w) >= 4]
+        best = max((sound_score(h, k) for h in heard for k in known), default=0.0)
+        scored.append((best, entity, name))
+    scored.sort(reverse=True)
+    if not scored or scored[0][0] < SOUND_THRESHOLD:
+        return None
+    if len(scored) > 1 and scored[0][0] - scored[1][0] < SOUND_MARGIN:
+        return None
+    return scored[0][1], scored[0][2]
+
+
+def resolve_part_spoken(registries, text):
+    """'BR 220', 'BR220', 'B R 220', 'br-220 blanks' -> the one part id with the same letters and digits."""
+    key = normalise_part_text(text)
+    if not key:
+        return None
+    found = {entity for entity, _, _ in table_entries(registries, "parts") if compact(entity) == key}
+    return found.pop() if len(found) == 1 else None
+
+
 def _one_stage(matches):
     """Return ('ok', id), ('ambiguous', ids) or None when the stage found nothing."""
     unique = sorted(set(matches))
@@ -166,6 +255,10 @@ def resolve(registries, table, text):
         if status == "ok":
             return {"id": value}
         return {"id": None, "reason": "ambiguous", "candidates": value}
+    if table == "parts":
+        spoken = resolve_part_spoken(registries, text)
+        if spoken:
+            return {"id": spoken}
     return {"id": None, "reason": f"not in {table}", "candidates": []}
 
 
@@ -174,8 +267,9 @@ def resolve(registries, table, text):
 UNKNOWN_NAME_FIELDS = ("to_supplier", "from_supplier", "new_material", "new_coating")
 
 
-def resolve_fields(registries, surface, utterance=None):
-    """Surface strings -> ({field: id}, [unresolved entries]). With an utterance, each name must be written in it."""
+def resolve_fields(registries, surface, utterance=None, notes=None):
+    """Surface strings -> ({field: id}, [unresolved entries]). With an utterance, each name must be written in it.
+    A sound-alike match is recorded in `notes` (a list the caller owns), never silent."""
     resolved, unresolved = {}, []
     for field, table in FIELD_TABLES.items():
         text = surface.get(field)
@@ -189,6 +283,13 @@ def resolve_fields(registries, surface, utterance=None):
         outcome = resolve(registries, table, text)
         if outcome["id"] is not None:
             resolved[field] = outcome["id"]
+        elif (outcome["reason"].startswith("not in ") and table in SOUND_FUZZY_TABLES
+              and resolve_sound_alike(registries, table, text)):
+            entity, name = resolve_sound_alike(registries, table, text)
+            resolved[field] = entity
+            if notes is not None:
+                notes.append({"field": field, "text": text, "id": entity,
+                              "note": f"heard \u201c{text}\u201d \u2192 {name} (sound-alike)"})
         elif outcome["reason"].startswith("not in ") and field in UNKNOWN_NAME_FIELDS:
             # A name said in the meeting that is in none of our records is information, not noise: pass it to
             # the rules verbatim so they raise "not in our records" with an owner, instead of dropping it.
@@ -201,8 +302,25 @@ def resolve_fields(registries, surface, utterance=None):
     return resolved, unresolved
 
 
+def fill_from_records(registries, resolved, notes, as_of=None):
+    """No from-supplier named, but the part has exactly one current approved source: fill it, with a note."""
+    part = resolved.get("part")
+    if not part or resolved.get("from_supplier"):
+        return
+    day = as_of or datetime.date.today().isoformat()
+    revoked = {row[9] for row in registries.get("asl", {}).get("rows", []) if len(row) > 9 and row[9]}
+    sources = {row[1] for row in registries.get("asl", {}).get("rows", [])
+               if row[2] == part and row[5] == "approved" and row[0] not in revoked
+               and (not row[6] or row[6] <= day) and (not row[7] or row[7] >= day)}
+    if len(sources) == 1:
+        source = sources.pop()
+        if source != resolved.get("to_supplier"):
+            resolved["from_supplier"] = source
+            notes.append({"field": "from_supplier", "text": "", "id": source, "note": "from records"})
+
+
 def build_request(change_type, resolved, unresolved, as_of=None, utterance=None, speaker=None, scope="series",
-                  confidence=None):
+                  confidence=None, notes=None):
     if change_type not in CHANGE_TYPES:
         unresolved = [*unresolved, {"field": "type", "text": str(change_type), "reason": "not a change type",
                                     "candidates": []}]
@@ -212,7 +330,8 @@ def build_request(change_type, resolved, unresolved, as_of=None, utterance=None,
                             site=resolved.get("site"), new_material=resolved.get("new_material"),
                             new_coating=resolved.get("new_coating"), scope=scope,
                             as_of=as_of or datetime.date.today().isoformat(), utterance=utterance,
-                            speaker=speaker, parse_confidence=confidence, unresolved=unresolved)
+                            speaker=speaker, parse_confidence=confidence, unresolved=unresolved,
+                            notes=notes or [])
     return request.to_dict()
 
 
@@ -236,14 +355,17 @@ def parse(remark, as_of=None, speaker=None, registries=None, live=False, call=No
     """Meeting remark -> ChangeRequest dict. Names the registries do not confirm go to `unresolved`."""
     registries = registries or load_registries()
     surface, _ = call_model(remark, live=live, call=call)
-    resolved, unresolved = resolve_fields(registries, surface, utterance=remark)
+    notes = []
+    resolved, unresolved = resolve_fields(registries, surface, utterance=remark, notes=notes)
     named = sum(1 for field in FIELD_TABLES if surface.get(field))
     passed_on = sum(1 for item in unresolved if item["reason"] == "not in our records: passed to the rules")
     confidence = round((len(resolved) - passed_on) / named, 2) if named else 0.0
     if surface.get("type") not in CHANGE_TYPES:
         confidence = 0.0
+    if surface.get("type") == "SourceChange":
+        fill_from_records(registries, resolved, notes, as_of=as_of)
     return build_request(surface.get("type"), resolved, unresolved, as_of=as_of, utterance=remark,
-                         speaker=speaker, confidence=confidence)
+                         speaker=speaker, confidence=confidence, notes=notes)
 
 
 def parse_form(form, registries=None):

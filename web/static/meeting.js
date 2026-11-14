@@ -318,6 +318,7 @@ const Meeting = (function makeMeeting() {
     let data = null;
     try {
       data = await Fallback.api("/api/meeting/line", { line: item.text, speaker: item.speaker, as_of: item.as_of });
+      attachSources(data);
     } catch (error) {
       bar.remove();
       trail.remove();
@@ -382,6 +383,9 @@ const Meeting = (function makeMeeting() {
     if (request.new_coating) chips.push(el("span", { class: "chip" }, [el("b", {}, "coating"), label(request.new_coating)]));
     if (request.new_material) chips.push(el("span", { class: "chip" }, [el("b", {}, "material"), label(request.new_material)]));
     chips.push(el("span", { class: "chip" }, [el("b", {}, "as of"), request.as_of || ""]));
+    for (const note of request.notes || []) {
+      chips.push(el("span", { class: "chip noted", title: note.note }, [el("b", {}, note.field === "from_supplier" ? "from?" : "heard"), note.note]));
+    }
     for (const item of request.unresolved || []) {
       chips.push(el("span", { class: "chip unresolved", title: item.reason }, [el("b", {}, `${item.field}?`), `“${item.text}” — ${item.reason}`]));
     }
@@ -455,6 +459,7 @@ const Meeting = (function makeMeeting() {
       let fresh = null;
       try {
         fresh = await Fallback.api("/api/check", body);
+        attachSources(fresh);
       } catch (error) {
         continue;
       }

@@ -76,7 +76,22 @@ async function api(path, body) {
   // Fallback.api (offline.js): live server, or the recorded snapshot when offline (#17).
   const data = await Fallback.api(path, body);
   if (data.labels) state.labels = data.labels;
+  attachSources(data);
   return data;
+}
+
+// Blocker source chips (server: finding_sources, parallel to card.findings): {name, id, clause}.
+function attachSources(data) {
+  const sources = data && data.finding_sources;
+  if (!sources || !data.card || !data.card.findings) return;
+  data.card.findings.forEach(function tag(finding, index) { finding._sources = sources[index] || []; });
+}
+
+function sourceChips(sources) {
+  return el("div", { class: "f-chips" }, sources.map(function chip(source) {
+    const text = [source.name, source.id + (source.clause ? ` \u00a7${source.clause}` : "")].join(" \u00b7 ");
+    return el("span", { class: "src-chip", title: source.id }, text);
+  }));
 }
 
 function setStatus(text, isError) {
@@ -384,18 +399,33 @@ function renderFinding(finding, replacedItems) {
       el("span", { class: "rule-id", title: "Rule code" }, finding.rule),
     ]),
   ]);
-  const best = bestQuote(finding.evidence);
+  let best = bestQuote(finding.evidence);
+  if (best && /^REG-/.test(best.source || "") && (finding._sources || []).length) {
+    // decisive register row (the first source chip) instead of the generic part row
+    const lead = finding._sources[0].id;
+    const walkLeaves = function find(list) {
+      for (const step of list || []) {
+        if (step.quote && String(step.quote).startsWith(lead + ",")) return step;
+        const inner = find(step.premises);
+        if (inner) return inner;
+      }
+      return null;
+    };
+    best = walkLeaves(finding.evidence) || best;
+  }
   let sourceLine = null;
+  const chips = finding.severity === "blocker" && (finding._sources || []).length ? sourceChips(finding._sources) : null;
   if (best) {
     const shown = readableQuote(best.source, best.quote);
     const clipped = shown.text.length > 220 ? shown.text.slice(0, 217).trimEnd() + "\u2026" : shown.text;
     sourceLine = el("div", { class: "f-source" }, [
       el("span", { class: shown.raw ? "f-quote mono" : "f-quote" }, `\u201c${clipped}\u201d`),
-      el("span", { class: "f-src" }, ` ${sourceName(best.source)}`),
+      chips ? null : el("span", { class: "f-src" }, ` ${sourceName(best.source)}`),
     ]);
   }
   const hasProof = (finding.evidence || []).length || finding.urgency !== undefined && finding.urgency !== null;
   // Blockers show their quote; warnings, questions and info show the title only, the quote sits behind the proof toggle.
+  if (chips) node.append(chips);
   if (sourceLine && (finding.severity === "blocker" || !hasProof)) node.append(sourceLine);
   node.append(meta);
   if (hasProof) {

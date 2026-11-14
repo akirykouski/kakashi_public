@@ -51,6 +51,7 @@ class ChangeRequest:
     speaker: Optional[str] = None
     parse_confidence: Optional[float] = None   # set by the parser; None for a typed form
     unresolved: list = field(default_factory=list)  # names the parser could not map to ids
+    notes: list = field(default_factory=list)       # how a name was filled: {field, text, note} (sound-alike, from records)
     epistemic: Optional[str] = None            # set on the card: "PLAN" (derived; ignored on input)
 
     def to_dict(self):
