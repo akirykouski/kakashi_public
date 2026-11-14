@@ -210,6 +210,7 @@ const Meeting = (function makeMeeting() {
     q("mt-cards").innerHTML = "";
     q("mt-cards").append(el("p", { class: "muted mt-empty", id: "mt-empty" }, "No change proposed yet. Ordinary lines pass; a line that proposes a change lights up here."));
     q("mt-hint").hidden = false;
+    document.dispatchEvent(new CustomEvent("mt:reset"));
     status("");
     renderCounter();
     renderSessions();
@@ -344,6 +345,7 @@ const Meeting = (function makeMeeting() {
       why.textContent = flaggedReason(data);
       await drawTrace(node, data, trail, held);
       addCard(item, data, node);
+      document.dispatchEvent(new CustomEvent("mt:flagged", { detail: { item: item, data: data } }));
     }
     renderCounter();
     m.busy = false;
