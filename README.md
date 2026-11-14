@@ -40,7 +40,7 @@ companies, 56 change requests; model baselines: A' = hybrid retrieval → model,
 | H1 · blockers that need several documents: our core beats retrieval by ≥ 20 points | **pass**: recall 0.90 vs 0.19 (47/52 vs 10/52) |
 | H4 · overall, not worse than a model reading all documents (−5 points) | **pass** on both worlds together: exact 0.68 vs 0.68; world M 0.78 vs 0.67, world A 0.50 vs 0.70 |
 | H2 · replaced rules and missing data: better than all documents → model | **fail**: 0.39 vs 0.67. Cause found: the parser dropped unknown names, so the rules never asked "not in our records". Fixed after the freeze (`CHANGES.md`); the frozen result stands |
-| H3 · scale | not run under this protocol; exploratory latency in `docs/benchmarks/latency.md` |
+| H3 · at 8× company size our core holds and full context degrades | **fail**: neither degraded on world M at 8× (core 0.78 → 0.81, full context 0.67 → 0.72); full context's tokens per question grew 14.5k → 111k, ours stayed at 2.1k. Exploratory latency: `docs/benchmarks/latency.md` |
 
 Synthetic data, gold written by the team, small n: differences under ~10 points are noise. Earlier research and
 benchmarks (memory libraries, the two prepared prototypes, extraction on four real public documents):
