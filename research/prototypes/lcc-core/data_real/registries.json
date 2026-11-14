@@ -1,0 +1,9 @@
+{
+ "_note": "ONBOARDING INPUT written by the team, not extracted. What a reader would enter when onboarding these customers: the customer, generic classes for 'the part', 'the supplier', 'the sub-supplier', and the named parties of the Ford recall. Real documents use real names that are not in the synthetic registry.",
+ "customers": {"columns": ["id","name"], "rows": [["CUST-ADIENT","Adient US LLC (and affiliates)"],["CUST-ASTEMO","Astemo (Hitachi Astemo Americas)"],["CUST-FORD","Ford Motor Company"]]},
+ "markets": {"columns": ["id","name"], "rows": [["MKT-US","United States"]]},
+ "parts": {"columns": ["id","name"], "rows": [["PART-ANY","Any product, part, component or Supplies delivered to the customer (generic class)"],["PART-AIRBAG-COVER","Driver airbag cover (Ford 18V-806)"]], "aliases": {"PART-AIRBAG-COVER": ["plastic cover"]}},
+ "suppliers": {"columns": ["id","name","commodity"], "rows": [["SUP-ANY","Supplier / Seller delivering to the customer (generic class)","any"],["SUP-SUBTIER","Sub-supplier / sub-tier supplier of the supplier (generic class)","any"],["SUP-AUTOLIV","Autoliv, Tier 1 airbag module supplier","airbag module"],["SUP-EISSMANN","Eissmann, Tier 2 supplier of the airbag cover","airbag cover"],["SUP-DEMO","DEMO, Tier 3 supplier of the cover molding","injection molding"]], "aliases": {"SUP-AUTOLIV": ["Autoliv"], "SUP-EISSMANN": ["Eissmann"], "SUP-DEMO": ["DEMO"]}},
+ "materials": {"columns": ["id","name"], "rows": [["MAT-ANY","Any raw material or purchased material (generic class)"]]},
+ "coatings": {"columns": ["id","name","substances"], "rows": [["COAT-ANY","Any coating, plating or surface treatment (generic class)","none"]]}
+}

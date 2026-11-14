@@ -1,0 +1,22 @@
+# PREP (written 13 Nov 2026, before the event).
+# Company rules that gate shapes. The frozen data set (data/sources) holds no
+# policy document: the rules reach us through data/eval/RULES.md (the gold's rule
+# glossary) and the probation e-mail. So they are declared here as ontology
+# individuals, not as extracted facts with a quote. Retiring a rule = removing its
+# triple; the shape that cc:basedOn it switches off with no code change.
+
+@prefix cc:   <https://example.org/ctxcol#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# SERIES-8D. data/eval/RULES.md, B_OPEN_8D_SAME_ALLOY: "Supplier has an open 8D on a
+# failure mode plausible for the part (alloy group 6xxx, fastener holes). No
+# document links the 8D to the part." The level is the ALLOY GROUP (series), plus the
+# same feature. Source texts: "alloy group 6xxx" in 8D-25-031 and DWG-BR220-RevC.
+cc:Policy_8D_SERIES a cc:CompanyPolicy ;
+    rdfs:label "No new source while the supplier has an open 8D on the same alloy group and feature" .
+
+# PROBATION. EML-SQ-2026-0814: "During probation Meccanica C S.p.A. receives no new
+# business and no new part approvals until the surveillance audit is closed."
+# Superseded for Meccanica C by EML-SQ-2026-1105 (probation revoked 2026-11-05).
+cc:Policy_PROBATION a cc:CompanyPolicy ;
+    rdfs:label "No new business while the supplier is on probation" .

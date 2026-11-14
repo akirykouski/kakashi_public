@@ -1,0 +1,19 @@
+{
+ "README.md": "2e6d31ac3206a70d9e59b307743c1e7ad8e89be478e46b795fced62f02ce44f3",
+ "eval/RULES.md": "308d9fd1300d9a3c303eeb8557eefd175fcc694bdd91ee126fbd3a5f0be09e12",
+ "eval/canonical.json": "117538c72ec226088516abd8053d45f2b42e3abad6eba79f9f729972d067a338",
+ "eval/change_requests.jsonl": "64fafc7cbebaba2664789455378d2f97602bcf052b89036511d2db70907fa28a",
+ "eval/dev.jsonl": "52c89ee5e731902c64e08e857252a86d55505c89dfc0f3781f14fc9da745b5fe",
+ "eval/gold.jsonl": "94e0a8a04abc88b7303807ba75ad9affdfaed6e5b366f50e3943fc5de40fdb8a",
+ "eval/invariants.json": "518c9d2178f9ead183aa2d3f08e9ff909f4ffc511021b8345def07c92bfb662f",
+ "sources/8D-25-031.md": "a75e759a0cea9b434ab5e1d96d37824cd208bbdc393a2d58988110cba559426c",
+ "sources/ASL-TO-2026-04.md": "b99036befd08b16c8cebb96c769da2b2725ee5ecd70f2c81121d840fd43ae164",
+ "sources/BOM-STL-TORINO-27.md": "1976c22e8419d1da0b74c2a4380b8d672418fa0b19e450edc50ff3b97fd3e75e",
+ "sources/CP-BR220-R3.md": "0dbe2af87e69c680a9696678e1d058abdff169d78a36e61463f6770b8f92ec1d",
+ "sources/CSR-STL-2026-02.md": "ddf03fd5fce6aefac8e27ec91a593f8897ff3ce91c54700401666742d40102de",
+ "sources/DWG-BR220-RevB.md": "2b608add3d21721e2cd899bad2b0d95d176ec93fcd2f68c7a0094c4f99ee00a0",
+ "sources/DWG-BR220-RevC.md": "9f97c28d4b1e773f06a2820ae39f0de68e07ebc1ff77442745132688022a5246",
+ "sources/EML-SQ-2026-0814.md": "af32c27969270a9aba1433ab5e8527c15182bbe2d752917ef08b08d466f8e10e",
+ "sources/EML-SQ-2026-1105.md": "d2e85eff6f1f1a4c206eada3dc39516f1a8a5ddfdcef01c3846ae0cdc9bd0a66",
+ "sources/PRC-DEV-007.md": "5fa1877c0c66135c6b88a08133228d880d8be9ac2816b03fa47516ab799d6b3c"
+}

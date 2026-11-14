@@ -1,0 +1,161 @@
+# PREP (written 13 Nov 2026, before the event).
+# Demands on a change request, as SHACL-SPARQL constraints run over the OWL 2 RL
+# closure. One shape = one blocker type. The shape IRI is the blocker type id.
+#
+# Every shape carries, as data:
+#   sh:severity   cc:Blocker  (proved from facts in force)
+#                 cc:Question (required evidence is absent and nothing licenses
+#                              reading the absence as a "no")
+#   cc:basedOn    the requirement the demand comes from. The query also matches
+#                 that requirement in the graph, so a retired policy or a
+#                 superseded clause switches its shape off without code changes.
+#   cc:derivation "direct" | "inferred" | "closed-world" (how the blocker is reached)
+#   cc:evidence   a CONSTRUCT returning the triples that made the shape fire.
+#                 Each is then either an asserted fact (a leaf with a quote) or
+#                 an inferred triple (handed to the proof explainer).
+#
+# Absence is a blocker ONLY under a cc:CompletenessStatement in force for that
+# class and scope. Otherwise absence is a question. Compare B_NO_SOURCE_RELEASE
+# with Q_SOURCE_RELEASE_UNKNOWN.
+
+@prefix cc:  <https://example.org/ctxcol#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+cc:Blocker  a rdfs:Class ; rdfs:label "Blocker" .
+cc:Question a rdfs:Class ; rdfs:label "Open question" .
+
+# ------------------------------------------------------------- supplier level
+
+cc:B_SUPPLIER_NOT_QUALIFIED a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Blocker ; cc:derivation "direct" ; cc:basedOn cc:Policy_PROBATION ;
+    sh:sparql [
+        sh:message "Supplier {?sup} is on {?grade}; no new business during probation." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup ?grade WHERE {
+              $this cc:proposedSupplier ?sup . ?sup cc:supplierStanding ?grade .
+              cc:Policy_PROBATION a cc:CompanyPolicy .
+              FILTER (?grade = "probation") }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this cc:proposedSupplier ?sup . ?sup cc:supplierStanding ?grade . cc:Policy_PROBATION a cc:CompanyPolicy }
+        WHERE { ?this cc:proposedSupplier ?sup . ?sup cc:supplierStanding ?grade }""" .
+
+cc:Q_SUPPLIER_QUALIFICATION_UNKNOWN a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Question ; cc:derivation "absence" ; cc:basedOn cc:Policy_PROBATION ;
+    sh:sparql [
+        sh:message "No standing (probation or good standing) on record for supplier {?sup}." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup WHERE {
+              $this cc:proposedSupplier ?sup . cc:Policy_PROBATION a cc:CompanyPolicy .
+              FILTER NOT EXISTS { ?sup cc:supplierStanding ?g } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this cc:proposedSupplier ?sup . cc:Policy_PROBATION a cc:CompanyPolicy }
+        WHERE { ?this cc:proposedSupplier ?sup }""" .
+
+# ----------------------------------------------------- part x plant x supplier
+
+cc:B_NO_SOURCE_RELEASE a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Blocker ; cc:derivation "closed-world" ;
+    sh:sparql [
+        sh:message "Supplier {?sup} has no release for part {?part} at plant {?plant}; the source list {?cs} is declared complete for that plant." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup ?part ?plant ?cs WHERE {
+              $this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant .
+              ?cs a cc:CompletenessStatement ; cc:completeForClass cc:SourceRelease ; cc:completeForPlant ?plant .
+              FILTER NOT EXISTS { ?r cc:releaseSupplier ?sup ; cc:releasePart ?part ;
+                                     cc:releasePlant ?plant ; cc:releaseStatus "released" } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant .
+                    ?cs cc:completeForClass cc:SourceRelease ; cc:completeForPlant ?plant .
+                    ?other cc:releaseSupplier ?sup ; cc:releasePart ?otherPart ; cc:releasePlant ?plant }
+        WHERE { ?this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant .
+                ?cs a cc:CompletenessStatement ; cc:completeForClass cc:SourceRelease ; cc:completeForPlant ?plant .
+                OPTIONAL { ?other cc:releaseSupplier ?sup ; cc:releasePart ?otherPart ; cc:releasePlant ?plant } }""" .
+
+cc:Q_SOURCE_RELEASE_UNKNOWN a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Question ; cc:derivation "absence" ;
+    sh:sparql [
+        sh:message "No release found for supplier {?sup}, part {?part}, plant {?plant}, and no source list is declared complete for that plant." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup ?part ?plant WHERE {
+              $this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant .
+              FILTER NOT EXISTS { ?cs a cc:CompletenessStatement ; cc:completeForClass cc:SourceRelease ; cc:completeForPlant ?plant }
+              FILTER NOT EXISTS { ?r cc:releaseSupplier ?sup ; cc:releasePart ?part ;
+                                     cc:releasePlant ?plant ; cc:releaseStatus "released" } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant }
+        WHERE { ?this cc:proposedSupplier ?sup ; cc:forPart ?part ; cc:atPlant ?plant }""" .
+
+# -------------------------------------------------------------------- material
+
+cc:B_MATERIAL_MISMATCH a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Blocker ; cc:derivation "closed-world" ;
+    sh:sparql [
+        sh:message "Offered material {?off} does not satisfy the drawing requirement {?req} for part {?part}." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?part ?req ?off WHERE {
+              $this cc:proposedSupplier ?sup ; cc:forPart ?part .
+              ?part cc:requiresMaterial ?req .
+              ?offer cc:offeredBy ?sup ; cc:offerForPart ?part ; cc:offeredMaterial ?off .
+              FILTER (?off != ?req)
+              FILTER NOT EXISTS { ?off cc:refines ?req } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?part cc:requiresMaterial ?req .
+                    ?offer cc:offeredBy ?sup ; cc:offerForPart ?part ; cc:offeredMaterial ?off .
+                    ?sc cc:characteristicOf ?part ; cc:controlPlanLine ?line }
+        WHERE { ?this cc:proposedSupplier ?sup ; cc:forPart ?part .
+                ?part cc:requiresMaterial ?req .
+                ?offer cc:offeredBy ?sup ; cc:offerForPart ?part ; cc:offeredMaterial ?off .
+                OPTIONAL { ?sc cc:characteristicOf ?part ; cc:constrainsMaterial true ; cc:controlPlanLine ?line } }""" .
+
+cc:Q_NO_MATERIAL_CERT a sh:NodeShape ; sh:targetClass cc:RawMaterialSourceChange ;
+    sh:severity cc:Question ; cc:derivation "absence" ;
+    sh:sparql [
+        sh:message "No material certificate on record from supplier {?sup} for part {?part}." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup ?part WHERE {
+              $this cc:proposedSupplier ?sup ; cc:forPart ?part .
+              FILTER NOT EXISTS { ?c cc:certSupplier ?sup ; cc:certForPart ?part } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this cc:proposedSupplier ?sup ; cc:forPart ?part }
+        WHERE { ?this cc:proposedSupplier ?sup ; cc:forPart ?part }""" .
+
+# -------------------------------------------------------- customer requirement
+
+cc:B_CUSTOMER_APPROVAL_REQUIRED a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Blocker ; cc:derivation "inferred" ;
+    sh:sparql [
+        sh:message "Part {?part} is subject to {?req}, which covers changes of class {?cls}; no customer approval or deviation in force for supplier {?sup}." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?part ?req ?cls ?sup WHERE {
+              $this cc:forPart ?part ; cc:proposedSupplier ?sup ; a ?cls .
+              ?part cc:subjectTo ?req .
+              ?req a cc:CustomerApprovalRequirement ; cc:appliesToChangeClass ?cls .
+              FILTER NOT EXISTS { ?a cc:approvalForPart ?part ; cc:approvalCoversSupplier ?sup ; cc:approvalStatus "approved" }
+              FILTER NOT EXISTS { ?d cc:deviationForPart ?part ; cc:deviationCoversSupplier ?sup } }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?this a ?cls ; cc:forPart ?part . ?part cc:subjectTo ?req .
+                    ?req a cc:CustomerApprovalRequirement ; cc:appliesToChangeClass ?cls }
+        WHERE { ?this cc:forPart ?part ; a ?cls . ?part cc:subjectTo ?req .
+                ?req a cc:CustomerApprovalRequirement ; cc:appliesToChangeClass ?cls }""" .
+
+# ------------------------------------------------------------- quality history
+
+cc:B_OPEN_8D_SAME_ALLOY a sh:NodeShape ; sh:targetClass cc:ChangeRequest ;
+    sh:severity cc:Blocker ; cc:derivation "inferred" ; cc:basedOn cc:Policy_8D_SERIES ;
+    sh:sparql [
+        sh:message "Supplier {?sup} has open report {?rep} on alloy series {?ser} and the same feature {?feat}; part {?part} is drawn in series {?ser} with that feature (named rule SERIES-8D)." ;
+        sh:select """PREFIX cc: <https://example.org/ctxcol#>
+            SELECT $this ?sup ?part ?rep ?ser ?feat WHERE {
+              $this cc:proposedSupplier ?sup ; cc:forPart ?part .
+              ?sup cc:hasSeriesQualityHistoryOn ?part ; cc:hasReport ?rep .
+              ?rep cc:reportStatus "open" ; cc:concernsSeries ?ser ; cc:failureFeature ?feat .
+              ?part cc:requiresSeries ?ser ; cc:hasFeature ?feat .
+              cc:Policy_8D_SERIES a cc:CompanyPolicy . }""" ] ;
+    cc:evidence """PREFIX cc: <https://example.org/ctxcol#>
+        CONSTRUCT { ?sup cc:hasSeriesQualityHistoryOn ?part . ?rep cc:reportStatus "open" ; cc:failureFeature ?feat .
+                    ?part cc:hasFeature ?feat . cc:Policy_8D_SERIES a cc:CompanyPolicy }
+        WHERE { ?this cc:proposedSupplier ?sup ; cc:forPart ?part .
+                ?sup cc:hasSeriesQualityHistoryOn ?part ; cc:hasReport ?rep .
+                ?rep cc:reportStatus "open" ; cc:concernsSeries ?ser ; cc:failureFeature ?feat .
+                ?part cc:requiresSeries ?ser ; cc:hasFeature ?feat }""" .

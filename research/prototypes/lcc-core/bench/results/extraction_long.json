@@ -1,0 +1,170 @@
+[
+ {
+  "id": "8D-25-031",
+  "chars": 91336,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 1,
+  "fn": 0,
+  "missed": [],
+  "extra": [
+   [
+    "8D-25-031",
+    "concernsMaterial",
+    "MAT-6082-T6"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 57440,
+  "tokens_out": 2952,
+  "seconds": 0.011690855026245117
+ },
+ {
+  "id": "8D-26-009",
+  "chars": 93308,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 58855,
+  "tokens_out": 3068,
+  "seconds": 0.021039962768554688
+ },
+ {
+  "id": "CSR-AUR-R3",
+  "chars": 97809,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 52630,
+  "tokens_out": 726,
+  "seconds": 0.006139993667602539
+ },
+ {
+  "id": "CSR-AUR-R4",
+  "chars": 102392,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 4,
+  "fp": 0,
+  "fn": 1,
+  "missed": [
+   [
+    "CSR-AUR-R4",
+    "requiresNotificationFor",
+    "SourceChange"
+   ]
+  ],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 54886,
+  "tokens_out": 884,
+  "seconds": 0.016364097595214844
+ },
+ {
+  "id": "CSR-NOR-R2",
+  "chars": 96891,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 52697,
+  "tokens_out": 631,
+  "seconds": 0.020484209060668945
+ },
+ {
+  "id": "DEV-121",
+  "chars": 87468,
+  "chunks": 5,
+  "gold": 5,
+  "tp": 4,
+  "fp": 1,
+  "fn": 1,
+  "missed": [
+   [
+    "DEV-121",
+    "permitsChangeType",
+    "CoatingChange"
+   ]
+  ],
+  "extra": [
+   [
+    "DEV-121",
+    "concernsCoating",
+    "COAT-ZNNI"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 50125,
+  "tokens_out": 2333,
+  "seconds": 0.011781930923461914
+ },
+ {
+  "id": "LAW-ELV",
+  "chars": 90750,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 5,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 49472,
+  "tokens_out": 1001,
+  "seconds": 0.017587900161743164
+ },
+ {
+  "id": "NCR-26-017",
+  "chars": 71756,
+  "chunks": 4,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 41275,
+  "tokens_out": 2091,
+  "seconds": 0.0045278072357177734
+ }
+]

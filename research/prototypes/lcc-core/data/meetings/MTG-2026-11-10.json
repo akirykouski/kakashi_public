@@ -1,0 +1,37 @@
+{
+  "id": "MTG-2026-11-10",
+  "title": "Program review PRG-X",
+  "date": "2026-11-10",
+  "participants": [
+    "PER-GRECO",
+    "PER-FERRI",
+    "PER-COSTA"
+  ],
+  "utterances": [
+    [
+      "PER-FERRI",
+      "Alluminio Bormida is two weeks late on BR-220 blanks, their saw line is down."
+    ],
+    [
+      "PER-COSTA",
+      "We can run eight days on stock."
+    ],
+    [
+      "PER-GRECO",
+      "Escalate to Bormida management today, and bring options to the change board."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-035",
+      "about": [
+        "BR-220",
+        "SUP-B"
+      ],
+      "by": "PER-GRECO",
+      "text": "Escalate SUP-B delay; options to change board.",
+      "reason": "Two-week delay against eight days of stock.",
+      "quote": "Escalate to Bormida management today, and bring options to the change board."
+    }
+  ]
+}
