@@ -34,6 +34,7 @@ def memory():
     global _LOG
     if _LOG is None:
         _LOG = default_log()
+        rules.extend_log(_LOG)  # policy facts (QP-15): 8D level, completeness scope, owners
     return _LOG
 
 
@@ -44,6 +45,10 @@ def coverage():
         report = decision.coverage_check()
         _COVERAGE = {key: report[key] for key in ("input_sets", "to_person", "overlaps")}
     return _COVERAGE
+
+
+def fallback_row():
+    return decision.to_decision_row(decision.load_table()["rows"][-1])
 
 
 def severity_rank(finding):
@@ -75,7 +80,10 @@ def run(request, record=True):
     findings = sorted(rules.check(projection, request), key=severity_rank)
     not_checked = rules.not_checked(projection, request) if hasattr(rules, "not_checked") else []
     checked = time.time()
-    row, verdict = decision.decide(findings, request)
+    if rules.covered(request, projection):
+        row, verdict = decision.decide(findings, request)
+    else:
+        row, verdict = fallback_row(), "not_covered"  # no rule applies to this change: a person decides
     entry = None
     if record:
         entry = decision.record(request, as_of, getattr(projection, "fact_ids_in_force", []), findings, row,

@@ -82,11 +82,13 @@ def test_elv_restricted_substance_is_a_stop(scenarios, table):
 
 
 def test_silence_schedule_change_goes_to_a_person(scenarios, table):
-    # No rule examines a ScheduleChange: before today this read "no blockers found".
+    # Whether any rule covers a change is decided by rules.covered(); core/check.py sends an uncovered change
+    # to R0. The table alone, given no findings for a class it has rows for, says "checks ran, none fired".
     row, result = run(scenarios["silence"], table)
     assert scenarios["silence"]["findings"] == []
-    assert row["row_id"] == "R0"
-    assert result == "not_covered"
+    assert row["row_id"] == "D11"
+    assert result == "no_blockers_found"
+    assert decision.verdict([], covered=False) == "not_covered"
 
 
 def test_checked_class_with_no_findings_is_not_an_approval(table):
@@ -120,8 +122,8 @@ def test_coverage_check_enumerates_every_input_set(table):
     assert report["to_person"] == report["to_person_class_not_checked"] + report["to_person_rule_combination"]
     assert sum(report["row_hits"].values()) == report["input_sets"]
     assert report["row_hits"]["R0"] == report["to_person"]
-    # Every class that no check examines goes entirely to a person.
-    assert report["to_person_by_class"]["ScheduleChange"] == 2 ** len(table["rules"])
+    # The table has rows for every class; what still goes to a person are rule combinations no row covers.
+    assert report["to_person_class_not_checked"] == 0
     assert report["overlaps"] > 0
     assert set(report) >= {"input_sets", "to_person", "overlaps", "examples"}
 
@@ -203,4 +205,4 @@ def test_log_is_append_only(scenarios, table, tmp_path):
     lines_after = log.read_text().splitlines()
     assert lines_after[:1] == lines_before
     assert json.loads(lines_after[0])["record_id"] == first["record_id"]
-    assert first["verdict"] == "not_covered" and first["decision_row"] == "R0"
+    assert first["verdict"] == result and first["decision_row"] == row["row_id"]

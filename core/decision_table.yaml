@@ -25,9 +25,14 @@ version_note: "v1, 14 Nov 2026"
 # Rule ids the table reads. The coverage check enumerates every subset of these.
 rules: [R1a, R1b, R2, R3, R4, R5, R6, R7, R8]
 
-# Change classes that the checks in core/rules.py actually examine. Any other class goes to R0.
+# Change classes the table has rows for. Whether a rule actually covers a given change (its class, part and
+# scope) is decided by core/rules.py covered(); core/check.py sends an uncovered change to R0 regardless of
+# this list. R2 (customer approval) covers every class a customer requirement in force names.
 class_groups:
-  checked: [SourceChange, MaterialChange, ProcessChange, CoatingChange, SubTierSupplierChange]
+  checked: [SourceChange, SubTierSupplierChange, LocationChange, ShippingLocationChange, MaterialChange,
+            CoatingChange, SpecialProcessChange, ProcessChange, EquipmentChange, ToolingChange,
+            TestMethodChange, SoftwareChange, DesignChange, PackagingChange, ProductionResumptionChange,
+            ScheduleChange, PriceChange]
   source: [SourceChange, SubTierSupplierChange]
 
 # Rule ids that mean "do not ship as proposed" when they fire.
