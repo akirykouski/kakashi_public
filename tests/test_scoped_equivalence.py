@@ -8,7 +8,8 @@ differ. A difference means the scope is too small: fix scope_facts, never this t
 Request sets
   * data/scenarios.json                          (world M, default fact log)
   * data/requests.jsonl                          (world M)
-  * eval/parses/M_hand.jsonl, A_hand.jsonl       (C* requests on each eval world's own fact log)
+  * eval/parses/M_hand.jsonl, A_hand.jsonl       (C* requests on each eval world's own fact log, and the M
+                                                 requests again on eval/worlds/M_scale, world M at 8x)
   * RANDOM_REQUESTS random requests over data/registries.json (world M), fixed seed
 """
 import json
@@ -127,9 +128,10 @@ def test_scoped_card_equals_full_card(default_world, request_id, request_):
     assert_same(request_id, request_)
 
 
-@pytest.mark.parametrize("world", ["M", "A"])
-def test_scoped_card_equals_full_card_eval_worlds(world):
+@pytest.mark.parametrize("world,m_dir", [("M", "M"), ("A", "M"), ("M", "M_scale")])
+def test_scoped_card_equals_full_card_eval_worlds(world, m_dir, monkeypatch):
     import run_core
+    monkeypatch.setattr(run_core, "M_DIR_NAME", m_dir)
     saved_log, saved = check._LOG, dict(rules._projections)
     try:
         gold = load_jsonl(ROOT / "eval" / "gold" / f"{world}.jsonl")
