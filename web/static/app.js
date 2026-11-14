@@ -397,7 +397,7 @@ function renderPastDecisions(box, card) {
         el("span", { class: "rule-id" }, item.id),
         el("span", { class: "f-title" }, `“${item.title}”`),
         epistemicBadge(item.epistemic),
-        el("span", { class: `past-status ${item.status === "review" ? "stale" : "holds"}` }, item.status),
+        el("span", { class: `past-status ${{ review: "stale", stands: "holds" }[item.status] || ""}` }, item.status),
       ]),
       el("div", { class: "f-meta" }, [
         `${item.date || ""} · ${item.by ? personText(item.by) : ""} · `, el("span", { class: "doc" }, item.meeting || ""),
