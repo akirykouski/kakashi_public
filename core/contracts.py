@@ -19,6 +19,10 @@ CHANGE_TYPES = (
     "ProductionResumptionChange", "ScheduleChange", "PriceChange",
 )
 
+# ---- OIDA epistemic types (docs/research/kva-oida-hooks.md 4.1) ------------------------------------------
+# Read from the lcc:epistemicType annotation of a record's class in ontology/lcc.ttl; None when no class says.
+EPISTEMIC_TYPES = ("CONSTRAINT", "DECISION", "EVIDENCE", "PLAN", "QUESTION")
+
 # ---- outcomes ------------------------------------------------------------------------------------------
 SEVERITIES = ("blocker", "warning", "question", "info")
 VERDICTS = (
@@ -45,6 +49,7 @@ class ChangeRequest:
     speaker: Optional[str] = None
     parse_confidence: Optional[float] = None   # set by the parser; None for a typed form
     unresolved: list = field(default_factory=list)  # names the parser could not map to ids
+    epistemic: Optional[str] = None            # set on the card: "PLAN" (derived; ignored on input)
 
     def to_dict(self):
         return {key: value for key, value in asdict(self).items() if value not in (None, [])}
@@ -61,6 +66,7 @@ class EvidenceStep:
     fact_id: Optional[str] = None
     rule: Optional[str] = None                 # axiom or rule that produced an inferred step
     premises: list = field(default_factory=list)  # list of EvidenceStep dicts
+    epistemic: Optional[str] = None            # leaves: OIDA type of the record's class (else of the source)
 
 
 @dataclass
@@ -73,6 +79,13 @@ class Finding:
     owner: Optional[str] = None                # person or role who answers a question
     note: Optional[str] = None                 # e.g. "CSR-AUR-R4 supersedes CSR-AUR-R3"
     consequence: Optional[dict] = None         # customer's stated consequence {type, source, quote}
+    # OIDA (core/oida.py), set by check.run; all optional
+    epistemic: Optional[str] = None            # one of EPISTEMIC_TYPES; "QUESTION" for every question
+    blocks: Optional[dict] = None              # questions: {"part", "change_type"} the question holds up
+    urgency: Optional[float] = None            # questions: clamp(age/30*0.3 + blocking_edges*0.2 + stakes*0.5)
+    stakes: Optional[float] = None             # questions: from rules_data/oida_stakes.json
+    age_days: Optional[int] = None             # questions: days since the latest dated evidence, else 0
+    blocking_edges: Optional[int] = None       # questions: blocker findings on the same card
 
 
 @dataclass

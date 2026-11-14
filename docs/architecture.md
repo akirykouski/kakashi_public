@@ -38,6 +38,8 @@ request give the same card.
 | `parse.py` | Remark → ChangeRequest via one structured-output call (team key, server side); names → ids by code against the registries and confirmed aliases (fix/5); unresolved names returned, never guessed | new + fix/5 | P |
 | `extract.py` | Document → proposed facts; verbatim quote and context quote checks (fix/3); aliases (fix/5); blanket rules (fix/7); unclassified items (fix/1); table-aware conversion (fix/6) | M prototype + fixes | P |
 | `check.py` | Pipeline + CLI + JSON for the page: request → Card + DecisionRecord | new | integration |
+| `oida.py` | OIDA epistemic type (`lcc:epistemicType` of the record's class) on the request (PLAN), every finding and every evidence leaf (#26) | new | integration |
+| `oida.py`, `rules_data/oida_stakes.json` | Open questions get `blocks` {part, change_type} and `urgency` = clamp(age/30·0.3 + blockers·0.2 + stakes·0.5); stakes table is data; questions sorted by urgency (#27). Runs after the decision: never changes rules or the table | new | integration |
 
 Data: `data/` holds the synthetic company (Valsangone, fictional customers). Real third-party documents are
 never committed; `data_real/SOURCES.md` lists their public URLs.
