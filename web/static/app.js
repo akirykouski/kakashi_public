@@ -326,28 +326,100 @@ function renderExtra(card) {
   // Only fields the card already provides. Nothing is rendered when the core does not send them.
   const box = $("extra");
   box.innerHTML = "";
-  const past = card.past_decisions || card.precedents || [];
-  if (past.length) {
-    box.append(el("h2", {}, "Decided before"));
-    for (const item of past) {
-      box.append(el("div", { class: "finding info" }, [
-        el("div", { class: "f-head" }, [el("span", { class: "rule-id" }, item.id || item.decision_id || ""),
-                                         el("span", { class: "f-title" }, item.title || item.summary || item.outcome || "")]),
-        el("div", { class: "f-meta" }, [item.date ? `${item.date} · ` : "", item.by ? personText(item.by) : "",
-                                         item.reason ? ` · ${item.reason}` : ""]),
-      ]));
-    }
+  renderMaintenance(box, card);
+  renderPastDecisions(box, card);
+}
+
+// ---- memory of decisions and maintenance (core/memory.py, issue #19) -------------------------------------
+
+const REASON_STATE_CLASS = { "still holds": "holds", "superseded": "stale", "no longer in force": "stale", "changed": "stale" };
+
+function quoteList(evidence) {
+  const list = el("ul", { class: "steps" });
+  for (const step of evidence || []) {
+    if (!step || !step.quote) continue;
+    list.append(el("li", { class: "step" }, [
+      el("div", { class: "quote" }, [`“${step.quote}”`]),
+      el("span", { class: "doc" }, step.source || "?"),
+      step.fact_id ? el("span", { class: "muted small" }, `  fact ${step.fact_id}`) : null,
+    ]));
   }
-  const maintenance = card.maintenance || [];
-  if (maintenance.length) {
-    box.append(el("h2", {}, "Memory maintenance"));
-    for (const item of maintenance) {
-      box.append(el("div", { class: "finding question" }, [
-        el("div", { class: "f-head" }, [el("span", { class: "rule-id" }, item.kind || item.id || ""),
-                                         el("span", { class: "f-title" }, item.title || item.summary || "")]),
-      ]));
-    }
+  return list;
+}
+
+function maintenanceMeta(item) {
+  const parts = [];
+  if (item.owner) parts.push(el("span", { class: "owner" }, `Owner: ${personText(item.owner)}`));
+  if (item.urgency !== undefined && item.urgency !== null) {
+    const level = item.urgency >= 0.7 ? "u-high" : "";
+    parts.push(el("span", { class: `urgency ${level}`, title: "urgency = clamp(days_overdue/30 × 0.3 + blocking_edges × 0.2 + stakes × 0.5, 0, 1)" }, [
+      el("span", { class: "u-bar" }, [el("span", { style: `width:${Math.round(item.urgency * 100)}%` })]),
+      `urgency ${item.urgency.toFixed(2)}`,
+    ]));
   }
+  return parts;
+}
+
+function renderMaintenance(box, card) {
+  const items = card.maintenance || [];
+  if (!items.length) return;
+  const known = card.request && card.request.known_at ? ` · as known on ${card.request.known_at}` : "";
+  const strip = el("div", { class: "maint-strip" }, [
+    el("h2", {}, "Maintenance"),
+    el("p", { class: "muted small" }, `What needs a person at ${card.request.as_of || ""}${known}: promises past their date, deviations ending, decisions whose reasons changed, records that disagree.`),
+  ]);
+  for (const item of items) {
+    const row = el("div", { class: `maint-item finding ${item.severity}${item.related ? " related" : ""}` }, [
+      el("div", { class: "f-head" }, [
+        el("span", { class: `sev ${item.severity}` }, item.kind.replace(/_/g, " ")),
+        el("span", { class: "f-title" }, item.title),
+        epistemicBadge(item.epistemic),
+      ]),
+    ]);
+    const meta = maintenanceMeta(item);
+    if (meta.length) row.append(el("div", { class: "f-meta maint-meta" }, meta));
+    const proof = el("details", { class: "proof" }, [el("summary", {}, "Sources")]);
+    proof.append(quoteList(item.evidence));
+    row.append(proof);
+    strip.append(row);
+  }
+  box.append(strip);
+}
+
+function renderPastDecisions(box, card) {
+  const past = card.past_decisions || [];
+  if (!past.length) return;
+  const panel = el("div", { class: "past-panel" }, [el("h2", {}, "Past decisions")]);
+  for (const item of past) {
+    const status = item.status === "review" ? "question" : "info";
+    const entry = el("div", { class: `finding ${status} past-decision` }, [
+      el("div", { class: "f-head" }, [
+        el("span", { class: "rule-id" }, item.id),
+        el("span", { class: "f-title" }, `“${item.title}”`),
+        epistemicBadge(item.epistemic),
+        el("span", { class: `past-status ${{ review: "stale", stands: "holds" }[item.status] || ""}` }, item.status),
+      ]),
+      el("div", { class: "f-meta" }, [
+        `${item.date || ""} · ${item.by ? personText(item.by) : ""} · `, el("span", { class: "doc" }, item.meeting || ""),
+        item.reason ? el("div", {}, `Why: ${item.reason}`) : null,
+      ]),
+    ]);
+    if ((item.reasons || []).length) {
+      const list = el("ul", { class: "reason-list" });
+      for (const reason of item.reasons) {
+        list.append(el("li", {}, [
+          el("span", { class: `reason-state ${REASON_STATE_CLASS[reason.state] || ""}` }, reason.state),
+          el("b", {}, ` ${label(reason.record)} `),
+          el("span", { class: "muted" }, reason.detail),
+          reason.quote ? el("div", { class: "quote" }, [`“${reason.quote}”`]) : null,
+          reason.source ? el("span", { class: "doc" }, reason.source) : null,
+        ]));
+      }
+      entry.append(list);
+    }
+    panel.append(entry);
+  }
+  box.append(panel);
 }
 
 function renderNotChecked(items) {

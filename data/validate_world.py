@@ -17,7 +17,7 @@ CLASS_NAMES = {
     "Part", "Material", "Alloy", "AlloyTemper", "Steel", "Polymer", "Coating", "Supplier", "Customer", "Site",
     "Program", "Market", "Person", "PartApproval", "SupplierQualification", "SupplierCapability", "MaterialCertificate",
     "SpecialCharacteristic", "CustomerRequirement", "Law", "Standard", "InternalProcedure", "Document",
-    "EightD", "NCR", "Deviation", "Decision",
+    "EightD", "NCR", "Deviation", "Decision", "Commitment",
 }
 
 

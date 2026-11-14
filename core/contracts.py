@@ -46,6 +46,7 @@ class ChangeRequest:
     new_coating: Optional[str] = None
     scope: str = "series"                      # series | service
     as_of: Optional[str] = None                # ISO date the check is made for; default today
+    known_at: Optional[str] = None             # record time: check with what was recorded by this date (None: all)
     utterance: Optional[str] = None            # the meeting remark, verbatim, if any
     speaker: Optional[str] = None
     parse_confidence: Optional[float] = None   # set by the parser; None for a typed form
@@ -112,6 +113,9 @@ class Card:
     # #28, optional: two current values side by side. Each item: {key: [s, p] | record, reason, question,
     # owner, sides: [{value, fact_id | record, source, quote, rank, valid_from, status}]}
     contested: list = field(default_factory=list)
+    # core/memory.py (issue #19); empty when nothing applies
+    past_decisions: list = field(default_factory=list)  # earlier decisions on the same part/supplier, reasons re-checked
+    maintenance: list = field(default_factory=list)     # promises past horizon, expiring deviations, stale reasons...
 
 
 @dataclass

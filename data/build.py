@@ -20,7 +20,7 @@ import yaml
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, DATA_DIR)
 
-from world import DOCUMENTS, REGISTRIES  # noqa: E402
+from world import ADDITIONAL_DOCUMENTS, DOCUMENTS, REASON_LINKS, RECORDED_AT, REGISTRIES  # noqa: E402
 from meetings import MEETINGS  # noqa: E402
 
 LITERAL_COLUMNS = {"status", "role", "drawing_rev", "typical_yield_mpa", "min_yield_mpa"}
@@ -133,7 +133,45 @@ def render_meeting_text(meeting, names):
     return "\n".join(lines)
 
 
-def main(out_dir=DATA_DIR, registries=REGISTRIES, documents=DOCUMENTS, meetings=MEETINGS):
+def reason_link_facts(meetings, links):
+    """`DEC reasonRef record`: a decision's reason as links to the records it relies on (issue #19, item 8)."""
+    facts = []
+    for meeting in meetings:
+        for decision in meeting["decisions"]:
+            for record in links.get(decision["id"], ()):
+                facts.append({"s": decision["id"], "p": "reasonRef", "o": record, "source": meeting["id"],
+                              "quote": decision["quote"], "valid_from": meeting["date"], "valid_to": None,
+                              "kind": "assert", "epistemic": "decision", "rank": FACT_RANK["meeting"],
+                              "author": decision["by"]})
+    return facts
+
+
+def set_recorded_at(facts, overrides):
+    """Record time of every fact: an explicit override by subject (world.RECORDED_AT), else its valid_from date,
+    else (undated registry rows) the first date of the world. Valid time is never changed."""
+    first = min(fact["valid_from"] for fact in facts if fact.get("valid_from"))
+    for fact in facts:
+        fact["recorded_at"] = overrides.get(fact["s"]) or f"{fact.get('valid_from') or first}T00:00:00+00:00"
+
+
+def write_document(out_dir, document):
+    header = {key: document.get(key) for key in
+              ("id", "type", "title", "date", "author", "valid_from", "valid_to", "supersedes", "mentions")}
+    header["facts"] = [{"s": item[0], "p": item[1], "o": item[2], "quote": item[3]} for item in document["facts"]]
+    with open(os.path.join(out_dir, "docs", f"{document['id']}.md"), "w") as file:
+        file.write("---\n" + yaml.safe_dump(header, sort_keys=False, allow_unicode=True) + "---\n")
+        file.write(document["body"].strip() + "\n")
+
+
+def corpus_item(document):
+    return {"id": document["id"], "type": document["type"], "title": document["title"],
+            "date": document["date"], "valid_from": document["valid_from"],
+            "valid_to": document["valid_to"], "supersedes": document.get("supersedes"),
+            "rank": DOC_RANK[document["type"]], "text": document["body"].strip()}
+
+
+def main(out_dir=DATA_DIR, registries=REGISTRIES, documents=DOCUMENTS, meetings=MEETINGS,
+         additional_documents=ADDITIONAL_DOCUMENTS, reason_links=REASON_LINKS, recorded_at=RECORDED_AT):
     for folder in ("registry", "docs", "meetings"):
         os.makedirs(os.path.join(out_dir, folder), exist_ok=True)
     names = {row[0]: row[1] for row in registries["people"]["rows"]}
@@ -151,17 +189,9 @@ def main(out_dir=DATA_DIR, registries=REGISTRIES, documents=DOCUMENTS, meetings=
                        "rank": DOC_RANK["registry"], "text": render_registry_text(name, registry)})
 
     for document in documents:
-        header = {key: document.get(key) for key in
-                  ("id", "type", "title", "date", "author", "valid_from", "valid_to", "supersedes", "mentions")}
-        header["facts"] = [{"s": item[0], "p": item[1], "o": item[2], "quote": item[3]} for item in document["facts"]]
-        with open(os.path.join(out_dir, "docs", f"{document['id']}.md"), "w") as file:
-            file.write("---\n" + yaml.safe_dump(header, sort_keys=False, allow_unicode=True) + "---\n")
-            file.write(document["body"].strip() + "\n")
+        write_document(out_dir, document)
         facts += document_facts(document)
-        corpus.append({"id": document["id"], "type": document["type"], "title": document["title"],
-                       "date": document["date"], "valid_from": document["valid_from"],
-                       "valid_to": document["valid_to"], "supersedes": document.get("supersedes"),
-                       "rank": DOC_RANK[document["type"]], "text": document["body"].strip()})
+        corpus.append(corpus_item(document))
 
     for meeting in meetings:
         with open(os.path.join(out_dir, "meetings", f"{meeting['id']}.json"), "w") as file:
@@ -171,6 +201,14 @@ def main(out_dir=DATA_DIR, registries=REGISTRIES, documents=DOCUMENTS, meetings=
                        "date": meeting["date"], "valid_from": meeting["date"], "valid_to": None,
                        "supersedes": None, "rank": DOC_RANK["meeting"],
                        "text": render_meeting_text(meeting, names)})
+
+    # Additions from issue #19, after the meetings so every existing fact id stays the same.
+    for document in additional_documents:
+        write_document(out_dir, document)
+        facts += document_facts(document)
+        corpus.append(corpus_item(document))
+    facts += reason_link_facts(meetings, reason_links)
+    set_recorded_at(facts, recorded_at)
 
     for index, fact in enumerate(facts):
         fact["id"] = f"F{index:04d}"
@@ -183,7 +221,7 @@ def main(out_dir=DATA_DIR, registries=REGISTRIES, documents=DOCUMENTS, meetings=
         for item in corpus:
             file.write(json.dumps(item, ensure_ascii=False) + "\n")
     record_count = sum(len(registry["rows"]) for registry in registries.values())
-    print(f"{record_count} registry rows, {len(documents)} documents, {len(meetings)} meetings, "
+    print(f"{record_count} registry rows, {len(documents) + len(additional_documents)} documents, {len(meetings)} meetings, "
           f"{len(facts)} facts, {len(corpus)} corpus items")
 
 
