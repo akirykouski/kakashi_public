@@ -106,6 +106,7 @@ ALIASES = {}
 
 
 M_DIR_NAME = "M"  # --m-dir M_scale for H3
+REUSE_PARSES = False  # --reuse-parses TAG: replay the model answers of an earlier run (isolates core changes)
 
 
 def use_world(world, as_of_dates):
@@ -170,7 +171,7 @@ def model_parse(item, model, raw_dir, world):
     parse.FIXTURES_DIR = str(raw_dir)
     registries = json.load(open(EVAL / "worlds" / (M_DIR_NAME if world == "M" else world) / ("core/registries.json" if world == "A" else "registries.json")))
     box = {"seconds": 0.0, "tokens_in": 0, "tokens_out": 0, "model_id": None}
-    change = parse.parse(item["request_text"], as_of=item["as_of"], registries=registries, live=True,
+    change = parse.parse(item["request_text"], as_of=item["as_of"], registries=registries, live=not REUSE_PARSES,
                          call=cli_call(model, box))
     return change, box["seconds"], box["tokens_in"], box["tokens_out"], box["model_id"]
 
@@ -211,8 +212,14 @@ def main():
     parser.add_argument("--raw-tag", required=True)
     parser.add_argument("--model", default="sonnet")
     parser.add_argument("--m-dir", default="M", help="world-M directory under eval/worlds (M_scale for H3)")
+    parser.add_argument("--reuse-parses", default=None, help="raw tag whose C parser answers are replayed")
     args = parser.parse_args()
-    global M_DIR_NAME
+    global M_DIR_NAME, REUSE_PARSES
+    if args.reuse_parses:
+        import shutil
+        REUSE_PARSES = True
+        source = EVAL / "raw" / args.reuse_parses / "C_parse"
+        shutil.copytree(source, EVAL / "raw" / args.raw_tag / "C_parse", dirs_exist_ok=True)
     M_DIR_NAME = args.m_dir
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)

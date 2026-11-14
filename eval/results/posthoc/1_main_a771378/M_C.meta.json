@@ -1,0 +1,12 @@
+{
+ "condition": "C",
+ "world": "M",
+ "core_commit": "a771378aaab90d171096bad1a07fb17d931eafce",
+ "facts": "/private/tmp/claude-501/-Users-whom-PycharmProjects-zorro-whole-project/33277e71-39d0-49ff-890f-4de8824febf4/scratchpad/p1/eval/worlds/M/core",
+ "model_arg": "sonnet",
+ "model_ids": [],
+ "n": 36,
+ "errors": 0,
+ "wall_seconds": 0.7,
+ "finished_at": "2026-11-14T13:45:00+0100"
+}

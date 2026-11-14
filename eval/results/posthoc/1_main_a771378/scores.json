@@ -1,0 +1,5844 @@
+{
+ "run": "eval/results/posthoc/1_main_a771378",
+ "gold_dir": "/Users/whom/Desktop/kva_hackathon/kakashi_fix/eval/gold",
+ "worlds": {
+  "M": {
+   "conditions": {
+    "C": {
+     "metrics": {
+      "n_requests": 36,
+      "n_gold_findings": 83,
+      "precision": {
+       "rate": 0.9865,
+       "k": 73,
+       "n": 74,
+       "lo": 0.9273,
+       "hi": 0.9976
+      },
+      "recall": {
+       "rate": 0.8795,
+       "k": 73,
+       "n": 83,
+       "lo": 0.7922,
+       "hi": 0.9332
+      },
+      "inferred_recall": {
+       "rate": 0.8947,
+       "k": 34,
+       "n": 38,
+       "lo": 0.7587,
+       "hi": 0.9583
+      },
+      "exact": {
+       "rate": 0.8333,
+       "k": 30,
+       "n": 36,
+       "lo": 0.6811,
+       "hi": 0.9213
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       },
+       "inferred": {
+        "rate": 0.7778,
+        "k": 7,
+        "n": 9,
+        "lo": 0.4526,
+        "hi": 0.9368
+       },
+       "stale": {
+        "rate": 0.7143,
+        "k": 5,
+        "n": 7,
+        "lo": 0.3589,
+        "hi": 0.9178
+       },
+       "missing": {
+        "rate": 0.5,
+        "k": 2,
+        "n": 4,
+        "lo": 0.15,
+        "hi": 0.85
+       },
+       "clean": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.9444,
+       "k": 34,
+       "n": 36,
+       "lo": 0.8186,
+       "hi": 0.9846
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 9,
+        "n": 9,
+        "lo": 0.7008,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 0.8571,
+        "k": 6,
+        "n": 7,
+        "lo": 0.4869,
+        "hi": 0.9743
+       },
+       "missing": {
+        "rate": 1.0,
+        "k": 4,
+        "n": 4,
+        "lo": 0.5101,
+        "hi": 1.0
+       },
+       "clean": {
+        "rate": 0.875,
+        "k": 7,
+        "n": 8,
+        "lo": 0.5291,
+        "hi": 0.9776
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "must_not_cite_hits": null,
+      "cleared_fired": null,
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 0.9836,
+         "k": 60,
+         "n": 61,
+         "lo": 0.9128,
+         "hi": 0.9971
+        },
+        "recall": {
+         "rate": 0.8824,
+         "k": 60,
+         "n": 68,
+         "lo": 0.7846,
+         "hi": 0.9392
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 1.0,
+         "k": 13,
+         "n": 13,
+         "lo": 0.7719,
+         "hi": 1.0
+        },
+        "recall": {
+         "rate": 0.8667,
+         "k": 13,
+         "n": 15,
+         "lo": 0.6212,
+         "hi": 0.9626
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.02,
+      "errors": [],
+      "counts": {
+       "tp": 73,
+       "fp": 1,
+       "fn": 10,
+       "inferred_tp": 34,
+       "inferred_total": 38
+      }
+     },
+     "per_request": [
+      {
+       "id": "D01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "D02",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.023,
+       "error": null
+      },
+      {
+       "id": "D03",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.046,
+       "error": null
+      },
+      {
+       "id": "D04",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D06",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "D07",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "D08",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "I01",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "I02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "I03",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "sup-c|br-180|cust-aur"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "I04",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.029,
+       "error": null
+      },
+      {
+       "id": "I05",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.026,
+       "error": null
+      },
+      {
+       "id": "I06",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "I07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "I08",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_OPEN_ISSUE",
+         "8d-25-031"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "sup-c|br-310|cust-nor"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "I09",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.022,
+       "error": null
+      },
+      {
+       "id": "S01",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.042,
+       "error": null
+      },
+      {
+       "id": "S02",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "S03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "S04",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "cust-nor"
+        ],
+        [
+         "U_OPEN_ISSUE",
+         "8d-26-009"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "sup-d|hb-620|cust-nor"
+        ],
+        [
+         "U_SUPPLIER_STANDING",
+         "sup-d"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "S05",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S06",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "S07",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_OPEN_ISSUE",
+         "8d-26-009"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "cust-nor"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.025,
+       "error": null
+      },
+      {
+       "id": "M01",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.023,
+       "error": null
+      },
+      {
+       "id": "M02",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "M03",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "M04",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "C01",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C02",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C03",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C05",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "C06",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C07",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C08",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      }
+     ]
+    },
+    "Cstar": {
+     "metrics": {
+      "n_requests": 36,
+      "n_gold_findings": 83,
+      "precision": {
+       "rate": 1.0,
+       "k": 81,
+       "n": 81,
+       "lo": 0.9547,
+       "hi": 1.0
+      },
+      "recall": {
+       "rate": 0.9759,
+       "k": 81,
+       "n": 83,
+       "lo": 0.9163,
+       "hi": 0.9934
+      },
+      "inferred_recall": {
+       "rate": 1.0,
+       "k": 38,
+       "n": 38,
+       "lo": 0.9082,
+       "hi": 1.0
+      },
+      "exact": {
+       "rate": 0.9444,
+       "k": 34,
+       "n": 36,
+       "lo": 0.8186,
+       "hi": 0.9846
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 9,
+        "n": 9,
+        "lo": 0.7008,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 1.0,
+        "k": 7,
+        "n": 7,
+        "lo": 0.6457,
+        "hi": 1.0
+       },
+       "missing": {
+        "rate": 0.5,
+        "k": 2,
+        "n": 4,
+        "lo": 0.15,
+        "hi": 0.85
+       },
+       "clean": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.9722,
+       "k": 35,
+       "n": 36,
+       "lo": 0.8583,
+       "hi": 0.9951
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 1.0,
+        "k": 8,
+        "n": 8,
+        "lo": 0.6756,
+        "hi": 1.0
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 9,
+        "n": 9,
+        "lo": 0.7008,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 1.0,
+        "k": 7,
+        "n": 7,
+        "lo": 0.6457,
+        "hi": 1.0
+       },
+       "missing": {
+        "rate": 1.0,
+        "k": 4,
+        "n": 4,
+        "lo": 0.5101,
+        "hi": 1.0
+       },
+       "clean": {
+        "rate": 0.875,
+        "k": 7,
+        "n": 8,
+        "lo": 0.5291,
+        "hi": 0.9776
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "must_not_cite_hits": null,
+      "cleared_fired": null,
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 1.0,
+         "k": 68,
+         "n": 68,
+         "lo": 0.9465,
+         "hi": 1.0
+        },
+        "recall": {
+         "rate": 1.0,
+         "k": 68,
+         "n": 68,
+         "lo": 0.9465,
+         "hi": 1.0
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 1.0,
+         "k": 13,
+         "n": 13,
+         "lo": 0.7719,
+         "hi": 1.0
+        },
+        "recall": {
+         "rate": 0.8667,
+         "k": 13,
+         "n": 15,
+         "lo": 0.6212,
+         "hi": 0.9626
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.02,
+      "errors": [],
+      "counts": {
+       "tp": 81,
+       "fp": 0,
+       "fn": 2,
+       "inferred_tp": 38,
+       "inferred_total": 38
+      }
+     },
+     "per_request": [
+      {
+       "id": "D01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.211,
+       "error": null
+      },
+      {
+       "id": "D02",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "D03",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "D04",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D06",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D07",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "D08",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "I01",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I03",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I04",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "I05",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "I06",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "I08",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "I09",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S01",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.022,
+       "error": null
+      },
+      {
+       "id": "S02",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "S03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "S04",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "S05",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "S06",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S07",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.027,
+       "error": null
+      },
+      {
+       "id": "M01",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "M02",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "M03",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "M04",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C01",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C02",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C03",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C05",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "C06",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C07",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "C08",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      }
+     ]
+    }
+   },
+   "mcnemar": {
+    "C vs Cstar": {
+     "exact": {
+      "b": 0,
+      "c": 4,
+      "p": 0.125
+     },
+     "verdict": {
+      "b": 0,
+      "c": 1,
+      "p": 1.0
+     }
+    }
+   }
+  },
+  "A": {
+   "conditions": {
+    "C": {
+     "metrics": {
+      "n_requests": 20,
+      "n_gold_findings": 32,
+      "precision": {
+       "rate": 0.6667,
+       "k": 24,
+       "n": 36,
+       "lo": 0.5033,
+       "hi": 0.7979
+      },
+      "recall": {
+       "rate": 0.75,
+       "k": 24,
+       "n": 32,
+       "lo": 0.5789,
+       "hi": 0.8675
+      },
+      "inferred_recall": {
+       "rate": 0.9286,
+       "k": 13,
+       "n": 14,
+       "lo": 0.6853,
+       "hi": 0.9873
+      },
+      "exact": {
+       "rate": 0.4,
+       "k": 8,
+       "n": 20,
+       "lo": 0.2188,
+       "hi": 0.6134
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 0.4,
+        "k": 2,
+        "n": 5,
+        "lo": 0.1176,
+        "hi": 0.7693
+       },
+       "inferred": {
+        "rate": 0.5,
+        "k": 3,
+        "n": 6,
+        "lo": 0.1876,
+        "hi": 0.8124
+       },
+       "stale": {
+        "rate": 0.5,
+        "k": 2,
+        "n": 4,
+        "lo": 0.15,
+        "hi": 0.85
+       },
+       "missing": {
+        "rate": 0.0,
+        "k": 0,
+        "n": 3,
+        "lo": 0.0,
+        "hi": 0.5615
+       },
+       "clean": {
+        "rate": 0.5,
+        "k": 1,
+        "n": 2,
+        "lo": 0.0945,
+        "hi": 0.9055
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.55,
+       "k": 11,
+       "n": 20,
+       "lo": 0.3421,
+       "hi": 0.7418
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 0.4,
+        "k": 2,
+        "n": 5,
+        "lo": 0.1176,
+        "hi": 0.7693
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 6,
+        "n": 6,
+        "lo": 0.6097,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 0.75,
+        "k": 3,
+        "n": 4,
+        "lo": 0.3006,
+        "hi": 0.9544
+       },
+       "missing": {
+        "rate": 0.0,
+        "k": 0,
+        "n": 3,
+        "lo": 0.0,
+        "hi": 0.5615
+       },
+       "clean": {
+        "rate": 0.0,
+        "k": 0,
+        "n": 2,
+        "lo": 0.0,
+        "hi": 0.6576
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.5,
+       "k": 1,
+       "n": 2,
+       "lo": 0.0945,
+       "hi": 0.9055
+      },
+      "must_not_cite_hits": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "cleared_fired": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 2,
+       "lo": 0.0,
+       "hi": 0.6576
+      },
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 0.8,
+         "k": 20,
+         "n": 25,
+         "lo": 0.6087,
+         "hi": 0.9114
+        },
+        "recall": {
+         "rate": 0.8,
+         "k": 20,
+         "n": 25,
+         "lo": 0.6087,
+         "hi": 0.9114
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 0.3636,
+         "k": 4,
+         "n": 11,
+         "lo": 0.1517,
+         "hi": 0.6462
+        },
+        "recall": {
+         "rate": 0.5714,
+         "k": 4,
+         "n": 7,
+         "lo": 0.2505,
+         "hi": 0.8418
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.01,
+      "errors": [],
+      "counts": {
+       "tp": 24,
+       "fp": 12,
+       "fn": 8,
+       "inferred_tp": 13,
+       "inferred_total": 14
+      }
+     },
+     "per_request": [
+      {
+       "id": "CR-01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-02",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "supplier_record"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-06",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-08",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MEASURED_VALUE",
+         "sc-01"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-09",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_DEVIATION_LIMIT",
+         "prc-dev-007"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-10",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-11",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "supplier_record"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-12",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-13",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_strength"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-14",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "coating_substances"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-15",
+       "category": "clean",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ]
+       ],
+       "clean_alarm": true,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-16",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-310"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.011,
+       "error": null
+      },
+      {
+       "id": "CR-17",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "CR-18",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.034,
+       "error": null
+      },
+      {
+       "id": "CR-19",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_data"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "CR-20",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      }
+     ]
+    },
+    "Cstar": {
+     "metrics": {
+      "n_requests": 20,
+      "n_gold_findings": 32,
+      "precision": {
+       "rate": 0.7647,
+       "k": 26,
+       "n": 34,
+       "lo": 0.6,
+       "hi": 0.8756
+      },
+      "recall": {
+       "rate": 0.8125,
+       "k": 26,
+       "n": 32,
+       "lo": 0.6469,
+       "hi": 0.9111
+      },
+      "inferred_recall": {
+       "rate": 1.0,
+       "k": 14,
+       "n": 14,
+       "lo": 0.7847,
+       "hi": 1.0
+      },
+      "exact": {
+       "rate": 0.5,
+       "k": 10,
+       "n": 20,
+       "lo": 0.2993,
+       "hi": 0.7007
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 0.4,
+        "k": 2,
+        "n": 5,
+        "lo": 0.1176,
+        "hi": 0.7693
+       },
+       "inferred": {
+        "rate": 0.6667,
+        "k": 4,
+        "n": 6,
+        "lo": 0.3,
+        "hi": 0.9032
+       },
+       "stale": {
+        "rate": 0.5,
+        "k": 2,
+        "n": 4,
+        "lo": 0.15,
+        "hi": 0.85
+       },
+       "missing": {
+        "rate": 0.0,
+        "k": 0,
+        "n": 3,
+        "lo": 0.0,
+        "hi": 0.5615
+       },
+       "clean": {
+        "rate": 1.0,
+        "k": 2,
+        "n": 2,
+        "lo": 0.3424,
+        "hi": 1.0
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.7,
+       "k": 14,
+       "n": 20,
+       "lo": 0.481,
+       "hi": 0.8545
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 0.8,
+        "k": 4,
+        "n": 5,
+        "lo": 0.3755,
+        "hi": 0.9638
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 6,
+        "n": 6,
+        "lo": 0.6097,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 0.5,
+        "k": 2,
+        "n": 4,
+        "lo": 0.15,
+        "hi": 0.85
+       },
+       "missing": {
+        "rate": 0.3333,
+        "k": 1,
+        "n": 3,
+        "lo": 0.0615,
+        "hi": 0.7923
+       },
+       "clean": {
+        "rate": 0.5,
+        "k": 1,
+        "n": 2,
+        "lo": 0.0945,
+        "hi": 0.9055
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 2,
+       "lo": 0.0,
+       "hi": 0.6576
+      },
+      "must_not_cite_hits": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "cleared_fired": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 2,
+       "lo": 0.0,
+       "hi": 0.6576
+      },
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 0.9565,
+         "k": 22,
+         "n": 23,
+         "lo": 0.7901,
+         "hi": 0.9923
+        },
+        "recall": {
+         "rate": 0.88,
+         "k": 22,
+         "n": 25,
+         "lo": 0.7004,
+         "hi": 0.9583
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 0.3636,
+         "k": 4,
+         "n": 11,
+         "lo": 0.1517,
+         "hi": 0.6462
+        },
+        "recall": {
+         "rate": 0.5714,
+         "k": 4,
+         "n": 7,
+         "lo": 0.2505,
+         "hi": 0.8418
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.01,
+      "errors": [
+       "CR-06",
+       "CR-08",
+       "CR-09",
+       "CR-15"
+      ],
+      "counts": {
+       "tp": 26,
+       "fp": 8,
+       "fn": 6,
+       "inferred_tp": 14,
+       "inferred_total": 14
+      }
+     },
+     "per_request": [
+      {
+       "id": "CR-01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.027,
+       "error": null
+      },
+      {
+       "id": "CR-02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "CR-06",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-08",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MEASURED_VALUE",
+         "sc-01"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-09",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_DEVIATION_LIMIT",
+         "prc-dev-007"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-10",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-11",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-12",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-13",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_strength"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-14",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "coating_substances"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-15",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-16",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-17",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-18",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-19",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "needs_info",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-20",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      }
+     ]
+    }
+   },
+   "mcnemar": {
+    "C vs Cstar": {
+     "exact": {
+      "b": 0,
+      "c": 2,
+      "p": 0.5
+     },
+     "verdict": {
+      "b": 1,
+      "c": 4,
+      "p": 0.375
+     }
+    }
+   }
+  },
+  "both": {
+   "conditions": {
+    "C": {
+     "metrics": {
+      "n_requests": 56,
+      "n_gold_findings": 115,
+      "precision": {
+       "rate": 0.8818,
+       "k": 97,
+       "n": 110,
+       "lo": 0.8082,
+       "hi": 0.9296
+      },
+      "recall": {
+       "rate": 0.8435,
+       "k": 97,
+       "n": 115,
+       "lo": 0.7661,
+       "hi": 0.8986
+      },
+      "inferred_recall": {
+       "rate": 0.9038,
+       "k": 47,
+       "n": 52,
+       "lo": 0.7939,
+       "hi": 0.9582
+      },
+      "exact": {
+       "rate": 0.6786,
+       "k": 38,
+       "n": 56,
+       "lo": 0.5482,
+       "hi": 0.786
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 0.7692,
+        "k": 10,
+        "n": 13,
+        "lo": 0.4974,
+        "hi": 0.9182
+       },
+       "inferred": {
+        "rate": 0.6667,
+        "k": 10,
+        "n": 15,
+        "lo": 0.4171,
+        "hi": 0.8482
+       },
+       "stale": {
+        "rate": 0.6364,
+        "k": 7,
+        "n": 11,
+        "lo": 0.3538,
+        "hi": 0.8483
+       },
+       "missing": {
+        "rate": 0.2857,
+        "k": 2,
+        "n": 7,
+        "lo": 0.0822,
+        "hi": 0.6411
+       },
+       "clean": {
+        "rate": 0.9,
+        "k": 9,
+        "n": 10,
+        "lo": 0.5958,
+        "hi": 0.9821
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.8036,
+       "k": 45,
+       "n": 56,
+       "lo": 0.6816,
+       "hi": 0.8866
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 0.7692,
+        "k": 10,
+        "n": 13,
+        "lo": 0.4974,
+        "hi": 0.9182
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 15,
+        "n": 15,
+        "lo": 0.7961,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 0.8182,
+        "k": 9,
+        "n": 11,
+        "lo": 0.523,
+        "hi": 0.9486
+       },
+       "missing": {
+        "rate": 0.5714,
+        "k": 4,
+        "n": 7,
+        "lo": 0.2505,
+        "hi": 0.8418
+       },
+       "clean": {
+        "rate": 0.7,
+        "k": 7,
+        "n": 10,
+        "lo": 0.3968,
+        "hi": 0.8922
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.1,
+       "k": 1,
+       "n": 10,
+       "lo": 0.0179,
+       "hi": 0.4042
+      },
+      "must_not_cite_hits": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "cleared_fired": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 2,
+       "lo": 0.0,
+       "hi": 0.6576
+      },
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 0.9302,
+         "k": 80,
+         "n": 86,
+         "lo": 0.856,
+         "hi": 0.9676
+        },
+        "recall": {
+         "rate": 0.8602,
+         "k": 80,
+         "n": 93,
+         "lo": 0.7754,
+         "hi": 0.9165
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 0.7083,
+         "k": 17,
+         "n": 24,
+         "lo": 0.5083,
+         "hi": 0.8509
+        },
+        "recall": {
+         "rate": 0.7727,
+         "k": 17,
+         "n": 22,
+         "lo": 0.5656,
+         "hi": 0.8988
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.02,
+      "errors": [],
+      "counts": {
+       "tp": 97,
+       "fp": 13,
+       "fn": 18,
+       "inferred_tp": 47,
+       "inferred_total": 52
+      }
+     },
+     "per_request": [
+      {
+       "id": "D01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "D02",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.023,
+       "error": null
+      },
+      {
+       "id": "D03",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.046,
+       "error": null
+      },
+      {
+       "id": "D04",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D06",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "D07",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "D08",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "I01",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "I02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "I03",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "sup-c|br-180|cust-aur"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "I04",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.029,
+       "error": null
+      },
+      {
+       "id": "I05",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.026,
+       "error": null
+      },
+      {
+       "id": "I06",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "I07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "I08",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_OPEN_ISSUE",
+         "8d-25-031"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "sup-c|br-310|cust-nor"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "I09",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.022,
+       "error": null
+      },
+      {
+       "id": "S01",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.042,
+       "error": null
+      },
+      {
+       "id": "S02",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "S03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "S04",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "cust-nor"
+        ],
+        [
+         "U_OPEN_ISSUE",
+         "8d-26-009"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "sup-d|hb-620|cust-nor"
+        ],
+        [
+         "U_SUPPLIER_STANDING",
+         "sup-d"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "S05",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S06",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "S07",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_OPEN_ISSUE",
+         "8d-26-009"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "cust-nor"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.025,
+       "error": null
+      },
+      {
+       "id": "M01",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.023,
+       "error": null
+      },
+      {
+       "id": "M02",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "M03",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "M04",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      },
+      {
+       "id": "C01",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C02",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C03",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C05",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "C06",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C07",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C08",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-02",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "supplier_record"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-06",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-08",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MEASURED_VALUE",
+         "sc-01"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-09",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_DEVIATION_LIMIT",
+         "prc-dev-007"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-10",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-11",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "supplier_record"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-12",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-13",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_strength"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-14",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "coating_substances"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-15",
+       "category": "clean",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ]
+       ],
+       "clean_alarm": true,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-16",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-310"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.011,
+       "error": null
+      },
+      {
+       "id": "CR-17",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "CR-18",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.034,
+       "error": null
+      },
+      {
+       "id": "CR-19",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_data"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "CR-20",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.015,
+       "error": null
+      }
+     ]
+    },
+    "Cstar": {
+     "metrics": {
+      "n_requests": 56,
+      "n_gold_findings": 115,
+      "precision": {
+       "rate": 0.9304,
+       "k": 107,
+       "n": 115,
+       "lo": 0.8687,
+       "hi": 0.9643
+      },
+      "recall": {
+       "rate": 0.9304,
+       "k": 107,
+       "n": 115,
+       "lo": 0.8687,
+       "hi": 0.9643
+      },
+      "inferred_recall": {
+       "rate": 1.0,
+       "k": 52,
+       "n": 52,
+       "lo": 0.9312,
+       "hi": 1.0
+      },
+      "exact": {
+       "rate": 0.7857,
+       "k": 44,
+       "n": 56,
+       "lo": 0.6618,
+       "hi": 0.8729
+      },
+      "exact_by_category": {
+       "direct": {
+        "rate": 0.7692,
+        "k": 10,
+        "n": 13,
+        "lo": 0.4974,
+        "hi": 0.9182
+       },
+       "inferred": {
+        "rate": 0.8667,
+        "k": 13,
+        "n": 15,
+        "lo": 0.6212,
+        "hi": 0.9626
+       },
+       "stale": {
+        "rate": 0.8182,
+        "k": 9,
+        "n": 11,
+        "lo": 0.523,
+        "hi": 0.9486
+       },
+       "missing": {
+        "rate": 0.2857,
+        "k": 2,
+        "n": 7,
+        "lo": 0.0822,
+        "hi": 0.6411
+       },
+       "clean": {
+        "rate": 1.0,
+        "k": 10,
+        "n": 10,
+        "lo": 0.7225,
+        "hi": 1.0
+       }
+      },
+      "verdict_accuracy": {
+       "rate": 0.875,
+       "k": 49,
+       "n": 56,
+       "lo": 0.7637,
+       "hi": 0.9381
+      },
+      "verdict_by_category": {
+       "direct": {
+        "rate": 0.9231,
+        "k": 12,
+        "n": 13,
+        "lo": 0.6669,
+        "hi": 0.9863
+       },
+       "inferred": {
+        "rate": 1.0,
+        "k": 15,
+        "n": 15,
+        "lo": 0.7961,
+        "hi": 1.0
+       },
+       "stale": {
+        "rate": 0.8182,
+        "k": 9,
+        "n": 11,
+        "lo": 0.523,
+        "hi": 0.9486
+       },
+       "missing": {
+        "rate": 0.7143,
+        "k": 5,
+        "n": 7,
+        "lo": 0.3589,
+        "hi": 0.9178
+       },
+       "clean": {
+        "rate": 0.8,
+        "k": 8,
+        "n": 10,
+        "lo": 0.4902,
+        "hi": 0.9433
+       }
+      },
+      "clean_false_alarm": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 10,
+       "lo": 0.0,
+       "hi": 0.2775
+      },
+      "must_not_cite_hits": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 8,
+       "lo": 0.0,
+       "hi": 0.3244
+      },
+      "cleared_fired": {
+       "rate": 0.0,
+       "k": 0,
+       "n": 2,
+       "lo": 0.0,
+       "hi": 0.6576
+      },
+      "by_kind": {
+       "blocker": {
+        "precision": {
+         "rate": 0.989,
+         "k": 90,
+         "n": 91,
+         "lo": 0.9403,
+         "hi": 0.9981
+        },
+        "recall": {
+         "rate": 0.9677,
+         "k": 90,
+         "n": 93,
+         "lo": 0.9094,
+         "hi": 0.989
+        }
+       },
+       "question": {
+        "precision": {
+         "rate": 0.7083,
+         "k": 17,
+         "n": 24,
+         "lo": 0.5083,
+         "hi": 0.8509
+        },
+        "recall": {
+         "rate": 0.7727,
+         "k": 17,
+         "n": 22,
+         "lo": 0.5656,
+         "hi": 0.8988
+        }
+       }
+      },
+      "tokens_in_mean": 0,
+      "tokens_out_mean": 0,
+      "seconds_mean": 0.02,
+      "errors": [
+       "CR-06",
+       "CR-08",
+       "CR-09",
+       "CR-15"
+      ],
+      "counts": {
+       "tp": 107,
+       "fp": 8,
+       "fn": 8,
+       "inferred_tp": 52,
+       "inferred_total": 52
+      }
+     },
+     "per_request": [
+      {
+       "id": "D01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.211,
+       "error": null
+      },
+      {
+       "id": "D02",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.02,
+       "error": null
+      },
+      {
+       "id": "D03",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "D04",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D06",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "D07",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "D08",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "I01",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I03",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I04",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "I05",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "I06",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "I07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "I08",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "I09",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S01",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.022,
+       "error": null
+      },
+      {
+       "id": "S02",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "S03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "S04",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.018,
+       "error": null
+      },
+      {
+       "id": "S05",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.019,
+       "error": null
+      },
+      {
+       "id": "S06",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.028,
+       "error": null
+      },
+      {
+       "id": "S07",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.027,
+       "error": null
+      },
+      {
+       "id": "M01",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "M02",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "M03",
+       "category": "missing",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "M04",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C01",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C02",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C03",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "C05",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.016,
+       "error": null
+      },
+      {
+       "id": "C06",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "C07",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.017,
+       "error": null
+      },
+      {
+       "id": "C08",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-01",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.027,
+       "error": null
+      },
+      {
+       "id": "CR-02",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-03",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-04",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": false,
+       "verdict": "not_covered",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.008,
+       "error": null
+      },
+      {
+       "id": "CR-05",
+       "category": "direct",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.021,
+       "error": null
+      },
+      {
+       "id": "CR-06",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-07",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-08",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MEASURED_VALUE",
+         "sc-01"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-09",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_DEVIATION_LIMIT",
+         "prc-dev-007"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-10",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-11",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": false,
+       "verdict": "blockers_found",
+       "gold_verdict": "needs_info",
+       "missed": [],
+       "extra": [
+        [
+         "U_CUSTOMER_APPROVAL",
+         "stl"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-12",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-13",
+       "category": "stale",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ],
+        [
+         "U_MISSING_EVIDENCE",
+         "material_strength"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.01,
+       "error": null
+      },
+      {
+       "id": "CR-14",
+       "category": "inferred",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "coating_substances"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-15",
+       "category": "clean",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "no_blockers_found",
+       "gold_verdict": "no_blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.0,
+       "error": "no change type the core accepts"
+      },
+      {
+       "id": "CR-16",
+       "category": "direct",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.013,
+       "error": null
+      },
+      {
+       "id": "CR-17",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      },
+      {
+       "id": "CR-18",
+       "category": "stale",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": true,
+       "mnc_hit": false,
+       "cleared_applicable": true,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.014,
+       "error": null
+      },
+      {
+       "id": "CR-19",
+       "category": "missing",
+       "exact": false,
+       "verdict_ok": true,
+       "verdict": "needs_info",
+       "gold_verdict": "needs_info",
+       "missed": [
+        [
+         "U_SOURCE_RELEASE",
+         "br-220"
+        ]
+       ],
+       "extra": [
+        [
+         "U_MISSING_EVIDENCE",
+         "material_certificate"
+        ]
+       ],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.012,
+       "error": null
+      },
+      {
+       "id": "CR-20",
+       "category": "inferred",
+       "exact": true,
+       "verdict_ok": true,
+       "verdict": "blockers_found",
+       "gold_verdict": "blockers_found",
+       "missed": [],
+       "extra": [],
+       "clean_alarm": false,
+       "mnc_applicable": false,
+       "mnc_hit": false,
+       "cleared_applicable": false,
+       "cleared_fired": false,
+       "tokens_in": 0,
+       "tokens_out": 0,
+       "seconds": 0.009,
+       "error": null
+      }
+     ]
+    }
+   },
+   "mcnemar": {
+    "C vs Cstar": {
+     "exact": {
+      "b": 0,
+      "c": 6,
+      "p": 0.0312
+     },
+     "verdict": {
+      "b": 1,
+      "c": 5,
+      "p": 0.2188
+     }
+    }
+   }
+  }
+ }
+}

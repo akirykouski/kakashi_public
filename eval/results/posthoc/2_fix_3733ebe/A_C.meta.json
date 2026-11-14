@@ -1,0 +1,12 @@
+{
+ "condition": "C",
+ "world": "A",
+ "core_commit": "3733ebed5845b9e746f8a52c735dca5daf70ecca",
+ "facts": "/Users/whom/Desktop/kva_hackathon/kakashi_fix/eval/worlds/A/core",
+ "model_arg": "sonnet",
+ "model_ids": [],
+ "n": 20,
+ "errors": 0,
+ "wall_seconds": 0.2,
+ "finished_at": "2026-11-14T13:45:03+0100"
+}

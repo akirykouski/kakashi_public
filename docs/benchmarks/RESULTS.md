@@ -31,7 +31,32 @@ Two synthetic worlds (M: 36 requests, 83 gold findings; A: 20 requests, 32 findi
 
 By category (both worlds): stale C 0.64 [0.35–0.85] (7/11) vs B 0.64 [0.35–0.85] (7/11); missing C 0.00 [0.00–0.35] (0/7) vs B 0.71 [0.36–0.92] (5/7).
 
-Why C fails on missing data: the core's parser keeps only names it can resolve against the registries and moves the rest to `unresolved` (by design: "never guessed"). An unknown supplier, coating or material therefore never reaches the rules, and the question the rules would ask ("not in our records") is never raised: M01, M02, M03, M04 lose every finding. With the hand parse (C*), which keeps the name, the same requests are right except for the certificate question added in re-gold. This is a product gap found by the evaluation; it is not fixed and re-run here, because tuning on the frozen set is not allowed.
+### Why H2 failed (reported run, per request)
+
+C got 7 of the 18 stale and missing requests exactly right; B got 12. The 11 misses, by cause:
+
+| Cause | Requests | Where |
+|---|---|---|
+| The parser dropped names that are in none of our records (a new supplier, coating or material), so the rules never saw them and never asked "not in our records" | M01, M02, M03, M04, CR-11 | `core/parse.py` |
+| The core did not ask for a material certificate from a supplier that is not in our records (QP-11 4.4 asks for it on any change of source; added to the gold in re-gold) | M01, M04 | `core/rules.py` |
+| The model parse read "order from them again" / "keep ordering" as the current supplier, not a source change | S04, S07 | parser (model) |
+| The change schema has no lot release and no measured value | CR-06, CR-08 | `core/contracts.py` |
+| Core behaviour: customer approval and extra questions on a plant outside the list (CR-11), on a grade change (CR-13); the parser has no service-part scope (CR-19) | CR-11, CR-13, CR-19 | rules, parser |
+
+With the hand parse (C*) the same core gets 11 of 18: the parser accounts for 4 of the 5 points between C and C*.
+
+### After the fix (post-hoc, not pre-registered)
+
+**Not a test of H2.** These runs use the same 56 frozen requests the failure was found on, so they show what the fixes change, not how the core generalises. H2 stays FAIL. The model's parser answers are replayed from the reported run (`--reuse-parses frozen`), so only the core changes; B is the reported run. Results: `eval/results/posthoc/`.
+
+| Core | What changed | C exact, stale + missing (n = 18) | C exact, all (n = 56) | C precision | C* exact, all |
+|---|---|---|---|---|---|
+| Reported run (cecba57) | — | 7 | 38 | 0.91 | 44 |
+| main a771378 | parser passes names in none of our records to the rules (b144aca, 12:44, written by the core track after the reported run) plus the other core commits since | 9 | 38 | 0.88 | 44 |
+| branch `fix/h2-unknown-names` 3733ebe | + certificate question for a supplier not in our records (3 lines in `rules.check`; core tests 321 passed) | **11** | **40** | 0.87 | 46 |
+| B, reported run | — | 12 | 38 | 0.85 | — |
+
+What the fixes did: missing-data requests 0 → 4 of 7 (M01–M04 now right). What they did not: stale requests stay 7 of 11, and C is still one request behind B on stale + missing (11 vs 12), so H2 would still fail. Still open: S04/S07 (parse reading of "order again"), CR-06/CR-08 (schema), CR-11/CR-13/CR-19 (core behaviour). Precision drops slightly (0.91 → 0.87) because the passed-on names also raise "not in our records" questions where the gold has none (CR-11).
 
 ## H3 — scale: at 8× company size C drops ≤ 3 points and B drops more than C
 
@@ -111,6 +136,6 @@ Found during this evaluation (all logged in `CHANGES.md`):
 
 1. "On blockers that only show up when two or more documents are combined, our core finds 90% of them (47 of 52, 95% interval 79–96%) where a fair retrieval baseline with BM25 and embeddings finds 19% — measured on 56 change requests across two independently written synthetic companies."
 2. "Overall it is on par with a model that reads every document — 68% of requests exactly right in both cases (38 of 56) — and raises a false alarm on 1 of 10 harmless changes instead of 5. Its cost does not grow with the company: at eight times the documents it still reads about 2,000 tokens per request, the model reading everything needs 110,000."
-3. "It is not better everywhere: when a supplier or material is missing from our records, the model reading everything gets 5 of 7 right and we get none, because our parser drops names it doesn't know — that is the next fix."
+3. "It is not better everywhere: on replaced rules and missing data the model reading everything was ahead, 12 of 18 against our 7. The evaluation showed why — our parser dropped names it did not know — we fixed it, and on the same requests we now get 11 of 18: still one behind, and we say so."
 
 Not safe: "100%", "reasons better than an LLM" (H2 failed; H4 passes only on both worlds together, at a tie), anything about generalisation (no hold-out), "accuracy holds while full context degrades" (H3 failed: full context did not degrade at 8×), a ranking of the two prepared cores.
