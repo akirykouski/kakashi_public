@@ -1,0 +1,23 @@
+# Fly.io alternative: fly launch --copy-config --no-deploy; fly secrets set AI_GATEWAY_API_KEY=...; fly deploy
+app = "change-check-kva"
+primary_region = "cdg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/healthz"
+    interval = "30s"
+    timeout = "5s"
+
+[[vm]]
+  memory = "1gb"
+  cpus = 1

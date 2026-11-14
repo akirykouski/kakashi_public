@@ -331,7 +331,9 @@ class Handler(BaseHTTPRequestHandler):
         url = urlparse(self.path)
         query = parse_qs(url.query)
         try:
-            if url.path in ("/", "/index.html"):
+            if url.path == "/healthz":
+                self.send_json({"ok": True})
+            elif url.path in ("/", "/index.html"):
                 self.send_static("index.html")
             elif url.path.startswith("/static/"):
                 self.send_static(url.path[len("/static/"):])
@@ -358,6 +360,10 @@ class Handler(BaseHTTPRequestHandler):
         try:
             length = int(self.headers.get("Content-Length") or 0)
             body = json.loads(self.rfile.read(length) or b"{}")
+            refusal = remark_budget_refusal(body, self.client_address[0])
+            if refusal:
+                self.send_json({"error": refusal}, 429)
+                return
             with LOCK:
                 self.send_json(handle_check(body))
         except ParseFailed as failure:  # gateway down / 402 / slow: the page offers the typed form, never a fake
@@ -366,10 +372,38 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json({"error": f"{type(error).__name__}: {error}"}, 400)
 
 
+# ---- public deployment guard: remarks may call the model on the team key, so cap them ----------------------
+REMARK_MAX_CHARS = int(os.environ.get("REMARK_MAX_CHARS", 600))
+REMARKS_PER_IP_PER_10_MIN = int(os.environ.get("REMARKS_PER_IP_PER_10_MIN", 30))
+REMARKS_TOTAL_CAP = int(os.environ.get("REMARKS_TOTAL_CAP", 1000))
+_remark_times = {}
+_remark_total = [0]
+
+
+def remark_budget_refusal(body, client_ip):
+    """None if this request may go on; else a message. Only free-text remarks are counted."""
+    remark = body.get("remark")
+    if not remark:
+        return None
+    if len(remark) > REMARK_MAX_CHARS:
+        return f"remark too long (max {REMARK_MAX_CHARS} characters)"
+    now = time.time()
+    with LOCK:
+        recent = [moment for moment in _remark_times.get(client_ip, []) if now - moment < 600]
+        if len(recent) >= REMARKS_PER_IP_PER_10_MIN:
+            return "too many remarks from this address; try again in a few minutes or use a demo button"
+        if _remark_total[0] >= REMARKS_TOTAL_CAP:
+            return "the public demo reached its remark budget; demo buttons still work"
+        recent.append(now)
+        _remark_times[client_ip] = recent
+        _remark_total[0] += 1
+    return None
+
+
 def main():
     parser = argparse.ArgumentParser(description="Demo page for the change check")
     parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)))
-    parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--host", default=os.environ.get("HOST", "127.0.0.1"))
     args = parser.parse_args()
     print("warming up (fact log, closure, table coverage)...", flush=True)
     with LOCK:

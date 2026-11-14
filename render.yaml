@@ -1,0 +1,16 @@
+# Render Blueprint: New + > Blueprint > this repo. Every push to main redeploys (autoDeploy).
+services:
+  - type: web
+    name: change-check
+    runtime: docker
+    plan: free
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /healthz
+    envVars:
+      - key: AI_GATEWAY_API_KEY
+        sync: false          # paste the team key in the Render dashboard; never in git
+      - key: REMARKS_TOTAL_CAP
+        value: "1000"
+      - key: REMARKS_PER_IP_PER_10_MIN
+        value: "30"
