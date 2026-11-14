@@ -16,6 +16,8 @@ Every deviation from `docs/methodology.md`, every interpretation fixed before a 
 | 2026-11-14 11:00 CET | World A requests have no date; as_of = 2026-11-14 (all A documents are dated earlier, so B reads all 10). | B needs a request date. | Maksim |
 | 2026-11-14 11:00 CET | Model conditions: one system prompt, one rule catalogue (unified ids, plain words) and one output schema for both worlds; only the documents and the key format lines differ per world. Model `sonnet` alias via the subscription CLI (resolved id recorded in each `*.meta.json`), temperature = CLI default (not settable). | Methodology §3: same model, prompt and schema. | Maksim |
 | 2026-11-14 11:00 CET | Dry runs on the unfrozen gold go to `eval/results/dryrun/` and `eval/raw/dryrun/`; reported runs never reuse their raw responses. | Dry-run numbers are never reported. | Maksim |
+| 2026-11-14 11:25 CET | C* and C read world M through `eval/worlds/M/core/facts.jsonl`: the core's own encoding (`data/facts.jsonl` at d75144b, new fields kind/rank/epistemic) filtered to the 510 facts of the frozen snapshot. The 21 facts added to `data/` after the snapshot (sub-tier lists SUBLIST-B/C, CSR-AUR-S1, consequences) are left out. Policy facts in `rules_data/` are engine configuration and are loaded. | Core and model baselines must read the same world the gold was written for. | Maksim |
+| 2026-11-14 11:25 CET | A core answer with no findings and decision row R0 is scored as verdict `not_covered`, not as a finding. | Methodology §5 lists "not covered by rules" as a verdict once the core has it. | Maksim |
 
 ## Gold decisions (re-gold, #21)
 
