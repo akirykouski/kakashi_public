@@ -200,7 +200,8 @@ def completeness_statement(projection, site, customer, part, scope):
     for statement in projection.instances("CompletenessStatement"):
         if site not in projection.objects(statement, "completeForPlant"):
             continue
-        if customer not in projection.objects(statement, "completeForCustomer"):
+        customers = set(projection.objects(statement, "completeForCustomer"))
+        if customers and customer not in customers:
             continue
         series = set(projection.objects(statement, "completeForSeries"))
         if series and not series & part_series:
@@ -242,8 +243,9 @@ def rule_part_approval(projection, change):
                                          f"this plant, customer, commodity and {scope} scope", evidence, entities))
                 continue
             if statement:
-                evidence += [explain(projection, statement, "completeForPlant", site),
-                             explain(projection, statement, "completeForCustomer", customer)]
+                evidence.append(explain(projection, statement, "completeForPlant", site))
+                if customer in projection.objects(statement, "completeForCustomer"):
+                    evidence.append(explain(projection, statement, "completeForCustomer", customer))
                 if series:
                     evidence += [explain(projection, statement, "completeForSeries", series),
                                  explain(projection, part, "madeOfSeries", series)]
@@ -497,30 +499,36 @@ def rule_material_change(projection, change):
     if not projection.is_a(new_material, "Material"):
         return [question(projection, "material_data", f"Material '{new_material}' is not in the material master",
                          [], {"material": new_material})]
-    findings = []
     drawing = projection.value(part, "madeOf")
-    if drawing and drawing != new_material:
+    off_drawing = bool(drawing and drawing != new_material)
+    characteristic, minimum = special_characteristic_yield(projection, part)
+    typical = projection.value(new_material, "typicalYieldMPa") if characteristic else None
+    below = characteristic is not None and typical is not None and float(typical) < minimum
+    yield_text = (f"{projection.label(new_material)} (typical yield {typical} MPa) is below the special "
+                  f"characteristic {characteristic} of {part} (minimum {minimum:.0f} MPa)") if below else None
+    findings = []
+    if off_drawing:
+        # One R6 blocker per material change: the drawing designation decides; a yield shortfall is added
+        # to the same finding as a second reason.
         evidence = [explain(projection, part, "madeOf", drawing), policy(projection, "POL-QP15-3.5")]
+        if below:
+            evidence.append(explain(projection, part, "hasSpecialCharacteristic", characteristic))
         findings.append(finding("R6", "blocker",
                                 f"{projection.label(new_material)} is not the material the drawing of {part} "
                                 f"designates ({projection.label(drawing)}): change the drawing first",
-                                evidence, {"part": part, "material": new_material, "drawing_material": drawing}))
-    characteristic, minimum = special_characteristic_yield(projection, part)
-    if not characteristic:
-        return findings
-    typical = projection.value(new_material, "typicalYieldMPa")
-    if typical is None:
+                                evidence, {"part": part, "material": new_material, "drawing_material": drawing,
+                                           "characteristic": characteristic if below else None},
+                                note=yield_text))
+    elif below:
+        findings.append(finding("R6", "blocker", yield_text,
+                                [explain(projection, part, "hasSpecialCharacteristic", characteristic)],
+                                {"material": new_material, "characteristic": characteristic}))
+    if characteristic and typical is None:
         findings.append(question(projection, "material_strength",
                                  f"No strength data for {projection.label(new_material)}; {part} has special "
                                  f"characteristic {characteristic} (minimum {minimum:.0f} MPa)",
                                  [explain(projection, part, "hasSpecialCharacteristic", characteristic)],
                                  {"material": new_material, "characteristic": characteristic}))
-    elif float(typical) < minimum:
-        findings.append(finding("R6", "blocker",
-                                f"{projection.label(new_material)} (typical yield {typical} MPa) is below the special "
-                                f"characteristic {characteristic} of {part} (minimum {minimum:.0f} MPa)",
-                                [explain(projection, part, "hasSpecialCharacteristic", characteristic)],
-                                {"material": new_material, "characteristic": characteristic}))
     return findings
 
 

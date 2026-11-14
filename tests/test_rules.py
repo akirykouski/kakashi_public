@@ -40,7 +40,7 @@ STEP_KEYS = set(EvidenceStep.__dataclass_fields__)
 def fact(s, p, o, source="TEST", quote=None, literal=False, valid_from=None, fact_id=None):
     fact.counter += 1
     return {"s": s, "p": p, "o": json.dumps(o) if literal else o, "source": source,
-            "quote": quote or f"{s} {p} {o}", "valid_from": valid_from, "valid_to": None, "kind": "evidence",
+            "quote": quote or f"{s} {p} {o}", "valid_from": valid_from, "valid_to": None, "kind": "assert", "rank": 2,
             "author": None, "id": fact_id or f"T{fact.counter:04d}"}
 
 
@@ -215,10 +215,30 @@ def test_exact_alloy_still_matches_under_any_policy(tmp_path):
 
 # ---- item 4: completeness-scoped source release -----------------------------------------------------------
 
+def narrow_scope():
+    """Replace the data's statement (series parts, both plants, all customers and commodities) by a narrow one:
+    Beinasco x Aurelia x 6xxx aluminium x series."""
+    extra = [fact("CS-NARROW", "type", "CompletenessStatement"), fact("CS-NARROW", "completeForPlant", "PLT-BEI"),
+             fact("CS-NARROW", "completeForCustomer", "CUST-AUR"),
+             fact("CS-NARROW", "completeForSeries", "Series6xxx"),
+             fact("CS-NARROW", "completeForScope", "series", literal=True)]
+    return extra, (lambda row: row["s"] == "CS-ASL-SERIES")
+
+
 def test_release_blocker_inside_declared_scope(log):
     _, findings = run(log, {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-D", "site": "PLT-BEI"})
     blockers = [item for item in findings if item["rule"] == "R1b"]
-    assert blockers and blockers[0]["severity"] == "blocker" and "CS-ASL-BEI-AUR-6XXX" in blockers[0]["entities"]
+    assert blockers and blockers[0]["severity"] == "blocker" and "CS-ASL-SERIES" in blockers[0]["entities"]
+
+
+def test_release_blocker_inside_narrow_scope(tmp_path):
+    extra, drop = narrow_scope()
+    _, findings = run(make_log(tmp_path, extra, drop),
+                      {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-D", "site": "PLT-BEI"})
+    blockers = [item for item in findings if item["rule"] == "R1b"]
+    assert blockers and "CS-NARROW" in blockers[0]["entities"]
+    sources = {leaf["source"] for step in blockers[0]["evidence"] for leaf in leaves(step)}
+    assert "REG-MATERIALS" in sources  # commodity proven via madeOfSeries
 
 
 def test_release_question_for_service_parts(log):
@@ -229,15 +249,17 @@ def test_release_question_for_service_parts(log):
     assert asked and asked[0]["severity"] == "question" and asked[0]["owner"] == "PER-GALLO"
 
 
-def test_release_question_outside_plant(log):
-    _, findings = run(log, {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-D", "site": "PLT-PIN"})
+def test_release_question_outside_plant(tmp_path):
+    extra, drop = narrow_scope()
+    _, findings = run(make_log(tmp_path, extra, drop), {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-D", "site": "PLT-PIN"})
     assert not [item for item in findings if item["rule"] == "R1b"]
     assert [item for item in findings if "Q-source_release" in item["entities"]]
 
 
-def test_release_question_outside_commodity(log):
-    # CL-115 is spring steel: the Beinasco list is complete only for 6xxx aluminium.
-    _, findings = run(log, {"type": "SourceChange", "part": "CL-115", "to_supplier": "SUP-C", "site": "PLT-BEI"})
+def test_release_question_outside_commodity(tmp_path):
+    # CL-115 is spring steel: the narrow list is complete only for 6xxx aluminium.
+    extra, drop = narrow_scope()
+    _, findings = run(make_log(tmp_path, extra, drop), {"type": "SourceChange", "part": "CL-115", "to_supplier": "SUP-C", "site": "PLT-BEI"})
     assert not [item for item in findings if item["rule"] == "R1b"]
     assert [item for item in findings if "Q-source_release" in item["entities"]]
 
@@ -276,19 +298,21 @@ def test_covered(log):
 # ---- explain.py ------------------------------------------------------------------------------------------
 
 def test_explainer_leaf_carries_context_quote(log):
+    # projection.graph and provenance are shared and cached: never mutate them; use a view.
+    from types import SimpleNamespace
     projection = Projection(log, "2026-11-14")
-    explainer = Explainer(projection)
-    triple, rows = next(iter(projection.provenance.items()))
-    rows[0]["context_quote"] = "governing sentence"
-    explainer.cache.clear()
-    step = explainer.explain(triple)
+    triple, rows = sorted(projection.provenance.items(), key=lambda item: str(item[0]))[0]
+    view = SimpleNamespace(graph=projection.graph,
+                           provenance={triple: [dict(rows[0], context_quote="governing sentence")]})
+    step = Explainer(view).explain(triple)
     assert step["context_quote"] == "governing sentence" and step["quote"]
 
 
-def test_explainer_returns_none_without_proof(log):
-    from rdflib import URIRef
-    projection = Projection(log, "2026-11-14")
+def test_explainer_returns_none_without_proof():
+    from types import SimpleNamespace
+    from rdflib import Graph, URIRef
     triple = (URIRef("https://lcc.example/id/X"), URIRef("https://lcc.example/ont#madeOf"),
               URIRef("https://lcc.example/id/Y"))
-    projection.graph.add(triple)  # in the closure, but no fact and no axiom produced it
-    assert Explainer(projection).explain(triple) is None
+    graph = Graph()
+    graph.add(triple)  # in the closure, but no fact and no axiom produced it
+    assert Explainer(SimpleNamespace(graph=graph, provenance={})).explain(triple) is None

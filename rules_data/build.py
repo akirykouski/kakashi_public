@@ -66,7 +66,8 @@ def facts():
 
     def add(s, p, o, source, quote, valid_from=None, literal=False):
         rows.append({"s": s, "p": p, "o": json.dumps(o) if literal else o, "source": source, "quote": quote,
-                     "valid_from": valid_from, "valid_to": None, "kind": "evidence", "author": None,
+                     "valid_from": valid_from, "valid_to": None, "kind": "assert", "epistemic": "evidence", "rank": 2,
+                     "author": None,
                      "id": f"RD{len(rows):04d}"})
 
     # Policy statements each rule rests on (rule code names the policy id, never the text).
@@ -99,13 +100,15 @@ def facts():
     add("BR-220", "hasFeature", "FEAT-FASTENING-HOLE", "FMEA-BR220", "crack at the fastening holes under fatigue load")
 
     # Completeness of the approved supplier list: plant x customer x commodity (alloy series) x scope.
-    statement = "CS-ASL-BEI-AUR-6XXX"
+    # An absent dimension means "all".
+    statement = "CS-ASL-SERIES"
     quote = qp15("2.1")
     add(statement, "type", "CompletenessStatement", "QP-15", quote)
     add(statement, "completeForPlant", "PLT-BEI", "QP-15", quote)
-    add(statement, "completeForCustomer", "CUST-AUR", "QP-15", quote)
-    add(statement, "completeForSeries", "Series6xxx", "QP-15", quote)
+    add(statement, "completeForPlant", "PLT-PIN", "QP-15", quote)
     add(statement, "completeForScope", "series", "QP-15", quote, literal=True)
+    # No completeForCustomer / completeForSeries: the statement covers every customer and commodity.
+    # A narrower list states them (completeForCustomer CUST-x, completeForSeries Series6xxx).
 
     # Owners of open questions, by kind of missing data.
     owners = [("Q-material_certificate", "PER-GALLO", "QP-11", QP11_CERT_OWNER),
