@@ -73,10 +73,8 @@ function urgencyLine(finding) {
 function shortHash(value) { return value ? value.slice(0, 10) : ""; }
 
 async function api(path, body) {
-  const options = body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {};
-  const response = await fetch(path, options);
-  const data = await response.json();
-  if (!response.ok || data.error) throw new Error(data.error || `HTTP ${response.status}`);
+  // Fallback.api (offline.js): live server, or the recorded snapshot when offline (#17).
+  const data = await Fallback.api(path, body);
   if (data.labels) state.labels = data.labels;
   return data;
 }
@@ -153,10 +151,17 @@ async function runCheck(body, what) {
     const data = await api("/api/check", body);
     state.lastRequest = data.card.request;
     state.lastResponse = data;
+    Fallback.hideForm();
     renderCard(data);
     setStatus("");
     return data;
   } catch (error) {
+    if (error.parseFailed) {  // model gateway failed: offer the typed form, never a silent fake
+      if (error.payload.labels) state.labels = error.payload.labels;
+      setStatus(`Could not parse the remark: ${error.message}`, true);
+      Fallback.showForm(error.payload, function submitForm(form) { runCheck({ form: form }, "Checking the typed form"); });
+      return null;
+    }
     setStatus(`Could not check: ${error.message}`, true);
     return null;
   } finally {
