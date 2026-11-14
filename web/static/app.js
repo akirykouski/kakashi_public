@@ -2,7 +2,6 @@
 "use strict";
 
 const TODAY = "2026-11-14";
-const RULE_CHANGE_REQUEST = { type: "CoatingChange", part: "BR-220", new_coating: "COAT-TCP" };
 const RULE_CHANGE_REMARK = "Can we switch BR-220 from anodising to trivalent conversion coating?";
 const NO_RULE_REMARK = "Let's move the BR-220 final inspection to the new CMM next week.";
 
@@ -438,8 +437,9 @@ function compareColumn(data, other, title) {
 function runRuleChange() {
   const r3 = state.scenarios.find(function isR3(item) { return item.id === "rule_change_r3"; });
   const r4 = state.scenarios.find(function isR4(item) { return item.id === "rule_change_r4"; });
-  const bodyA = r3 ? { scenario: r3.id } : { request: { ...RULE_CHANGE_REQUEST, as_of: "2026-06-15" } };
-  const bodyB = r4 ? { scenario: r4.id } : { request: { ...RULE_CHANGE_REQUEST, as_of: TODAY } };
+  // The same remark, parsed the same way, asked on two dates.
+  const bodyA = r3 ? { scenario: r3.id } : { remark: RULE_CHANGE_REMARK, as_of: "2026-06-15" };
+  const bodyB = r4 ? { scenario: r4.id } : { remark: RULE_CHANGE_REMARK, as_of: TODAY };
   $("remark").value = (r4 && r4.utterance) || RULE_CHANGE_REMARK;
   return compare(bodyA, bodyB, `As of ${r3 ? r3.as_of : "15 Jun 2026"} — Aurelia manual rev 3`,
                  `As of ${r4 ? r4.as_of : "14 Nov 2026"} — Aurelia manual rev 4`,
