@@ -58,7 +58,7 @@ deterministic and does not need the model."
 
 Play the recorded run from another laptop or a phone. It is not in the repo (local files only):
 
-- `~/Desktop/kva_hackathon/demo_backup/demo_run.webm` — the demo order of issue #19, 1440×900, no sound
+- `~/Desktop/kva_hackathon/demo_backup/demo_run.mp4` (QuickTime) and `demo_run.webm` — the demo order of issue #19, 1440×900, ~40 s, no sound
 - `~/Desktop/kva_hackathon/demo_backup/NN_*.png` — one screenshot per step
 - `~/Desktop/kva_hackathon/demo_backup/DEMO_SCRIPT.md` — each step: what to click, what the jury sees, one line to say
 
