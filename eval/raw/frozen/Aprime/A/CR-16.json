@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "cd956f9dcac39f0f5b3153c13a3468fb7d01163b1757ccc9b20d38f61d2dd99e",
+ "model_arg": "sonnet",
+ "seconds": 12.114880084991455,
+ "response": {
+  "duration_api_ms": 11087,
+  "stop_reason": "tool_use",
+  "session_id": "583c5cb7-0263-4729-8a1e-3ba3f6d8f214",
+  "total_cost_usd": 0.0359543,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4510,
+   "cache_read_input_tokens": 4963,
+   "output_tokens": 1741,
+   "output_tokens_details": {
+    "thinking_tokens": 688
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4510,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 530,
+     "cache_read_input_tokens": 4110,
+     "cache_creation_input_tokens": 1253,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1253
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1741,
+    "cacheReadInputTokens": 4963,
+    "cacheCreationInputTokens": 4510,
+    "webSearchRequests": 0,
+    "costUSD": 0.0359543,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 688,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4510,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-310\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0344: part BR-310; plant TO2; customer CLM; supplier Meccanica C S.p.A. (Chieri); billet grade EN AW-5083-H111; status APPROVED 2025-06-11 (PPAP-2025-052)\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM).\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Scope: series production parts released at Torino Plant 1 (TO1) and Torino Plant 2 (TO2) for customers Stellantis (STL) and Cantieri Lombardi Mobility S.p.A. (CLM).\"}],\"why\":\"Meccanica C's only approval for BR-310 is for plant TO2 and customer CLM. The proposal is to run BR-310 for CLM at TO1. The ASL is the controlled record and its scope covers TO1 and CLM. It lists no BR-310 approval for TO1, so the source has no current approval for this part at the receiving plant. A TO2 approval does not transfer to TO1.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-310",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0344: part BR-310; plant TO2; customer CLM; supplier Meccanica C S.p.A. (Chieri); billet grade EN AW-5083-H111; status APPROVED 2025-06-11 (PPAP-2025-052)"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM)."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Scope: series production parts released at Torino Plant 1 (TO1) and Torino Plant 2 (TO2) for customers Stellantis (STL) and Cantieri Lombardi Mobility S.p.A. (CLM)."
+      }
+     ],
+     "why": "Meccanica C's only approval for BR-310 is for plant TO2 and customer CLM. The proposal is to run BR-310 for CLM at TO1. The ASL is the controlled record and its scope covers TO1 and CLM. It lists no BR-310 approval for TO1, so the source has no current approval for this part at the receiving plant. A TO2 approval does not transfer to TO1."
+    }
+   ]
+  },
+  "ttft_ms": 5674,
+  "type": "result",
+  "duration_ms": 11153,
+  "uuid": "cf321ac8-b2f0-42a1-b276-5a2fc17a1dc9",
+  "ttft_stream_ms": 696,
+  "time_to_request_ms": 74,
+  "first_content_frame_ms": 696,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

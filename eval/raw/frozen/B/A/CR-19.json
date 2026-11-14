@@ -1,0 +1,151 @@
+{
+ "prompt_sha256": "6380e16a300bf4ffdc51360c6eef635a4c84e7604bad6e46cda937a9fea02012",
+ "model_arg": "sonnet",
+ "seconds": 11.113148927688599,
+ "response": {
+  "duration_api_ms": 10143,
+  "stop_reason": "tool_use",
+  "session_id": "2e05a7f6-a259-4bac-9b7b-77f3c180d189",
+  "total_cost_usd": 0.0435253,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 6989,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1548,
+   "output_tokens_details": {
+    "thinking_tokens": 714
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 6989,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1548,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 6989,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 6989
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1548,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 6989,
+    "webSearchRequests": 0,
+    "costUSD": 0.0435253,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 714,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 6989,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-220\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Service and aftermarket parts are not in scope of this record.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20\"},{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt.\"}],\"why\":\"The only approval for Alluminio B and BR-220 (AP-0311) covers series production at TO1 for STL. The ASL excludes service and aftermarket parts, and no controlled record in the documents covers BR-220 as a service part. This is not a finding that the source is not approved. A person must confirm whether Alluminio B is approved for service-part BR-220, and for which receiving plant. The Stellantis service-part requirements (STL-CSR-SP-01) are not available.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Material certificate EN 10204 type 3.1 required with each lot.\"},{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"EN AW-6082-T6, EN 10204 type 3.1\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Material certificates are not stored in this record.\"}],\"why\":\"The proposal uses billet already in stock. No certificate or tensile result is provided for that lot. Drawing Rev C requires EN AW-6082-T6 with Rp0.2 >= 250 MPa (SC-01), and a 3.1 certificate with each lot. The grade, temper and yield of the stock billet cannot be checked. A person must supply the certificate for this lot. The email EML-SQ-2026-1105 says BR-220 is 6061-T6 with 240 MPa. That is Rev B data, superseded 2026-06-01, and it should not be used.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-220",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Service and aftermarket parts are not in scope of this record."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20"
+      },
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt."
+      }
+     ],
+     "why": "The only approval for Alluminio B and BR-220 (AP-0311) covers series production at TO1 for STL. The ASL excludes service and aftermarket parts, and no controlled record in the documents covers BR-220 as a service part. This is not a finding that the source is not approved. A person must confirm whether Alluminio B is approved for service-part BR-220, and for which receiving plant. The Stellantis service-part requirements (STL-CSR-SP-01) are not available."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Material certificate EN 10204 type 3.1 required with each lot."
+      },
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "EN AW-6082-T6, EN 10204 type 3.1"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Material certificates are not stored in this record."
+      }
+     ],
+     "why": "The proposal uses billet already in stock. No certificate or tensile result is provided for that lot. Drawing Rev C requires EN AW-6082-T6 with Rp0.2 >= 250 MPa (SC-01), and a 3.1 certificate with each lot. The grade, temper and yield of the stock billet cannot be checked. A person must supply the certificate for this lot. The email EML-SQ-2026-1105 says BR-220 is 6061-T6 with 240 MPa. That is Rev B data, superseded 2026-06-01, and it should not be used."
+    }
+   ]
+  },
+  "ttft_ms": 5849,
+  "type": "result",
+  "duration_ms": 10334,
+  "uuid": "564decbb-cbfb-489e-a53f-e8cb662504cc",
+  "ttft_stream_ms": 1014,
+  "time_to_request_ms": 191,
+  "first_content_frame_ms": 1014,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

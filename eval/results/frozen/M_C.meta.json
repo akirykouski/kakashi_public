@@ -1,0 +1,14 @@
+{
+ "condition": "C",
+ "world": "M",
+ "core_commit": "cecba57b354842a3d3c77c3b76c210b1156a2456",
+ "facts": "/Users/whom/Desktop/kva_hackathon/kakashi_eval/eval/worlds/M/core",
+ "model_arg": "sonnet",
+ "model_ids": [
+  "claude-sonnet-5-5"
+ ],
+ "n": 36,
+ "errors": 0,
+ "wall_seconds": 206.7,
+ "finished_at": "2026-11-14T12:39:00+0100"
+}

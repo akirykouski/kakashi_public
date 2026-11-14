@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "ccb986b1859948abed3f51ad40bd2a6a2c4c00635d730e53bc1361c7e80af55a",
+ "model_arg": "sonnet",
+ "seconds": 11.408432960510254,
+ "response": {
+  "duration_api_ms": 10527,
+  "stop_reason": "tool_use",
+  "session_id": "4e7324f7-031f-4c40-a6d6-ed4197016a37",
+  "total_cost_usd": 0.0613133,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11556,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1500,
+   "output_tokens_details": {
+    "thinking_tokens": 810
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11556,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1500,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11556,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11556
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1500,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11556,
+    "webSearchRequests": 0,
+    "costUSD": 0.0613133,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 810,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11556,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-H|HB-620|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-011,SUP-H,HB-620,PLT-PIN,CUST-NOR,approved,2026-10-01,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer.\"}],\"why\":\"Fonderia Pellice (SUP-H) is approved for HB-620 only for the receiving site Pinerolo (PLT-PIN). The proposal is to deliver to Beinasco (PLT-BEI), and the ASL has no approval for that site. The ASL does cover HB-620, so this is a missing approval and not an unknown.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"Moving production to another site is a change of source.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"HB-620,\\\"Gearbox mount housing, die cast\\\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD\"}],\"why\":\"HB-620 belongs to PRG-Y (Nordhavn). Moving supply to a different receiving site counts as a change of source under the Nordhavn requirements. It needs written Nordhavn approval before the first shipment. The documents contain no Nordhavn approval for Pellice to deliver to Beinasco.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-H|HB-620|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-011,SUP-H,HB-620,PLT-PIN,CUST-NOR,approved,2026-10-01,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer."
+      }
+     ],
+     "why": "Fonderia Pellice (SUP-H) is approved for HB-620 only for the receiving site Pinerolo (PLT-PIN). The proposal is to deliver to Beinasco (PLT-BEI), and the ASL has no approval for that site. The ASL does cover HB-620, so this is a missing approval and not an unknown."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "Moving production to another site is a change of source."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HB-620,\"Gearbox mount housing, die cast\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD"
+      }
+     ],
+     "why": "HB-620 belongs to PRG-Y (Nordhavn). Moving supply to a different receiving site counts as a change of source under the Nordhavn requirements. It needs written Nordhavn approval before the first shipment. The documents contain no Nordhavn approval for Pellice to deliver to Beinasco."
+    }
+   ]
+  },
+  "ttft_ms": 6720,
+  "type": "result",
+  "duration_ms": 10595,
+  "uuid": "5c33fd51-83e8-41d8-8c1a-496933759f1c",
+  "ttft_stream_ms": 895,
+  "time_to_request_ms": 69,
+  "first_content_frame_ms": 895,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

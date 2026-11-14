@@ -1,0 +1,132 @@
+{
+ "prompt_sha256": "bd38b9e8ce1a0a006ee4fb659fc2b1ee68ef5924b6a5f5a8151f4c7aafae6ed9",
+ "model_arg": "sonnet",
+ "seconds": 8.565993070602417,
+ "response": {
+  "duration_api_ms": 7472,
+  "stop_reason": "tool_use",
+  "session_id": "b0fe0c80-7ab2-4180-aaa8-bd86a5a67102",
+  "total_cost_usd": 0.024083300000000002,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3491,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1003,
+   "output_tokens_details": {
+    "thinking_tokens": 452
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3491,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1003,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3491,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3491
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1003,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3491,
+    "webSearchRequests": 0,
+    "costUSD": 0.024083300000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 452,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3491,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"NCR-26-017\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"NCR-26-017\",\"quote\":\"Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open.\"},{\"doc_id\":\"NCR-26-017\",\"quote\":\"Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC.\"},{\"doc_id\":\"MTG-2026-10-20\",\"quote\":\"Block the lot, 100% hardness check on the next three lots, keep Germanasca as source.\"}],\" why\":\"The proposed change doubles the December CL-115 order. CL-115 is supplied by Germanasca (SUP-G), which has an open NCR on the C67S spring steel of this part: hardness 52 HRC against a tolerance of 44-50. The NCR is still open, and the 100% check on the next three lots is still running. The NCR is therefore an open quality issue on the part's material at this supplier.\",\"why\":\"The proposed change doubles the December CL-115 order. CL-115 is supplied by Germanasca (SUP-G), which has an open NCR on the C67S spring steel of this part: hardness 52 HRC against a tolerance of 44-50. The NCR is still open, and the 100% check on the next three lots is still running. The NCR is therefore an open quality issue on the part's material at this supplier.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "NCR-26-017",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open."
+      },
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC."
+      },
+      {
+       "doc_id": "MTG-2026-10-20",
+       "quote": "Block the lot, 100% hardness check on the next three lots, keep Germanasca as source."
+      }
+     ],
+     " why": "The proposed change doubles the December CL-115 order. CL-115 is supplied by Germanasca (SUP-G), which has an open NCR on the C67S spring steel of this part: hardness 52 HRC against a tolerance of 44-50. The NCR is still open, and the 100% check on the next three lots is still running. The NCR is therefore an open quality issue on the part's material at this supplier.",
+     "why": "The proposed change doubles the December CL-115 order. CL-115 is supplied by Germanasca (SUP-G), which has an open NCR on the C67S spring steel of this part: hardness 52 HRC against a tolerance of 44-50. The NCR is still open, and the 100% check on the next three lots is still running. The NCR is therefore an open quality issue on the part's material at this supplier."
+    }
+   ]
+  },
+  "ttft_ms": 4900,
+  "type": "result",
+  "duration_ms": 7799,
+  "uuid": "21e0748e-b6a5-47cd-b360-abe2abc56286",
+  "ttft_stream_ms": 1204,
+  "time_to_request_ms": 327,
+  "first_content_frame_ms": 1204,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "eb90f3af88437c0ebc48072c697c35e7841fc3de1e5ba021c3520a8355f70b24",
+ "model_arg": "sonnet",
+ "seconds": 8.461193084716797,
+ "response": {
+  "duration_api_ms": 7197,
+  "stop_reason": "tool_use",
+  "session_id": "c74cc2d1-5c22-49a0-bdfc-5e975fbae6f6",
+  "total_cost_usd": 0.0386913,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 6998,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1061,
+   "output_tokens_details": {
+    "thinking_tokens": 541
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 6998,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1061,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 6998,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 6998
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1061,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 6998,
+    "webSearchRequests": 0,
+    "costUSD": 0.0386913,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 541,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 6998,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"8.4.2.1 A change of subcontracted process, including surface treatment, needs notification to Stellantis and approval before shipment.\"},{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"Annex A: programs STL-Torino-27 and STL-Torino-31.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes\"},{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"Surface treatment (subcontracted to Anodica Veneta S.r.l.)\"}],\"why\":\"BR-220 belongs to program STL-Torino-27 for Stellantis. The in-force control plan names Anodica Veneta as the subcontracted anodiser. Moving the anodising to Rivestimenti Nord is a change of subcontracted surface-treatment process. CSR 8.4.2.1 requires notification to and approval from Stellantis before shipment. No document in force contains such an approval or notification. The 3 lots may not ship until Stellantis has approved the change.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "8.4.2.1 A change of subcontracted process, including surface treatment, needs notification to Stellantis and approval before shipment."
+      },
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "Annex A: programs STL-Torino-27 and STL-Torino-31."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes"
+      },
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "Surface treatment (subcontracted to Anodica Veneta S.r.l.)"
+      }
+     ],
+     "why": "BR-220 belongs to program STL-Torino-27 for Stellantis. The in-force control plan names Anodica Veneta as the subcontracted anodiser. Moving the anodising to Rivestimenti Nord is a change of subcontracted surface-treatment process. CSR 8.4.2.1 requires notification to and approval from Stellantis before shipment. No document in force contains such an approval or notification. The 3 lots may not ship until Stellantis has approved the change."
+    }
+   ]
+  },
+  "ttft_ms": 4758,
+  "type": "result",
+  "duration_ms": 7370,
+  "uuid": "b02973a3-6f44-4ce8-8373-182bbafdf60c",
+  "ttft_stream_ms": 1229,
+  "time_to_request_ms": 497,
+  "first_content_frame_ms": 1229,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

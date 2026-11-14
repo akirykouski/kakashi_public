@@ -1,0 +1,183 @@
+{
+ "prompt_sha256": "3677aec663872fb4d402d68e83ae545a49129d96143f2aa226dc831fa3025aa7",
+ "model_arg": "sonnet",
+ "seconds": 17.298291206359863,
+ "response": {
+  "duration_api_ms": 15966,
+  "stop_reason": "tool_use",
+  "session_id": "ba3568f4-2f38-4a60-9374-858364bfd10d",
+  "total_cost_usd": 0.0826267,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 13293,
+   "cache_read_input_tokens": 13267,
+   "output_tokens": 2812,
+   "output_tokens_details": {
+    "thinking_tokens": 552
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 13293,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1145,
+     "cache_read_input_tokens": 12414,
+     "cache_creation_input_tokens": 1732,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1732
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2812,
+    "cacheReadInputTokens": 13267,
+    "cacheCreationInputTokens": 13293,
+    "webSearchRequests": 0,
+    "costUSD": 0.0826267,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 552,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 13293,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_RESTRICTED_SUBSTANCE\",\"key\":\"CrVI\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI\"},{\"doc_id\":\"LAW-ELV\",\"quote\":\"so a coating containing hexavalent chromium may not be used on our parts\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"CL-115,\\\"Cable clip, spring steel\\\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,\"}],\"why\":\"Yellow chromate passivation on zinc (COAT-ZN-YELLOW) contains hexavalent chromium, which is banned in the EU market where PRG-X and PRG-Y are sold. The ELV Annex II exemption has expired. The ban continues under Regulation (EU) 2026/1738.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"or change of coating or surface treatment.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia shall be notified of every planned change at least 90 days before implementation.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"CL-115,\\\"Cable clip, spring steel\\\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,\"}],\"why\":\"CL-115 is used on PRG-X (Aurelia). Revision 4 of the Aurelia manual replaces revision 3. It requires written approval (PPAP resubmission) for a coating change, and 90 days' notice. Nothing in force covers this change.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.2 A change of coating requires Nordhavn approval before the first shipment.\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"}],\"why\":\"CL-115 is also used on PRG-Y (Nordhavn). A coating change needs Nordhavn approval before the first shipment, and nothing in force covers it.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"NCR-26-017\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"NCR-26-017\",\"quote\":\"Supplier: Minuterie Germanasca (SUP-G). Status: open.\"},{\"doc_id\":\"NCR-26-017\",\"quote\":\"Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC.\"}],\"why\":\"SUP-G is the source of CL-115 and has an open NCR on the C67S spring steel of this part.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_RESTRICTED_SUBSTANCE",
+     "key": "CrVI",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI"
+      },
+      {
+       "doc_id": "LAW-ELV",
+       "quote": "so a coating containing hexavalent chromium may not be used on our parts"
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "CL-115,\"Cable clip, spring steel\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,"
+      }
+     ],
+     "why": "Yellow chromate passivation on zinc (COAT-ZN-YELLOW) contains hexavalent chromium, which is banned in the EU market where PRG-X and PRG-Y are sold. The ELV Annex II exemption has expired. The ban continues under Regulation (EU) 2026/1738."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "or change of coating or surface treatment."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "CL-115,\"Cable clip, spring steel\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,"
+      }
+     ],
+     "why": "CL-115 is used on PRG-X (Aurelia). Revision 4 of the Aurelia manual replaces revision 3. It requires written approval (PPAP resubmission) for a coating change, and 90 days' notice. Nothing in force covers this change."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.2 A change of coating requires Nordhavn approval before the first shipment."
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      }
+     ],
+     "why": "CL-115 is also used on PRG-Y (Nordhavn). A coating change needs Nordhavn approval before the first shipment, and nothing in force covers it."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "NCR-26-017",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Supplier: Minuterie Germanasca (SUP-G). Status: open."
+      },
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC."
+      }
+     ],
+     "why": "SUP-G is the source of CL-115 and has an open NCR on the C67S spring steel of this part."
+    }
+   ]
+  },
+  "ttft_ms": 5110,
+  "type": "result",
+  "duration_ms": 16744,
+  "uuid": "d674ccc3-b726-43c1-9527-cf83307c6002",
+  "ttft_stream_ms": 1579,
+  "time_to_request_ms": 763,
+  "first_content_frame_ms": 1579,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

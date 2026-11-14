@@ -1,0 +1,159 @@
+{
+ "prompt_sha256": "9673f7c31e5324f4e9840abfee6a5658407cbaccf90ab78d3e12eac3df82b563",
+ "model_arg": "sonnet",
+ "seconds": 13.485060930252075,
+ "response": {
+  "duration_api_ms": 12446,
+  "stop_reason": "tool_use",
+  "session_id": "fee47ae2-2698-4f7b-ac51-549b6afd4b60",
+  "total_cost_usd": 0.030337299999999998,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3237,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1730,
+   "output_tokens_details": {
+    "thinking_tokens": 941
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3237,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1730,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3237,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3237
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1730,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3237,
+    "webSearchRequests": 0,
+    "costUSD": 0.030337299999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 941,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3237,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-26-009\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Supplier: Fonderia Dora (SUP-D). Opened 2026-08-20. Status: open.\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3)\"}],\"why\":\"SUP-D has an open 8D on the AlSi9Cu3 material of HB-620, the part this change would keep ordering.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-D|HB-620|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Approval for HB-620 revoked on 2026-09-15.\"},{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-009,SUP-D,HB-620,PLT-PIN,CUST-NOR,approved,2022-11-10,,PER-BIANCHI,\"}],\"why\":\"The ASL record APR-009 still shows approved with no valid_to. It is outdated, because the 8D says the approval was revoked on 2026-09-15. That date is after the meeting (2026-09-01) but before today (2026-11-14), so the source has no current approval for HB-620 / PLT-PIN / CUST-NOR. If the review is meant to be judged as of the meeting date, this finding would not apply, but the open 8D would.\"},{\"rule_u\":\"U_MEASURED_VALUE\",\"key\":\"SC-HB620-POR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-SPECIAL_CHARACTERISTICS\",\"quote\":\"SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the\"}],\"why\":\"The measured porosity of grade 4 in the mount bores fails the special characteristic requirement of grade 2 or better.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-26-009",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Supplier: Fonderia Dora (SUP-D). Opened 2026-08-20. Status: open."
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3)"
+      }
+     ],
+     "why": "SUP-D has an open 8D on the AlSi9Cu3 material of HB-620, the part this change would keep ordering."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-D|HB-620|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Approval for HB-620 revoked on 2026-09-15."
+      },
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-009,SUP-D,HB-620,PLT-PIN,CUST-NOR,approved,2022-11-10,,PER-BIANCHI,"
+      }
+     ],
+     "why": "The ASL record APR-009 still shows approved with no valid_to. It is outdated, because the 8D says the approval was revoked on 2026-09-15. That date is after the meeting (2026-09-01) but before today (2026-11-14), so the source has no current approval for HB-620 / PLT-PIN / CUST-NOR. If the review is meant to be judged as of the meeting date, this finding would not apply, but the open 8D would."
+    },
+    {
+     "rule_u": "U_MEASURED_VALUE",
+     "key": "SC-HB620-POR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-SPECIAL_CHARACTERISTICS",
+       "quote": "SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores"
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the"
+      }
+     ],
+     "why": "The measured porosity of grade 4 in the mount bores fails the special characteristic requirement of grade 2 or better."
+    }
+   ]
+  },
+  "ttft_ms": 8553,
+  "type": "result",
+  "duration_ms": 12703,
+  "uuid": "85cb83bc-b622-4345-9a29-9bbea299832f",
+  "ttft_stream_ms": 1239,
+  "time_to_request_ms": 256,
+  "first_content_frame_ms": 1240,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

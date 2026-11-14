@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "e2408a1a913e53ec19a4043a6cc0a7e6a837664eea22543b6bbf5bbbed7d45db",
+ "model_arg": "sonnet",
+ "seconds": 8.997761964797974,
+ "response": {
+  "duration_api_ms": 8065,
+  "stop_reason": "tool_use",
+  "session_id": "b59ced00-0f0a-471c-b843-801a23dc45da",
+  "total_cost_usd": 0.0223193,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 2680,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1151,
+   "output_tokens_details": {
+    "thinking_tokens": 673
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 2680,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1151,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 2680,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 2680
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1151,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 2680,
+    "webSearchRequests": 0,
+    "costUSD": 0.0223193,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 673,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 2680,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MEASURED_VALUE\",\"key\":\"SC-01\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01\"},{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Tensile result on the Alluminio B BR-220 lot is 245 MPa. The drawing says min 240 MPa so it passes. Accept the lot?\"}],\"why\":\"The measured Rp0.2 of 245 MPa is below the 250 MPa minimum for SC-01 in the drawing (Rev C) and control plan in force. The 240 MPa limit comes from the superseded Rev B, and the email repeating it is outdated. The lot fails SC-01, so it should not be accepted. The control plan reaction is to quarantine the heat and notify the Supplier Quality Engineer.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MEASURED_VALUE",
+     "key": "SC-01",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01"
+      },
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Tensile result on the Alluminio B BR-220 lot is 245 MPa. The drawing says min 240 MPa so it passes. Accept the lot?"
+      }
+     ],
+     "why": "The measured Rp0.2 of 245 MPa is below the 250 MPa minimum for SC-01 in the drawing (Rev C) and control plan in force. The 240 MPa limit comes from the superseded Rev B, and the email repeating it is outdated. The lot fails SC-01, so it should not be accepted. The control plan reaction is to quarantine the heat and notify the Supplier Quality Engineer."
+    }
+   ]
+  },
+  "ttft_ms": 5886,
+  "type": "result",
+  "duration_ms": 8171,
+  "uuid": "2494a1c6-4d59-42cd-b452-b62fbf922f30",
+  "ttft_stream_ms": 742,
+  "time_to_request_ms": 103,
+  "first_content_frame_ms": 742,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

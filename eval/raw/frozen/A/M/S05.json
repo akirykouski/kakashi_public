@@ -1,0 +1,143 @@
+{
+ "prompt_sha256": "808a56440a0093ad5eeb4f28a014884cd17038bc1641f06ea3bfaebbc9412009",
+ "model_arg": "sonnet",
+ "seconds": 10.974338054656982,
+ "response": {
+  "duration_api_ms": 10039,
+  "stop_reason": "tool_use",
+  "session_id": "13e1bee4-33b6-46c7-8f55-ec011f3167eb",
+  "total_cost_usd": 0.0278953,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3399,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1421,
+   "output_tokens_details": {
+    "thinking_tokens": 762
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3399,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1421,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3399,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3399
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1421,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3399,
+    "webSearchRequests": 0,
+    "costUSD": 0.0278953,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 762,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3399,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-225|unknown\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"Correct, the audit qualifies the company. Part approvals stay as they are.\"},{\"doc_id\":\"REG-SUPPLIER_QUALIFICATION\",\"quote\":\"QS-C-2026,SUP-C,approved,2026-11-06,,PER-BIANCHI,QS-C-2025,\\\"re-audit passed, score 86\\\"\"}],\"why\":\"The re-audit approves the company only. Part approvals are unchanged. No controlled record in the documents covers SUP-C for BR-225 at a receiving plant and customer. The documents do not give the customer of BR-225 either. Absence of a record is not proof of non-approval, so a person must confirm whether SUP-C is released for BR-225.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"},{\"doc_id\":\"REG-SUPPLIER_QUALIFICATION\",\"quote\":\"no new parts until 8D-25-031 is closed and re-audit passed\"}],\"why\":\"The 8D on cracks in 6082 is still open at Meccanica Chisone. BR-225 is a milled aluminium bracket. The documents do not state its alloy, and the link between this 8D and 8D-25-031 is inferred from the superseded 2025 qualification record. Confirm that BR-225 is made from 6082. The new qualification (QS-C-2026) is based on the re-audit and does not say the 8D is closed.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-225|unknown",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "Correct, the audit qualifies the company. Part approvals stay as they are."
+      },
+      {
+       "doc_id": "REG-SUPPLIER_QUALIFICATION",
+       "quote": "QS-C-2026,SUP-C,approved,2026-11-06,,PER-BIANCHI,QS-C-2025,\"re-audit passed, score 86\""
+      }
+     ],
+     "why": "The re-audit approves the company only. Part approvals are unchanged. No controlled record in the documents covers SUP-C for BR-225 at a receiving plant and customer. The documents do not give the customer of BR-225 either. Absence of a record is not proof of non-approval, so a person must confirm whether SUP-C is released for BR-225."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      },
+      {
+       "doc_id": "REG-SUPPLIER_QUALIFICATION",
+       "quote": "no new parts until 8D-25-031 is closed and re-audit passed"
+      }
+     ],
+     "why": "The 8D on cracks in 6082 is still open at Meccanica Chisone. BR-225 is a milled aluminium bracket. The documents do not state its alloy, and the link between this 8D and 8D-25-031 is inferred from the superseded 2025 qualification record. Confirm that BR-225 is made from 6082. The new qualification (QS-C-2026) is based on the re-audit and does not say the 8D is closed."
+    }
+   ]
+  },
+  "ttft_ms": 6353,
+  "type": "result",
+  "duration_ms": 10135,
+  "uuid": "0b33d62b-2260-4ba2-abb8-60dd5a9595c0",
+  "ttft_stream_ms": 1019,
+  "time_to_request_ms": 96,
+  "first_content_frame_ms": 1019,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

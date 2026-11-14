@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "d9a0fa667253ca5acfe2d316a14930666134b3b7df82a9f661b4aeccb9d070bd",
+ "model_arg": "sonnet",
+ "seconds": 10.931809902191162,
+ "response": {
+  "duration_api_ms": 9890,
+  "stop_reason": "tool_use",
+  "session_id": "37fc6fd1-5845-4778-a00d-84a8d8dcf6fd",
+  "total_cost_usd": 0.061307299999999995,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11557,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1499,
+   "output_tokens_details": {
+    "thinking_tokens": 707
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11557,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1499,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11557,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11557
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1499,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11557,
+    "webSearchRequests": 0,
+    "costUSD": 0.061307299999999995,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 707,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11557,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"Moving production to another site is a change of source.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment.\"}],\"why\":\"BR-310 belongs only to PRG-Y (Nordhavn). Moving the coating to a new line at Pinerolo is a change of production site, which Nordhavn treats as a change of source. Written Nordhavn approval (PPAP) is needed before the first shipment. No approval for this change is in force. Aurelia has no requirement here because BR-310 is not on an Aurelia program.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by the supplier; found at incoming inspection on BR-310.\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"}],\"why\":\"Meccanica Chisone supplies BR-310, which is made of EN AW-6082-T5. The 8D on cracks in 6082 material is still open, so the supplier has an open quality issue on this part's alloy. The re-audit lifted the company-level conditional status but did not close this 8D.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "Moving production to another site is a change of source."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment."
+      }
+     ],
+     "why": "BR-310 belongs only to PRG-Y (Nordhavn). Moving the coating to a new line at Pinerolo is a change of production site, which Nordhavn treats as a change of source. Written Nordhavn approval (PPAP) is needed before the first shipment. No approval for this change is in force. Aurelia has no requirement here because BR-310 is not on an Aurelia program."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by the supplier; found at incoming inspection on BR-310."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      }
+     ],
+     "why": "Meccanica Chisone supplies BR-310, which is made of EN AW-6082-T5. The 8D on cracks in 6082 material is still open, so the supplier has an open quality issue on this part's alloy. The re-audit lifted the company-level conditional status but did not close this 8D."
+    }
+   ]
+  },
+  "ttft_ms": 6004,
+  "type": "result",
+  "duration_ms": 10028,
+  "uuid": "ad153878-e5e8-4dbc-8dbc-2be8240ece53",
+  "ttft_stream_ms": 955,
+  "time_to_request_ms": 138,
+  "first_content_frame_ms": 955,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

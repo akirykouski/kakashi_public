@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "fc050a988d6ffbb5f33c5aaf919c5a3c67a432e74238ec1bf188e91b9b0eb4e6",
+ "model_arg": "sonnet",
+ "seconds": 10.913576126098633,
+ "response": {
+  "duration_api_ms": 10012,
+  "stop_reason": "tool_use",
+  "session_id": "522a4a3d-2c5f-4525-896e-1298ad4acf99",
+  "total_cost_usd": 0.027893300000000003,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3351,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1440,
+   "output_tokens_details": {
+    "thinking_tokens": 734
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3351,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1440,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3351,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3351
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1440,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3351,
+    "webSearchRequests": 0,
+    "costUSD": 0.027893300000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 734,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3351,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Meccanica Chisone's qualification is conditional, as stated at the 2026-10-02 board. Nothing later in the documents lifts that. Moving BR-310 deliveries to a new receiving plant (Beinasco) is new business for this supplier.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\\nthe supplier; found at incoming inspection on BR-310.\"}],\"why\":\"The supplier has an open 8D on EN AW-6082 material, and it was found on BR-310 itself. The root cause is still under investigation and the corrective action is not verified.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-310|unknown\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-SITES\",\"quote\":\"PLT-BEI,\\\"Beinasco plant (machining, assembly)\\\"\"},{\"doc_id\":\"DEV-125\",\"quote\":\"BR-310 brackets from Meccanica Chisone (SUP-C) may be packed 40 per layer\"}],\"why\":\"No controlled release record is in the documents for BR-310 from Chisone at Beinasco (PLT-BEI), for any customer. DEV-125 only covers packing and does not release the part to this plant. The customer of BR-310 is also not given. Absence of a record is not proof of non-approval, so a person must confirm whether a current release exists.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Meccanica Chisone's qualification is conditional, as stated at the 2026-10-02 board. Nothing later in the documents lifts that. Moving BR-310 deliveries to a new receiving plant (Beinasco) is new business for this supplier."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\nthe supplier; found at incoming inspection on BR-310."
+      }
+     ],
+     "why": "The supplier has an open 8D on EN AW-6082 material, and it was found on BR-310 itself. The root cause is still under investigation and the corrective action is not verified."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-310|unknown",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-SITES",
+       "quote": "PLT-BEI,\"Beinasco plant (machining, assembly)\""
+      },
+      {
+       "doc_id": "DEV-125",
+       "quote": "BR-310 brackets from Meccanica Chisone (SUP-C) may be packed 40 per layer"
+      }
+     ],
+     "why": "No controlled release record is in the documents for BR-310 from Chisone at Beinasco (PLT-BEI), for any customer. DEV-125 only covers packing and does not release the part to this plant. The customer of BR-310 is also not given. Absence of a record is not proof of non-approval, so a person must confirm whether a current release exists."
+    }
+   ]
+  },
+  "ttft_ms": 6396,
+  "type": "result",
+  "duration_ms": 10090,
+  "uuid": "6b1678e8-18b7-4604-8432-9ce28c666b7a",
+  "ttft_stream_ms": 1007,
+  "time_to_request_ms": 79,
+  "first_content_frame_ms": 1007,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

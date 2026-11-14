@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "26c61e8f12cc51125fab5089200e4cbccadc5f193c636eaddec996ec916a91a6",
+ "model_arg": "sonnet",
+ "seconds": 13.387653827667236,
+ "response": {
+  "duration_api_ms": 12447,
+  "stop_reason": "tool_use",
+  "session_id": "0f461847-1c12-4a81-956e-167cbd3bc4ab",
+  "total_cost_usd": 0.0370951,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4542,
+   "cache_read_input_tokens": 4791,
+   "output_tokens": 1844,
+   "output_tokens_details": {
+    "thinking_tokens": 992
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4542,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 429,
+     "cache_read_input_tokens": 3938,
+     "cache_creation_input_tokens": 1457,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1457
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1844,
+    "cacheReadInputTokens": 4791,
+    "cacheCreationInputTokens": 4542,
+    "webSearchRequests": 0,
+    "costUSD": 0.0370951,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 992,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4542,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese).\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM).\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"Attenzione: l'audit riguarda il fornitore, non le singole parti.\"}],\"why\":\"Lifting the probation (EML-SQ-2026-1105, 2026-11-05) restores supplier standing only. It does not approve any part. The approved source list covers BR-220 at TO1 for STL for Alluminio B only. Meccanica C has no approval for BR-220 (its approvals are BR-180 and BR-310). The BR-180 approval does not carry over to BR-220.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese)."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM)."
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "Attenzione: l'audit riguarda il fornitore, non le singole parti."
+      }
+     ],
+     "why": "Lifting the probation (EML-SQ-2026-1105, 2026-11-05) restores supplier standing only. It does not approve any part. The approved source list covers BR-220 at TO1 for STL for Alluminio B only. Meccanica C has no approval for BR-220 (its approvals are BR-180 and BR-310). The BR-180 approval does not carry over to BR-220."
+    }
+   ]
+  },
+  "ttft_ms": 7960,
+  "type": "result",
+  "duration_ms": 12582,
+  "uuid": "c824c4c0-e876-4b99-9022-607dd996dced",
+  "ttft_stream_ms": 763,
+  "time_to_request_ms": 132,
+  "first_content_frame_ms": 763,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

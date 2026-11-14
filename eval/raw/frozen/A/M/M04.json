@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "d5b418da9472f435d70f654eed70117afc51fc27872d07ed4bf6e6963c85ca68",
+ "model_arg": "sonnet",
+ "seconds": 10.55886721611023,
+ "response": {
+  "duration_api_ms": 9673,
+  "stop_reason": "tool_use",
+  "session_id": "22ef71cc-6c8b-43c3-afd2-efff7ea15e49",
+  "total_cost_usd": 0.0285573,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3492,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1450,
+   "output_tokens_details": {
+    "thinking_tokens": 698
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3492,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1450,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3492,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3492
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1450,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3492,
+    "webSearchRequests": 0,
+    "costUSD": 0.0285573,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 698,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3492,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"supplier_record\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Supplier: Fonderia Dora (SUP-D)\"}],\"why\":\"Viteria Lanzo has no supplier id and appears in none of the documents, so we have no supplier record for it. A person must confirm its standing and qualification before it can receive HB-620.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"Viteria Lanzo|HB-620|CUST-NOR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"HB-620,\\\"Gearbox mount housing, die cast\\\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"three escapes to the Nordhavn line\"}],\"why\":\"No controlled record covers Viteria Lanzo for HB-620, the receiving plant or the customer (Nordhavn, from the 8D). Dora's approval for HB-620 was revoked on 2026-09-15, so a new approved source is needed. The absence of a record cannot be read as \\\"not approved\\\", so a person must clarify.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"QP-11\",\"quote\":\"A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for the drawing material.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"HB-620,\\\"Gearbox mount housing, die cast\\\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR\"}],\"why\":\"This is a change of source for HB-620, whose drawing material is MAT-ALSI9CU3. No 3.1 certificate from Viteria Lanzo is in the documents, so the supplier quality engineer must obtain one.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "supplier_record",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Supplier: Fonderia Dora (SUP-D)"
+      }
+     ],
+     "why": "Viteria Lanzo has no supplier id and appears in none of the documents, so we have no supplier record for it. A person must confirm its standing and qualification before it can receive HB-620."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "Viteria Lanzo|HB-620|CUST-NOR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HB-620,\"Gearbox mount housing, die cast\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR"
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "three escapes to the Nordhavn line"
+      }
+     ],
+     "why": "No controlled record covers Viteria Lanzo for HB-620, the receiving plant or the customer (Nordhavn, from the 8D). Dora's approval for HB-620 was revoked on 2026-09-15, so a new approved source is needed. The absence of a record cannot be read as \"not approved\", so a person must clarify."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "QP-11",
+       "quote": "A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for the drawing material."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HB-620,\"Gearbox mount housing, die cast\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR"
+      }
+     ],
+     "why": "This is a change of source for HB-620, whose drawing material is MAT-ALSI9CU3. No 3.1 certificate from Viteria Lanzo is in the documents, so the supplier quality engineer must obtain one."
+    }
+   ]
+  },
+  "ttft_ms": 5659,
+  "type": "result",
+  "duration_ms": 9717,
+  "uuid": "a642f864-1818-4948-8fbf-7df7fcd8aa59",
+  "ttft_stream_ms": 958,
+  "time_to_request_ms": 50,
+  "first_content_frame_ms": 958,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

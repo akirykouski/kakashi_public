@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "5629fd61244fde3810b947866abfcfe4ac5f12bde88665e5c8c1a70c8fbe28bb",
+ "model_arg": "sonnet",
+ "seconds": 10.775439023971558,
+ "response": {
+  "duration_api_ms": 9829,
+  "stop_reason": "tool_use",
+  "session_id": "c1c6cbad-023c-4e3c-8440-addb8a5be5b4",
+  "total_cost_usd": 0.0608153,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11559,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1449,
+   "output_tokens_details": {
+    "thinking_tokens": 662
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11559,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1449,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11559,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11559
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1449,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11559,
+    "webSearchRequests": 0,
+    "costUSD": 0.0608153,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 662,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11559,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-180|CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer.\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"the audit qualifies the company. Part approvals stay as they are.\"}],\"why\":\"The only approval for SUP-C on BR-180 is for receiving plant PLT-BEI. The ASL has no approval for PLT-PIN, and the 2026-11-06 re-audit did not add part approvals. Delivery to Pinerolo is therefore not released.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\\nafter any of: a change of source\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Approval is granted per part number and per manufacturing site.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia shall be notified of every planned change at least 90 days before implementation.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-180,\\\"Battery tray bracket, milled\\\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,\"}],\"why\":\"BR-180 is on PRG-Z, a CUST-AUR program. Revision 4 of the Aurelia manual is in force and replaces revision 3. It ties approval to the part and the site, so the move to a different site needs written Aurelia approval (PPAP) and 90 days' notice. No approval or deviation covers it, and DEV-114 has expired.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-180|CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "the audit qualifies the company. Part approvals stay as they are."
+      }
+     ],
+     "why": "The only approval for SUP-C on BR-180 is for receiving plant PLT-BEI. The ASL has no approval for PLT-PIN, and the 2026-11-06 re-audit did not add part approvals. Delivery to Pinerolo is therefore not released."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter any of: a change of source"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Approval is granted per part number and per manufacturing site."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-180,\"Battery tray bracket, milled\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,"
+      }
+     ],
+     "why": "BR-180 is on PRG-Z, a CUST-AUR program. Revision 4 of the Aurelia manual is in force and replaces revision 3. It ties approval to the part and the site, so the move to a different site needs written Aurelia approval (PPAP) and 90 days' notice. No approval or deviation covers it, and DEV-114 has expired."
+    }
+   ]
+  },
+  "ttft_ms": 5569,
+  "type": "result",
+  "duration_ms": 9874,
+  "uuid": "7e385297-649f-49b8-a652-41419975798a",
+  "ttft_stream_ms": 945,
+  "time_to_request_ms": 53,
+  "first_content_frame_ms": 945,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

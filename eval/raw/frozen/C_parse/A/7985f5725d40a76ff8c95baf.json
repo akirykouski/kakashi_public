@@ -1,0 +1,50 @@
+{
+ "note": "Meccanica C is approved for BR-180 and has capacity. Move 40% of BR-180 volume at Plant 1 for STL from Alluminio B to C.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "claude -p --model sonnet (eval track, subscription CLI)",
+ "output": {
+  "type": "SourceChange",
+  "part": "BR-180",
+  "to_supplier": "Meccanica C",
+  "from_supplier": "Alluminio B",
+  "site": "Plant 1",
+  "new_material": null,
+  "new_coating": null
+ },
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 2133,
+  "output_tokens": 351,
+  "output_tokens_details": {
+   "thinking_tokens": 139
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 351,
+    "cache_read_input_tokens": 2133,
+    "cache_creation_input_tokens": 0,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 0
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null,
+  "model_id": "claude-sonnet-5-5",
+  "seconds": 3.9420251846313477
+ }
+}

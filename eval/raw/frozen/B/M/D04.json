@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "e6222dfe2034104d8c25f0d106c2f20cb6d2fe910ecffc2bb3d9e84b51f16281",
+ "model_arg": "sonnet",
+ "seconds": 11.136389970779419,
+ "response": {
+  "duration_api_ms": 9779,
+  "stop_reason": "tool_use",
+  "session_id": "028452ec-637d-456c-8f7e-c384be7d28c0",
+  "total_cost_usd": 0.0650463,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 12478,
+   "cache_read_input_tokens": 13263,
+   "output_tokens": 1380,
+   "output_tokens_details": {
+    "thinking_tokens": 383
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 12478,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 503,
+     "cache_read_input_tokens": 12410,
+     "cache_creation_input_tokens": 921,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 921
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1380,
+    "cacheReadInputTokens": 13263,
+    "cacheCreationInputTokens": 12478,
+    "webSearchRequests": 0,
+    "costUSD": 0.0650463,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 383,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 12478,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"HS-410,\\\"Exhaust heat shield, stamped\\\",PRG-X,B,MAT-DC04,COAT-ZNNI,\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"or a change of coating or surface treatment.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia shall be notified of every planned change at least 90 days before implementation.\"}],\"why\":\"HS-410 belongs to PRG-X, an Aurelia program. Revision 4 of the Aurelia manual replaces revision 3 and requires written approval (PPAP resubmission) for any coating change, plus 90 days' notice. Revision 3 only needed 60 days' notice for a change within the same specification family. DEV-121 only relaxes the zinc-nickel layer thickness, so it does not cover a change to zinc flake. No other document in force gives Aurelia's approval for this change.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HS-410,\"Exhaust heat shield, stamped\",PRG-X,B,MAT-DC04,COAT-ZNNI,"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "or a change of coating or surface treatment."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation."
+      }
+     ],
+     "why": "HS-410 belongs to PRG-X, an Aurelia program. Revision 4 of the Aurelia manual replaces revision 3 and requires written approval (PPAP resubmission) for any coating change, plus 90 days' notice. Revision 3 only needed 60 days' notice for a change within the same specification family. DEV-121 only relaxes the zinc-nickel layer thickness, so it does not cover a change to zinc flake. No other document in force gives Aurelia's approval for this change."
+    }
+   ]
+  },
+  "ttft_ms": 4211,
+  "type": "result",
+  "duration_ms": 9941,
+  "uuid": "05877a30-e751-407d-9648-1d3216a63ff7",
+  "ttft_stream_ms": 1409,
+  "time_to_request_ms": 394,
+  "first_content_frame_ms": 1409,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

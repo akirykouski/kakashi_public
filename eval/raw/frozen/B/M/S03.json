@@ -1,0 +1,143 @@
+{
+ "prompt_sha256": "889a5b66f73bb7870db9631a90cf4e3e9e1429873b4b779594f09deb11a619d6",
+ "model_arg": "sonnet",
+ "seconds": 8.805562973022461,
+ "response": {
+  "duration_api_ms": 7915,
+  "stop_reason": "tool_use",
+  "session_id": "64cfbb07-8e9a-471f-8cf5-a59e761d54aa",
+  "total_cost_usd": 0.048147300000000004,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 9147,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1147,
+   "output_tokens_details": {
+    "thinking_tokens": 457
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 9147,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1147,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 9147,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 9147
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1147,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 9147,
+    "webSearchRequests": 0,
+    "costUSD": 0.048147300000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 457,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 9147,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-220,\\\"Front subframe bracket, milled\\\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01\"},{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-TCP,Trivalent chromium conversion coating on aluminium,CrIII\"},{\"doc_id\":\"CSR-AUR-R3\",\"quote\":\"7.1 The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\\nafter a change of source, a change of material or a change of manufacturing process.\"},{\"doc_id\":\"CSR-AUR-R3\",\"quote\":\"7.2 A change of coating or surface treatment within the same specification family requires\\nnotification to Aurelia at least 60 days before implementation; approval is not required.\"},{\"doc_id\":\"CON-AUR\",\"quote\":\"no change to an\\napproved part or its process may be implemented without the written approval of Aurelia.\"}],\"why\":\"BR-220 is on PRG-X, an Aurelia program. The change moves the surface from sulphuric acid anodising to a trivalent conversion coating. That is a different process, not a variant within one specification family. So the 60-day notification in 7.2 does not clearly cover it, and 7.1 and contract clause 14.3 call for written Aurelia approval before shipment. No Aurelia approval is in the documents. The customer master also lists CSR-AUR-R4, which is not among the documents given, so I could not check whether it changes this.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01"
+      },
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-TCP,Trivalent chromium conversion coating on aluminium,CrIII"
+      },
+      {
+       "doc_id": "CSR-AUR-R3",
+       "quote": "7.1 The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter a change of source, a change of material or a change of manufacturing process."
+      },
+      {
+       "doc_id": "CSR-AUR-R3",
+       "quote": "7.2 A change of coating or surface treatment within the same specification family requires\nnotification to Aurelia at least 60 days before implementation; approval is not required."
+      },
+      {
+       "doc_id": "CON-AUR",
+       "quote": "no change to an\napproved part or its process may be implemented without the written approval of Aurelia."
+      }
+     ],
+     "why": "BR-220 is on PRG-X, an Aurelia program. The change moves the surface from sulphuric acid anodising to a trivalent conversion coating. That is a different process, not a variant within one specification family. So the 60-day notification in 7.2 does not clearly cover it, and 7.1 and contract clause 14.3 call for written Aurelia approval before shipment. No Aurelia approval is in the documents. The customer master also lists CSR-AUR-R4, which is not among the documents given, so I could not check whether it changes this."
+    }
+   ]
+  },
+  "ttft_ms": 4402,
+  "type": "result",
+  "duration_ms": 8005,
+  "uuid": "e89b1167-a2d5-4cf6-81d4-8b0b5524538d",
+  "ttft_stream_ms": 1019,
+  "time_to_request_ms": 91,
+  "first_content_frame_ms": 1020,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,151 @@
+{
+ "prompt_sha256": "a76446d0ec32e25988868d3df1ec0b60a508f10d8c98630116f39b3cc19cdf62",
+ "model_arg": "sonnet",
+ "seconds": 19.916359901428223,
+ "response": {
+  "duration_api_ms": 19176,
+  "stop_reason": "tool_use",
+  "session_id": "9a783425-5a81-4382-b787-7fd222adeee2",
+  "total_cost_usd": 0.0507064,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 5242,
+   "cache_read_input_tokens": 4504,
+   "output_tokens": 2928,
+   "output_tokens_details": {
+    "thinking_tokens": 1229
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 5242,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 848,
+     "cache_read_input_tokens": 3651,
+     "cache_creation_input_tokens": 2444,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 2444
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2928,
+    "cacheReadInputTokens": 4504,
+    "cacheCreationInputTokens": 5242,
+    "webSearchRequests": 0,
+    "costUSD": 0.0507064,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 1229,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 5242,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"A source that is not listed for a part, plant and customer has no approval.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"A supplier audit result does not grant a part approval.\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"Attenzione: l'audit riguarda il fornitore, non le singole parti.\"}],\"why\":\"The probation was lifted on 2026-11-05, so the supplier standing rule does not apply. The audit does not approve any part, though. The only approval for BR-220 (TO1, STL) is for Alluminio B. Meccanica C (Chieri) has no entry for BR-220. Its only entry is for BR-180. The approval list is the complete list for these parts, plants and customers, so Meccanica C has no approval for BR-220.\"},{\"rule_u\":\"U_MATERIAL\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene.\"}],\"why\":\"The controlled approval record ties BR-220 to billet grade EN AW-6082-T6 under drawing Rev C. The only statement that BR-220 uses 6061-T6 is an informal email, which is not a controlled drawing. Meccanica C's 6061-T6 billet therefore does not meet the grade in the approved record, and the email cannot override it. The drawing in force is not among the documents, so the material requirement should be checked against it.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "A source that is not listed for a part, plant and customer has no approval."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "A supplier audit result does not grant a part approval."
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "Attenzione: l'audit riguarda il fornitore, non le singole parti."
+      }
+     ],
+     "why": "The probation was lifted on 2026-11-05, so the supplier standing rule does not apply. The audit does not approve any part, though. The only approval for BR-220 (TO1, STL) is for Alluminio B. Meccanica C (Chieri) has no entry for BR-220. Its only entry is for BR-180. The approval list is the complete list for these parts, plants and customers, so Meccanica C has no approval for BR-220."
+    },
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)"
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene."
+      }
+     ],
+     "why": "The controlled approval record ties BR-220 to billet grade EN AW-6082-T6 under drawing Rev C. The only statement that BR-220 uses 6061-T6 is an informal email, which is not a controlled drawing. Meccanica C's 6061-T6 billet therefore does not meet the grade in the approved record, and the email cannot override it. The drawing in force is not among the documents, so the material requirement should be checked against it."
+    }
+   ]
+  },
+  "ttft_ms": 9747,
+  "type": "result",
+  "duration_ms": 19221,
+  "uuid": "f0ad285e-3470-4dfc-a466-6c52e4545cce",
+  "ttft_stream_ms": 586,
+  "time_to_request_ms": 47,
+  "first_content_frame_ms": 587,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

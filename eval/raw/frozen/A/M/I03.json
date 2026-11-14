@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "52c06fdb2cc222e1d696dde97f9388b33b8f4662334c71c3e542cb30d6d29769",
+ "model_arg": "sonnet",
+ "seconds": 13.26429295539856,
+ "response": {
+  "duration_api_ms": 7534,
+  "stop_reason": "tool_use",
+  "session_id": "890eea7e-194f-4138-9925-98458cf044e8",
+  "total_cost_usd": 0.0242133,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3296,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1094,
+   "output_tokens_details": {
+    "thinking_tokens": 555
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3296,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1094,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3296,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3296
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1094,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3296,
+    "webSearchRequests": 0,
+    "costUSD": 0.0242133,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 555,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3296,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Meccanica Chisone (SUP-C) is recorded as conditional at the latest change board (2026-10-02). No later document lifts this. Moving BR-180 deliveries to Pinerolo is new business for them, so it is blocked while the conditional status stands.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-180|CUST-AUR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"DEV-114\",\"quote\":\"Temporary permit to accept BR-180 brackets from Meccanica Chisone (SUP-C)\"},{\"doc_id\":\"REG-SITES\",\"quote\":\"PLT-PIN,Pinerolo plant (assembly)\"}],\"why\":\"No controlled approval record covers Chisone, BR-180 and Pinerolo for any customer. The only BR-180 document is DEV-114, which has expired, and it was about Beinasco-era hardness acceptance. Absence of a record is not proof of non-approval, so a person must confirm whether a release exists for Pinerolo. The customer is inferred from DEV-114 (Aurelia resident engineer) and should be confirmed.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Meccanica Chisone (SUP-C) is recorded as conditional at the latest change board (2026-10-02). No later document lifts this. Moving BR-180 deliveries to Pinerolo is new business for them, so it is blocked while the conditional status stands."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-180|CUST-AUR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "DEV-114",
+       "quote": "Temporary permit to accept BR-180 brackets from Meccanica Chisone (SUP-C)"
+      },
+      {
+       "doc_id": "REG-SITES",
+       "quote": "PLT-PIN,Pinerolo plant (assembly)"
+      }
+     ],
+     "why": "No controlled approval record covers Chisone, BR-180 and Pinerolo for any customer. The only BR-180 document is DEV-114, which has expired, and it was about Beinasco-era hardness acceptance. Absence of a record is not proof of non-approval, so a person must confirm whether a release exists for Pinerolo. The customer is inferred from DEV-114 (Aurelia resident engineer) and should be confirmed."
+    }
+   ]
+  },
+  "ttft_ms": 9374,
+  "type": "result",
+  "duration_ms": 12385,
+  "uuid": "da4ab249-57c6-4fda-bffc-87cbf9c305fe",
+  "ttft_stream_ms": 5678,
+  "time_to_request_ms": 4856,
+  "first_content_frame_ms": 5678,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

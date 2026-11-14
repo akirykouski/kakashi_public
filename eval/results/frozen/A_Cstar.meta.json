@@ -1,0 +1,12 @@
+{
+ "condition": "Cstar",
+ "world": "A",
+ "core_commit": "cecba57b354842a3d3c77c3b76c210b1156a2456",
+ "facts": "/Users/whom/Desktop/kva_hackathon/kakashi_eval/eval/worlds/A/core",
+ "model_arg": null,
+ "model_ids": [],
+ "n": 20,
+ "errors": 4,
+ "wall_seconds": 0.2,
+ "finished_at": "2026-11-14T12:39:01+0100"
+}

@@ -1,0 +1,143 @@
+{
+ "prompt_sha256": "d6a10ee09fb2fe47c6490c95a1f3b383b99262afdc4c152f0fc760aa9c8de1ef",
+ "model_arg": "sonnet",
+ "seconds": 7.80651068687439,
+ "response": {
+  "duration_api_ms": 6542,
+  "stop_reason": "tool_use",
+  "session_id": "bdca06ab-c6ee-417c-97d2-553f97deb5e7",
+  "total_cost_usd": 0.0207333,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 2646,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1006,
+   "output_tokens_details": {
+    "thinking_tokens": 446
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 2646,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1006,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 2646,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 2646
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1006,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 2646,
+    "webSearchRequests": 0,
+    "costUSD": 0.0207333,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 446,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 2646,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_DEVIATION_LIMIT\",\"key\":\"PRC-DEV-007\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"PRC-DEV-007\",\"quote\":\"A temporary deviation may cover at most 2000 pieces and at most 6 weeks.\"},{\"doc_id\":\"PRC-DEV-007\",\"quote\":\"The allowed responses to a late approved source are: expedite the approved source, or request a temporary deviation within the limits of section 2.\"}],\"why\":\"The proposed deviation covers 3,500 pieces over 10 weeks. That exceeds both limits of PRC-DEV-007 rev 2, which are 2000 pieces and 6 weeks. The 100% hole inspection does not change those limits.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"A temporary deviation is requested through the supplier portal and needs approval before shipment.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese).\"}],\"why\":\"BR-220 is an STL part. STL's customer requirement says a temporary deviation needs written approval through the supplier portal before shipment. No approval is in the documents, and nothing in force already covers this deviation. Nothing may ship under the deviation until STL approves it.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_DEVIATION_LIMIT",
+     "key": "PRC-DEV-007",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "PRC-DEV-007",
+       "quote": "A temporary deviation may cover at most 2000 pieces and at most 6 weeks."
+      },
+      {
+       "doc_id": "PRC-DEV-007",
+       "quote": "The allowed responses to a late approved source are: expedite the approved source, or request a temporary deviation within the limits of section 2."
+      }
+     ],
+     "why": "The proposed deviation covers 3,500 pieces over 10 weeks. That exceeds both limits of PRC-DEV-007 rev 2, which are 2000 pieces and 6 weeks. The 100% hole inspection does not change those limits."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "A temporary deviation is requested through the supplier portal and needs approval before shipment."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese)."
+      }
+     ],
+     "why": "BR-220 is an STL part. STL's customer requirement says a temporary deviation needs written approval through the supplier portal before shipment. No approval is in the documents, and nothing in force already covers this deviation. Nothing may ship under the deviation until STL approves it."
+    }
+   ]
+  },
+  "ttft_ms": 3679,
+  "type": "result",
+  "duration_ms": 6627,
+  "uuid": "7db31a80-c7bd-4ea6-aa33-55eab6a6d78f",
+  "ttft_stream_ms": 690,
+  "time_to_request_ms": 83,
+  "first_content_frame_ms": 690,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

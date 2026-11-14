@@ -1,0 +1,50 @@
+{
+ "note": "The Plant 1 tensile machine is down. Send BR-220 tensile tests for the line 30 check to Laboratorio Sigma in Milan.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "claude -p --model sonnet (eval track, subscription CLI)",
+ "output": {
+  "type": "TestMethodChange",
+  "part": "BR-220",
+  "to_supplier": "Laboratorio Sigma",
+  "from_supplier": null,
+  "site": "Plant 1",
+  "new_material": null,
+  "new_coating": null
+ },
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 2129,
+  "output_tokens": 409,
+  "output_tokens_details": {
+   "thinking_tokens": 196
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 409,
+    "cache_read_input_tokens": 2129,
+    "cache_creation_input_tokens": 0,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 0
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null,
+  "model_id": "claude-sonnet-5-5",
+  "seconds": 4.277267932891846
+ }
+}

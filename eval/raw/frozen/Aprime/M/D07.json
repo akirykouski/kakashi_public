@@ -1,0 +1,127 @@
+{
+ "prompt_sha256": "cab03f7afb21e28e01a9ed82e6830d2ccdb65274ce134fe53a0aaa1abdb0c770",
+ "model_arg": "sonnet",
+ "seconds": 8.075482845306396,
+ "response": {
+  "duration_api_ms": 7035,
+  "stop_reason": "tool_use",
+  "session_id": "aeaa40ba-605d-4549-ad22-46141f7c0e1b",
+  "total_cost_usd": 0.0233853,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3484,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 936,
+   "output_tokens_details": {
+    "thinking_tokens": 527
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3484,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 936,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3484,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3484
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 936,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3484,
+    "webSearchRequests": 0,
+    "costUSD": 0.0233853,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 527,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3484,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|HS-410|CUST-AUR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"HS-410,\\\"Exhaust heat shield, stamped\\\",PRG-X,B,MAT-DC04,COAT-ZNNI,\"},{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks\"}],\"why\":\"No controlled approval record covers HS-410 at Meccanica Chisone for any receiving plant or customer. The only HS-410 customer reference in the documents is the DEV-121 agreement with Aurelia. The supplier's listed commodity is aluminium extrusions and blanks, not stamping. The 2026-11-06 review set the supplier back to approved but said part approvals stay as they are. Absence of a record is not proof of non-approval, so a person must confirm whether a part, plant and customer release exists.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|HS-410|CUST-AUR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HS-410,\"Exhaust heat shield, stamped\",PRG-X,B,MAT-DC04,COAT-ZNNI,"
+      },
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks"
+      }
+     ],
+     "why": "No controlled approval record covers HS-410 at Meccanica Chisone for any receiving plant or customer. The only HS-410 customer reference in the documents is the DEV-121 agreement with Aurelia. The supplier's listed commodity is aluminium extrusions and blanks, not stamping. The 2026-11-06 review set the supplier back to approved but said part approvals stay as they are. Absence of a record is not proof of non-approval, so a person must confirm whether a part, plant and customer release exists."
+    }
+   ]
+  },
+  "ttft_ms": 5210,
+  "type": "result",
+  "duration_ms": 7217,
+  "uuid": "737c1179-c144-4ef3-bea5-825140cc92b4",
+  "ttft_stream_ms": 1122,
+  "time_to_request_ms": 189,
+  "first_content_frame_ms": 1122,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

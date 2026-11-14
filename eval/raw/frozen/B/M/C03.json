@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "22225bdf7abd15b81bbcce9f32040ef4f67f750323d4cf1adbc1761346d84ef9",
+ "model_arg": "sonnet",
+ "seconds": 6.251280069351196,
+ "response": {
+  "duration_api_ms": 5286,
+  "stop_reason": "tool_use",
+  "session_id": "1cbbac62-0def-4860-864b-13a1e0cc3bd8",
+  "total_cost_usd": 0.0541113,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11548,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 783,
+   "output_tokens_details": {
+    "thinking_tokens": 364
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11548,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 783,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11548,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11548
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 783,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11548,
+    "webSearchRequests": 0,
+    "costUSD": 0.0541113,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 364,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11548,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by the supplier; found at incoming inspection on BR-310.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"Status: open.\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Material: EN AW-6082-T5 extrusion.\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"}],\"why\":\"Meccanica Chisone (SUP-C) has an open 8D on EN AW-6082 material, found on BR-310, which is made of 6082-T5. The 8D is still open as of 2026-11-06, even though the company was re-qualified. The packaging change itself (40 per layer) is already covered by DEV-125, valid 2026-08-01 to 2027-01-31, and needs no other finding.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by the supplier; found at incoming inspection on BR-310."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Status: open."
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Material: EN AW-6082-T5 extrusion."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      }
+     ],
+     "why": "Meccanica Chisone (SUP-C) has an open 8D on EN AW-6082 material, found on BR-310, which is made of 6082-T5. The 8D is still open as of 2026-11-06, even though the company was re-qualified. The packaging change itself (40 per layer) is already covered by DEV-125, valid 2026-08-01 to 2027-01-31, and needs no other finding."
+    }
+   ]
+  },
+  "ttft_ms": 3311,
+  "type": "result",
+  "duration_ms": 5423,
+  "uuid": "f8c96a8b-43b4-405d-9d3d-fed71e284b1f",
+  "ttft_stream_ms": 991,
+  "time_to_request_ms": 138,
+  "first_content_frame_ms": 992,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

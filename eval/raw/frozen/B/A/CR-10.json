@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "a1933656fac315a1f18cd022bd6790f491f89d3df2b3b691d5186ddd3897996e",
+ "model_arg": "sonnet",
+ "seconds": 9.548863172531128,
+ "response": {
+  "duration_api_ms": 8566,
+  "stop_reason": "tool_use",
+  "session_id": "332437ac-154e-46e8-95aa-8d9786f539b6",
+  "total_cost_usd": 0.0406793,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 7000,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1259,
+   "output_tokens_details": {
+    "thinking_tokens": 665
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 7000,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1259,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 7000,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 7000
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1259,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 7000,
+    "webSearchRequests": 0,
+    "costUSD": 0.0406793,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 665,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 7000,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Cracks at fastener holes found on machined brackets made from EN AW-6061-T6 (alloy group 6xxx).\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"Root cause not confirmed. A material-related contribution has not been excluded.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"Effectiveness verification not yet completed. Report status: OPEN.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 110: part BR-180 (drawing Rev F); program STL-Torino-27; customer STL; material EN AW-6061-T6; features: 4 fastener holes\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"La 8D-25-031 resta aperta.\"}],\"why\":\"Meccanica C has an OPEN 8D on cracks at fastener holes in EN AW-6061-T6, the same alloy as BR-180, which also has 4 fastener holes. A material contribution is not excluded and verification is not complete. The 2026-11-05 email lifts the probation but says the 8D stays open. The proposed move of 40% of BR-180 volume to Meccanica C therefore has an open quality issue on the material. Supplier standing is no longer a blocker, because the probation was revoked on 2026-11-05. The source approval AP-0207 for BR-180 at TO1 for STL is current, so there is no source-release finding.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Cracks at fastener holes found on machined brackets made from EN AW-6061-T6 (alloy group 6xxx)."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Root cause not confirmed. A material-related contribution has not been excluded."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Effectiveness verification not yet completed. Report status: OPEN."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 110: part BR-180 (drawing Rev F); program STL-Torino-27; customer STL; material EN AW-6061-T6; features: 4 fastener holes"
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "La 8D-25-031 resta aperta."
+      }
+     ],
+     "why": "Meccanica C has an OPEN 8D on cracks at fastener holes in EN AW-6061-T6, the same alloy as BR-180, which also has 4 fastener holes. A material contribution is not excluded and verification is not complete. The 2026-11-05 email lifts the probation but says the 8D stays open. The proposed move of 40% of BR-180 volume to Meccanica C therefore has an open quality issue on the material. Supplier standing is no longer a blocker, because the probation was revoked on 2026-11-05. The source approval AP-0207 for BR-180 at TO1 for STL is current, so there is no source-release finding."
+    }
+   ]
+  },
+  "ttft_ms": 5699,
+  "type": "result",
+  "duration_ms": 8768,
+  "uuid": "62707914-1493-4f08-ab6b-7b497e46e637",
+  "ttft_stream_ms": 725,
+  "time_to_request_ms": 202,
+  "first_content_frame_ms": 725,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

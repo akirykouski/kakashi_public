@@ -1,0 +1,163 @@
+{
+ "prompt_sha256": "473cc652193f2b72ac8cad280c61af527d81673c7b431464e78d41f1bfb821a8",
+ "model_arg": "sonnet",
+ "seconds": 15.038864135742188,
+ "response": {
+  "duration_api_ms": 14123,
+  "stop_reason": "tool_use",
+  "session_id": "7645cd9c-a9a0-4dc5-87ce-972c9dfb48c0",
+  "total_cost_usd": 0.0764881,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 13031,
+   "cache_read_input_tokens": 13261,
+   "output_tokens": 2303,
+   "output_tokens_details": {
+    "thinking_tokens": 558
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 13031,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 883,
+     "cache_read_input_tokens": 12408,
+     "cache_creation_input_tokens": 1476,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1476
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2303,
+    "cacheReadInputTokens": 13261,
+    "cacheCreationInputTokens": 13031,
+    "webSearchRequests": 0,
+    "costUSD": 0.0764881,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 558,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 13031,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-D\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-SUPPLIER_QUALIFICATION\",\"quote\":\"QS-D-2026,SUP-D,conditional,2026-09-15,,PER-BIANCHI,QS-D-2022,\\\"porosity escapes, see 8D-26-009\\\"\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier with status conditional may not receive new parts.\"}],\"why\":\"Fonderia Dora has been conditional since 2026-09-15 (it replaced the approved QS-D-2022). Placing new HB-620 orders with it is new business that QP-11 4.3 does not allow.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-D|HB-620|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-010,SUP-D,HB-620,PLT-PIN,CUST-NOR,revoked,2026-09-15,,PER-BIANCHI,APR-009\"},{\"doc_id\":\"MTG-2026-09-15\",\"quote\":\"Then I revoke Dora's approval for HB-620 today and set Dora to conditional.\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer.\"}],\"why\":\"The statement that Dora is still on the approved list is outdated. APR-009 was superseded by APR-010, which revoked the approval on 2026-09-15. No current approval exists for Dora, HB-620, PLT-PIN and CUST-NOR. The current approved source is Fonderia Pellice (APR-011).\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-26-009\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Opened 2026-08-20. Status: open.\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the Nordhavn line.\"}],\"why\":\"Dora has an open 8D on porosity in the AlSi9Cu3 castings of HB-620. This is the same material and part as the proposed order.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-D",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-SUPPLIER_QUALIFICATION",
+       "quote": "QS-D-2026,SUP-D,conditional,2026-09-15,,PER-BIANCHI,QS-D-2022,\"porosity escapes, see 8D-26-009\""
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier with status conditional may not receive new parts."
+      }
+     ],
+     "why": "Fonderia Dora has been conditional since 2026-09-15 (it replaced the approved QS-D-2022). Placing new HB-620 orders with it is new business that QP-11 4.3 does not allow."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-D|HB-620|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-010,SUP-D,HB-620,PLT-PIN,CUST-NOR,revoked,2026-09-15,,PER-BIANCHI,APR-009"
+      },
+      {
+       "doc_id": "MTG-2026-09-15",
+       "quote": "Then I revoke Dora's approval for HB-620 today and set Dora to conditional."
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer."
+      }
+     ],
+     "why": "The statement that Dora is still on the approved list is outdated. APR-009 was superseded by APR-010, which revoked the approval on 2026-09-15. No current approval exists for Dora, HB-620, PLT-PIN and CUST-NOR. The current approved source is Fonderia Pellice (APR-011)."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-26-009",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Opened 2026-08-20. Status: open."
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the Nordhavn line."
+      }
+     ],
+     "why": "Dora has an open 8D on porosity in the AlSi9Cu3 castings of HB-620. This is the same material and part as the proposed order."
+    }
+   ]
+  },
+  "ttft_ms": 5009,
+  "type": "result",
+  "duration_ms": 14233,
+  "uuid": "4bf6c726-c354-4f0f-9a43-2e9f1916109d",
+  "ttft_stream_ms": 946,
+  "time_to_request_ms": 100,
+  "first_content_frame_ms": 947,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

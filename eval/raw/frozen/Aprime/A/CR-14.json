@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "3ac55b109c9d9f34b7e67cd2d599a55af0cbcfa13df66ab1b46bb2362583d6ac",
+ "model_arg": "sonnet",
+ "seconds": 10.72562313079834,
+ "response": {
+  "duration_api_ms": 9684,
+  "stop_reason": "tool_use",
+  "session_id": "df5b2fa2-f342-4a19-b6e4-84137b4f1780",
+  "total_cost_usd": 0.0306772,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 3939,
+   "cache_read_input_tokens": 4632,
+   "output_tokens": 1445,
+   "output_tokens_details": {
+    "thinking_tokens": 502
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3939,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 476,
+     "cache_read_input_tokens": 3779,
+     "cache_creation_input_tokens": 1013,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1013
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1445,
+    "cacheReadInputTokens": 4632,
+    "cacheCreationInputTokens": 3939,
+    "webSearchRequests": 0,
+    "costUSD": 0.0306772,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 502,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3939,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"8.3.6.1 Any change to a requirement stated on a customer drawing, including material and finish, needs written approval from Stellantis before the change is implemented.\"},{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"Annex A: programs STL-Torino-27 and STL-Torino-31.\"},{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Finish: anodise type II, thickness 10 to 15 micrometres, black, per specification SPEC-FIN-12.\"},{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Program: STL-Torino-27\"}],\"why\":\"BR-220 belongs to program STL-Torino-27, which is listed in Annex A of the Stellantis requirements. The effective drawing Rev C specifies anodise type II as the finish. Changing it to a chromate conversion coat changes a requirement on the customer drawing. Clause 8.3.6.1 therefore requires written Stellantis approval before the change is implemented. No document in force contains such an approval.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "8.3.6.1 Any change to a requirement stated on a customer drawing, including material and finish, needs written approval from Stellantis before the change is implemented."
+      },
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "Annex A: programs STL-Torino-27 and STL-Torino-31."
+      },
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Finish: anodise type II, thickness 10 to 15 micrometres, black, per specification SPEC-FIN-12."
+      },
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Program: STL-Torino-27"
+      }
+     ],
+     "why": "BR-220 belongs to program STL-Torino-27, which is listed in Annex A of the Stellantis requirements. The effective drawing Rev C specifies anodise type II as the finish. Changing it to a chromate conversion coat changes a requirement on the customer drawing. Clause 8.3.6.1 therefore requires written Stellantis approval before the change is implemented. No document in force contains such an approval."
+    }
+   ]
+  },
+  "ttft_ms": 4715,
+  "type": "result",
+  "duration_ms": 9851,
+  "uuid": "f0a706c7-1e3f-4682-af1a-de9178267f45",
+  "ttft_stream_ms": 780,
+  "time_to_request_ms": 159,
+  "first_content_frame_ms": 780,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

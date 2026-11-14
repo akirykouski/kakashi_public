@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "8295f284cf372ec199fa765a2210617eb6a40fbcab0b76c2ac86ac5eafc69fd1",
+ "model_arg": "sonnet",
+ "seconds": 10.306761026382446,
+ "response": {
+  "duration_api_ms": 8904,
+  "stop_reason": "tool_use",
+  "session_id": "65566c5e-495a-46d0-b714-9c84badbd784",
+  "total_cost_usd": 0.025853300000000003,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3221,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1288,
+   "output_tokens_details": {
+    "thinking_tokens": 575
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3221,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1288,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3221,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3221
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1288,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3221,
+    "webSearchRequests": 0,
+    "costUSD": 0.025853300000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 575,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3221,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Chisone (SUP-C) has conditional qualification as of the last board record. No newer document lifts it. Moving BR-310 deliveries to a new receiving plant is new business for a conditional supplier.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-310|CUST-NOR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"PC-BR310\",\"quote\":\"Source: Meccanica Chisone (SUP-C).\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"roof rail bracket for the Nordhavn Fjell (PRG-Y)\"}],\"why\":\"The part card names Chisone as source for BR-310 (Nordhavn). No controlled record gives a source approval per receiving plant, so nothing shows whether Chisone is approved for BR-310 to Beinasco (PLT-BEI). Pinerolo is the current plant by the proposal's wording, and Beinasco is the new one. Absence of a record is not proof of non-approval, so a person must confirm.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D cracking on Chisone 6082 material (no issue id in documents)\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"the cracking 8D on their 6082 material is still open\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Material: EN AW-6082-T5 extrusion.\"}],\"why\":\"BR-310 is made from EN AW-6082-T5, and Chisone has an open cracking 8D on its 6082 material. No document shows it as closed. The issue id is not given in the documents.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Chisone (SUP-C) has conditional qualification as of the last board record. No newer document lifts it. Moving BR-310 deliveries to a new receiving plant is new business for a conditional supplier."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-310|CUST-NOR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Source: Meccanica Chisone (SUP-C)."
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "roof rail bracket for the Nordhavn Fjell (PRG-Y)"
+      }
+     ],
+     "why": "The part card names Chisone as source for BR-310 (Nordhavn). No controlled record gives a source approval per receiving plant, so nothing shows whether Chisone is approved for BR-310 to Beinasco (PLT-BEI). Pinerolo is the current plant by the proposal's wording, and Beinasco is the new one. Absence of a record is not proof of non-approval, so a person must confirm."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D cracking on Chisone 6082 material (no issue id in documents)",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "the cracking 8D on their 6082 material is still open"
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Material: EN AW-6082-T5 extrusion."
+      }
+     ],
+     "why": "BR-310 is made from EN AW-6082-T5, and Chisone has an open cracking 8D on its 6082 material. No document shows it as closed. The issue id is not given in the documents."
+    }
+   ]
+  },
+  "ttft_ms": 5456,
+  "type": "result",
+  "duration_ms": 9424,
+  "uuid": "e8c54f47-0ae0-4d5f-8ecc-6a515f9d427a",
+  "ttft_stream_ms": 1400,
+  "time_to_request_ms": 520,
+  "first_content_frame_ms": 1400,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "5513b40a37a2036dde338688b47affa545638cd731340ef951bec0d47c359366",
+ "model_arg": "sonnet",
+ "seconds": 12.753338098526001,
+ "response": {
+  "duration_api_ms": 11751,
+  "stop_reason": "tool_use",
+  "session_id": "75ee7246-bc85-4e19-b413-bf22d4ad1470",
+  "total_cost_usd": 0.0358724,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4024,
+   "cache_read_input_tokens": 4484,
+   "output_tokens": 1932,
+   "output_tokens_details": {
+    "thinking_tokens": 448
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4024,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 749,
+     "cache_read_input_tokens": 3631,
+     "cache_creation_input_tokens": 1246,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1246
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1932,
+    "cacheReadInputTokens": 4484,
+    "cacheCreationInputTokens": 4024,
+    "webSearchRequests": 0,
+    "costUSD": 0.0358724,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 448,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4024,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-220\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Service and aftermarket parts are not in scope of this record.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)\"},{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt.\"}],\"why\":\"The only approval for BR-220 from Alluminio B (AP-0311) is for TO1 and STL series supply. The request is for service parts, which the approved source list excludes. The receiving plant is also not stated. No controlled record in the documents covers service-part approval for this part, plant and customer, so the absence cannot be read as 'not approved'. A person must confirm whether a service-part approval exists, for example under STL-CSR-SP-01, and which plant receives the parts.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Material certificates are not stored in this record.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes\"}],\"why\":\"The billet in stock would need to be EN AW-6082-T6 to meet the BOM and drawing Rev C. No certificate or test result for this stock billet or its lot is in the documents. A person must supply it to confirm the grade.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-220",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Service and aftermarket parts are not in scope of this record."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)"
+      },
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt."
+      }
+     ],
+     "why": "The only approval for BR-220 from Alluminio B (AP-0311) is for TO1 and STL series supply. The request is for service parts, which the approved source list excludes. The receiving plant is also not stated. No controlled record in the documents covers service-part approval for this part, plant and customer, so the absence cannot be read as 'not approved'. A person must confirm whether a service-part approval exists, for example under STL-CSR-SP-01, and which plant receives the parts."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Material certificates are not stored in this record."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes"
+      }
+     ],
+     "why": "The billet in stock would need to be EN AW-6082-T6 to meet the BOM and drawing Rev C. No certificate or test result for this stock billet or its lot is in the documents. A person must supply it to confirm the grade."
+    }
+   ]
+  },
+  "ttft_ms": 3892,
+  "type": "result",
+  "duration_ms": 11925,
+  "uuid": "4b798226-46d7-462a-b618-c34cdc9c97ed",
+  "ttft_stream_ms": 848,
+  "time_to_request_ms": 166,
+  "first_content_frame_ms": 848,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

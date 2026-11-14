@@ -1,0 +1,127 @@
+{
+ "prompt_sha256": "3faf1acf10847821dd70d41966d636af853a68931e375446a7d3924b14b7e4a5",
+ "model_arg": "sonnet",
+ "seconds": 5.965277194976807,
+ "response": {
+  "duration_api_ms": 5007,
+  "stop_reason": "tool_use",
+  "session_id": "001f409f-0855-492a-ba74-a8e59fb5003d",
+  "total_cost_usd": 0.0196373,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3272,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 646,
+   "output_tokens_details": {
+    "thinking_tokens": 291
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3272,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 646,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3272,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3272
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 646,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3272,
+    "webSearchRequests": 0,
+    "costUSD": 0.0196373,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 291,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3272,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"coating_substances\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-ZNNI,Zinc-nickel 8-12 um with trivalent (Cr(III)) passivation,Zinc;Nickel;CrIII\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-180,\\\"Battery tray bracket, milled\\\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,\"}],\"why\":\"The proposed 'Nanoceram' finish for BR-180 is not in the coating catalogue. The catalogue lists only other coatings, and the drawing in force calls for COAT-ANOD. Its substances are unknown, so a person must supply the composition. Until then it can't be checked for restricted substances such as CrVI.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "coating_substances",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-ZNNI,Zinc-nickel 8-12 um with trivalent (Cr(III)) passivation,Zinc;Nickel;CrIII"
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-180,\"Battery tray bracket, milled\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,"
+      }
+     ],
+     "why": "The proposed 'Nanoceram' finish for BR-180 is not in the coating catalogue. The catalogue lists only other coatings, and the drawing in force calls for COAT-ANOD. Its substances are unknown, so a person must supply the composition. Until then it can't be checked for restricted substances such as CrVI."
+    }
+   ]
+  },
+  "ttft_ms": 3273,
+  "type": "result",
+  "duration_ms": 5104,
+  "uuid": "92de012e-eaab-4f7e-9060-761da299a0f5",
+  "ttft_stream_ms": 1098,
+  "time_to_request_ms": 98,
+  "first_content_frame_ms": 1098,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

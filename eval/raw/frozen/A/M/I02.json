@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "8bf29ff592f6b8d6e1a0554c7912811a913b288655f426a8339f3a205a6376d3",
+ "model_arg": "sonnet",
+ "seconds": 12.815599918365479,
+ "response": {
+  "duration_api_ms": 9807,
+  "stop_reason": "tool_use",
+  "session_id": "ec2fcb82-1d18-4135-9903-b7ad275d55eb",
+  "total_cost_usd": 0.026567300000000002,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3457,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1265,
+   "output_tokens_details": {
+    "thinking_tokens": 859
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3457,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1265,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3457,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3457
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1265,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3457,
+    "webSearchRequests": 0,
+    "costUSD": 0.026567300000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 859,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3457,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-225|unknown\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-09-15\",\"quote\":\"Can Meccanica Chisone take over the BR-225 blanks?\"},{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks\"},{\"doc_id\":\"DEV-127\",\"quote\":\"Status: rejected on 2026-10-02 by A. Conti\"}],\"why\":\"No controlled approval record covers SUP-C for BR-225 for any receiving plant or customer. The supplier master only lists the commodity. DEV-127 (rejected) concerns BR-220, and DEV-114 (expired) concerns BR-180, so neither covers BR-225. The customer of BR-225 is not stated in any document. Absence of a record is not proof of non-approval, so a person must confirm whether SUP-C is released for BR-225.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-225|unknown",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-09-15",
+       "quote": "Can Meccanica Chisone take over the BR-225 blanks?"
+      },
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks"
+      },
+      {
+       "doc_id": "DEV-127",
+       "quote": "Status: rejected on 2026-10-02 by A. Conti"
+      }
+     ],
+     "why": "No controlled approval record covers SUP-C for BR-225 for any receiving plant or customer. The supplier master only lists the commodity. DEV-127 (rejected) concerns BR-220, and DEV-114 (expired) concerns BR-180, so neither covers BR-225. The customer of BR-225 is not stated in any document. Absence of a record is not proof of non-approval, so a person must confirm whether SUP-C is released for BR-225."
+    }
+   ]
+  },
+  "ttft_ms": 9837,
+  "type": "result",
+  "duration_ms": 11982,
+  "uuid": "a4b74174-0c82-443a-b27a-de1a98b674b0",
+  "ttft_stream_ms": 3432,
+  "time_to_request_ms": 2173,
+  "first_content_frame_ms": 3432,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

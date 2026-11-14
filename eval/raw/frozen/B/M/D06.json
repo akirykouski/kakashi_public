@@ -1,0 +1,179 @@
+{
+ "prompt_sha256": "708e725cde6a52b2dbe3df59da05558a4bb30c8b82226ef45dacc2a6e53f9d2a",
+ "model_arg": "sonnet",
+ "seconds": 11.221612215042114,
+ "response": {
+  "duration_api_ms": 9848,
+  "stop_reason": "tool_use",
+  "session_id": "fa9eae0c-3c57-48fd-909b-bfe31cd9ac31",
+  "total_cost_usd": 0.0623293,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11555,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1602,
+   "output_tokens_details": {
+    "thinking_tokens": 497
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11555,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1602,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11555,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11555
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1602,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11555,
+    "webSearchRequests": 0,
+    "costUSD": 0.0623293,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 497,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11555,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_RESTRICTED_SUBSTANCE\",\"key\":\"CrVI\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-CCC-YELLOW,Yellow chromate conversion coating on aluminium,CrVI\"},{\"doc_id\":\"LAW-ELV\",\"quote\":\"do not contain lead, mercury, cadmium or hexavalent chromium other than in cases listed in\"},{\"doc_id\":\"LAW-ELV\",\"quote\":\"the Annex II exemption for hexavalent chromium in corrosion-preventive coatings has expired\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"}],\"why\":\"BR-310 belongs to PRG-Y, which is sold in the EU market. The proposed yellow chromate coating contains hexavalent chromium. Our own note says the Annex II exemption has expired, so the coating cannot be used.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.2 A change of coating requires Nordhavn approval before the first shipment.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP,\"},{\"doc_id\":\"REG-CUSTOMERS\",\"quote\":\"CUST-NOR,Nordhavn Trucks AB,MKT-EU,CSR-NOR-R2\"}],\"why\":\"BR-310 belongs to PRG-Y, which belongs to Nordhavn. Changing the coating from COAT-TCP to COAT-CCC-YELLOW needs written Nordhavn approval before the first shipment. No deviation or approval in force covers this change. DEV-125 only covers packing.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Material: EN AW-6082-T5 extrusion.\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"}],\"why\":\"SUP-C is the source of BR-310. SUP-C has an open 8D on EN AW-6082 material, which is the alloy of BR-310 (6082-T5), and the 8D was raised on BR-310 itself. The re-audit restored SUP-C's company status but did not close the 8D.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_RESTRICTED_SUBSTANCE",
+     "key": "CrVI",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-CCC-YELLOW,Yellow chromate conversion coating on aluminium,CrVI"
+      },
+      {
+       "doc_id": "LAW-ELV",
+       "quote": "do not contain lead, mercury, cadmium or hexavalent chromium other than in cases listed in"
+      },
+      {
+       "doc_id": "LAW-ELV",
+       "quote": "the Annex II exemption for hexavalent chromium in corrosion-preventive coatings has expired"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      }
+     ],
+     "why": "BR-310 belongs to PRG-Y, which is sold in the EU market. The proposed yellow chromate coating contains hexavalent chromium. Our own note says the Annex II exemption has expired, so the coating cannot be used."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.2 A change of coating requires Nordhavn approval before the first shipment."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP,"
+      },
+      {
+       "doc_id": "REG-CUSTOMERS",
+       "quote": "CUST-NOR,Nordhavn Trucks AB,MKT-EU,CSR-NOR-R2"
+      }
+     ],
+     "why": "BR-310 belongs to PRG-Y, which belongs to Nordhavn. Changing the coating from COAT-TCP to COAT-CCC-YELLOW needs written Nordhavn approval before the first shipment. No deviation or approval in force covers this change. DEV-125 only covers packing."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by"
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Material: EN AW-6082-T5 extrusion."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      }
+     ],
+     "why": "SUP-C is the source of BR-310. SUP-C has an open 8D on EN AW-6082 material, which is the alloy of BR-310 (6082-T5), and the 8D was raised on BR-310 itself. The re-audit restored SUP-C's company status but did not close the 8D."
+    }
+   ]
+  },
+  "ttft_ms": 4700,
+  "type": "result",
+  "duration_ms": 10166,
+  "uuid": "890b3cf6-0d9d-470f-920b-f74d8107b811",
+  "ttft_stream_ms": 1304,
+  "time_to_request_ms": 317,
+  "first_content_frame_ms": 1304,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

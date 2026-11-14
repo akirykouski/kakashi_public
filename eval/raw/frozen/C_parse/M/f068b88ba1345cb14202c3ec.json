@@ -1,0 +1,50 @@
+{
+ "note": "Galvanica Eporediese offered to cast the HB-620 housings for us. Let's do it.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "claude -p --model sonnet (eval track, subscription CLI)",
+ "output": {
+  "type": "SourceChange",
+  "part": "HB-620 housings",
+  "to_supplier": "Galvanica Eporediese",
+  "from_supplier": null,
+  "site": null,
+  "new_material": null,
+  "new_coating": null
+ },
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1087,
+  "cache_read_input_tokens": 1024,
+  "output_tokens": 209,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1087,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 209,
+    "cache_read_input_tokens": 1024,
+    "cache_creation_input_tokens": 1087,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1087
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null,
+  "model_id": "claude-sonnet-5-5",
+  "seconds": 3.0943970680236816
+ }
+}

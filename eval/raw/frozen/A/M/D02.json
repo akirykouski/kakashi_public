@@ -1,0 +1,123 @@
+{
+ "prompt_sha256": "41ebcc11300a7789468642ae87a47f1c5d348bd61b7137c18d15cafb8c49d31b",
+ "model_arg": "sonnet",
+ "seconds": 9.584137916564941,
+ "response": {
+  "duration_api_ms": 7700,
+  "stop_reason": "tool_use",
+  "session_id": "5a42d538-069a-47c3-87de-e77e49f40846",
+  "total_cost_usd": 0.027428,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 4241,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 1046,
+   "output_tokens_details": {
+    "thinking_tokens": 703
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4241,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1046,
+     "cache_read_input_tokens": 0,
+     "cache_creation_input_tokens": 4241,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 4241
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1046,
+    "cacheReadInputTokens": 0,
+    "cacheCreationInputTokens": 4241,
+    "webSearchRequests": 0,
+    "costUSD": 0.027428,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 703,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4241,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-G|SP-700|CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-012,SUP-F,SP-700,PLT-BEI,CUST-AUR,approved,2023-04-18,,PER-BIANCHI,\"}],\"why\":\"The approved supplier list covers SP-700 at PLT-BEI for CUST-AUR and lists only SUP-F (Plastiche Fenestrelle) as approved. There is no approval record for SUP-G (Minuterie Germanasca) for this part, plant and customer. The register covers this part, so the missing entry means SUP-G is not approved. SUP-G's commodity in the supplier master is \\\"steel stampings, clips, pins\\\", not injection moulding.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-G|SP-700|CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-012,SUP-F,SP-700,PLT-BEI,CUST-AUR,approved,2023-04-18,,PER-BIANCHI,"
+      }
+     ],
+     "why": "The approved supplier list covers SP-700 at PLT-BEI for CUST-AUR and lists only SUP-F (Plastiche Fenestrelle) as approved. There is no approval record for SUP-G (Minuterie Germanasca) for this part, plant and customer. The register covers this part, so the missing entry means SUP-G is not approved. SUP-G's commodity in the supplier master is \"steel stampings, clips, pins\", not injection moulding."
+    }
+   ]
+  },
+  "ttft_ms": 5932,
+  "type": "result",
+  "duration_ms": 7741,
+  "uuid": "f42ae587-9afd-478e-9bd0-eb3faf3cc878",
+  "ttft_stream_ms": 923,
+  "time_to_request_ms": 57,
+  "first_content_frame_ms": 923,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}
