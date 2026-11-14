@@ -1,0 +1,187 @@
+{
+ "prompt_sha256": "693d2cd655fcd6fabefac3c52cef1101653f989c4d625015f0ef597450758931",
+ "model_arg": "sonnet",
+ "seconds": 14.850675821304321,
+ "response": {
+  "duration_api_ms": 13664,
+  "stop_reason": "tool_use",
+  "session_id": "614f7d59-4fa3-4f3e-91c7-a64d61797dba",
+  "total_cost_usd": 0.38269729999999996,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 90317,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 2134,
+   "output_tokens_details": {
+    "thinking_tokens": 680
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 90317,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 2134,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 90317,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 90317
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 2134,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 90317,
+    "webSearchRequests": 0,
+    "costUSD": 0.38269729999999996,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 680,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 90317,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-E|HB-620|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that\\nsupplier, that part, the receiving site and the customer.\"},{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-011,SUP-H,HB-620,PLT-PIN,CUST-NOR,approved,2026-10-01,,PER-BIANCHI,\"},{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-006,SUP-E,HB-620\"}],\"why\":\"The approved supplier list has HB-620 / PLT-PIN / CUST-NOR approvals for SUP-D (revoked) and SUP-H only. SUP-E has an approval only for HS-410 and has none for HB-620. The list covers this part, plant and customer, so the absence means 'not approved'. The line quoted from REG-ASL for APR-006 is a mismatch with SUP-E on HS-410, shown only to indicate SUP-E's sole entry; the controlling record is that no SUP-E|HB-620 line exists.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before\\nthe first shipment.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"HB-620,\\\"Gearbox mount housing, die cast\\\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"}],\"why\":\"HB-620 belongs to PRG-Y, a Nordhavn program. Changing the source to Galvanica Eporediese is a change of source and needs written Nordhavn approval (PPAP) before first shipment. No such approval is in the documents.\"},{\"rule_u\":\"U_MATERIAL\",\"key\":\"MAT-ALSI9CU3\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"HB-620,\\\"Gearbox mount housing, die cast\\\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR\"},{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-E,Galvanica Eporediese S.r.l.,electroplating (coater)\"},{\"doc_id\":\"REG-SPECIAL_CHARACTERISTICS\",\"quote\":\"SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores\"}],\"why\":\"The drawing requires die-cast EN AC-46000 (MAT-ALSI9CU3) with porosity grade 2 or better in the mount bores. SUP-E is a coater and has no capability line for MAT-ALSI9CU3 or for casting in REG-CAPABILITIES. Only SUP-D and SUP-H are qualified for it.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"QP-11\",\"quote\":\"A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for\\nthe drawing material. Missing certificates are an open question for the supplier quality engineer.\"},{\"doc_id\":\"REG-CERTIFICATES\",\"quote\":\"CERT-H-ALSI,SUP-H,MAT-ALSI9CU3,2026-10-01\"}],\"why\":\"REG-CERTIFICATES has no 3.1 certificate from SUP-E for MAT-ALSI9CU3. The SUQ owner, the supplier quality engineer (E. Gallo), has to answer.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-E|HB-620|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that\nsupplier, that part, the receiving site and the customer."
+      },
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-011,SUP-H,HB-620,PLT-PIN,CUST-NOR,approved,2026-10-01,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-006,SUP-E,HB-620"
+      }
+     ],
+     "why": "The approved supplier list has HB-620 / PLT-PIN / CUST-NOR approvals for SUP-D (revoked) and SUP-H only. SUP-E has an approval only for HS-410 and has none for HB-620. The list covers this part, plant and customer, so the absence means 'not approved'. The line quoted from REG-ASL for APR-006 is a mismatch with SUP-E on HS-410, shown only to indicate SUP-E's sole entry; the controlling record is that no SUP-E|HB-620 line exists."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before\nthe first shipment."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HB-620,\"Gearbox mount housing, die cast\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      }
+     ],
+     "why": "HB-620 belongs to PRG-Y, a Nordhavn program. Changing the source to Galvanica Eporediese is a change of source and needs written Nordhavn approval (PPAP) before first shipment. No such approval is in the documents."
+    },
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "MAT-ALSI9CU3",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "HB-620,\"Gearbox mount housing, die cast\",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR"
+      },
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-E,Galvanica Eporediese S.r.l.,electroplating (coater)"
+      },
+      {
+       "doc_id": "REG-SPECIAL_CHARACTERISTICS",
+       "quote": "SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores"
+      }
+     ],
+     "why": "The drawing requires die-cast EN AC-46000 (MAT-ALSI9CU3) with porosity grade 2 or better in the mount bores. SUP-E is a coater and has no capability line for MAT-ALSI9CU3 or for casting in REG-CAPABILITIES. Only SUP-D and SUP-H are qualified for it."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "QP-11",
+       "quote": "A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for\nthe drawing material. Missing certificates are an open question for the supplier quality engineer."
+      },
+      {
+       "doc_id": "REG-CERTIFICATES",
+       "quote": "CERT-H-ALSI,SUP-H,MAT-ALSI9CU3,2026-10-01"
+      }
+     ],
+     "why": "REG-CERTIFICATES has no 3.1 certificate from SUP-E for MAT-ALSI9CU3. The SUQ owner, the supplier quality engineer (E. Gallo), has to answer."
+    }
+   ]
+  },
+  "ttft_ms": 5973,
+  "type": "result",
+  "duration_ms": 13903,
+  "uuid": "02f7a156-c7e7-472f-bc7a-7f1fb6993843",
+  "ttft_stream_ms": 1322,
+  "time_to_request_ms": 350,
+  "first_content_frame_ms": 1322,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

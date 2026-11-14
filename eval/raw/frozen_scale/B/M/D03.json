@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "7791df9186592b7ffb65e9d4e1404ddf39082aefc8c9757c7b5e27592dc97ac6",
+ "model_arg": "sonnet",
+ "seconds": 16.59170413017273,
+ "response": {
+  "duration_api_ms": 15466,
+  "stop_reason": "tool_use",
+  "session_id": "54d4dbd3-3774-4b6e-8c8e-bd2c95190f7a",
+  "total_cost_usd": 0.4007694,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 91845,
+   "cache_read_input_tokens": 92014,
+   "output_tokens": 2418,
+   "output_tokens_details": {
+    "thinking_tokens": 601
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 91845,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 934,
+     "cache_read_input_tokens": 91161,
+     "cache_creation_input_tokens": 1537,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1537
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2418,
+    "cacheReadInputTokens": 92014,
+    "cacheCreationInputTokens": 91845,
+    "webSearchRequests": 0,
+    "costUSD": 0.4007694,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 601,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 91845,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-B|BR-180|CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that\\nsupplier, that part, the receiving site and the customer.\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier audit qualifies the supplier as a company. It does not approve the supplier for any\\npart.\"}],\"why\":\"The approved supplier list covers BR-180 at PLT-BEI for CUST-AUR, but its only approval is for SUP-C. There is no approval for SUP-B on BR-180. SUP-B's approvals are for BR-220 and BR-225 only, and an approval for one part does not carry over to another. The qualification and capability records for SUP-B do not replace a part approval.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-180,\\\"Battery tray bracket, milled\\\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\\nafter any of: a change of source,\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Approval is granted per part number and per manufacturing site. An approval for one part does not\\nextend to another part, even if made of the same material.\"}],\"why\":\"BR-180 belongs to PRG-Z, an Aurelia program. Adding SUP-B is a change of source. Revision 4 of the Aurelia manual (which replaces revision 3) requires written Aurelia approval before shipment, and it requires 90 days' notice of the planned change. No Aurelia approval is on file. Existing Aurelia approvals for SUP-B on BR-220 and BR-225 do not cover BR-180.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-B|BR-180|CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that\nsupplier, that part, the receiving site and the customer."
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier audit qualifies the supplier as a company. It does not approve the supplier for any\npart."
+      }
+     ],
+     "why": "The approved supplier list covers BR-180 at PLT-BEI for CUST-AUR, but its only approval is for SUP-C. There is no approval for SUP-B on BR-180. SUP-B's approvals are for BR-220 and BR-225 only, and an approval for one part does not carry over to another. The qualification and capability records for SUP-B do not replace a part approval."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-180,\"Battery tray bracket, milled\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter any of: a change of source,"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Approval is granted per part number and per manufacturing site. An approval for one part does not\nextend to another part, even if made of the same material."
+      }
+     ],
+     "why": "BR-180 belongs to PRG-Z, an Aurelia program. Adding SUP-B is a change of source. Revision 4 of the Aurelia manual (which replaces revision 3) requires written Aurelia approval before shipment, and it requires 90 days' notice of the planned change. No Aurelia approval is on file. Existing Aurelia approvals for SUP-B on BR-220 and BR-225 do not cover BR-180."
+    }
+   ]
+  },
+  "ttft_ms": 5439,
+  "type": "result",
+  "duration_ms": 15615,
+  "uuid": "1e67abbf-a422-4952-832f-7a6a110f2782",
+  "ttft_stream_ms": 1277,
+  "time_to_request_ms": 152,
+  "first_content_frame_ms": 1277,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

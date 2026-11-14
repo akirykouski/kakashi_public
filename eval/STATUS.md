@@ -2,7 +2,7 @@
 
 Owner: Maksim (eval track). Updated 12:41 Rome. Protocol: `docs/methodology.md`. Every interpretation and deviation: `docs/benchmarks/CHANGES.md`.
 
-**One line:** reported run done; results, hypotheses and three sentences for the pitch are in `docs/benchmarks/RESULTS.md`. H1 PASS, H4 PASS (both worlds, at a tie; fails on world A), H2 FAIL, H3 not run.
+**One line:** reported run done; results, hypotheses and three sentences for the pitch are in `docs/benchmarks/RESULTS.md`. H1 PASS, H4 PASS (both worlds, at a tie; fails on world A), H2 FAIL, H3 FAIL (world M at 8×: full context did not degrade).
 
 ## Done
 
@@ -25,7 +25,7 @@ Nothing. Reported run finished: `eval/results/frozen/` (1650459).
 ## Next
 
 1. Done: `docs/benchmarks/RESULTS.md`.
-2. H3 (8× company size) on world M if time allows; otherwise reported as "not run".
+2. Done: H3 on world M at 8× (`eval/results/frozen_scale/`).
 3. Ablations (methodology §4) only if everything above is done by 14:45.
 
 ## Decisions taken (so nobody has to ask)

@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "41c646c0f8c3aa90b116284494d39e6257567290cd5d9535652aedead5bcf490",
+ "model_arg": "sonnet",
+ "seconds": 11.822975873947144,
+ "response": {
+  "duration_api_ms": 10771,
+  "stop_reason": "tool_use",
+  "session_id": "f25bfd78-99bd-4451-871e-de52232d46ec",
+  "total_cost_usd": 0.38902749999999997,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 91317,
+   "cache_read_input_tokens": 92015,
+   "output_tokens": 1455,
+   "output_tokens_details": {
+    "thinking_tokens": 649
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 91317,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 491,
+     "cache_read_input_tokens": 91162,
+     "cache_creation_input_tokens": 1008,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1008
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1455,
+    "cacheReadInputTokens": 92015,
+    "cacheCreationInputTokens": 91317,
+    "webSearchRequests": 0,
+    "costUSD": 0.38902749999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 649,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 91317,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"why\":\"BR-220 belongs to PRG-X, an Aurelia program. Aurelia's Supplier Quality Manual revision 4 replaces revision 3. It requires written approval (PPAP resubmission) before shipping after a change of coating or surface treatment. It also requires 90 days' notice. Changing BR-220 from clear anodising to a trivalent conversion coating is such a change. Nothing in force covers it, and revision 3's notification-only rule for same-family coating changes is superseded.\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-220,\\\"Front subframe bracket, milled\\\",PRG-X\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-X,Aurelia Torre compact SUV,CUST-AUR\"},{\"doc_id\":\"REG-CUSTOMERS\",\"quote\":\"CUST-AUR,Aurelia Automobili S.p.A.,MKT-EU,CSR-AUR-R3;CSR-AUR-R4\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"of coating or surface treatment.\"}]}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "why": "BR-220 belongs to PRG-X, an Aurelia program. Aurelia's Supplier Quality Manual revision 4 replaces revision 3. It requires written approval (PPAP resubmission) before shipping after a change of coating or surface treatment. It also requires 90 days' notice. Changing BR-220 from clear anodising to a trivalent conversion coating is such a change. Nothing in force covers it, and revision 3's notification-only rule for same-family coating changes is superseded.",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR"
+      },
+      {
+       "doc_id": "REG-CUSTOMERS",
+       "quote": "CUST-AUR,Aurelia Automobili S.p.A.,MKT-EU,CSR-AUR-R3;CSR-AUR-R4"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "of coating or surface treatment."
+      }
+     ]
+    }
+   ]
+  },
+  "ttft_ms": 6070,
+  "type": "result",
+  "duration_ms": 11058,
+  "uuid": "d3820ff2-e630-4fdb-8467-c3ec4af159a2",
+  "ttft_stream_ms": 1233,
+  "time_to_request_ms": 277,
+  "first_content_frame_ms": 1233,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

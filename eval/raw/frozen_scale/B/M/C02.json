@@ -1,0 +1,110 @@
+{
+ "prompt_sha256": "fd54e3f08f269cdeaf1f6f3edd8be90b0bdb461442567be78f3a14c1d6afd094",
+ "model_arg": "sonnet",
+ "seconds": 5.360098123550415,
+ "response": {
+  "duration_api_ms": 4296,
+  "stop_reason": "tool_use",
+  "session_id": "5481ad5c-868b-4c7e-a137-2290b81f3073",
+  "total_cost_usd": 0.3665233,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 90321,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 515,
+   "output_tokens_details": {
+    "thinking_tokens": 461
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 90321,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 515,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 90321,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 90321
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 515,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 90321,
+    "webSearchRequests": 0,
+    "costUSD": 0.3665233,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 461,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 90321,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[]}",
+  "structured_output": {
+   "findings": []
+  },
+  "ttft_ms": 4214,
+  "type": "result",
+  "duration_ms": 4379,
+  "uuid": "b163af51-546a-4244-a574-8d7287136e7a",
+  "ttft_stream_ms": 903,
+  "time_to_request_ms": 79,
+  "first_content_frame_ms": 903,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

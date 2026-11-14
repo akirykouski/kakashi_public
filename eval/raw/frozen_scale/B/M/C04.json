@@ -1,0 +1,159 @@
+{
+ "prompt_sha256": "db2b4413efc6340e7a0bc6656766ab7744931c6db396f15e5a485c2a44100c3a",
+ "model_arg": "sonnet",
+ "seconds": 13.595924139022827,
+ "response": {
+  "duration_api_ms": 12530,
+  "stop_reason": "tool_use",
+  "session_id": "d58f4077-0758-4d51-995e-e8bf9791420b",
+  "total_cost_usd": 0.37922930000000005,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 90315,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1788,
+   "output_tokens_details": {
+    "thinking_tokens": 839
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 90315,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1788,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 90315,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 90315
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1788,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 90315,
+    "webSearchRequests": 0,
+    "costUSD": 0.37922930000000005,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 839,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 90315,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP,\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.3 A change of manufacturing process at the same approved site requires notification only, 30 days\\nin advance. Moving production to another site is a change of source.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.2 A change of coating requires Nordhavn approval before the first shipment.\"}],\"why\":\"BR-310 belongs to PRG-Y, so Nordhavn's CSR-NOR-R2 applies. Moving the coating to a new line is at least a process change, which needs 30 days' notice (5.3). If the coating line is at another site, or the coating counts as changed, it needs Nordhavn approval before the first shipment (5.1/5.2). No notification or approval is on file. The documents don't say where the coating is done today, so the board must confirm which clause applies. Even \\\"same process spec\\\" does not remove the notification duty.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\\nthe supplier; found at incoming inspection on BR-310.\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Material: EN AW-6082-T5 extrusion. Surface: trivalent conversion coating. Source: Meccanica Chisone (SUP-C).\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"Elena Gallo: The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"}],\"why\":\"BR-310 is made of EN AW-6082-T5, and the source SUP-C still has an open 8D (8D-25-031) on cracking in 6082 material found on BR-310. The 2026-11-06 meeting confirms it is not closed. The re-audit restored company status only, not this issue.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP,"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.3 A change of manufacturing process at the same approved site requires notification only, 30 days\nin advance. Moving production to another site is a change of source."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.2 A change of coating requires Nordhavn approval before the first shipment."
+      }
+     ],
+     "why": "BR-310 belongs to PRG-Y, so Nordhavn's CSR-NOR-R2 applies. Moving the coating to a new line is at least a process change, which needs 30 days' notice (5.3). If the coating line is at another site, or the coating counts as changed, it needs Nordhavn approval before the first shipment (5.1/5.2). No notification or approval is on file. The documents don't say where the coating is done today, so the board must confirm which clause applies. Even \"same process spec\" does not remove the notification duty."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\nthe supplier; found at incoming inspection on BR-310."
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Material: EN AW-6082-T5 extrusion. Surface: trivalent conversion coating. Source: Meccanica Chisone (SUP-C)."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "Elena Gallo: The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      }
+     ],
+     "why": "BR-310 is made of EN AW-6082-T5, and the source SUP-C still has an open 8D (8D-25-031) on cracking in 6082 material found on BR-310. The 2026-11-06 meeting confirms it is not closed. The re-audit restored company status only, not this issue."
+    }
+   ]
+  },
+  "ttft_ms": 6883,
+  "type": "result",
+  "duration_ms": 12577,
+  "uuid": "7cca1ead-ebed-4c8d-b6a4-29a180e4e06b",
+  "ttft_stream_ms": 948,
+  "time_to_request_ms": 49,
+  "first_content_frame_ms": 948,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

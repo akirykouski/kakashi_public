@@ -1,0 +1,167 @@
+{
+ "prompt_sha256": "e4f232c49b379b80be2d40a6143d6535af83723edf80d9c4c7a962a7c5a0f366",
+ "model_arg": "sonnet",
+ "seconds": 22.597209930419922,
+ "response": {
+  "duration_api_ms": 16931,
+  "stop_reason": "tool_use",
+  "session_id": "2d25f6b7-3e8f-4594-b5a7-6556529ff3f9",
+  "total_cost_usd": 0.40451790000000004,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 92082,
+   "cache_read_input_tokens": 92019,
+   "output_tokens": 2698,
+   "output_tokens_details": {
+    "thinking_tokens": 747
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 92082,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 987,
+     "cache_read_input_tokens": 91166,
+     "cache_creation_input_tokens": 1769,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1769
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2698,
+    "cacheReadInputTokens": 92019,
+    "cacheCreationInputTokens": 92082,
+    "webSearchRequests": 0,
+    "costUSD": 0.40451790000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 747,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 92082,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-310|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that\\nsupplier, that part, the receiving site and the customer.\"}],\"why\":\"The only approval for Chisone on BR-310 is for Pinerolo. The approved supplier list has no approval for Beinasco (PLT-BEI) with CUST-NOR, so delivery there is not released.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"Moving production to another site is a change of source.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before\\nthe first shipment.\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP,\"}],\"why\":\"BR-310 is on PRG-Y, a Nordhavn program. Moving it to Beinasco counts as a change of source under CSR-NOR-R2. Written Nordhavn approval (PPAP resubmission) is needed before the first shipment, and no approval in the documents covers it.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"8D report 8D-25-031. Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\\nthe supplier; found at incoming inspection on BR-310.\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet, corrective action still being verified.\"}],\"why\":\"Chisone has an open 8D on EN AW-6082 material, the alloy family of BR-310 (6082-T5), and the report names BR-310 itself. The 2026-11-06 re-audit restored company standing only; it did not close the 8D.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-310|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that\nsupplier, that part, the receiving site and the customer."
+      }
+     ],
+     "why": "The only approval for Chisone on BR-310 is for Pinerolo. The approved supplier list has no approval for Beinasco (PLT-BEI) with CUST-NOR, so delivery there is not released."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "Moving production to another site is a change of source."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before\nthe first shipment."
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP,"
+      }
+     ],
+     "why": "BR-310 is on PRG-Y, a Nordhavn program. Moving it to Beinasco counts as a change of source under CSR-NOR-R2. Written Nordhavn approval (PPAP resubmission) is needed before the first shipment, and no approval in the documents covers it."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "8D report 8D-25-031. Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "cracks around fastening holes on brackets machined from EN AW-6082 material delivered by\nthe supplier; found at incoming inspection on BR-310."
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+      }
+     ],
+     "why": "Chisone has an open 8D on EN AW-6082 material, the alloy family of BR-310 (6082-T5), and the report names BR-310 itself. The 2026-11-06 re-audit restored company standing only; it did not close the 8D."
+    }
+   ]
+  },
+  "ttft_ms": 11312,
+  "type": "result",
+  "duration_ms": 21829,
+  "uuid": "5607142e-8600-490d-8af4-6762d3fe27ec",
+  "ttft_stream_ms": 5913,
+  "time_to_request_ms": 4887,
+  "first_content_frame_ms": 5913,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

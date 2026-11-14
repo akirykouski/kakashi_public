@@ -10,7 +10,7 @@ Two synthetic worlds (M: 36 requests, 83 gold findings; A: 20 requests, 32 findi
 |---|---|---|---|---|
 | H1 | Recall on inferred findings, C > A' by at least 20 points | **PASS** | PASS | PASS |
 | H2 | Exact match on the stale and missing categories, C > B | **FAIL** | FAIL | FAIL |
-| H3 | Exact match at 8x company size: C drops <= 3 points, B drops more than C | **not decided** | not decided | not decided |
+| H3 | Exact match at 8x company size: C drops <= 3 points, B drops more than C | **FAIL** (world M only) | FAIL | not run (no scaled world) |
 | H4 | Exact match, C >= B - 5 points | **PASS** | PASS | FAIL |
 
 ## H1 — inferred blockers: C recall > A' recall + 20 points
@@ -35,7 +35,15 @@ Why C fails on missing data: the core's parser keeps only names it can resolve a
 
 ## H3 — scale: at 8× company size C drops ≤ 3 points and B drops more than C
 
-Not run today. The pre-event bench on world M at 4.7k facts is in `docs/benchmarks/core/RESULTS_scale.md` (earlier core, not this protocol).
+World M only (world A has no scaled version). World M grown 8.1× by text (corpus 27 kB → 220 kB, 510 → 4,718 facts) with distractors that never touch the 36 requests (`eval/worlds/M_scale/`, hashed in FROZEN.md before the run). Same gold, same prompt.
+
+| Condition | Exact match 1× | Exact match 8× | Drop (points) | Tokens in / request, 1× / 8× |
+|---|---|---|---|---|
+| B (all documents → model) | 0.67 [0.50–0.80] (24/36) | 0.72 [0.56–0.84] (26/36) | -5.5 | 14,543 / 110,769 |
+| C (model parse → core) | 0.78 [0.62–0.88] (28/36) | 0.81 [0.65–0.90] (29/36) | -2.8 | 2,109 / 2,109 |
+| C* (hand parse → core) | 0.94 [0.82–0.98] (34/36) | 0.94 [0.82–0.98] (34/36) | +0.0 | 0 / 0 |
+
+**Result: FAIL.** C does not drop (−2.8, i.e. one more request right, within noise), but neither does B: at about 110,000 tokens of context per request the model reading everything is as accurate as at 14,000. The pre-registered claim that full context degrades as the company grows is not supported at 8×. What does change is cost: C reads the same ~2,100 tokens at any size (the parse only; the core answers in under 0.1 s), B reads 53× more.
 
 ## H4 — overall: exact match C ≥ B − 5 points
 
@@ -76,7 +84,7 @@ From methodology §6:
 - Only 4 real documents; real-document results are a spot check, reported separately.
 - In the cross-benchmark, the third-party encoders saw some gold.
 - One model family for every model condition and for the parser.
-- The full-context baseline benefits from small companies; H3 was not run.
+- The full-context baseline benefits from small companies; H3 tests this only on a synthetic 8× scale-up of world M, made of distractors that never touch the requests (easy to ignore), and found no degradation.
 
 Found during this evaluation (all logged in `CHANGES.md`):
 - **Re-gold was not arbitrated.** 17 disputed items were decided by the eval track on Maksim's instruction, on document quotes only; for world M the decider was on the author's side. 5 findings were added (certificate question CR-05, CR-12, M01, M04; customer approval CR-13), all else kept.
@@ -89,7 +97,7 @@ Found during this evaluation (all logged in `CHANGES.md`):
 ## Safe to say on stage
 
 1. "On blockers that only show up when two or more documents are combined, our core finds 90% of them (47 of 52, 95% interval 79–96%) where a fair retrieval baseline with BM25 and embeddings finds 19% — measured on 56 change requests across two independently written synthetic companies."
-2. "Overall it is on par with a model that reads every document — 68% of requests exactly right in both cases (38 of 56) — while reading about 2,000 tokens per request instead of 13,000 and raising a false alarm on 1 of 10 harmless changes instead of 5."
+2. "Overall it is on par with a model that reads every document — 68% of requests exactly right in both cases (38 of 56) — and raises a false alarm on 1 of 10 harmless changes instead of 5. Its cost does not grow with the company: at eight times the documents it still reads about 2,000 tokens per request, the model reading everything needs 110,000."
 3. "It is not better everywhere: when a supplier or material is missing from our records, the model reading everything gets 5 of 7 right and we get none, because our parser drops names it doesn't know — that is the next fix."
 
-Not safe: "100%", "reasons better than an LLM" (H2 failed; H4 passes only on both worlds together, at a tie), anything about generalisation (no hold-out), anything about scale (H3 not run), a ranking of the two prepared cores.
+Not safe: "100%", "reasons better than an LLM" (H2 failed; H4 passes only on both worlds together, at a tie), anything about generalisation (no hold-out), "accuracy holds while full context degrades" (H3 failed: full context did not degrade at 8×), a ranking of the two prepared cores.

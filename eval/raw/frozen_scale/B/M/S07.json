@@ -1,0 +1,163 @@
+{
+ "prompt_sha256": "94df94ed77af7c184d68a97f797d27b18e8423b6ae91d18d4d6e394513dcbc7e",
+ "model_arg": "sonnet",
+ "seconds": 10.687727928161621,
+ "response": {
+  "duration_api_ms": 9836,
+  "stop_reason": "tool_use",
+  "session_id": "7e8ad3b6-70ec-4c34-8d30-ca2d98e95192",
+  "total_cost_usd": 0.3531653,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 84644,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1450,
+   "output_tokens_details": {
+    "thinking_tokens": 559
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 84644,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1450,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 84644,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 84644
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1450,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 84644,
+    "webSearchRequests": 0,
+    "costUSD": 0.3531653,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 559,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 84644,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-D|HB-620|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Approval for HB-620 revoked on 2026-09-15.\"},{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-009,SUP-D,HB-620,PLT-PIN,CUST-NOR,approved,2022-11-10,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer.\"}],\"why\":\"The ASL entry APR-009 still reads 'approved' with no end date. But 8D-26-009 revoked the HB-620 approval on 2026-09-15, which is after the 2026-09-01 meeting and before today (2026-11-14). The newer 8D therefore overrides the ASL, so Fonderia Dora has no current approval for HB-620 at Pinerolo for Nordhavn. Continuing to order is not allowed. The ASL record should be updated.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-26-009\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-26-009\",\"quote\":\"Opened 2026-08-20. Status: open.\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the Nordhavn line\"}],\"why\":\"Fonderia Dora has an open 8D on the AlSi9Cu3 castings for HB-620, the same material and part as the proposed orders. It is still open and the root cause is only stated as die temperature control.\"},{\"rule_u\":\"U_MEASURED_VALUE\",\"key\":\"SC-HB620-POR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-SPECIAL_CHARACTERISTICS\",\"quote\":\"SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores,\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"porosity grade 4 in the mount bores of HB-620 castings\"}],\"why\":\"The measured porosity in the mount bores is grade 4. The special characteristic in the control plan requires grade 2 or better, so the measured value fails it. Three of these castings reached the Nordhavn line.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-D|HB-620|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Approval for HB-620 revoked on 2026-09-15."
+      },
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-009,SUP-D,HB-620,PLT-PIN,CUST-NOR,approved,2022-11-10,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer."
+      }
+     ],
+     "why": "The ASL entry APR-009 still reads 'approved' with no end date. But 8D-26-009 revoked the HB-620 approval on 2026-09-15, which is after the 2026-09-01 meeting and before today (2026-11-14). The newer 8D therefore overrides the ASL, so Fonderia Dora has no current approval for HB-620 at Pinerolo for Nordhavn. Continuing to order is not allowed. The ASL record should be updated."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-26-009",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-26-009",
+       "quote": "Opened 2026-08-20. Status: open."
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "porosity grade 4 in the mount bores of HB-620 castings (AlSi9Cu3), three escapes to the Nordhavn line"
+      }
+     ],
+     "why": "Fonderia Dora has an open 8D on the AlSi9Cu3 castings for HB-620, the same material and part as the proposed orders. It is still open and the root cause is only stated as die temperature control."
+    },
+    {
+     "rule_u": "U_MEASURED_VALUE",
+     "key": "SC-HB620-POR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-SPECIAL_CHARACTERISTICS",
+       "quote": "SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores,"
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "porosity grade 4 in the mount bores of HB-620 castings"
+      }
+     ],
+     "why": "The measured porosity in the mount bores is grade 4. The special characteristic in the control plan requires grade 2 or better, so the measured value fails it. Three of these castings reached the Nordhavn line."
+    }
+   ]
+  },
+  "ttft_ms": 4970,
+  "type": "result",
+  "duration_ms": 9921,
+  "uuid": "9cf2e4c3-8d23-4659-86c9-6ecf629ea2f9",
+  "ttft_stream_ms": 1033,
+  "time_to_request_ms": 85,
+  "first_content_frame_ms": 1033,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}
