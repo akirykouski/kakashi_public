@@ -102,25 +102,37 @@ def to_gold_format(world, card, change):
     return list(unique.values())
 
 
-def use_world(world):
-    """Point the core's process-wide fact log at this world's facts. Reads only; no core file is changed."""
-    from core import check, factlog
+ALIASES = {}
+
+
+def use_world(world, as_of_dates):
+    """Point the core at this world's facts. Reads only; no core file is changed.
+
+    check.run projects from check._LOG, and rules.covered() (decision row R0) projects from a per-date cache
+    that otherwise loads the default data/ world: both are set to this world's log, so worlds never mix.
+    World M also loads the core's policy facts (rules_data/, written for world M); world A has its own policy
+    facts inside eval/worlds/A/core/facts.jsonl (eval/tools/encode_A.py)."""
+    from core import check, factlog, rules
+    from core.project import Projection
     data_dir = EVAL / "worlds" / world / "core"
-    if not (data_dir / "facts.jsonl").exists():
-        data_dir = EVAL / "worlds" / world
     log = factlog.default_log(data_dir=str(data_dir))
-    try:
-        from core import rules
-        if hasattr(rules, "extend_log"):
-            log = rules.extend_log(log)
-    except ImportError:
-        pass
+    if world == "M":
+        log = rules.extend_log(log)
     check._LOG = log
+    rules._projections.clear()
+    for as_of in sorted(set(as_of_dates)):
+        rules._projections[as_of] = Projection(log, as_of)
+    A_KEY_NAMES.clear()
+    ALIASES.clear()
     if world == "A":
-        names = EVAL / "worlds" / "A" / "core" / "key_names.json"
-        if names.exists():
-            A_KEY_NAMES.update(json.load(open(names)))
+        A_KEY_NAMES.update(json.load(open(data_dir / "key_names.json")))
+        ALIASES.update(json.load(open(data_dir / "aliases.json")))
     return str(data_dir)
+
+
+def resolve(change):
+    """Names as said -> world ids, by the world's alias table (exact match only; unknown names stay names)."""
+    return {key: ALIASES.get(value, value) if isinstance(value, str) else value for key, value in change.items()}
 
 
 def model_parse(item, model, raw_dir):
@@ -157,7 +169,7 @@ def run_one(world, condition, item, hand, model, raw_dir):
               "seconds": 0.0, "tokens_in": 0, "tokens_out": 0, "model_id": None}
     try:
         if condition == "Cstar":
-            change = dict(hand[item["id"]]["change"])
+            change = resolve(dict(hand[item["id"]]["change"]))
             result["schema_gap"] = hand[item["id"]].get("schema_gap")
         else:
             change, seconds, tokens_in, tokens_out, model_id = model_parse(item, model, raw_dir)
@@ -192,8 +204,8 @@ def main():
     commit = __import__("subprocess").run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True,
                                           text=True).stdout.strip()
     for world in args.worlds.split(","):
-        data_dir = use_world(world)
         gold = load_jsonl(EVAL / "gold" / f"{world}.jsonl")
+        data_dir = use_world(world, [item["as_of"] for item in gold])
         hand = {row["id"]: row for row in load_jsonl(EVAL / "parses" / f"{world}_hand.jsonl")}
         for condition in args.conditions.split(","):
             raw_dir = EVAL / "raw" / args.raw_tag / "C_parse" / world

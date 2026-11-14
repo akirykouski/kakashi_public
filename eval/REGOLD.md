@@ -489,12 +489,13 @@ Decision (Valentina):  — time:
 
 ---
 
-## 8. Schedule and packaging changes: "no blockers" or "not covered"? C01, C03, C06, C08 (world M)
+## 8. Schedule and packaging changes: "no blockers" or "not covered"? C01, C03, C06, C08 (world M); CR-03, CR-04 (world A)
 
 **Added 14 Nov 11:30** after the merged core (d75144b) was first wired to the eval (adapter check, not a reported run).
 
 - **Requests:** C01 "We postpone the BR-220 delivery to Aurelia by one week." · C03 "Chisone will pack BR-310 forty per layer from next week." · C06 "Double the CL-115 order for December." · C08 "Move the BK-330 delivery slot from Monday to Wednesday."
-- **Current gold:** no findings, verdict `no_blockers_found` (derived; M's gold has no verdict field, `eval/MAPPING.md` decision 1).
+- World A has the same case: CR-03 ("Put 2 extra pallets of BR-310 … at Plant 2 with Meccanica C") and CR-04 ("Ask them to expedite the open order, air freight and a second shift"); A's author gold: `no_blockers_found`, and the core says `not_covered`.
+- **Current gold:** no findings, verdict `no_blockers_found` (M derived; M's gold has no verdict field, `eval/MAPPING.md` decision 1).
 - **Question:** when no rule covers a change class (schedule, packaging, volume), is the right answer "rules ran, nothing blocks" (`no_blockers_found`) or "no rule covers this, a person decides" (`not_covered`, decision row R0, issue #3)?
 - **Maksim (author of M), 13 Nov:** `no_blockers_found`. His rule catalogue: "Changes of delivery date, quantity or packaging alone need no finding unless a rule above applies."
 - **Merged core (14 Nov):** `not_covered` for all four: the decision table lists ScheduleChange and PackagingChange among classes no rule covers.
