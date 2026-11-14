@@ -10,7 +10,8 @@ Definitions
 - Inferred recall: recall over gold findings with inferred = true.
 - Exact match: the predicted set of (rule_u, key) equals the gold set, nothing missing, nothing extra.
 - Verdict: derived from predicted kinds by the same rule as the gold (any blocker -> blockers_found; else any
-  question -> needs_info; else not_covered if any; else no_blockers_found).
+  question -> needs_info; else not_covered if any; else no_blockers_found). A core prediction with no findings and
+  `not_covered: true` (decision row R0) has verdict not_covered.
 - False alarm on clean: a clean request with at least one predicted finding.
 - must_not_cite hit: a predicted finding cites (same doc_id and a matching quote) a gold must_not_cite quote.
   Rate over requests that have must_not_cite items.
@@ -44,7 +45,9 @@ def finding_set(findings):
     return {(f["rule_u"], norm(f["key"])) for f in findings}
 
 
-def verdict_of(findings):
+def verdict_of(findings, not_covered=False):
+    if not_covered and not findings:
+        return "not_covered"
     kinds = {f.get("kind", "blocker") for f in findings}
     for kind, verdict in (("blocker", "blockers_found"), ("question", "needs_info"), ("not_covered", "not_covered")):
         if kind in kinds:
@@ -120,8 +123,8 @@ def score_condition(gold_rows, predictions):
         per_request.append({
             "id": gold["id"], "category": gold["category"],
             "exact": expected == got,
-            "verdict_ok": verdict_of(predicted) == gold["verdict"],
-            "verdict": verdict_of(predicted), "gold_verdict": gold["verdict"],
+            "verdict_ok": verdict_of(predicted, prediction.get("not_covered")) == gold["verdict"],
+            "verdict": verdict_of(predicted, prediction.get("not_covered")), "gold_verdict": gold["verdict"],
             "missed": sorted(expected - got), "extra": sorted(got - expected),
             "clean_alarm": gold["category"] == "clean" and bool(got),
             "mnc_applicable": bool(gold.get("must_not_cite")),
