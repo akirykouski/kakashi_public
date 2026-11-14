@@ -5,6 +5,11 @@ The team key is an environment variable (`AI_GATEWAY_API_KEY`), never in git. Ev
 tests in GitHub Actions (`.github/workflows/test.yml`, no key needed: model answers are replayed) and, once the
 host is connected, redeploys.
 
+## Live
+
+https://change-check.onrender.com — Render web service `change-check` (free, Docker), created from the public repo URL.
+Redeploy after a merge to `main`: call the service's deploy hook (kept outside git, with the team key).
+
 ## Render (default)
 1. render.com → New + → Blueprint → connect `akirykouski/kakashi_public` → it reads `render.yaml`.
 2. Paste the team key into `AI_GATEWAY_API_KEY` when asked. Deploy.

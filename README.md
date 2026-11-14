@@ -2,6 +2,8 @@
 
 KVA hackathon "AI brain for industry", Turin, 14 November 2026 · track **Decision models** · Valentina, Maksim & Arseniy.
 
+**Live demo: https://change-check.onrender.com** (meeting mode: `/?view=meeting`; free instance, the first request after a pause can take ~50 s to wake up).
+
 In a supplier-quality meeting someone says *"Bormida is two weeks late, let's take the BR-220 blanks from Chisone,
 same alloy."* Before the decision is taken, the system answers with the blockers it can prove from the company's
 own records, each with the chain of reasoning and a verbatim quote under every step, the open questions and who
