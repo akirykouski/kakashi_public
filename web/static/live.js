@@ -48,13 +48,14 @@ const Live = (function makeLive() {
   function mountPresets() {
     const strip = document.querySelector(".strip");
     if (!strip || $("live-presets")) return;
+    strip.prepend(el("p", { class: "home-line" }, "Say a change. See what blocks it and who decides."));
     const row = el("div", { id: "live-presets", class: "live-presets" });
     for (const preset of PRESETS) {
       row.append(el("button", { class: "live-chip", title: preset.remark, onclick: function click() { runPreset(preset); } }, preset.label));
     }
     row.append(el("button", { class: "live-chip live-play", onclick: playMeeting }, "Play meeting"));
     row.append(el("select", { id: "more-select", class: "more-select", "aria-label": "More scenarios" }, [el("option", { value: "" }, "More\u2026")]));
-    strip.prepend(row);
+    $("remark").closest(".remark-row").before(row);
     if (typeof renderDemoButtons === "function" && state.scenarios.length) renderDemoButtons();
   }
 
@@ -148,6 +149,8 @@ const Live = (function makeLive() {
 
   async function know8Nov() {
     if (!state.lastRequest) await runCheck({ scenario: "main_after_audit" }, "Checking");
+    $("as-of").value = "2026-11-08";
+    await runCheck({ request: { ...state.lastRequest, as_of: "2026-11-08" } }, "Checking as of 8 Nov");  // headline shows "As of 8 Nov"
     $("cmp-a").value = "2026-11-08";
     $("cmp-b").value = today();
     await runTimeTravel();
@@ -179,24 +182,60 @@ const Live = (function makeLive() {
                         `checked in ${total < 10 ? total.toFixed(1) : Math.round(total)} ms`));
     }
     const button = function btn(text, action) { return el("button", { class: "live-btn", onclick: action }, text); };
+    const row = firedRow();
+    const more = el("details", { class: "live-more" }, [
+      el("summary", { class: "live-btn" }, "More"),
+      el("div", { class: "live-more-pop" }, [
+        button("What would clear it", clears), button("Plain words", plain), button("Compare\u2026", openCompare)]),
+    ]);
     bar.innerHTML = "";
     bar.append(
       button("Why", why),
-      button("What would clear it", clears),
-      button("Plain words", plain),
-      button("Turn this rule off", turnOff),
-      button("Add the audit email", addAudit),
-      button("What did we know on 8 Nov", know8Nov),
-      button("Compare\u2026", openCompare));
+      button(row && row !== "R0" ? `Turn ${row} off` : "Turn rule off", turnOff),
+      button("Add audit email", addAudit),
+      button("As of 8 Nov", know8Nov),
+      more);
   }
 
-  // Wrap the table modal: a one-click "turn this row off" next to the fired row.
+  function resetDemo() {
+    closeModal();
+    if (window.Docs) Docs.reset();
+    state.lastRequest = null;
+    state.lastResponse = null;
+    $("result").hidden = true;
+    $("documents-section").hidden = true;
+    $("compare-section").hidden = true;
+    $("compare").innerHTML = "";
+    if ($("drop-row")) $("drop-row").value = "D2";
+    $("remark").value = "";
+    $("as-of").value = today();
+    $("cmp-a").value = "2026-11-05";
+    $("cmp-b").value = today();
+    setStatus("");
+    document.body.classList.remove("has-result");
+    if ($("live-accept")) $("live-accept").remove();
+    showCheckTab();
+    window.scrollTo(0, 0);
+  }
+
+  function mountReset() {
+    const pop = $("menu-pop");
+    if (!pop || $("reset-demo")) return;
+    pop.append(el("button", { id: "reset-demo", class: "link", onclick: resetDemo }, "Reset demo"));
+  }
+
+  // The table modal: a one-click "turn this row off" in the modal head (not on the table).
+  const baseOpenModal = window.openModal;
+  window.openModal = function openModalClean() {
+    for (const stale of document.querySelectorAll(".modal-head .live-drop")) stale.remove();
+    return baseOpenModal.apply(this, arguments);
+  };
   const baseShowTable = window.showTable;
   window.showTable = async function showTableWithDrop(hitRow, dropRows) {
     await baseShowTable(hitRow, dropRows);
-    const cell = document.querySelector("#modal-body tr.hit td:last-child");
-    if (cell && hitRow && hitRow !== "R0" && !cell.querySelector(".live-drop")) {
-      cell.append(el("button", { class: "live-drop", onclick: function click() { dropRow(hitRow); } }, `Turn row ${hitRow} off and re-check`));
+    const head = document.querySelector(".modal-head");
+    if (head && hitRow && hitRow !== "R0" && !head.querySelector(".live-drop")) {
+      head.insertBefore(el("button", { class: "live-drop", onclick: function click() { dropRow(hitRow); } }, `Turn ${hitRow} off`), $("modal-close"));
     }
   };
 
@@ -213,6 +252,11 @@ const Live = (function makeLive() {
     return baseCompare.apply(this, arguments);
   };
 
-  window.addEventListener("DOMContentLoaded", function init() { mountPresets(); mountQr(); });
+  document.addEventListener("click", function closeMore(event) {
+    for (const more of document.querySelectorAll("details.live-more[open]")) {
+      if (!more.contains(event.target) || event.target.closest(".live-more-pop button")) more.open = false;
+    }
+  });
+  window.addEventListener("DOMContentLoaded", function init() { mountPresets(); mountQr(); mountReset(); });
   return { run: runPreset, presets: PRESETS };
 })();

@@ -28,6 +28,7 @@ const Meeting = (function makeMeeting() {
   function show(view) {
     const meeting = view === "meeting";
     document.querySelector("main").hidden = meeting;
+    document.body.classList.toggle("view-meeting", meeting);
     q("tab-check").classList.toggle("active", !meeting);
     q("tab-meeting").classList.toggle("active", meeting);
     if (meeting && !m.built) build();
@@ -44,15 +45,15 @@ const Meeting = (function makeMeeting() {
       onchange: function setSpeed(event) { m.delayFactor = Number(event.target.value); } });
     for (const [text, factor] of SPEEDS) speed.append(el("option", { value: String(factor), text: text }));
     speed.value = "1";
-    const mic = el("button", { id: "mt-mic", class: "mt-btn mic", onclick: toggleMic, title: "Speak a line (Chrome speech recognition)" }, "🎙 Mic");
     const view = el("section", { id: "meeting-view", class: "mt-view" }, [
       el("div", { class: "mt-bar" }, [
         el("div", { class: "mt-controls" }, [
-          el("button", { id: "mt-play", class: "mt-btn primary", onclick: togglePlay }, "▶ Play"),
+          el("button", { id: "mt-mic", class: "mt-btn primary", onclick: toggleMic, title: "Speak: each finished sentence is checked like a line of the meeting (Chrome speech recognition)" }, "Talk live"),
+          el("span", { id: "mt-listening", class: "mt-listening", hidden: true }, "\u25CF Listening"),
+          el("button", { id: "mt-play", class: "mt-btn", onclick: togglePlay }, "▶ Play"),
           el("button", { id: "mt-step", class: "mt-btn", onclick: stepOnce }, "Step"),
           el("button", { id: "mt-reset", class: "mt-btn", onclick: reset }, "Reset"),
           el("label", { class: "mt-speed" }, ["Speed ", speed]),
-          mic,
         ]),
         el("div", { id: "mt-counter", class: "mt-counter" }),
       ]),
@@ -71,8 +72,6 @@ const Meeting = (function makeMeeting() {
       ]),
     ]);
     document.querySelector("main").after(view);
-    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Recognition) mic.hidden = true;
     m.loading = loadDemo();
   }
 
@@ -94,16 +93,36 @@ const Meeting = (function makeMeeting() {
     box.classList.toggle("error", Boolean(isError));
   }
 
+  function offerRecorded(text) {
+    const box = q("mt-status");
+    box.hidden = false;
+    box.classList.add("error");
+    box.textContent = `${text} `;
+    box.append(el("button", { class: "link", onclick: function playRecorded() { status(""); reset(); play(); } }, "Play the recorded meeting"));
+  }
+
   function renderCounter() {
     q("mt-counter").innerHTML = "";
     q("mt-counter").append(
       el("span", {}, [el("b", {}, String(m.processed)), " lines"]),
       el("span", { class: "flag" }, [el("b", {}, String(m.flagged)), " flagged"]),
-      el("span", {}, [el("b", {}, "0"), " approved"]),
     );
   }
 
-  function speakerNode(id) {
+  function flaggedReason(data) {
+    const request = (data.card && data.card.request) || data.request || {};
+    const short = function shortOf(id) { return shortName(id); };
+    if (request.part && (request.from_supplier || request.to_supplier)) {
+      return `Change proposed: ${request.part}${request.from_supplier ? ` from ${short(request.from_supplier)}` : ""}${request.to_supplier ? ` to ${short(request.to_supplier)}` : ""}`;
+    }
+    if (request.part && request.new_coating) return `Change proposed: ${request.part} coating to ${label(request.new_coating)}`;
+    if (request.part && request.new_material) return `Change proposed: ${request.part} material to ${label(request.new_material)}`;
+    if (request.part) return `Change proposed: ${camelWords(request.type)} on ${request.part}`;
+    return `Change proposed: ${data.reason || ""}`;
+  }
+
+  function speakerNode(id, you) {
+    if (you) return el("span", { class: "mt-who" }, [el("span", { class: "mt-avatar", "aria-hidden": "true" }, "YO"), el("span", { class: "mt-name" }, "You")]);
     const person = state.people[id];
     if (!person) return el("span", { class: "mt-who" }, id || "Speaker");
     const initials = String(person.name || "").split(/\s+/).filter(Boolean).slice(0, 2)
@@ -117,7 +136,7 @@ const Meeting = (function makeMeeting() {
 
   function lineNode(item, index) {
     const node = el("li", { class: "mt-line pending", id: `mt-line-${index}` }, [
-      speakerNode(item.speaker),
+      speakerNode(item.speaker, item.you),
       el("div", { class: "mt-text" }, item.text),
       el("div", { class: "mt-why" }),
     ]);
@@ -206,6 +225,7 @@ const Meeting = (function makeMeeting() {
     } catch (error) {
       node.className = "mt-line unclassified";
       why.textContent = `not classified: ${error.message}`;
+      if (item.you) offerRecorded("Could not check what you said (network or model credits).");
       m.busy = false;
       return false;
     }
@@ -221,7 +241,7 @@ const Meeting = (function makeMeeting() {
     } else {
       m.flagged += 1;
       node.className = "mt-line flagged";
-      why.textContent = data.reason;
+      why.textContent = flaggedReason(data);
       addCard(item, data, node);
     }
     renderCounter();
@@ -268,7 +288,7 @@ const Meeting = (function makeMeeting() {
   function drawCard(entry) {
     const { item, data, holder } = entry;
     holder.innerHTML = "";
-    holder.append(el("div", { class: "mt-quote" }, [speakerNode(item.speaker), el("span", {}, `“${item.text}”`)]));
+    holder.append(el("div", { class: "mt-quote" }, [speakerNode(item.speaker, item.you), el("span", {}, `“${item.text}”`)]));
     if (!data.card) {
       holder.append(el("div", { class: "verdict not_covered" }, el("div", { class: "big" }, "Flagged, no card")));
       holder.append(el("p", { class: "muted" }, data.card_error || "The line was flagged but not checked."));
@@ -278,7 +298,7 @@ const Meeting = (function makeMeeting() {
     const card = data.card;
     holder.append(requestChips(card.request));
     const verdict = el("div");
-    renderVerdict(verdict, card.verdict, false, card.findings);
+    renderVerdict(verdict, card.verdict, false, card.findings, verdictOpts(card, true));
     holder.append(verdict);
     for (const update of entry.history) holder.append(update);
     const findings = el("div", { class: "mt-findings" });
@@ -353,39 +373,68 @@ const Meeting = (function makeMeeting() {
 
   // ---- microphone (Web Speech API, Chrome) --------------------------------------------------------------------
 
+  function interimNode() {
+    let node = q("mt-interim");
+    if (!node) {
+      node = el("li", { id: "mt-interim", class: "mt-interim" });
+      q("mt-transcript").append(node);
+    }
+    return node;
+  }
+
+  function stopListening() {
+    m.listening = false;
+    const mic = q("mt-mic");
+    if (mic) { mic.classList.remove("on"); mic.textContent = "Talk live"; }
+    q("mt-listening").hidden = true;
+    const interim = q("mt-interim");
+    if (interim) interim.remove();
+  }
+
   function toggleMic() {
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Recognition) return;
+    if (!m.built) show("meeting");
+    if (!Recognition) { offerRecorded("This browser has no speech recognition (use Chrome)."); return; }
     if (m.listening) { m.recognizer.stop(); return; }
     pause();
+    status("");
+    if (m.next > 0 || m.cards.length) reset();
     const recognizer = new Recognition();
     recognizer.lang = "en-GB";
     recognizer.continuous = true;
-    recognizer.interimResults = false;
+    recognizer.interimResults = true;
     recognizer.onresult = function onResult(event) {
+      let interim = "";
       for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        if (!event.results[i].isFinal) continue;
         const text = event.results[i][0].transcript.trim();
-        if (text) addSpokenLine(text);
+        if (event.results[i].isFinal) { if (text) addSpokenLine(text); } else interim += `${text} `;
       }
+      const node = interimNode();
+      node.textContent = interim.trim();
+      node.hidden = !interim.trim();
     };
-    recognizer.onend = function onEnd() { m.listening = false; q("mt-mic").classList.remove("on"); q("mt-mic").textContent = "🎙 Mic"; };
-    recognizer.onerror = function onError(event) { status(`Microphone: ${event.error}`, true); };
+    recognizer.onend = function onEnd() { stopListening(); };
+    recognizer.onerror = function onError(event) {
+      if (event.error === "no-speech" || event.error === "aborted") return;
+      const denied = event.error === "not-allowed" || event.error === "service-not-allowed";
+      offerRecorded(denied ? "Microphone permission was denied." : `Speech recognition failed (${event.error}).`);
+    };
     m.recognizer = recognizer;
     m.listening = true;
     q("mt-mic").classList.add("on");
-    q("mt-mic").textContent = "■ Stop mic";
-    recognizer.start();
+    q("mt-mic").textContent = "\u25A0 Stop";
+    q("mt-listening").hidden = false;
+    try { recognizer.start(); } catch (error) { stopListening(); offerRecorded("Could not start the microphone."); }
   }
 
   async function addSpokenLine(text) {
     while (m.busy) await new Promise(function wait(resolve) { setTimeout(resolve, 150); });
-    const last = m.lines[m.next - 1];
-    const item = { speaker: "mic", text: text, as_of: (last && last.as_of) || TODAY };
+    const item = { speaker: state.people["PER-FERRI"] ? "PER-FERRI" : undefined, you: true, text: text, as_of: TODAY };
     m.spoken += 1;
     const node = lineNode(item, `mic-${m.spoken}`);
-    node.querySelector(".mt-who").textContent = "You (mic)";
-    q("mt-transcript").append(node);
+    const interim = q("mt-interim");
+    if (interim) interim.before(node); else q("mt-transcript").append(node);
+    node.scrollIntoView({ behavior: "smooth", block: "nearest" });
     await processLine(item, node);
   }
 
@@ -393,6 +442,6 @@ const Meeting = (function makeMeeting() {
   function ready() { if (!m.built) build(); return m.loading; }
   function position() { return m.next; }
 
-  document.addEventListener("DOMContentLoaded", mountTabs);
+  document.addEventListener("DOMContentLoaded", function init() { mountTabs(); });
   return { show: show, ready: ready, reset: reset, step: stepOnce, position: position };
 })();

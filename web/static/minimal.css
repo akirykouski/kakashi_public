@@ -257,3 +257,71 @@ table.dt tr.hit td { background: var(--grey-soft) !important; } table.dt tr.hit 
   .menu > summary { padding: 4px 8px; }
   .menu { margin-left: 0; }
 }
+
+/* ---- judge pass v3 (desktop 1440) ---- */
+/* home */
+.home-line { font-size: 22px; font-weight: 500; line-height: 1.3; margin: 0 0 16px; color: var(--ink); }
+.remark-row select#speaker { min-width: 260px; }
+.remark-row input#remark { border: 1px solid var(--line) !important; box-shadow: none; }
+.more-select { width: auto; }
+.live-chip.live-play { background: #fff; color: var(--accent); border-color: var(--accent); font-weight: 600; }
+.live-chip.live-play:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* card */
+.parsed .who { display: none; }
+.parsed { margin: 28px 0 0; }
+.change-line { font-size: 1rem; color: var(--ink-2); flex: 1 1 100%; }
+.verdict { align-items: baseline; }
+.verdict .big { order: 1; flex: 1 1 auto; }
+.verdict .v-time { order: 2; font-size: .75rem; color: var(--muted); margin-left: auto; }
+.verdict .vsub { order: 3; flex: 1 1 100%; font-size: 20px; color: var(--ink); font-weight: 400; line-height: 1.35; margin-top: -4px; }
+.live-bar { gap: 8px 28px; align-items: center; }
+.live-btn { font-size: 18px; }
+.live-more { position: relative; }
+.live-more > summary { list-style: none; cursor: pointer; padding: 6px 0; color: var(--accent); }
+.live-more > summary::-webkit-details-marker { display: none; }
+.live-more > summary::after { content: " \25BE"; }
+.live-more-pop { position: absolute; left: 0; top: calc(100% + 4px); z-index: 20; min-width: 230px; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.live-more-pop .live-btn { text-align: left; padding: 8px 12px; font-size: 16px; }
+.live-more-pop .live-btn:hover { background: var(--grey-soft); text-decoration: none; }
+.maint-wrap, .past-panel { margin: 20px 0 0; border-top: 1px solid var(--line); padding-top: 12px; }
+.maint-wrap > summary, .past-panel > summary { cursor: pointer; font-size: .9rem; font-weight: 500; color: var(--accent); }
+.maint-wrap .maint-strip { border-top: 0; margin-top: 8px; padding-top: 0; }
+.finding > .replaced { display: none; }
+.proof-body .replaced { display: block; }
+.cf-line summary, details.cf-line > summary { color: var(--muted) !important; font-size: 14px; }
+.finding, h2.sec { scroll-margin-top: 72px; }
+.proof-body { font-size: 15px; max-height: 420px; overflow: auto; }
+.proof-body .f-source { margin: 0 0 10px; font-family: inherit; color: var(--ink-2); font-size: 15px; }
+.proof-body .f-quote.mono { font-size: .8rem; }
+.proof-body .steps, .proof-body .quote, .proof-body .triple, .proof-body .doc, .proof-body .inferred { font-size: 14px; }
+
+/* rules modal */
+.modal { background: rgba(0,0,0,.55); padding-top: 0; }
+.modal-box { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.modal-head { align-items: center; gap: 16px; }
+.modal-head .live-drop { display: inline-block; margin: 0 0 0 auto; padding: 6px 14px; font-size: .9rem; white-space: nowrap; }
+table.dt tr.hit td { border-left: 0; }
+table.dt tr.hit td:first-child { box-shadow: none; font-weight: 700; }
+
+/* documents */
+.documents-section { border-top: 0; padding-top: 0; }
+#docs-demo.demo-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.documents-section .demo-btn, #docs-demo .demo-btn { border-radius: 4px; border-style: solid; font-size: .9rem; }
+.docs-own-wrap > summary { cursor: pointer; font-size: .9rem; font-weight: 500; color: var(--accent); }
+.docs-own-wrap .docs-own { margin-top: 10px; }
+.docs-own-real { flex: 1 1 100%; }
+
+/* meeting */
+.mt-line.flagged { padding-right: 16px; }
+.mt-line.flagged .mt-why::before { content: none; }
+.mt-cards-wrap { max-height: calc(100vh - 190px); overflow: auto; }
+.mt-cards { max-height: none; overflow: visible; }
+body.view-meeting .foot { display: none !important; }
+.documents-section button.live-big, button#live-accept { background: var(--accent) !important; color: #fff !important; border: 0 !important;
+  border-radius: 4px; font-size: 1rem; padding: 10px 20px; margin: 12px 0; }
+.mt-listening { color: var(--red); font-weight: 600; font-size: .9rem; align-self: center; }
+.mt-btn.primary.on { background: var(--red); border-color: var(--red); }
+.mt-interim { list-style: none; color: var(--muted); font-style: italic; padding: 8px 0 8px 48px; }
+.mt-interim[hidden] { display: none; }

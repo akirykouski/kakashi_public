@@ -182,7 +182,9 @@ const Demo = (function makeDemo() {
       beats: [async function pastDecision() {
         await resetDocuments();
         await checkScenario("main");
-        focus(document.querySelector(".past-panel"));
+        const panel = document.querySelector(".past-panel");
+        if (panel) panel.open = true;
+        focus(panel);
       }] },
     { title: "New facts", caption: "New facts replace old ones by date and authority; history stays.",
       beats: [

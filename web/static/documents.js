@@ -62,17 +62,23 @@ const Docs = (function makeDocs() {
 
   // ---- input --------------------------------------------------------------------------------------------
 
+  const SHORT_DOC_LABEL = { "DEV-AUR-26-044": "Audit email", "CSR-AUR-R5": "Aurelia manual rev 5" };
+
   function renderInputs() {
     const demo = $("docs-demo");
     demo.innerHTML = "";
     for (const item of docState.demo) {
-      demo.append(el("button", { class: "demo-btn", title: item.expect,
-                                 onclick: function load() { upload({ demo: item.id }, item); } }, item.label));
+      demo.append(el("button", { class: "demo-btn", title: item.label + (item.expect ? ` \u2014 ${item.expect}` : ""),
+                                 onclick: function load() { upload({ demo: item.id }, item); } }, SHORT_DOC_LABEL[item.id] || item.label));
     }
-    if (docState.real) {
-      demo.append(el("button", { class: "demo-btn live-only", title: docState.real.url,
-                                 onclick: function loadReal() { upload({ real: true }, null); } },
-                     ["Real public document (live: network + model key): ", docState.real.title]));
+    const own = $("docs-own-real");  // the live-network document stays reachable, inside "Your own document"
+    if (own) {
+      own.innerHTML = "";
+      if (docState.real) {
+        own.append(el("button", { class: "demo-btn", title: docState.real.url,
+                                  onclick: function loadReal() { upload({ real: true }, null); } },
+                      ["Real public document (live: network + model key): ", docState.real.title]));
+      }
     }
   }
 

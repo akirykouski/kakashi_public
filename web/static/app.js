@@ -193,7 +193,8 @@ function renderCard(data) {
   if (window.Explain) Explain.setCard(card);  // explain.js: counterfactuals + explanation of this card
   $("result").hidden = false;
   renderParsed(card.request);
-  renderVerdict($("verdict"), card.verdict, true, card.findings);
+  renderVerdict($("verdict"), card.verdict, true, card.findings, verdictOpts(card, false));
+  if (data.row_meaning) $("verdict").append(el("div", { class: "vsub" }, data.row_meaning));
   renderFindings(card.findings, data.replaced || {});
   renderContested(card.contested || []);
   renderExtra(card);
@@ -208,46 +209,78 @@ function chip(name, value, title) {
   return el("span", { class: "chip", title: title || null }, [el("b", { text: name }), value]);
 }
 
+function bareName(id) {
+  return String(label(id) || "").replace(/\s+(S\.?\s?r\.?\s?l\.?|S\.?\s?p\.?\s?A\.?)$/i, "").trim();
+}
+
+function shortName(id) {
+  const words = bareName(id).split(/\s+/).filter(Boolean);
+  return words.length > 1 ? words[words.length - 1] : (words[0] || "");
+}
+
+function camelWords(text) {
+  return String(text || "").replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase().replace(/^./, function up(c) { return c.toUpperCase(); });
+}
+
+function changeLine(request) {
+  const bits = [request.part || camelWords(request.type)];
+  if (request.from_supplier || request.to_supplier) {
+    bits.push(`${bareName(request.from_supplier) || "?"} \u2192 ${bareName(request.to_supplier) || "?"}`);
+  } else if (request.new_coating) bits.push(`coating \u2192 ${label(request.new_coating)}`);
+  else if (request.new_material) bits.push(`material \u2192 ${label(request.new_material)}`);
+  else if (request.part) bits.push(camelWords(request.type));
+  return bits.join(" \u00b7 ");
+}
+
 function renderParsed(request) {
   const box = $("parsed");
   box.innerHTML = "";
   if (request.utterance) {
     const who = request.speaker ? `${personText(request.speaker)}: ` : "";
-    box.append(el("div", { class: "who" }, `${who}“${request.utterance}”`));
+    box.append(el("div", { class: "who" }, `${who}\u201c${request.utterance}\u201d`));
   }
-  box.append(el("span", { class: "chip" }, [el("b", { text: "change" }), request.type, epistemicBadge(request.epistemic)]));
-  if (request.part) box.append(chip("part", `${request.part}`, label(request.part)));
-  if (request.from_supplier) box.append(chip("from", label(request.from_supplier), request.from_supplier));
-  if (request.to_supplier) box.append(chip("to", label(request.to_supplier), request.to_supplier));
-  if (request.site) box.append(chip("site", label(request.site), request.site));
-  if (request.new_material) box.append(chip("material", label(request.new_material), request.new_material));
-  if (request.new_coating) box.append(chip("coating", label(request.new_coating), request.new_coating));
-  if (request.scope) box.append(chip("scope", request.scope));
-  box.append(chip("as of", request.as_of || TODAY));
-  if (request.parse_confidence !== undefined) box.append(chip("names resolved", `${Math.round(request.parse_confidence * 100)}%`));
+  box.append(el("div", { class: "change-line" }, changeLine(request)));
   for (const item of request.unresolved || []) {
     const candidates = (item.candidates || []).map(label).join(", ");
     box.append(el("span", { class: "chip unresolved", title: item.reason }, [
       el("b", { text: `${item.field}?` }),
-      `“${item.text}” — ${item.reason}`,
-      candidates ? el("span", { class: "cand" }, ` · candidates: ${candidates}`) : null,
+      `\u201c${item.text}\u201d \u2014 ${item.reason}`,
+      candidates ? el("span", { class: "cand" }, ` \u00b7 candidates: ${candidates}`) : null,
     ]));
   }
 }
 
-function verdictHeadline(verdict, findings) {
-  const blockers = (findings || []).filter(function isBlocker(f) { return f.severity === "blocker"; }).length;
-  if (verdict === "blockers_found" && findings) return `${blockers} blocker${blockers === 1 ? "" : "s"} \u2014 a person decides`;
-  if (verdict === "needs_info") return "Needs information \u2014 a person decides";
-  if (verdict === "no_blockers_found") return "No blockers found \u2014 not an approval";
-  if (verdict === "not_covered") return "Not covered \u2014 a person decides";
-  return (VERDICT_TEXT[verdict] || [verdict])[0];
+function capitalize(text) { return String(text || "").replace(/^./, function up(c) { return c.toUpperCase(); }); }
+
+function shortDate(iso) {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+  return m ? `${Number(m[3])} ${months[Number(m[2]) - 1]}` : "";
 }
 
-function renderVerdict(box, verdict, withSub, findings) {
+// Headline options: who decides, and the "As of 5 Nov: " prefix (always in the meeting, only off-today on the Check card).
+function verdictOpts(card, alwaysDate) {
+  const asOf = card.request && card.request.as_of;
+  const date = asOf && (alwaysDate || asOf !== TODAY) ? shortDate(asOf) : "";
+  return { decider: card.decision && card.decision.decider, date: date };
+}
+
+function verdictHeadline(verdict, findings, opts) {
+  const blockers = (findings || []).filter(function isBlocker(f) { return f.severity === "blocker"; }).length;
+  const who = opts && opts.decider ? ` ${capitalize(opts.decider)} decides.` : "";
+  let text;
+  if (verdict === "blockers_found" && findings) text = `${blockers} blocker${blockers === 1 ? "" : "s"}.${who}`;
+  else if (verdict === "needs_info") text = `Needs information.${who}`;
+  else if (verdict === "no_blockers_found") text = "No blockers found. Not an approval.";
+  else if (verdict === "not_covered") text = `Not covered.${who || " A person decides."}`;
+  else text = (VERDICT_TEXT[verdict] || [verdict])[0];
+  return opts && opts.date ? `As of ${opts.date}: ${text}` : text;
+}
+
+function renderVerdict(box, verdict, withSub, findings, opts) {
   box.className = `verdict ${verdict}`;
   box.innerHTML = "";
-  box.append(el("div", { class: "big" }, verdictHeadline(verdict, findings)));
+  box.append(el("div", { class: "big" }, verdictHeadline(verdict, findings, opts)));
 }
 
 function renderFindings(findings, replaced) {
@@ -258,6 +291,7 @@ function renderFindings(findings, replaced) {
     return;
   }
   const shownReplaced = new Set();
+  cfSeen = new Set();
   for (const finding of findings) {
     const items = (replaced[finding.rule] || []).filter(function notShown(item) {
       const key = `${finding.rule}:${item.id}`;
@@ -267,7 +301,10 @@ function renderFindings(findings, replaced) {
     });
     box.append(renderFinding(finding, items));
   }
+  cfSeen = null;
 }
+
+let cfSeen = null;  // "What would clear this" lines already shown on this card: a repeat is not drawn again
 
 // ---- plain-language sources (frontend only; built from fields the card already carries) -------------------
 
@@ -348,30 +385,43 @@ function renderFinding(finding, replacedItems) {
     ]),
   ]);
   const best = bestQuote(finding.evidence);
+  let sourceLine = null;
   if (best) {
     const shown = readableQuote(best.source, best.quote);
     const clipped = shown.text.length > 220 ? shown.text.slice(0, 217).trimEnd() + "\u2026" : shown.text;
-    node.append(el("div", { class: "f-source" }, [
+    sourceLine = el("div", { class: "f-source" }, [
       el("span", { class: shown.raw ? "f-quote mono" : "f-quote" }, `\u201c${clipped}\u201d`),
       el("span", { class: "f-src" }, ` ${sourceName(best.source)}`),
-    ]));
+    ]);
   }
+  const hasProof = (finding.evidence || []).length || finding.urgency !== undefined && finding.urgency !== null;
+  // Blockers show their quote; warnings, questions and info show the title only, the quote sits behind the proof toggle.
+  if (sourceLine && (finding.severity === "blocker" || !hasProof)) node.append(sourceLine);
   node.append(meta);
-  for (const item of replacedItems) node.append(renderReplaced(item));
-  for (const item of replacedItems) if (item.source === item.id) node.append(impactButton(item.id));
-  if ((finding.evidence || []).length || finding.urgency !== undefined && finding.urgency !== null) {
+  if (hasProof) {
     const body = el("div", { class: "proof-body" });
+    if (sourceLine && finding.severity !== "blocker") body.append(sourceLine);
+    for (const item of replacedItems) body.append(renderReplaced(item));
+    for (const item of replacedItems) if (item.source === item.id) body.append(impactButton(item.id));
     const urgency = urgencyLine(finding);
     if (urgency) body.append(urgency);
-    if (finding.epistemic) body.append(el("div", { class: "proof-epi" }, ["kind ", epistemicBadge(finding.epistemic)]));
     if ((finding.evidence || []).length) body.append(renderSteps(finding.evidence));
-    node.append(el("details", { class: "proof" }, [
-      el("summary", {}, `Show proof (${countLeaves(finding.evidence)} quotes)`),
-      body,
-    ]));
+    const summaryText = `Show proof (${countLeaves(finding.evidence)} quotes)`;
+    const details = el("details", { class: "proof" }, [el("summary", {}, summaryText), body]);
+    details.addEventListener("toggle", function flip() {
+      details.querySelector("summary").textContent = details.open ? "Hide proof" : summaryText;
+    });
+    node.append(details);
+  } else {
+    for (const item of replacedItems) node.append(renderReplaced(item));
   }
   const clear = window.Explain ? Explain.lineFor(finding) : null;  // "What would clear this" (explain.js)
-  if (clear) node.append(clear);
+  if (clear) {
+    const head = clear.querySelector("summary");
+    const key = (head || clear).textContent;
+    if (!cfSeen || !cfSeen.has(key)) node.append(clear);
+    if (cfSeen) cfSeen.add(key);
+  }
   return node;
 }
 
@@ -461,7 +511,6 @@ function renderMaintenance(box, card) {
   if (!items.length) return;
   const known = card.request && card.request.known_at ? ` · as known on ${card.request.known_at}` : "";
   const strip = el("div", { class: "maint-strip" }, [
-    el("h2", {}, "Maintenance"),
     el("p", { class: "muted small" }, `What needs a person at ${card.request.as_of || ""}${known}: promises past their date, deviations ending, decisions whose reasons changed, records that disagree.`),
   ]);
   for (const item of items) {
@@ -479,13 +528,15 @@ function renderMaintenance(box, card) {
     row.append(proof);
     strip.append(row);
   }
-  box.append(strip);
+  box.append(el("details", { class: "maint-wrap" }, [
+    el("summary", {}, `${items.length} open item${items.length === 1 ? "" : "s"}`), strip]));
 }
 
 function renderPastDecisions(box, card) {
   const past = card.past_decisions || [];
   if (!past.length) return;
-  const panel = el("div", { class: "past-panel" }, [el("h2", {}, "Past decisions")]);
+  const panel = el("details", { class: "past-panel" }, [
+    el("summary", {}, `${past.length} past decision${past.length === 1 ? "" : "s"}`)]);
   for (const item of past) {
     const status = item.status === "review" ? "question" : "info";
     const entry = el("div", { class: `finding ${status} past-decision` }, [
@@ -506,7 +557,8 @@ function renderPastDecisions(box, card) {
         list.append(el("li", {}, [
           el("span", { class: `reason-state ${REASON_STATE_CLASS[reason.state] || ""}` }, reason.state),
           el("b", {}, ` ${label(reason.record)} `),
-          el("span", { class: "muted" }, reason.detail),
+          reason.detail && String(reason.detail).trim().toLowerCase() !== String(reason.state || "").trim().toLowerCase()
+            ? el("span", { class: "muted" }, reason.detail) : null,
           reason.quote ? el("div", { class: "quote" }, [`“${reason.quote}”`]) : null,
           reason.source ? el("span", { class: "doc" }, reason.source) : null,
         ]));
@@ -522,11 +574,9 @@ function renderNotChecked(items) {
   const box = $("not-checked");
   box.innerHTML = "";
   box.className = "notchecked";
+  box.hidden = !items.length;  // nothing to say when every requirement in scope is covered
+  if (!items.length) return;
   box.append(el("h2", {}, "Not checked"));
-  if (!items.length) {
-    box.append(el("p", { class: "muted small" }, "Every requirement in scope for this change is expressed in the ontology."));
-    return;
-  }
   box.append(el("p", { class: "muted small" }, "Requirements in scope that the ontology cannot express yet. A person reads them."));
   const list = el("ul");
   for (const item of items) {
@@ -540,20 +590,17 @@ function renderDecision(card, data) {
   const row = card.decision;
   const box = $("decision");
   box.innerHTML = "";
-  box.append(el("h3", {}, `Decision \u00b7 table row ${row.row_id}`));
-  if (data.row_meaning) box.append(el("div", { class: "meaning" }, data.row_meaning));
+  box.append(el("h3", {}, `Rule ${row.row_id}`));
   const actions = el("ul", { class: "actions" });
   for (const action of row.allowed_actions) actions.append(el("li", {}, action));
   if (!row.allowed_actions.length) actions.append(el("li", { class: "muted" }, "none declared: a person decides"));
+  const basis = (row.rests_on || []).filter(function notRuleId(item) { return !/^R\d+[a-z]?$/.test(item); });
   box.append(el("dl", { class: "kv" }, [
     el("dt", {}, "Allowed"), el("dd", {}, actions),
-    el("dt", {}, "Decides"), el("dd", {}, el("b", {}, row.decider)),
-    el("dt", {}, "Rests on"), el("dd", {}, row.rests_on.length ? row.rests_on.join(", ") : "—"),
+    el("dt", {}, "Rests on"), el("dd", {}, basis.length ? basis.join(", ") : "\u2014"),
   ]));
   if ((data.drop_rows || []).length) box.append(el("div", { class: "note small" }, `Table edited in memory: ${data.table_note}`));
-  const cover = card.coverage || {};
   box.append(el("div", { class: "coverage" }, [
-    `Table checked: ${cover.input_sets} input sets, ${cover.to_person} go to a person, ${cover.overlaps} overlap. `,
     el("button", { class: "link", onclick: function openTable() { showTable(row.row_id, data.drop_rows || []); } }, "View the whole table"),
   ]));
 }
@@ -620,7 +667,7 @@ function compareColumn(data, other, title) {
   }
   if (!card.findings.length) findings.append(el("li", { class: "muted" }, "no rule fired"));
   const verdict = el("div");
-  renderVerdict(verdict, card.verdict, false, card.findings);
+  renderVerdict(verdict, card.verdict, false, card.findings, verdictOpts(card, false));
   const diffClass = function differs(a, b) { return a !== b ? "diff" : null; };
   const row = card.decision;
   return el("div", { class: "cmp-col" }, [
@@ -777,13 +824,13 @@ function openModal(title, body) {
 function closeModal() { $("modal").hidden = true; }
 
 function conditionText(when) {
+  const list = function asList(value) { return Array.isArray(value) ? value : [value]; };
   const parts = [];
-  for (const key of ["classes", "all", "any", "none"]) {
-    if (when[key] === undefined) continue;
-    const value = Array.isArray(when[key]) ? when[key].join(", ") : when[key];
-    parts.push(`${key}: ${value}`);
-  }
-  return parts.join(" · ") || "(no condition)";
+  if (when.classes !== undefined) parts.push(list(when.classes).map(camelWords).join(" or ").replace(/^./, function up(c) { return c.toUpperCase(); }));
+  if (when.all !== undefined) parts.push(...list(when.all));
+  if (when.any !== undefined) parts.push(`any of ${list(when.any).join(", ")}`);
+  if (when.none !== undefined) parts.push(`not ${list(when.none).join(", ")}`);
+  return parts.join(" + ") || "(no condition)";
 }
 
 async function showTable(hitRow, dropRows) {
@@ -792,10 +839,6 @@ async function showTable(hitRow, dropRows) {
     const table = declared.table;
     const report = declared.coverage;
     const body = el("div");
-    body.append(el("p", { class: "muted" }, [
-      `${table.version_note} · hit policy ${table.hit_policy} (first matching row answers) · rules version `,
-      el("span", { class: "mono" }, shortHash(declared.rules_version)),
-    ]));
     body.append(el("p", {}, `Table checked: ${report.input_sets} input sets (2^${report.rules.length} rule sets × ${report.change_classes} change classes), `
                             + `${report.to_person} go to a person, ${report.overlaps} overlap (the first row wins).`));
     const head = el("tr", {}, ["Row", "Meaning", "When", "Allowed actions", "Decides"].map(function th(text) { return el("th", {}, text); }));

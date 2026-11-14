@@ -59,10 +59,12 @@
       <h2>Bring your documents</h2>
       <button class="link" id="docs-reset">Reset to the original memory</button>
     </div>
-    <p class="muted">Upload, paste or link a document. The model proposes facts, each with a verbatim quote; code checks every quote and id. Nothing counts until a person accepts it. Then re-check the current change.</p>
+    <p class="muted">Facts are proposed with quotes. Nothing counts until you accept.</p>
     <div class="docs-inputs">
-      <div><span class="label">Demo documents (synthetic, fictional company)</span><div id="docs-demo" class="demo-buttons"></div></div>
+      <div><div id="docs-demo" class="demo-buttons"></div></div>
+      <details class="docs-own-wrap"><summary>Your own document</summary>
       <div class="docs-own">
+        <div id="docs-own-real" class="docs-own-real"></div>
         <input id="docs-name" placeholder="Document name" aria-label="Document name">
         <select id="docs-type" aria-label="Document type">
           <option value="customer_requirement">customer requirement (rank 1)</option>
@@ -74,6 +76,7 @@
         <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
         <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
       </div>
+      </details>
     </div>
     <div id="docs-status" class="status" hidden></div>
     <div id="docs-view"></div>
