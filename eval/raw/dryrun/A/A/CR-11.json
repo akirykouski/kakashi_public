@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "21427c6ab3ede72ee44966b320e0dcdad58c440f8d76500a9026707439edd3e9",
+ "model_arg": "sonnet",
+ "seconds": 6.356503009796143,
+ "response": {
+  "duration_api_ms": 5379,
+  "stop_reason": "tool_use",
+  "session_id": "4f47b5b2-6206-4356-9f46-66a8deaecd17",
+  "total_cost_usd": 0.0205633,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3061,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 823,
+   "output_tokens_details": {
+    "thinking_tokens": 315
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3061,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 823,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3061,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3061
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 823,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3061,
+    "webSearchRequests": 0,
+    "costUSD": 0.0205633,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 315,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3061,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-180\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Torino Plant 3 (TO3) is not in scope of this record.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Scope: series production parts released at Torino Plant 1 (TO1) and Torino Plant 2 (TO2) for customers Stellantis (STL) and Cantieri Lombardi Mobility S.p.A. (CLM).\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0208: part BR-180; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6061-T6; status APPROVED 2024-10-14 (PPAP-2024-091)\"}],\"why\":\"The proposed receiving plant is TO3 for BR-180 / STL with billet from Alluminio B (Settimo Torinese). The only approval for that combination, AP-0208, is for plant TO1. The approved supplier list does not cover TO3, so no controlled record shows whether the source is approved there. Absence cannot be read as \\\"not approved\\\", so a person must confirm whether a TO3 release exists elsewhere.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-180",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Torino Plant 3 (TO3) is not in scope of this record."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Scope: series production parts released at Torino Plant 1 (TO1) and Torino Plant 2 (TO2) for customers Stellantis (STL) and Cantieri Lombardi Mobility S.p.A. (CLM)."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0208: part BR-180; plant TO1; customer STL; supplier Alluminio B S.r.l. (Settimo Torinese); billet grade EN AW-6061-T6; status APPROVED 2024-10-14 (PPAP-2024-091)"
+      }
+     ],
+     "why": "The proposed receiving plant is TO3 for BR-180 / STL with billet from Alluminio B (Settimo Torinese). The only approval for that combination, AP-0208, is for plant TO1. The approved supplier list does not cover TO3, so no controlled record shows whether the source is approved there. Absence cannot be read as \"not approved\", so a person must confirm whether a TO3 release exists elsewhere."
+    }
+   ]
+  },
+  "ttft_ms": 2992,
+  "type": "result",
+  "duration_ms": 5567,
+  "uuid": "3cf7ba0c-1575-46bf-984e-f2dba2f613a4",
+  "ttft_stream_ms": 829,
+  "time_to_request_ms": 187,
+  "first_content_frame_ms": 829,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

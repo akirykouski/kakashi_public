@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "20313fded3c5e4cb62c8802c5869a0eb791685e039177ec3b274193b7eb37432",
+ "model_arg": "sonnet",
+ "seconds": 12.188358783721924,
+ "response": {
+  "duration_api_ms": 11195,
+  "stop_reason": "tool_use",
+  "session_id": "0fdddd4c-5e4a-4265-9d1c-0ab4463c2a43",
+  "total_cost_usd": 0.0696735,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 13005,
+   "cache_read_input_tokens": 13255,
+   "output_tokens": 1632,
+   "output_tokens_details": {
+    "thinking_tokens": 568
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 13005,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 500,
+     "cache_read_input_tokens": 12402,
+     "cache_creation_input_tokens": 1456,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1456
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1632,
+    "cacheReadInputTokens": 13255,
+    "cacheCreationInputTokens": 13005,
+    "webSearchRequests": 0,
+    "costUSD": 0.0696735,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 568,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 13005,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"SC-BR220-YS\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"7.1 The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"after any of: a change of source, a change of material, a change of manufacturing process, or a change\"}],\"why\":\"BR-220 belongs to PRG-X, whose customer is Aurelia. A new CNC program and fixture is a change of manufacturing process. Aurelia's manual revision 4 (which replaces revision 3) requires written approval (PPAP resubmission) before parts ship after such a change. It also requires 90 days' notice (section 7.2). I found no approval or deviation in force that covers this change. The only BR-220 deviation, DEV-118, covers packaging and has expired. The change is planned for next week, so the 90-day notice cannot be met either.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "SC-BR220-YS"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "7.1 The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "after any of: a change of source, a change of material, a change of manufacturing process, or a change"
+      }
+     ],
+     "why": "BR-220 belongs to PRG-X, whose customer is Aurelia. A new CNC program and fixture is a change of manufacturing process. Aurelia's manual revision 4 (which replaces revision 3) requires written approval (PPAP resubmission) before parts ship after such a change. It also requires 90 days' notice (section 7.2). I found no approval or deviation in force that covers this change. The only BR-220 deviation, DEV-118, covers packaging and has expired. The change is planned for next week, so the 90-day notice cannot be met either."
+    }
+   ]
+  },
+  "ttft_ms": 5096,
+  "type": "result",
+  "duration_ms": 11409,
+  "uuid": "d6815ad2-837c-4416-aeb9-c4da816d30a3",
+  "ttft_stream_ms": 1113,
+  "time_to_request_ms": 202,
+  "first_content_frame_ms": 1113,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

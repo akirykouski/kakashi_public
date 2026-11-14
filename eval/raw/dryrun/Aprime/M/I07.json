@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "edce43b5baf3b0afc9dd57083bb5f8958b92828a16fddbcaafa65689188954ae",
+ "model_arg": "sonnet",
+ "seconds": 15.89817500114441,
+ "response": {
+  "duration_api_ms": 10157,
+  "stop_reason": "tool_use",
+  "session_id": "60e469e0-6ee9-4daa-a036-bbc462d124cd",
+  "total_cost_usd": 0.028963299999999997,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3531,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1475,
+   "output_tokens_details": {
+    "thinking_tokens": 839
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3531,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1475,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3531,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3531
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1475,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3531,
+    "webSearchRequests": 0,
+    "costUSD": 0.028963299999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 839,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3531,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|PN-050|unknown\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"the audit qualifies the company. Part approvals stay as they are.\"},{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"PN-050,Hinge pin,PRG-X,A,MAT-42CRMO4,COAT-ZNFLAKE,\"}],\"why\":\"The re-audit restored company-level standing only. No controlled approval record covers PN-050 for Chisone, a receiving plant or a customer. The customer for PRG-X is not stated in any document. Chisone is listed as an aluminium supplier and the pin is steel, so absence of approval cannot be read as 'not approved'. A person must confirm.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"PN-050,Hinge pin,PRG-X,A,MAT-42CRMO4,COAT-ZNFLAKE,\"},{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"Chisone is qualified for 6061-T6 and 6082-T5 only.\"}],\"why\":\"The drawing requires 42CrMo4 steel. Chisone's documented qualification covers only aluminium alloys. No 3.1 material certificate for 42CrMo4 from Chisone is in the documents, so a person must say whether one exists.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|PN-050|unknown",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "the audit qualifies the company. Part approvals stay as they are."
+      },
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-C,Meccanica Chisone S.r.l.,aluminium extrusions and blanks"
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "PN-050,Hinge pin,PRG-X,A,MAT-42CRMO4,COAT-ZNFLAKE,"
+      }
+     ],
+     "why": "The re-audit restored company-level standing only. No controlled approval record covers PN-050 for Chisone, a receiving plant or a customer. The customer for PRG-X is not stated in any document. Chisone is listed as an aluminium supplier and the pin is steel, so absence of approval cannot be read as 'not approved'. A person must confirm."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "PN-050,Hinge pin,PRG-X,A,MAT-42CRMO4,COAT-ZNFLAKE,"
+      },
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "Chisone is qualified for 6061-T6 and 6082-T5 only."
+      }
+     ],
+     "why": "The drawing requires 42CrMo4 steel. Chisone's documented qualification covers only aluminium alloys. No 3.1 material certificate for 42CrMo4 from Chisone is in the documents, so a person must say whether one exists."
+    }
+   ]
+  },
+  "ttft_ms": 11727,
+  "type": "result",
+  "duration_ms": 15019,
+  "uuid": "e114a5a5-3912-4b00-ad1a-b61daf70f562",
+  "ttft_stream_ms": 5914,
+  "time_to_request_ms": 4860,
+  "first_content_frame_ms": 5914,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

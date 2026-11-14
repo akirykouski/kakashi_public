@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "ef4a466c243553189b1659b4f6ee3cb4eb2a6fea4492233940ad65779dd09ba3",
+ "model_arg": "sonnet",
+ "seconds": 10.268606901168823,
+ "response": {
+  "duration_api_ms": 9289,
+  "stop_reason": "tool_use",
+  "session_id": "f5d380fc-0d73-4f7a-a9b5-56d138f36439",
+  "total_cost_usd": 0.026019300000000002,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3065,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1367,
+   "output_tokens_details": {
+    "thinking_tokens": 689
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3065,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1367,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3065,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3065
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1367,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3065,
+    "webSearchRequests": 0,
+    "costUSD": 0.026019300000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 689,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3065,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MEASURED_VALUE\",\"key\":\"SC-01\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01\"},{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced.\"},{\"doc_id\":\"DWG-BR220-RevB\",\"quote\":\"Tensile result on the Alluminio B BR-220 lot is 245 MPa. The drawing says min 240 MPa so it passes.\"}],\"why\":\"The meeting used the 240 MPa minimum from Rev B. Rev B is superseded and withdrawn on 2026-06-01. Rev C is in force and, with control plan CP-BR220-R3, requires Rp0.2 >= 250 MPa (SC-01). The measured 245 MPa is below that, so the lot fails SC-01.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"EN AW-6082-T6, EN 10204 type 3.1 | Each lot, before release to production\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Material certificates are not stored in this record.\"}],\"why\":\"The 245 MPa figure is only stated verbally in the meeting. The documents contain no EN 10204 3.1 certificate or tensile report for this lot. A person must supply the certificate (grade, temper, heat, Rp0.2) to confirm the grade and the value.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MEASURED_VALUE",
+     "key": "SC-01",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01"
+      },
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced."
+      },
+      {
+       "doc_id": "DWG-BR220-RevB",
+       "quote": "Tensile result on the Alluminio B BR-220 lot is 245 MPa. The drawing says min 240 MPa so it passes."
+      }
+     ],
+     "why": "The meeting used the 240 MPa minimum from Rev B. Rev B is superseded and withdrawn on 2026-06-01. Rev C is in force and, with control plan CP-BR220-R3, requires Rp0.2 >= 250 MPa (SC-01). The measured 245 MPa is below that, so the lot fails SC-01."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "EN AW-6082-T6, EN 10204 type 3.1 | Each lot, before release to production"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Material certificates are not stored in this record."
+      }
+     ],
+     "why": "The 245 MPa figure is only stated verbally in the meeting. The documents contain no EN 10204 3.1 certificate or tensile report for this lot. A person must supply the certificate (grade, temper, heat, Rp0.2) to confirm the grade and the value."
+    }
+   ]
+  },
+  "ttft_ms": 6038,
+  "type": "result",
+  "duration_ms": 9466,
+  "uuid": "83620dfb-b368-4197-90e5-6152e51215c3",
+  "ttft_stream_ms": 813,
+  "time_to_request_ms": 176,
+  "first_content_frame_ms": 813,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

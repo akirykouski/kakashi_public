@@ -1,0 +1,31 @@
+{
+ "condition": "B",
+ "world": "M",
+ "model_arg": "sonnet",
+ "model_ids": [
+  "claude-sonnet-5-5"
+ ],
+ "cli": "2.1.325 (Claude Code)",
+ "cli_flags": [
+  "claude",
+  "-p",
+  "--strict-mcp-config",
+  "--tools",
+  "",
+  "--setting-sources",
+  "",
+  "--disable-slash-commands",
+  "--no-session-persistence",
+  "--output-format",
+  "json"
+ ],
+ "top_k": 8,
+ "dense_model": "intfloat/multilingual-e5-small",
+ "rrf_k": 60,
+ "raw_dir": "eval/raw/dryrun",
+ "temperature": "CLI default (not settable)",
+ "n": 36,
+ "errors": 0,
+ "wall_seconds": 156.3,
+ "finished_at": "2026-11-14T11:04:58+0100"
+}

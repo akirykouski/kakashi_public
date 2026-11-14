@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "f76253762818d740669f2252f8f42de342c81d397632e11d24ec4a28b8af1580",
+ "model_arg": "sonnet",
+ "seconds": 7.143597841262817,
+ "response": {
+  "duration_api_ms": 6007,
+  "stop_reason": "tool_use",
+  "session_id": "17135e9e-c50c-4bbf-9b22-3c23e628bb15",
+  "total_cost_usd": 0.021427300000000003,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3112,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 889,
+   "output_tokens_details": {
+    "thinking_tokens": 309
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3112,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 889,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3112,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3112
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 889,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3112,
+    "webSearchRequests": 0,
+    "costUSD": 0.021427300000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 309,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3112,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-310\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"APPROVAL AP-0344: part BR-310; plant TO2; customer CLM; supplier Meccanica C S.p.A. (Chieri); billet grade EN AW-5083-H111; status APPROVED 2025-06-11 (PPAP-2025-052)\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM).\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"A source that is not listed for a part, plant and customer has no approval.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Approval is granted per part, per receiving plant and per customer, never per supplier.\"},{\"doc_id\":\"PRC-DEV-007\",\"quote\":\"A temporary deviation does not approve a new material source.\"}],\"why\":\"The proposal is to run BR-310 for CLM at Plant 1 (TO1) with Meccanica C billet. The only approval for BR-310 is AP-0344, which covers plant TO2 only. The ASL is the complete list for TO1 and TO2 and for STL and CLM, so Meccanica C has no approval for BR-310 at TO1 for CLM. A temporary deviation cannot grant one, and the TO2 approval does not carry over to TO1.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-310",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "APPROVAL AP-0344: part BR-310; plant TO2; customer CLM; supplier Meccanica C S.p.A. (Chieri); billet grade EN AW-5083-H111; status APPROVED 2025-06-11 (PPAP-2025-052)"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM)."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "A source that is not listed for a part, plant and customer has no approval."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Approval is granted per part, per receiving plant and per customer, never per supplier."
+      },
+      {
+       "doc_id": "PRC-DEV-007",
+       "quote": "A temporary deviation does not approve a new material source."
+      }
+     ],
+     "why": "The proposal is to run BR-310 for CLM at Plant 1 (TO1) with Meccanica C billet. The only approval for BR-310 is AP-0344, which covers plant TO2 only. The ASL is the complete list for TO1 and TO2 and for STL and CLM, so Meccanica C has no approval for BR-310 at TO1 for CLM. A temporary deviation cannot grant one, and the TO2 approval does not carry over to TO1."
+    }
+   ]
+  },
+  "ttft_ms": 3457,
+  "type": "result",
+  "duration_ms": 6316,
+  "uuid": "f5f5b7fa-ab0e-49d6-a7ec-00afea5db191",
+  "ttft_stream_ms": 1101,
+  "time_to_request_ms": 311,
+  "first_content_frame_ms": 1101,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

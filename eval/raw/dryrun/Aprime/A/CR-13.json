@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "697e2aa367ed7f4e5930857b0e5ae8af503a143e9a1fe425ccfb5b5dc578c1a2",
+ "model_arg": "sonnet",
+ "seconds": 15.838279008865356,
+ "response": {
+  "duration_api_ms": 14784,
+  "stop_reason": "tool_use",
+  "session_id": "1e16b5a3-9bdc-4020-8bc3-98ccb0c96b76",
+  "total_cost_usd": 0.0436522,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4852,
+   "cache_read_input_tokens": 4862,
+   "output_tokens": 2375,
+   "output_tokens_details": {
+    "thinking_tokens": 933
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4852,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 728,
+     "cache_read_input_tokens": 4009,
+     "cache_creation_input_tokens": 1696,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1696
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 2375,
+    "cacheReadInputTokens": 4862,
+    "cacheCreationInputTokens": 4852,
+    "webSearchRequests": 0,
+    "costUSD": 0.0436522,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 933,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4852,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MATERIAL\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa\"}],\"why\":\"Drawing Rev C is in force and requires EN AW-6082-T6 with yield of at least 250 MPa (SC-01). Alluminio B offers 6061-T6, which is the wrong grade. Its 240 MPa minimum is also below 250 MPa. Elena's mail uses the old Rev A/B values from the superseded drawing (DWG-BR220-RevB, withdrawn 2026-06-01), so it is outdated and cannot support the change.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"5. Material certificate EN 10204 type 3.1 required with each lot.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Material certificates are not stored in this record.\"}],\"why\":\"The drawing requires a 3.1 certificate with each lot. No certificate or test result is in the documents for the 6061-T6 bar that Alluminio B proposes to ship this week. A person must say whether one exists and what it shows.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Rev C, 2026-06-01: material changed from EN AW-6061-T6 to EN AW-6082-T6; yield requirement raised from 240 MPa to 250 MPa; SC-01 introduced."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes"
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa"
+      }
+     ],
+     "why": "Drawing Rev C is in force and requires EN AW-6082-T6 with yield of at least 250 MPa (SC-01). Alluminio B offers 6061-T6, which is the wrong grade. Its 240 MPa minimum is also below 250 MPa. Elena's mail uses the old Rev A/B values from the superseded drawing (DWG-BR220-RevB, withdrawn 2026-06-01), so it is outdated and cannot support the change."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "5. Material certificate EN 10204 type 3.1 required with each lot."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Material certificates are not stored in this record."
+      }
+     ],
+     "why": "The drawing requires a 3.1 certificate with each lot. No certificate or test result is in the documents for the 6061-T6 bar that Alluminio B proposes to ship this week. A person must say whether one exists and what it shows."
+    }
+   ]
+  },
+  "ttft_ms": 7530,
+  "type": "result",
+  "duration_ms": 15022,
+  "uuid": "aacaa748-9fa9-44be-b0f6-d7f32a15bb1f",
+  "ttft_stream_ms": 860,
+  "time_to_request_ms": 228,
+  "first_content_frame_ms": 860,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

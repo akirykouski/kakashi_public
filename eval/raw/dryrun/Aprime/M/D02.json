@@ -1,0 +1,127 @@
+{
+ "prompt_sha256": "8a3bae8f4e94caeda756b65003071d3f77f112bc2b4a7bc4df2902c82ba3b846",
+ "model_arg": "sonnet",
+ "seconds": 12.939812898635864,
+ "response": {
+  "duration_api_ms": 11594,
+  "stop_reason": "tool_use",
+  "session_id": "7b0db2c5-689c-4081-ab05-d6a9e3041ae2",
+  "total_cost_usd": 0.0340754,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4580,
+   "cache_read_input_tokens": 5074,
+   "output_tokens": 1524,
+   "output_tokens_details": {
+    "thinking_tokens": 825
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4580,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 352,
+     "cache_read_input_tokens": 4221,
+     "cache_creation_input_tokens": 1212,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1212
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1524,
+    "cacheReadInputTokens": 5074,
+    "cacheCreationInputTokens": 4580,
+    "webSearchRequests": 0,
+    "costUSD": 0.0340754,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 825,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4580,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-G|SP-700|customer not stated\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-G,Minuterie Germanasca S.r.l.,\\\"steel stampings, clips, pins\\\"\"},{\"doc_id\":\"REG-PARTS\",\"quote\":\"SP-700,\\\"Battery spacer, injection moulded\\\",PRG-Z,A,MAT-PA66GF30,,\"}],\"why\":\"No controlled source-release record covers SP-700 at Minuterie Germanasca for any receiving plant or customer. Germanasca is listed only for steel stampings, clips and pins, and the part master gives no customer for PRG-Z. Absence of a record is not proof the source is unapproved, so a person must confirm whether a release exists.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-G|SP-700|customer not stated",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-G,Minuterie Germanasca S.r.l.,\"steel stampings, clips, pins\""
+      },
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "SP-700,\"Battery spacer, injection moulded\",PRG-Z,A,MAT-PA66GF30,,"
+      }
+     ],
+     "why": "No controlled source-release record covers SP-700 at Minuterie Germanasca for any receiving plant or customer. Germanasca is listed only for steel stampings, clips and pins, and the part master gives no customer for PRG-Z. Absence of a record is not proof the source is unapproved, so a person must confirm whether a release exists."
+    }
+   ]
+  },
+  "ttft_ms": 7367,
+  "type": "result",
+  "duration_ms": 11869,
+  "uuid": "43502d34-6570-4fe6-ae90-70ee1b59dc8a",
+  "ttft_stream_ms": 1266,
+  "time_to_request_ms": 282,
+  "first_content_frame_ms": 1266,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "prompt_sha256": "1ad570d43d3efd2fe78535d9dc5d55419844e34e7db32cd6afaba578cfe0db87",
+ "model_arg": "sonnet",
+ "seconds": 14.642794132232666,
+ "response": {
+  "duration_api_ms": 13604,
+  "stop_reason": "tool_use",
+  "session_id": "fd60fd9c-c685-4367-ab8f-a3d69352b537",
+  "total_cost_usd": 0.033341300000000004,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3373,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1976,
+   "output_tokens_details": {
+    "thinking_tokens": 967
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3373,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1976,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3373,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3373
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1976,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3373,
+    "webSearchRequests": 0,
+    "costUSD": 0.033341300000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 967,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3373,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"},{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"No temporary source for BR-220 without 6082-T6 capability and a closed 8D.\"}],\"why\":\"Meccanica Chisone's qualification is conditional, so it cannot receive new parts now. The only record is the 2026-10-02 minutes, so someone should confirm the status is still current.\"},{\"rule_u\":\"U_MATERIAL\",\"key\":\"MAT-6082-T6\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"Chisone is qualified for 6061-T6 and 6082-T5 only. BR-220 is drawn in 6082-T6, yield at least 250.\"},{\"doc_id\":\"EML-2026-10-29\",\"quote\":\"Meccanica Chisone told me on the phone they can make BR-220 blanks from the same alloy they use for BR-310\"}],\"why\":\"The drawing requires 6082-T6. Chisone is qualified only for 6061-T6 and 6082-T5. The 'same alloy as BR-310' claim is a phone statement, and it names neither the alloy nor the temper.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D cracking issue on SUP-C 6082 material (id not given)\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Chisone has an open cracking 8D on 6082 material, which is the alloy BR-220 uses. The documents give no issue id and no closure.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-220|customer not stated\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"Chisone is qualified for 6061-T6 and 6082-T5 only.\"}],\"why\":\"No controlled record gives a source release for BR-220 from Chisone for any receiving plant or customer. The only statement is in meeting minutes. Absence of a release cannot be read as 'not approved', so a person must confirm the release status.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"EML-2026-10-29\",\"quote\":\"they can make BR-220 blanks from the same alloy they use for BR-310, so it should be a formality.\"}],\"why\":\"There is no 3.1 material certificate for Chisone's proposed alloy or temper. The capability claim is only verbal.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      },
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "No temporary source for BR-220 without 6082-T6 capability and a closed 8D."
+      }
+     ],
+     "why": "Meccanica Chisone's qualification is conditional, so it cannot receive new parts now. The only record is the 2026-10-02 minutes, so someone should confirm the status is still current."
+    },
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "MAT-6082-T6",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "Chisone is qualified for 6061-T6 and 6082-T5 only. BR-220 is drawn in 6082-T6, yield at least 250."
+      },
+      {
+       "doc_id": "EML-2026-10-29",
+       "quote": "Meccanica Chisone told me on the phone they can make BR-220 blanks from the same alloy they use for BR-310"
+      }
+     ],
+     "why": "The drawing requires 6082-T6. Chisone is qualified only for 6061-T6 and 6082-T5. The 'same alloy as BR-310' claim is a phone statement, and it names neither the alloy nor the temper."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D cracking issue on SUP-C 6082 material (id not given)",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Chisone has an open cracking 8D on 6082 material, which is the alloy BR-220 uses. The documents give no issue id and no closure."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-220|customer not stated",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "Chisone is qualified for 6061-T6 and 6082-T5 only."
+      }
+     ],
+     "why": "No controlled record gives a source release for BR-220 from Chisone for any receiving plant or customer. The only statement is in meeting minutes. Absence of a release cannot be read as 'not approved', so a person must confirm the release status."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "EML-2026-10-29",
+       "quote": "they can make BR-220 blanks from the same alloy they use for BR-310, so it should be a formality."
+      }
+     ],
+     "why": "There is no 3.1 material certificate for Chisone's proposed alloy or temper. The capability claim is only verbal."
+    }
+   ]
+  },
+  "ttft_ms": 8453,
+  "type": "result",
+  "duration_ms": 13863,
+  "uuid": "c93688f8-e782-49a8-aa5b-798160889fe5",
+  "ttft_stream_ms": 1271,
+  "time_to_request_ms": 259,
+  "first_content_frame_ms": 1271,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

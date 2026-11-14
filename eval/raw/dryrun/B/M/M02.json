@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "2e9e8bf105929c75c12e435c750e4e80bbd5dedadd6b886246103bada2008797",
+ "model_arg": "sonnet",
+ "seconds": 18.81542706489563,
+ "response": {
+  "duration_api_ms": 13137,
+  "stop_reason": "tool_use",
+  "session_id": "5f40e475-695f-4ca3-bc35-1e077201eda6",
+  "total_cost_usd": 0.0728201,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 12894,
+   "cache_read_input_tokens": 13261,
+   "output_tokens": 1991,
+   "output_tokens_details": {
+    "thinking_tokens": 603
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 12894,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 701,
+     "cache_read_input_tokens": 12408,
+     "cache_creation_input_tokens": 1339,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1339
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1991,
+    "cacheReadInputTokens": 13261,
+    "cacheCreationInputTokens": 12894,
+    "webSearchRequests": 0,
+    "costUSD": 0.0728201,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 603,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 12894,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-180,\\\"Battery tray bracket, milled\\\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"or a change of coating or surface treatment.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia shall be notified of every planned change at least 90 days before implementation.\"}],\"why\":\"BR-180 belongs to PRG-Z (Aurelia). It is now clear-anodised (COAT-ANOD). Replacing that with the Nanoceram finish is a coating change. Aurelia revision 4, which replaced revision 3, requires written approval (PPAP resubmission) before shipment. It also requires 90 days' notice. No deviation or approval in force covers this change. DEV-114 is expired and only covered hardness.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"coating_substances\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-ANOD,\\\"Sulphuric acid anodising, clear\\\",none\"}],\"why\":\"Nanoceram is not in the coating catalogue, so its substances are unknown. We cannot check it against the ELV ban on lead, mercury, cadmium and hexavalent chromium (LAW-ELV). Process engineering (PER-ROMANO) should supply the composition and add it to the catalogue. Which coater would apply it is also not stated.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-180,\"Battery tray bracket, milled\",PRG-Z,D,MAT-6061-T6,COAT-ANOD,"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "or a change of coating or surface treatment."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation."
+      }
+     ],
+     "why": "BR-180 belongs to PRG-Z (Aurelia). It is now clear-anodised (COAT-ANOD). Replacing that with the Nanoceram finish is a coating change. Aurelia revision 4, which replaced revision 3, requires written approval (PPAP resubmission) before shipment. It also requires 90 days' notice. No deviation or approval in force covers this change. DEV-114 is expired and only covered hardness."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "coating_substances",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-ANOD,\"Sulphuric acid anodising, clear\",none"
+      }
+     ],
+     "why": "Nanoceram is not in the coating catalogue, so its substances are unknown. We cannot check it against the ELV ban on lead, mercury, cadmium and hexavalent chromium (LAW-ELV). Process engineering (PER-ROMANO) should supply the composition and add it to the catalogue. Which coater would apply it is also not stated."
+    }
+   ]
+  },
+  "ttft_ms": 10117,
+  "type": "result",
+  "duration_ms": 18048,
+  "uuid": "d5a59f0e-b4ee-4981-acdf-af2208175a28",
+  "ttft_stream_ms": 5846,
+  "time_to_request_ms": 4906,
+  "first_content_frame_ms": 5847,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

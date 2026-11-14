@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "0163a15f4e74698a8c974cc35ab4e04fcd035387305459516a47863aee3eb4ee",
+ "model_arg": "sonnet",
+ "seconds": 10.456912755966187,
+ "response": {
+  "duration_api_ms": 9320,
+  "stop_reason": "tool_use",
+  "session_id": "1b463057-236b-4f09-88d5-7cfc3cfb338c",
+  "total_cost_usd": 0.0294373,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4146,
+   "cache_read_input_tokens": 4953,
+   "output_tokens": 1235,
+   "output_tokens_details": {
+    "thinking_tokens": 484
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4146,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 378,
+     "cache_read_input_tokens": 4100,
+     "cache_creation_input_tokens": 899,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 899
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1235,
+    "cacheReadInputTokens": 4953,
+    "cacheCreationInputTokens": 4146,
+    "webSearchRequests": 0,
+    "costUSD": 0.0294373,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 484,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4146,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-H|HB-620|CUST-NOR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-09-15\",\"quote\":\"We move HB-620 to Fonderia Pellice once their audit and PPAP are through.\"},{\"doc_id\":\"MTG-2026-09-15\",\"quote\":\"Pellice can start in October if the audit passes.\"},{\"doc_id\":\"8D-26-009\",\"quote\":\"three escapes to the Nordhavn line\"}],\"why\":\"Pellice (SUP-H) is only a planned source for HB-620, conditional on audit and PPAP. No controlled approval record in the documents covers HB-620 from Pellice to Beinasco (PLT-BEI) for Nordhavn (CUST-NOR). Absence of a record cannot be read as not approved, so a person must confirm whether the audit and PPAP were completed and the release issued.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-H|HB-620|CUST-NOR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-09-15",
+       "quote": "We move HB-620 to Fonderia Pellice once their audit and PPAP are through."
+      },
+      {
+       "doc_id": "MTG-2026-09-15",
+       "quote": "Pellice can start in October if the audit passes."
+      },
+      {
+       "doc_id": "8D-26-009",
+       "quote": "three escapes to the Nordhavn line"
+      }
+     ],
+     "why": "Pellice (SUP-H) is only a planned source for HB-620, conditional on audit and PPAP. No controlled approval record in the documents covers HB-620 from Pellice to Beinasco (PLT-BEI) for Nordhavn (CUST-NOR). Absence of a record cannot be read as not approved, so a person must confirm whether the audit and PPAP were completed and the release issued."
+    }
+   ]
+  },
+  "ttft_ms": 4989,
+  "type": "result",
+  "duration_ms": 9643,
+  "uuid": "a9692675-22c8-4f1a-8505-761e392a5400",
+  "ttft_stream_ms": 1307,
+  "time_to_request_ms": 318,
+  "first_content_frame_ms": 1307,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

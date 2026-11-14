@@ -1,0 +1,127 @@
+{
+ "prompt_sha256": "bd38b9e8ce1a0a006ee4fb659fc2b1ee68ef5924b6a5f5a8151f4c7aafae6ed9",
+ "model_arg": "sonnet",
+ "seconds": 9.481045007705688,
+ "response": {
+  "duration_api_ms": 8475,
+  "stop_reason": "tool_use",
+  "session_id": "c9b9e778-0138-42de-ac01-f9a729e714c1",
+  "total_cost_usd": 0.0289757,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 4332,
+   "cache_read_input_tokens": 5197,
+   "output_tokens": 1112,
+   "output_tokens_details": {
+    "thinking_tokens": 495
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4332,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 311,
+     "cache_read_input_tokens": 4344,
+     "cache_creation_input_tokens": 841,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 841
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1112,
+    "cacheReadInputTokens": 5197,
+    "cacheCreationInputTokens": 4332,
+    "webSearchRequests": 0,
+    "costUSD": 0.0289757,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 495,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 4332,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"NCR-26-017\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"NCR-26-017\",\"quote\":\"Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open.\"},{\"doc_id\":\"NCR-26-017\",\"quote\":\"Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC.\"}],\"why\":\"The supplier of CL-115 (Germanasca, SUP-G) has an open NCR on the C67S spring steel clips. The proposed change doubles the December CL-115 order from that supplier while the NCR is still open.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "NCR-26-017",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open."
+      },
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC."
+      }
+     ],
+     "why": "The supplier of CL-115 (Germanasca, SUP-G) has an open NCR on the C67S spring steel clips. The proposed change doubles the December CL-115 order from that supplier while the NCR is still open."
+    }
+   ]
+  },
+  "ttft_ms": 4671,
+  "type": "result",
+  "duration_ms": 8693,
+  "uuid": "98f56cf2-963a-4b5d-a9e5-55142d230104",
+  "ttft_stream_ms": 1115,
+  "time_to_request_ms": 208,
+  "first_content_frame_ms": 1115,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

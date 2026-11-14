@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "d9a0fa667253ca5acfe2d316a14930666134b3b7df82a9f661b4aeccb9d070bd",
+ "model_arg": "sonnet",
+ "seconds": 93.20854616165161,
+ "response": {
+  "duration_api_ms": 91859,
+  "stop_reason": "tool_use",
+  "session_id": "e00805da-55e1-48a5-8cf3-7909ce6e3a5f",
+  "total_cost_usd": 0.0821544,
+  "usage": {
+   "input_tokens": 6,
+   "cache_creation_input_tokens": 13468,
+   "cache_read_input_tokens": 27004,
+   "output_tokens": 2557,
+   "output_tokens_details": {
+    "thinking_tokens": 750
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 13468,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 761,
+     "cache_read_input_tokens": 13741,
+     "cache_creation_input_tokens": 580,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 580
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 6,
+    "outputTokens": 2557,
+    "cacheReadInputTokens": 27004,
+    "cacheCreationInputTokens": 13468,
+    "webSearchRequests": 0,
+    "costUSD": 0.0821544,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 750,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 13468,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 4,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"why\":\"BR-310 belongs only to PRG-Y (Nordhavn). Moving the coating step to the new Pinerolo line moves production to another site. CSR-NOR-R2 treats that as a change of source, which needs Nordhavn approval (PPAP) before first shipment. No approval in force covers it. BR-310 is not an Aurelia part, so no Aurelia finding applies.\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"Moving production to another site is a change of source.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before\"}]},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"why\":\"BR-310 is made from EN AW-6082-T5 by Meccanica Chisone. 8D-25-031, on cracks in 6082 material found on BR-310, is still open. The 2026-11-06 review confirmed it is not closed. The re-audit only restored company-level status.\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"found at incoming inspection on BR-310\"},{\"doc_id\":\"MTG-2026-11-06\",\"quote\":\"The 8D on the 6082 cracks is not closed yet\"}]}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "why": "BR-310 belongs only to PRG-Y (Nordhavn). Moving the coating step to the new Pinerolo line moves production to another site. CSR-NOR-R2 treats that as a change of source, which needs Nordhavn approval (PPAP) before first shipment. No approval in force covers it. BR-310 is not an Aurelia part, so no Aurelia finding applies.",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "Moving production to another site is a change of source."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before"
+      }
+     ]
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "why": "BR-310 is made from EN AW-6082-T5 by Meccanica Chisone. 8D-25-031, on cracks in 6082 material found on BR-310, is still open. The 2026-11-06 review confirmed it is not closed. The re-audit only restored company-level status.",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Supplier: Meccanica Chisone (SUP-C). Opened 2025-03-20. Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "found at incoming inspection on BR-310"
+      },
+      {
+       "doc_id": "MTG-2026-11-06",
+       "quote": "The 8D on the 6082 cracks is not closed yet"
+      }
+     ]
+    }
+   ]
+  },
+  "ttft_ms": 81673,
+  "type": "result",
+  "duration_ms": 92400,
+  "uuid": "17c12fe5-c4d6-4761-8b59-65e996dead5a",
+  "ttft_stream_ms": 76481,
+  "time_to_request_ms": 524,
+  "first_content_frame_ms": 76481,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "prompt_sha256": "d686c42b953dd32418fb9a1de2d14798f1cb4a2d45c3606953148ee5af4a611f",
+ "model_arg": "sonnet",
+ "seconds": 8.00833511352539,
+ "response": {
+  "duration_api_ms": 6858,
+  "stop_reason": "tool_use",
+  "session_id": "79f4aacf-0375-4f42-8615-ba9a00973944",
+  "total_cost_usd": 0.0235533,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3411,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 982,
+   "output_tokens_details": {
+    "thinking_tokens": 515
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3411,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 982,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3411,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3411
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 982,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3411,
+    "webSearchRequests": 0,
+    "costUSD": 0.0235533,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 515,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3411,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"supplier_record\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-G,Minuterie Germanasca S.r.l.,\\\"steel stampings, clips, pins\\\"\"}],\"why\":\"Viteria Lanzo is the proposed new source for CL-115, but the supplier master lists no such supplier. Its standing and qualification are unknown, so a person must say whether it is a known supplier.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"Viteria Lanzo|CL-115|CUST-AUR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-007,SUP-G,CL-115,PLT-BEI,CUST-AUR,approved,2024-11-05,,PER-BIANCHI,\"}],\"why\":\"The only approved-supplier record for CL-115 is for SUP-G, not Viteria Lanzo. No controlled record covers Viteria Lanzo for this part, plant and customer, so I can't read the gap as 'not approved'. A person must confirm whether any approval exists or whether a new approval is needed.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "supplier_record",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-G,Minuterie Germanasca S.r.l.,\"steel stampings, clips, pins\""
+      }
+     ],
+     "why": "Viteria Lanzo is the proposed new source for CL-115, but the supplier master lists no such supplier. Its standing and qualification are unknown, so a person must say whether it is a known supplier."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "Viteria Lanzo|CL-115|CUST-AUR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-007,SUP-G,CL-115,PLT-BEI,CUST-AUR,approved,2024-11-05,,PER-BIANCHI,"
+      }
+     ],
+     "why": "The only approved-supplier record for CL-115 is for SUP-G, not Viteria Lanzo. No controlled record covers Viteria Lanzo for this part, plant and customer, so I can't read the gap as 'not approved'. A person must confirm whether any approval exists or whether a new approval is needed."
+    }
+   ]
+  },
+  "ttft_ms": 4633,
+  "type": "result",
+  "duration_ms": 7212,
+  "uuid": "f42fe5fb-5e12-408b-a7ab-a5a3b0789522",
+  "ttft_stream_ms": 1278,
+  "time_to_request_ms": 351,
+  "first_content_frame_ms": 1278,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

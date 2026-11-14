@@ -1,0 +1,183 @@
+{
+ "prompt_sha256": "1d5e6e0fd32161b096ad4597cfc10299a968cdf8eb2baafe56952908d5b7c321",
+ "model_arg": "sonnet",
+ "seconds": 14.60449481010437,
+ "response": {
+  "duration_api_ms": 13535,
+  "stop_reason": "tool_use",
+  "session_id": "d8e14982-8d98-4c9d-a4e8-b7a5de44418b",
+  "total_cost_usd": 0.0680413,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 11558,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 2172,
+   "output_tokens_details": {
+    "thinking_tokens": 944
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 11558,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 2172,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 11558,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 11558
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 2172,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 11558,
+    "webSearchRequests": 0,
+    "costUSD": 0.0680413,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 944,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 11558,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-B|BR-310|CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,\"},{\"doc_id\":\"QP-11\",\"quote\":\"A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer.\"}],\"why\":\"The ASL covers BR-310 at PLT-PIN for CUST-NOR, but the only approval is for SUP-C. There is no approval for Alluminio Bormida (SUP-B) on BR-310, so SUP-B has no current release.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP,\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment.\"}],\"why\":\"BR-310 belongs to PRG-Y, which belongs to Nordhavn. A change of source needs Nordhavn's written approval before the first shipment. No approval is in the documents.\"},{\"rule_u\":\"U_MATERIAL\",\"key\":\"MAT-6082-T5\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BR-310,\\\"Roof rail bracket, extruded and cut\\\",PRG-Y,A,MAT-6082-T5,COAT-TCP,\"},{\"doc_id\":\"REG-CAPABILITIES\",\"quote\":\"CAP-B-01,SUP-B,MAT-6082-T6,2023-01-20\"},{\"doc_id\":\"REG-CAPABILITIES\",\"quote\":\"CAP-B-02,SUP-B,MAT-6061-T6,2023-01-20\"}],\"why\":\"The drawing requires EN AW-6082-T5. Bormida is qualified only for 6082-T6 and 6061-T6, not for 6082-T5. The 6082-T6 qualification is a different temper and does not cover T5.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"QP-11\",\"quote\":\"A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for the drawing material. Missing certificates are an open question for the supplier quality engineer.\"},{\"doc_id\":\"REG-CERTIFICATES\",\"quote\":\"CERT-B-6082T6,SUP-B,MAT-6082-T6,2026-10-28\"}],\"why\":\"No 3.1 certificate is on file for SUP-B and MAT-6082-T5, the drawing material of BR-310. Bormida's certificates cover only 6082-T6 and 6061-T6. The owner is the supplier quality engineer, Elena Gallo.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-B|BR-310|CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "QP-11",
+       "quote": "A supplier may deliver a part only if the approved supplier list contains an approval for that supplier, that part, the receiving site and the customer."
+      }
+     ],
+     "why": "The ASL covers BR-310 at PLT-PIN for CUST-NOR, but the only approval is for SUP-C. There is no approval for Alluminio Bormida (SUP-B) on BR-310, so SUP-B has no current release."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP,"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01"
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "A change of source or a change of material requires Nordhavn approval (PPAP resubmission) before the first shipment."
+      }
+     ],
+     "why": "BR-310 belongs to PRG-Y, which belongs to Nordhavn. A change of source needs Nordhavn's written approval before the first shipment. No approval is in the documents."
+    },
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "MAT-6082-T5",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BR-310,\"Roof rail bracket, extruded and cut\",PRG-Y,A,MAT-6082-T5,COAT-TCP,"
+      },
+      {
+       "doc_id": "REG-CAPABILITIES",
+       "quote": "CAP-B-01,SUP-B,MAT-6082-T6,2023-01-20"
+      },
+      {
+       "doc_id": "REG-CAPABILITIES",
+       "quote": "CAP-B-02,SUP-B,MAT-6061-T6,2023-01-20"
+      }
+     ],
+     "why": "The drawing requires EN AW-6082-T5. Bormida is qualified only for 6082-T6 and 6061-T6, not for 6082-T5. The 6082-T6 qualification is a different temper and does not cover T5."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "QP-11",
+       "quote": "A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier for the drawing material. Missing certificates are an open question for the supplier quality engineer."
+      },
+      {
+       "doc_id": "REG-CERTIFICATES",
+       "quote": "CERT-B-6082T6,SUP-B,MAT-6082-T6,2026-10-28"
+      }
+     ],
+     "why": "No 3.1 certificate is on file for SUP-B and MAT-6082-T5, the drawing material of BR-310. Bormida's certificates cover only 6082-T6 and 6061-T6. The owner is the supplier quality engineer, Elena Gallo."
+    }
+   ]
+  },
+  "ttft_ms": 7636,
+  "type": "result",
+  "duration_ms": 13806,
+  "uuid": "b09826af-5d4c-4250-8de5-f46b6ec8fc29",
+  "ttft_stream_ms": 1185,
+  "time_to_request_ms": 273,
+  "first_content_frame_ms": 1185,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

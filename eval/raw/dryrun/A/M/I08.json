@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "8295f284cf372ec199fa765a2210617eb6a40fbcab0b76c2ac86ac5eafc69fd1",
+ "model_arg": "sonnet",
+ "seconds": 10.652989864349365,
+ "response": {
+  "duration_api_ms": 9342,
+  "stop_reason": "tool_use",
+  "session_id": "cb9b23ed-1bc4-4c56-8e04-71e99c47f7ab",
+  "total_cost_usd": 0.026813299999999998,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3221,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1384,
+   "output_tokens_details": {
+    "thinking_tokens": 690
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3221,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1384,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3221,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3221
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1384,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3221,
+    "webSearchRequests": 0,
+    "costUSD": 0.026813299999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 690,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3221,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Chisone (SUP-C) has conditional qualification, so it may not receive new business now. Shipping BR-310 to Beinasco is a new delivery destination. No newer document shows the status was lifted.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-310|CUST-NOR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"PC-BR310\",\"quote\":\"Source: Meccanica Chisone (SUP-C).\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Part card BR-310, roof rail bracket for the Nordhavn Fjell (PRG-Y).\"}],\"why\":\"The part card names Chisone as the source for BR-310 (Nordhavn). It does not name the receiving plant, and no controlled approval record covers BR-310 from Chisone to Beinasco (PLT-BEI) for Nordhavn. The documents show no approval and no refusal, so a person must confirm whether a release exists for this plant.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D cracking on Chisone 6082 material (no id given)\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"the cracking 8D on their 6082 material is still open.\"},{\"doc_id\":\"PC-BR310\",\"quote\":\"Material: EN AW-6082-T5 extrusion.\"}],\"why\":\"Chisone has an open cracking 8D on its 6082 material. BR-310 is made from EN AW-6082-T5, so the issue applies to this part. The 8D has no id in the documents.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Chisone (SUP-C) has conditional qualification, so it may not receive new business now. Shipping BR-310 to Beinasco is a new delivery destination. No newer document shows the status was lifted."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-310|CUST-NOR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Source: Meccanica Chisone (SUP-C)."
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Part card BR-310, roof rail bracket for the Nordhavn Fjell (PRG-Y)."
+      }
+     ],
+     "why": "The part card names Chisone as the source for BR-310 (Nordhavn). It does not name the receiving plant, and no controlled approval record covers BR-310 from Chisone to Beinasco (PLT-BEI) for Nordhavn. The documents show no approval and no refusal, so a person must confirm whether a release exists for this plant."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D cracking on Chisone 6082 material (no id given)",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "the cracking 8D on their 6082 material is still open."
+      },
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Material: EN AW-6082-T5 extrusion."
+      }
+     ],
+     "why": "Chisone has an open cracking 8D on its 6082 material. BR-310 is made from EN AW-6082-T5, so the issue applies to this part. The 8D has no id in the documents."
+    }
+   ]
+  },
+  "ttft_ms": 6233,
+  "type": "result",
+  "duration_ms": 9866,
+  "uuid": "9a08307a-b937-47ba-9279-217fbdd3824f",
+  "ttft_stream_ms": 1401,
+  "time_to_request_ms": 524,
+  "first_content_frame_ms": 1401,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

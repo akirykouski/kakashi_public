@@ -1,0 +1,147 @@
+{
+ "prompt_sha256": "77bad358567c7dfc532f2a5fa624ed8ec607b0fae33958e0d570ae73248c827e",
+ "model_arg": "sonnet",
+ "seconds": 8.253507852554321,
+ "response": {
+  "duration_api_ms": 7237,
+  "stop_reason": "tool_use",
+  "session_id": "98250905-f311-457b-bbbf-dd66be428135",
+  "total_cost_usd": 0.0240533,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3336,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1062,
+   "output_tokens_details": {
+    "thinking_tokens": 451
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3336,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1062,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3336,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3336
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1062,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3336,
+    "webSearchRequests": 0,
+    "costUSD": 0.0240533,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 451,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3336,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_RESTRICTED_SUBSTANCE\",\"key\":\"CrVI\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-COATINGS\",\"quote\":\"COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI\"},{\"doc_id\":\"LAW-ELV\",\"quote\":\"so a coating containing hexavalent chromium may not be used on our parts.\"}],\"why\":\"The proposed yellow chromate passivation (COAT-ZN-YELLOW) contains hexavalent chromium. The end-of-life vehicle rules ban it, and the ban continues under Regulation (EU) 2026/1738. The excerpt gives the replacement regulation's date as 1 September 2028, but it also says to check the Official Journal text before quoting dates.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"NCR-26-017\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"NCR-26-017\",\"quote\":\"Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open.\"},{\"doc_id\":\"NCR-26-017\",\"quote\":\"Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC.\"},{\"doc_id\":\"PC-CL115\",\"quote\":\"Spring steel C67S, hardened.\"}],\"why\":\"The source of CL-115, SUP-G, has an open NCR on the C67S spring steel of this part. A lot measured 52 HRC against a 44-50 HRC tolerance.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_RESTRICTED_SUBSTANCE",
+     "key": "CrVI",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-COATINGS",
+       "quote": "COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI"
+      },
+      {
+       "doc_id": "LAW-ELV",
+       "quote": "so a coating containing hexavalent chromium may not be used on our parts."
+      }
+     ],
+     "why": "The proposed yellow chromate passivation (COAT-ZN-YELLOW) contains hexavalent chromium. The end-of-life vehicle rules ban it, and the ban continues under Regulation (EU) 2026/1738. The excerpt gives the replacement regulation's date as 1 September 2028, but it also says to check the Official Journal text before quoting dates."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "NCR-26-017",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Nonconformance report NCR-26-017. Supplier: Minuterie Germanasca (SUP-G). Status: open."
+      },
+      {
+       "doc_id": "NCR-26-017",
+       "quote": "Lot 26-0412 of CL-115 clips in C67S spring steel measured 52 HRC, tolerance 44-50 HRC."
+      },
+      {
+       "doc_id": "PC-CL115",
+       "quote": "Spring steel C67S, hardened."
+      }
+     ],
+     "why": "The source of CL-115, SUP-G, has an open NCR on the C67S spring steel of this part. A lot measured 52 HRC against a 44-50 HRC tolerance."
+    }
+   ]
+  },
+  "ttft_ms": 4347,
+  "type": "result",
+  "duration_ms": 7463,
+  "uuid": "94077b94-b35e-4d19-b569-ca35cb3b5342",
+  "ttft_stream_ms": 1244,
+  "time_to_request_ms": 226,
+  "first_content_frame_ms": 1244,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "prompt_sha256": "adda74eeb6382533a501c6958793910f9d821a933525683d225a13fcca6fdacb",
+ "model_arg": "sonnet",
+ "seconds": 16.922998189926147,
+ "response": {
+  "duration_api_ms": 11044,
+  "stop_reason": "tool_use",
+  "session_id": "62c120a7-ae7b-4466-ba32-d70f696332db",
+  "total_cost_usd": 0.0289433,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 2791,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1769,
+   "output_tokens_details": {
+    "thinking_tokens": 749
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 2791,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1769,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 2791,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 2791
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1769,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 2791,
+    "webSearchRequests": 0,
+    "costUSD": 0.0289433,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 749,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 2791,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese).\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"A source that is not listed for a part, plant and customer has no approval.\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM).\"}],\"why\":\"Meccanica C has no approval for BR-220 at TO1 for STL. The record is the complete list, and its BR-180 approval does not carry over to another part. A supplier audit does not grant a part approval. PRC-DEV-007 also says a temporary deviation does not approve a new material source.\"},{\"rule_u\":\"U_MATERIAL\",\"key\":\"BR-220\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes\"},{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)\"},{\"doc_id\":\"DWG-BR220-RevC\",\"quote\":\"Rev B is superseded and withdrawn as of 2026-06-01.\"}],\"why\":\"Drawing Rev C, which is in force, requires EN AW-6082-T6 for BR-220. Meccanica C quoted EN AW-6061-T6, which is a different grade. The supplier's claim of equivalent strength does not replace the grade the drawing specifies. The email's note that 6061-T6 is acceptable for BR-220 is not a controlled drawing or record, and it conflicts with Rev C.\"},{\"rule_u\":\"U_MISSING_EVIDENCE\",\"key\":\"material_certificate\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"ASL-TO-2026-04\",\"quote\":\"Material certificates are not stored in this record.\"},{\"doc_id\":\"EML-SQ-2026-1105\",\"quote\":\"per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene.\"}],\"why\":\"The only support for 6061-T6 being equivalent to 6082 is the supplier's statement and an email figure. No material certificate or test result for Meccanica C's billet is in the documents. A person must supply one before anyone can judge capability against the drawing.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "BR-220 at TO1 for STL has one approved material source: Alluminio B S.r.l. (Settimo Torinese)."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "A source that is not listed for a part, plant and customer has no approval."
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Meccanica C S.p.A. holds approvals for: BR-180 (TO1, STL); BR-310 (TO2, CLM)."
+      }
+     ],
+     "why": "Meccanica C has no approval for BR-220 at TO1 for STL. The record is the complete list, and its BR-180 approval does not carry over to another part. A supplier audit does not grant a part approval. PRC-DEV-007 also says a temporary deviation does not approve a new material source."
+    },
+    {
+     "rule_u": "U_MATERIAL",
+     "key": "BR-220",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes"
+      },
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "billet grade EN AW-6082-T6; status APPROVED 2026-07-20 (PPAP-2026-118, drawing Rev C)"
+      },
+      {
+       "doc_id": "DWG-BR220-RevC",
+       "quote": "Rev B is superseded and withdrawn as of 2026-06-01."
+      }
+     ],
+     "why": "Drawing Rev C, which is in force, requires EN AW-6082-T6 for BR-220. Meccanica C quoted EN AW-6061-T6, which is a different grade. The supplier's claim of equivalent strength does not replace the grade the drawing specifies. The email's note that 6061-T6 is acceptable for BR-220 is not a controlled drawing or record, and it conflicts with Rev C."
+    },
+    {
+     "rule_u": "U_MISSING_EVIDENCE",
+     "key": "material_certificate",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "ASL-TO-2026-04",
+       "quote": "Material certificates are not stored in this record."
+      },
+      {
+       "doc_id": "EML-SQ-2026-1105",
+       "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene."
+      }
+     ],
+     "why": "The only support for 6061-T6 being equivalent to 6082 is the supplier's statement and an email figure. No material certificate or test result for Meccanica C's billet is in the documents. A person must supply one before anyone can judge capability against the drawing."
+    }
+   ]
+  },
+  "ttft_ms": 10687,
+  "type": "result",
+  "duration_ms": 15796,
+  "uuid": "3612bf89-5db5-4788-b0c8-fc2feb045d97",
+  "ttft_stream_ms": 5347,
+  "time_to_request_ms": 4752,
+  "first_content_frame_ms": 5347,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

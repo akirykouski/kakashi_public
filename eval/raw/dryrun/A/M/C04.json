@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "40fe37297bf13e3a465e2df8be6ce1989528056ba2f1f9c5de2d08371dbdceb0",
+ "model_arg": "sonnet",
+ "seconds": 9.300441026687622,
+ "response": {
+  "duration_api_ms": 8288,
+  "stop_reason": "tool_use",
+  "session_id": "0420e4e8-3698-43bf-8beb-bed418801dc7",
+  "total_cost_usd": 0.0252293,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3385,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1160,
+   "output_tokens_details": {
+    "thinking_tokens": 719
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3385,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1160,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3385,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3385
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1160,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3385,
+    "webSearchRequests": 0,
+    "costUSD": 0.0252293,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 719,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3385,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-NOR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"PC-BR310\",\"quote\":\"Part card BR-310, roof rail bracket for the Nordhavn Fjell (PRG-Y).\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.2 A change of coating requires Nordhavn approval before the first shipment.\"},{\"doc_id\":\"CSR-NOR-R2\",\"quote\":\"5.3 A change of manufacturing process at the same approved site requires notification only, 30 days\"}],\"why\":\"BR-310 belongs to the Nordhavn Fjell program (CUST-NOR). Moving the coating to a new line at Pinerolo is a change of coating or process location under the Nordhavn CSR in force. Nothing in the documents already covers it. Written Nordhavn approval or notification is needed before shipment. Pinerolo is not shown as the approved site, so 5.2 (approval) may apply rather than 5.3 (notification only), and the 5.3 text is cut off. Aurelia is not a customer of this part.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-NOR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "PC-BR310",
+       "quote": "Part card BR-310, roof rail bracket for the Nordhavn Fjell (PRG-Y)."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.2 A change of coating requires Nordhavn approval before the first shipment."
+      },
+      {
+       "doc_id": "CSR-NOR-R2",
+       "quote": "5.3 A change of manufacturing process at the same approved site requires notification only, 30 days"
+      }
+     ],
+     "why": "BR-310 belongs to the Nordhavn Fjell program (CUST-NOR). Moving the coating to a new line at Pinerolo is a change of coating or process location under the Nordhavn CSR in force. Nothing in the documents already covers it. Written Nordhavn approval or notification is needed before shipment. Pinerolo is not shown as the approved site, so 5.2 (approval) may apply rather than 5.3 (notification only), and the 5.3 text is cut off. Aurelia is not a customer of this part."
+    }
+   ]
+  },
+  "ttft_ms": 6277,
+  "type": "result",
+  "duration_ms": 8509,
+  "uuid": "0bc061da-982d-4da5-ad6e-b7bef976e7fc",
+  "ttft_stream_ms": 1192,
+  "time_to_request_ms": 220,
+  "first_content_frame_ms": 1192,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

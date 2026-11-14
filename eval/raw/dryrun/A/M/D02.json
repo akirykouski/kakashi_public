@@ -1,0 +1,127 @@
+{
+ "prompt_sha256": "41ebcc11300a7789468642ae87a47f1c5d348bd61b7137c18d15cafb8c49d31b",
+ "model_arg": "sonnet",
+ "seconds": 8.344981908798218,
+ "response": {
+  "duration_api_ms": 7233,
+  "stop_reason": "tool_use",
+  "session_id": "08dd903d-1f58-4bf4-a368-9ba3348e88bc",
+  "total_cost_usd": 0.0239013,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3388,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1026,
+   "output_tokens_details": {
+    "thinking_tokens": 648
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3388,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1026,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3388,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3388
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1026,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3388,
+    "webSearchRequests": 0,
+    "costUSD": 0.0239013,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 648,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3388,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-G|SP-700|CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-ASL\",\"quote\":\"APR-012,SUP-F,SP-700,PLT-BEI,CUST-AUR,approved,2023-04-18,,PER-BIANCHI,\"},{\"doc_id\":\"REG-SUPPLIERS\",\"quote\":\"SUP-G,Minuterie Germanasca S.r.l.,\\\"steel stampings, clips, pins\\\"\"}],\"why\":\"The approved supplier list covers SP-700 at PLT-BEI for CUST-AUR, but its only entry is for SUP-F (Plastiche Fenestrelle). There is no approval for SUP-G for this part, plant and customer, so SUP-G is not released as a source. The supplier master also lists SUP-G only for steel stampings, clips and pins, not injection moulding.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-G|SP-700|CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-ASL",
+       "quote": "APR-012,SUP-F,SP-700,PLT-BEI,CUST-AUR,approved,2023-04-18,,PER-BIANCHI,"
+      },
+      {
+       "doc_id": "REG-SUPPLIERS",
+       "quote": "SUP-G,Minuterie Germanasca S.r.l.,\"steel stampings, clips, pins\""
+      }
+     ],
+     "why": "The approved supplier list covers SP-700 at PLT-BEI for CUST-AUR, but its only entry is for SUP-F (Plastiche Fenestrelle). There is no approval for SUP-G for this part, plant and customer, so SUP-G is not released as a source. The supplier master also lists SUP-G only for steel stampings, clips and pins, not injection moulding."
+    }
+   ]
+  },
+  "ttft_ms": 5409,
+  "type": "result",
+  "duration_ms": 7382,
+  "uuid": "59cfbbb6-2aa8-425c-ab8e-96598422a97c",
+  "ttft_stream_ms": 1254,
+  "time_to_request_ms": 154,
+  "first_content_frame_ms": 1254,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

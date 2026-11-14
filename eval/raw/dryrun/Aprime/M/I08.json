@@ -1,0 +1,155 @@
+{
+ "prompt_sha256": "fc050a988d6ffbb5f33c5aaf919c5a3c67a432e74238ec1bf188e91b9b0eb4e6",
+ "model_arg": "sonnet",
+ "seconds": 14.726459980010986,
+ "response": {
+  "duration_api_ms": 8979,
+  "stop_reason": "tool_use",
+  "session_id": "45c46ebc-8381-4100-9cea-5971fd5ab0a7",
+  "total_cost_usd": 0.0260433,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3351,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1255,
+   "output_tokens_details": {
+    "thinking_tokens": 598
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3351,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1255,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3351,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3351
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1255,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3351,
+    "webSearchRequests": 0,
+    "costUSD": 0.0260433,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 598,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3351,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Meccanica Chisone (SUP-C) has conditional qualification, so it may not get new business or new parts now. Moving BR-310 shipments to a different receiving plant is new business. No later document shows the status has been lifted.\"},{\"rule_u\":\"U_OPEN_ISSUE\",\"key\":\"8D-25-031\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"8D-25-031\",\"quote\":\"Status: open.\"},{\"doc_id\":\"8D-25-031\",\"quote\":\"found at incoming inspection on BR-310.\"}],\"why\":\"The 8D on cracks in EN AW-6082 brackets is still open. The root cause is under investigation and the corrective action is not verified. It was raised on BR-310 itself, and the supplier is the one proposed as the BR-310 source.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-310|unknown\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"Chisone is qualified for 6061-T6 and 6082-T5 only.\"},{\"doc_id\":\"REG-SITES\",\"quote\":\"PLT-BEI,\\\"Beinasco plant (machining, assembly)\\\"\"}],\"why\":\"No controlled approval record covers SUP-C for BR-310 at Beinasco (PLT-BEI), and no document names the customer of BR-310. The absence of a record is not proof that the source is unapproved. A person must confirm whether a current release exists for this part, plant and customer.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Meccanica Chisone (SUP-C) has conditional qualification, so it may not get new business or new parts now. Moving BR-310 shipments to a different receiving plant is new business. No later document shows the status has been lifted."
+    },
+    {
+     "rule_u": "U_OPEN_ISSUE",
+     "key": "8D-25-031",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "8D-25-031",
+       "quote": "Status: open."
+      },
+      {
+       "doc_id": "8D-25-031",
+       "quote": "found at incoming inspection on BR-310."
+      }
+     ],
+     "why": "The 8D on cracks in EN AW-6082 brackets is still open. The root cause is under investigation and the corrective action is not verified. It was raised on BR-310 itself, and the supplier is the one proposed as the BR-310 source."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-310|unknown",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "Chisone is qualified for 6061-T6 and 6082-T5 only."
+      },
+      {
+       "doc_id": "REG-SITES",
+       "quote": "PLT-BEI,\"Beinasco plant (machining, assembly)\""
+      }
+     ],
+     "why": "No controlled approval record covers SUP-C for BR-310 at Beinasco (PLT-BEI), and no document names the customer of BR-310. The absence of a record is not proof that the source is unapproved. A person must confirm whether a current release exists for this part, plant and customer."
+    }
+   ]
+  },
+  "ttft_ms": 10197,
+  "type": "result",
+  "duration_ms": 13836,
+  "uuid": "13efd3b8-2b87-488e-acff-dbc5a25002f2",
+  "ttft_stream_ms": 5859,
+  "time_to_request_ms": 4889,
+  "first_content_frame_ms": 5859,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

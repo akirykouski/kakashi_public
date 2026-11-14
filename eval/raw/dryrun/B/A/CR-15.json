@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "fd1bef531b0908ecdb6335c10a7ee0daf43c8d0ea44dde4ad2ac8082d02808b5",
+ "model_arg": "sonnet",
+ "seconds": 11.149263858795166,
+ "response": {
+  "duration_api_ms": 10148,
+  "stop_reason": "tool_use",
+  "session_id": "cd6b67e8-9c89-41ac-b895-732c81af2948",
+  "total_cost_usd": 0.047830899999999996,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 8033,
+   "cache_read_input_tokens": 8709,
+   "output_tokens": 1482,
+   "output_tokens_details": {
+    "thinking_tokens": 501
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 8033,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 494,
+     "cache_read_input_tokens": 7856,
+     "cache_creation_input_tokens": 1030,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1030
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1482,
+    "cacheReadInputTokens": 8709,
+    "cacheCreationInputTokens": 8033,
+    "webSearchRequests": 0,
+    "costUSD": 0.047830899999999996,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 501,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 8033,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"8.7.1.1 A temporary deviation is requested through the supplier portal and needs approval before shipment.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes\"},{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"Annex A: programs STL-Torino-27 and STL-Torino-31.\"}],\"why\":\"BR-220 belongs to program STL-Torino-27, which is covered by the Stellantis CSR. A temporary deviation needs Stellantis approval through the supplier portal before any shipment. No approval is in the documents, and DEV-2025-019 covers only HS-040. The request is within PRC-DEV-007 limits (1,800 pieces is at most 2000; 5 weeks is at most 6 weeks; 100% fastener hole inspection is included), and it stays with the approved source Alluminio B (AP-0311). So only the customer approval is open.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "8.7.1.1 A temporary deviation is requested through the supplier portal and needs approval before shipment."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL; material EN AW-6082-T6; features: 4 fastener holes"
+      },
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "Annex A: programs STL-Torino-27 and STL-Torino-31."
+      }
+     ],
+     "why": "BR-220 belongs to program STL-Torino-27, which is covered by the Stellantis CSR. A temporary deviation needs Stellantis approval through the supplier portal before any shipment. No approval is in the documents, and DEV-2025-019 covers only HS-040. The request is within PRC-DEV-007 limits (1,800 pieces is at most 2000; 5 weeks is at most 6 weeks; 100% fastener hole inspection is included), and it stays with the approved source Alluminio B (AP-0311). So only the customer approval is open."
+    }
+   ]
+  },
+  "ttft_ms": 4497,
+  "type": "result",
+  "duration_ms": 10359,
+  "uuid": "1a321ac4-29dd-4faf-8705-7ffe92855c89",
+  "ttft_stream_ms": 737,
+  "time_to_request_ms": 201,
+  "first_content_frame_ms": 737,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

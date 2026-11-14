@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "52c06fdb2cc222e1d696dde97f9388b33b8f4662334c71c3e542cb30d6d29769",
+ "model_arg": "sonnet",
+ "seconds": 8.02886700630188,
+ "response": {
+  "duration_api_ms": 7166,
+  "stop_reason": "tool_use",
+  "session_id": "6ceb93b6-eaea-40ef-979d-77895b3949dd",
+  "total_cost_usd": 0.0236033,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 3296,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1033,
+   "output_tokens_details": {
+    "thinking_tokens": 564
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 3296,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1033,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 3296,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3296
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1033,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 3296,
+    "webSearchRequests": 0,
+    "costUSD": 0.0236033,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 564,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 3296,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_SUPPLIER_STANDING\",\"key\":\"SUP-C\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"MTG-2026-10-02\",\"quote\":\"And Chisone is conditional, the cracking 8D on their 6082 material is still open.\"}],\"why\":\"Meccanica Chisone (SUP-C) has conditional qualification. Delivering BR-180 to a new plant (Pinerolo) is new business, which the supplier may not receive now.\"},{\"rule_u\":\"U_SOURCE_RELEASE\",\"key\":\"SUP-C|BR-180|CUST-AUR\",\"kind\":\"question\",\"sources\":[{\"doc_id\":\"REG-SITES\",\"quote\":\"PLT-PIN,Pinerolo plant (assembly)\"},{\"doc_id\":\"DEV-114\",\"quote\":\"Status: expired.\"}],\"why\":\"No controlled record gives Chisone an approval for BR-180 at Pinerolo for the customer. The only BR-180 record for Chisone is DEV-114, which is expired and concerned a hardness deviation, not a source release. This is not proof of non-approval, so a person must confirm whether a release exists for PLT-PIN. The customer is taken as Aurelia from DEV-114.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_SUPPLIER_STANDING",
+     "key": "SUP-C",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "MTG-2026-10-02",
+       "quote": "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+      }
+     ],
+     "why": "Meccanica Chisone (SUP-C) has conditional qualification. Delivering BR-180 to a new plant (Pinerolo) is new business, which the supplier may not receive now."
+    },
+    {
+     "rule_u": "U_SOURCE_RELEASE",
+     "key": "SUP-C|BR-180|CUST-AUR",
+     "kind": "question",
+     "sources": [
+      {
+       "doc_id": "REG-SITES",
+       "quote": "PLT-PIN,Pinerolo plant (assembly)"
+      },
+      {
+       "doc_id": "DEV-114",
+       "quote": "Status: expired."
+      }
+     ],
+     "why": "No controlled record gives Chisone an approval for BR-180 at Pinerolo for the customer. The only BR-180 record for Chisone is DEV-114, which is expired and concerned a hardness deviation, not a source release. This is not proof of non-approval, so a person must confirm whether a release exists for PLT-PIN. The customer is taken as Aurelia from DEV-114."
+    }
+   ]
+  },
+  "ttft_ms": 4992,
+  "type": "result",
+  "duration_ms": 7248,
+  "uuid": "9612a9e0-77b1-4c8a-bd42-cceab8fab7c0",
+  "ttft_stream_ms": 1034,
+  "time_to_request_ms": 82,
+  "first_content_frame_ms": 1034,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

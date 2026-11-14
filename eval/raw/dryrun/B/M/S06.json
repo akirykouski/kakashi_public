@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "1167cbac03125b3cafe3d305d7c28ec89f893236b397811ea379f7ab2ed568fe",
+ "model_arg": "sonnet",
+ "seconds": 11.059072017669678,
+ "response": {
+  "duration_api_ms": 10055,
+  "stop_reason": "tool_use",
+  "session_id": "e5e600da-bc73-41e9-8184-64c3204ad977",
+  "total_cost_usd": 0.06649479999999999,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 12550,
+   "cache_read_input_tokens": 13268,
+   "output_tokens": 1496,
+   "output_tokens_details": {
+    "thinking_tokens": 399
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 12550,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 554,
+     "cache_read_input_tokens": 12415,
+     "cache_creation_input_tokens": 988,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 988
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 1496,
+    "cacheReadInputTokens": 13268,
+    "cacheCreationInputTokens": 12550,
+    "webSearchRequests": 0,
+    "costUSD": 0.06649479999999999,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 399,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 12550,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 3,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"CUST-AUR\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"REG-PARTS\",\"quote\":\"BK-330,\\\"Seat rail bracket, stamped\\\",PRG-Z,C,MAT-DC04,COAT-ZNNI,SC-BK330-WELD\"},{\"doc_id\":\"REG-PROGRAMS\",\"quote\":\"PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"a change of coating or surface treatment.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia Automobili - Supplier Quality Manual, revision 4, section 7 \\\"Changes\\\". Replaces revision 3.\"},{\"doc_id\":\"CSR-AUR-R4\",\"quote\":\"Aurelia shall be notified of every planned change at least 90 days before implementation.\"}],\"why\":\"BK-330 belongs to PRG-Z (Aurelia). The claim that a coating change needs only notification comes from revision 3, which revision 4 replaces. Under revision 4, changing the coating from zinc-nickel to zinc flake needs written Aurelia approval (PPAP resubmission) before shipment, plus notification at least 90 days ahead. No approval or deviation in the documents covers this change.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "CUST-AUR",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "REG-PARTS",
+       "quote": "BK-330,\"Seat rail bracket, stamped\",PRG-Z,C,MAT-DC04,COAT-ZNNI,SC-BK330-WELD"
+      },
+      {
+       "doc_id": "REG-PROGRAMS",
+       "quote": "PRG-Z,Aurelia Corso sedan,CUST-AUR,MKT-EU,2023-06-01"
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "a change of coating or surface treatment."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia Automobili - Supplier Quality Manual, revision 4, section 7 \"Changes\". Replaces revision 3."
+      },
+      {
+       "doc_id": "CSR-AUR-R4",
+       "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation."
+      }
+     ],
+     "why": "BK-330 belongs to PRG-Z (Aurelia). The claim that a coating change needs only notification comes from revision 3, which revision 4 replaces. Under revision 4, changing the coating from zinc-nickel to zinc flake needs written Aurelia approval (PPAP resubmission) before shipment, plus notification at least 90 days ahead. No approval or deviation in the documents covers this change."
+    }
+   ]
+  },
+  "ttft_ms": 3934,
+  "type": "result",
+  "duration_ms": 10253,
+  "uuid": "db8eb02d-ed4c-49a0-9e07-0a0d6425fb35",
+  "ttft_stream_ms": 1160,
+  "time_to_request_ms": 190,
+  "first_content_frame_ms": 1160,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

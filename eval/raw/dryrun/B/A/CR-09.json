@@ -1,0 +1,139 @@
+{
+ "prompt_sha256": "3a637017ccca889a6f2568fba47de4cd2e6e69c095fb02f467aff7c1532b60c3",
+ "model_arg": "sonnet",
+ "seconds": 8.217518091201782,
+ "response": {
+  "duration_api_ms": 7230,
+  "stop_reason": "tool_use",
+  "session_id": "6907316e-96d9-4948-b461-6c4e5d4a846a",
+  "total_cost_usd": 0.0391413,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 7003,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1104,
+   "output_tokens_details": {
+    "thinking_tokens": 569
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 7003,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1104,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 7003,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 7003
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1104,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 7003,
+    "webSearchRequests": 0,
+    "costUSD": 0.0391413,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 569,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 7003,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_DEVIATION_LIMIT\",\"key\":\"PRC-DEV-007\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"PRC-DEV-007\",\"quote\":\"A temporary deviation may cover at most 2000 pieces and at most 6 weeks.\"}],\"why\":\"The request is for 3,500 BR-220 pieces over 10 weeks. That exceeds both the 2000-piece limit and the 6-week limit. The 100% hole inspection requirement is met, but it does not cure the overrun. The procedure only allows expediting the approved source or a deviation within these limits.\"},{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"8.7.1.1 A temporary deviation is requested through the supplier portal and needs approval before shipment.\"},{\"doc_id\":\"BOM-STL-TORINO-27\",\"quote\":\"BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL\"}],\"why\":\"BR-220 belongs to program STL-Torino-27, which is in Annex A of the Stellantis CSR in force. A temporary deviation therefore needs Stellantis approval before any shipment. The only deviation on record, DEV-2025-019, covers part HS-040, so nothing in force covers this request.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_DEVIATION_LIMIT",
+     "key": "PRC-DEV-007",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "PRC-DEV-007",
+       "quote": "A temporary deviation may cover at most 2000 pieces and at most 6 weeks."
+      }
+     ],
+     "why": "The request is for 3,500 BR-220 pieces over 10 weeks. That exceeds both the 2000-piece limit and the 6-week limit. The 100% hole inspection requirement is met, but it does not cure the overrun. The procedure only allows expediting the approved source or a deviation within these limits."
+    },
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "8.7.1.1 A temporary deviation is requested through the supplier portal and needs approval before shipment."
+      },
+      {
+       "doc_id": "BOM-STL-TORINO-27",
+       "quote": "BOM-LINE 120: part BR-220 (drawing Rev C); program STL-Torino-27; customer STL"
+      }
+     ],
+     "why": "BR-220 belongs to program STL-Torino-27, which is in Annex A of the Stellantis CSR in force. A temporary deviation therefore needs Stellantis approval before any shipment. The only deviation on record, DEV-2025-019, covers part HS-040, so nothing in force covers this request."
+    }
+   ]
+  },
+  "ttft_ms": 4525,
+  "type": "result",
+  "duration_ms": 7425,
+  "uuid": "07d4cdcc-b826-442e-971a-0ccb5c4d87b5",
+  "ttft_stream_ms": 790,
+  "time_to_request_ms": 195,
+  "first_content_frame_ms": 790,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}

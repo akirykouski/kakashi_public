@@ -1,0 +1,131 @@
+{
+ "prompt_sha256": "550c2c538734351e2fe0978bfe001acea7b2d2bbf8d64dbb73d7fcc86fe5fef3",
+ "model_arg": "sonnet",
+ "seconds": 14.710699081420898,
+ "response": {
+  "duration_api_ms": 7447,
+  "stop_reason": "tool_use",
+  "session_id": "08b19466-408c-4fc9-b608-0606553f73d6",
+  "total_cost_usd": 0.0219493,
+  "usage": {
+   "input_tokens": 2,
+   "cache_creation_input_tokens": 2650,
+   "cache_read_input_tokens": 853,
+   "output_tokens": 1126,
+   "output_tokens_details": {
+    "thinking_tokens": 581
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 2650,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1126,
+     "cache_read_input_tokens": 853,
+     "cache_creation_input_tokens": 2650,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 2650
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 2,
+    "outputTokens": 1126,
+    "cacheReadInputTokens": 853,
+    "cacheCreationInputTokens": 2650,
+    "webSearchRequests": 0,
+    "costUSD": 0.0219493,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 581,
+    "cacheCreationEphemeral5mInputTokens": 0,
+    "cacheCreationEphemeral1hInputTokens": 2650,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 2,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"rule_u\":\"U_CUSTOMER_APPROVAL\",\"key\":\"STL\",\"kind\":\"blocker\",\"sources\":[{\"doc_id\":\"CSR-STL-2026-02\",\"quote\":\"8.3.3.3 Any change to a characteristic designated special, to its control method or to its sampling frequency needs written approval from Stellantis before the change is implemented.\"},{\"doc_id\":\"CP-BR220-R3\",\"quote\":\"| 30 | Material properties | Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01 | Certificate review plus tensile test, 1 specimen per heat | Quarantine heat, notify Supplier Quality Engineer |\"},{\"doc_id\":\"Meeting note\",\"quote\":\"Cut the tensile test from 1 specimen per heat to 1 per 3 heats.\"}],\"why\":\"The change cuts the sampling frequency of the tensile test that controls SC-01, a special characteristic, in control plan CP-BR220-R3 step 30. CSR-STL-2026-02 8.3.3.3 requires written Stellantis approval before a change to a special characteristic's sampling frequency. Nothing in the documents already covers it. The documents don't list the programs that BR-220 is delivered for, so confirm that BR-220 belongs to Annex A programs STL-Torino-27 or STL-Torino-31. The argument that there has never been a tensile failure does not replace the approval.\"}]}",
+  "structured_output": {
+   "findings": [
+    {
+     "rule_u": "U_CUSTOMER_APPROVAL",
+     "key": "STL",
+     "kind": "blocker",
+     "sources": [
+      {
+       "doc_id": "CSR-STL-2026-02",
+       "quote": "8.3.3.3 Any change to a characteristic designated special, to its control method or to its sampling frequency needs written approval from Stellantis before the change is implemented."
+      },
+      {
+       "doc_id": "CP-BR220-R3",
+       "quote": "| 30 | Material properties | Yield strength Rp0.2 | >= 250 MPa, SPECIAL CHARACTERISTIC SC-01 | Certificate review plus tensile test, 1 specimen per heat | Quarantine heat, notify Supplier Quality Engineer |"
+      },
+      {
+       "doc_id": "Meeting note",
+       "quote": "Cut the tensile test from 1 specimen per heat to 1 per 3 heats."
+      }
+     ],
+     "why": "The change cuts the sampling frequency of the tensile test that controls SC-01, a special characteristic, in control plan CP-BR220-R3 step 30. CSR-STL-2026-02 8.3.3.3 requires written Stellantis approval before a change to a special characteristic's sampling frequency. Nothing in the documents already covers it. The documents don't list the programs that BR-220 is delivered for, so confirm that BR-220 belongs to Annex A programs STL-Torino-27 or STL-Torino-31. The argument that there has never been a tensile failure does not replace the approval."
+    }
+   ]
+  },
+  "ttft_ms": 9409,
+  "type": "result",
+  "duration_ms": 12298,
+  "uuid": "8da097f5-4bb7-4618-abfd-7fc411f77a81",
+  "ttft_stream_ms": 5426,
+  "time_to_request_ms": 4850,
+  "first_content_frame_ms": 5427,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "credential_expires_at": "2026-11-18T05:07:22.992Z"
+ }
+}
