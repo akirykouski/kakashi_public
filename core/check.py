@@ -22,9 +22,12 @@ from core import decision, oida, rules  # noqa: E402
 from core import memory as decision_memory  # noqa: E402  (check.memory() is the fact log)
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.factlog import default_log  # noqa: E402
-from core.project import Projection  # noqa: E402
+from core.project import Projection, request_entities  # noqa: E402
 
 DEFAULT_AS_OF = "2026-11-14"
+# Request-scoped reasoning (core/project.py scope_facts): close only the change's neighbourhood. LCC_SCOPED=0 closes
+# the whole snapshot as before; tests/test_scoped_equivalence.py proves both give the same card.
+SCOPED = os.environ.get("LCC_SCOPED", "1") != "0"
 SEVERITY_ORDER = {"blocker": 0, "warning": 1, "question": 2, "info": 3}
 _LOG = None
 _COVERAGE = None
@@ -78,7 +81,7 @@ def run(request, record=True):
     return card, entry
 
 
-def evaluate(request, record=True, table=None, rules_version_value=None, coverage_value=None):
+def evaluate(request, record=True, table=None, rules_version_value=None, coverage_value=None, scoped=None):
     """The one pipeline. table / rules_version_value / coverage_value let the demo page re-check under an
     edited decision table without writing core/decision_table.yaml. Returns (card, record, projection)."""
     known = set(ChangeRequest.__dataclass_fields__)
@@ -86,7 +89,9 @@ def evaluate(request, record=True, table=None, rules_version_value=None, coverag
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
     as_of = request.get("as_of") or DEFAULT_AS_OF
     started = time.time()
-    projection = Projection(memory(), as_of, known_at=request.get("known_at"))
+    scoped = SCOPED if scoped is None else scoped
+    projection = Projection(memory(), as_of, known_at=request.get("known_at"),
+                            scope=request_entities(request) if scoped else None)
     projected = time.time()
     findings = sorted(rules.check(projection, request), key=severity_rank)
     not_checked = rules.not_checked(projection, request) if hasattr(rules, "not_checked") else []

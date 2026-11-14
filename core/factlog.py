@@ -100,6 +100,7 @@ class FactLog:
         # isolation_level=None: we issue BEGIN / COMMIT ourselves, so check + write share one transaction.
         self.connection = sqlite3.connect(path, check_same_thread=False, isolation_level=None, timeout=30)
         self.lock = threading.RLock()
+        self.on_commit = []
         self.connection.row_factory = sqlite3.Row
         self.connection.executescript(SCHEMA)
 
@@ -115,6 +116,8 @@ class FactLog:
                 raise
             else:
                 self.connection.execute("COMMIT")
+                for listener in list(self.on_commit):   # core/project.py warm(): recompute the closure kept warm
+                    listener(self)
 
     # ---- loading -------------------------------------------------------------------------------------
 
