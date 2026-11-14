@@ -222,9 +222,8 @@ const Demo = (function makeDemo() {
         },
         async function recheck() {
           await documentsAt(3);
-          const finding = findingIn($("findings"), "R2");
-          focus($("docs-diff"), true);
-          focus(finding);
+          // Documents is a full-width tab: the before/after diff sits on it (the card is on the Workspace tab)
+          focus($("docs-diff"));
         },
       ] },
     { title: "The rule changed", caption: "Same question, different rules in force, different answer — and the record says which.",

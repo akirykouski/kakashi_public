@@ -340,7 +340,7 @@ async function checkRemark() {
 }
 
 async function runCheck(body, what) {
-  if (window.Meeting) Meeting.show("check");
+  if (typeof Meeting !== "undefined") Meeting.show("check");
   setBusy(true);
   setStatus(`${what}…`);
   try {
@@ -694,6 +694,7 @@ function renderTimings(timings) {
 // ---- comparisons (#16) ---------------------------------------------------------------------------------
 
 async function compare(bodyA, bodyB, titleA, titleB, lead) {
+  if (typeof Meeting !== "undefined") Meeting.show("check");
   setBusy(true);
   setStatus("Checking both…");
   const box = $("compare");

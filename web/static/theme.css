@@ -331,3 +331,19 @@ body[data-tab="workspace"] .foot { display: none; }
 .meeting-slot .mt-line { padding-left: 60px; }
 .meeting-slot .mt-line .mt-avatar { left: 12px; top: 10px; }
 .finding:not(.open) .f-head .epi { display: none; }
+.meeting-slot .mt-transcript:not(:has(.mt-line:not([hidden])))::before {
+  content: "The meeting has not started. Press ▶ Play to run the transcript, Step for one line, or Mic to speak.";
+  display: block; margin-top: 8px; padding: 28px 18px; border: 2px dashed rgba(255,255,255,.16); border-radius: 12px;
+  color: var(--navy-muted); text-align: center; font-size: .95rem;
+}
+@media (min-width: 901px) {
+  main.ws { background: linear-gradient(90deg, var(--navy-2) 0, var(--navy-2) max(380px, 38%), transparent max(380px, 38%)); min-height: calc(100vh - var(--header-h)); }
+}
+.offline-badge { top: auto; bottom: 14px; right: 14px; z-index: 1001; }
+body.demo-on .offline-badge { bottom: 104px; }
+.hero-kicker .epi { margin-left: 0; }
+.documents-section .docs-inputs, .documents-section .docs-inputs > div { min-width: 0; }
+.documents-section .demo-buttons { flex-wrap: wrap; }
+.documents-section .demo-buttons button { max-width: 100%; white-space: normal; text-align: left; }
+@media (max-width: 900px) { .documents-section .docs-inputs { grid-template-columns: 1fr; } }
+.docs-own input[type=file] { max-width: 100%; min-width: 0; }
