@@ -9,7 +9,7 @@
 const Fallback = (function makeFallback() {
   const SNAPSHOT = "/static/snapshot/";
   const REQUEST_FIELDS = ["type", "part", "to_supplier", "from_supplier", "site", "at_supplier", "new_material",
-                          "new_coating", "scope"];
+                          "new_coating", "scope", "known_at"];
   const FORM_FIELDS = ["type", "part", "to_supplier", "from_supplier", "site", "new_material", "new_coating"];
   const forced = new URLSearchParams(location.search).get("offline") === "1";
   const mode = { on: forced, why: forced ? "?offline=1" : "", manifest: null };

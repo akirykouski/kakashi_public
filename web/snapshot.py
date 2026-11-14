@@ -6,7 +6,7 @@
 The page (web/static/app.js) switches to "offline replay" when the server is unreachable or a route errors, and
 answers from these files. Only what is recorded here can be replayed: the scenarios, the demo remarks on the
 dates the page sends them, the rule-change compare, time travel and table edits of every recorded request, the
-decision table and the decision records. Any other remark shows "offline: parsing needs the network".
+decision table, the impact report of every superseded document a card shows, and the decision records. Any other remark shows "offline: parsing needs the network".
 
 The lookup key is built the same way here and in app.js (snapshotKey): keep the two in step.
 
@@ -21,6 +21,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -34,7 +35,7 @@ NO_RULE_REQUEST = {"type": "EquipmentChange", "part": "BR-220"}
 DEFAULT_REMARK = "Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy."
 TIME_TRAVEL_DATES = ["2026-11-05", TODAY]  # the page's default compare dates
 REQUEST_FIELDS = ["type", "part", "to_supplier", "from_supplier", "site", "at_supplier", "new_material",
-                  "new_coating", "scope"]
+                  "new_coating", "scope", "known_at"]
 
 
 # ---- the key (mirrors snapshotKey in app.js) ----------------------------------------------------------------
@@ -68,6 +69,7 @@ class Recorder:
         self.index = {}
         self.labels = {}
         self.failures = []
+        self.impact_docs = set()  # superseded documents shown on a card: their "what does this affect" report
 
     def call(self, path, body=None):
         data = json.dumps(body).encode("utf-8") if body is not None else None
@@ -105,6 +107,8 @@ class Recorder:
         if payload.get("error"):
             self.failures.append((key, payload["error"]))
             return None
+        for items in (payload.get("replaced") or {}).values():
+            self.impact_docs.update(item["id"] for item in items if item.get("id"))
         self.save(key, payload)
         return payload
 
@@ -148,7 +152,10 @@ def record_all(recorder, records_limit=40):
         recorder.check({"request": request})
         for row in droppable:
             recorder.check({"request": request, "drop_rows": [row]})
-    # 4. the records list last, so it shows the checks above
+    # 4. the impact report (#29) of every superseded document a card shows
+    for doc in sorted(recorder.impact_docs):
+        recorder.get(f"/api/impact?doc={urllib.parse.quote(doc)}")
+    # 5. the records list last, so it shows the checks above
     recorder.get(f"/api/records?limit={records_limit}")
     return len(scenarios), len(requests)
 

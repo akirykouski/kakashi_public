@@ -12,7 +12,7 @@ python -m web.server                       # http://localhost:8000
 ```
 
 `web/snapshot.py` starts its own server on a free port, calls every route the demo buttons use and saves the
-answers to `web/static/snapshot/` (about 160 responses, 2 MB, a few seconds). Record it again after every merge
+answers to `web/static/snapshot/` (about 270 responses, 5 MB, under 20 s). Record it again after every merge
 that touches `data/`, `core/` or `data/scenarios.json`; the label on the page shows when it was recorded.
 `python -m web.snapshot --base http://127.0.0.1:8000` records from a server that is already running.
 
@@ -31,7 +31,7 @@ again to go back to the live server.
 What replays offline: every demo button (scenarios and the built-in rule-change and CMM demos), the demo remarks
 typed into the strip on the dates the page sends them (the scenario's own date and 14 Nov), the rule-change
 compare (15 Jun vs 14 Nov), time travel with the default dates and every scenario date, "Edit the decision table"
-for every row of every recorded request, the decision table and the decision records. Any other remark shows
+for every row of every recorded request (record time `known_at` included), the "What does this document change affect?" report of every superseded document a card shows, the decision table and the decision records. Any other remark shows
 "offline: parsing needs the network"; nothing is invented.
 
 **If the server process died but the laptop is fine**, serve the static page and the snapshot without Python
@@ -58,7 +58,7 @@ deterministic and does not need the model."
 
 Play the recorded run from another laptop or a phone. It is not in the repo (local files only):
 
-- `~/Desktop/kva_hackathon/demo_backup/demo_run.mp4` (QuickTime) and `demo_run.webm` — the demo order of issue #19, 1440×900, ~40 s, no sound
+- `~/Desktop/kva_hackathon/demo_backup/demo_run.mp4` (QuickTime) and `demo_run.webm` — the demo order of issue #19, 1440×900, ~65 s, no sound
 - `~/Desktop/kva_hackathon/demo_backup/NN_*.png` — one screenshot per step
 - `~/Desktop/kva_hackathon/demo_backup/DEMO_SCRIPT.md` — each step: what to click, what the jury sees, one line to say
 
