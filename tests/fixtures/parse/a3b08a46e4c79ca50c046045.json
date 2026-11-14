@@ -1,0 +1,45 @@
+{
+ "note": "Viteria Lanzo quoted 20% less for the CL-115 clips, let's switch.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "type": "SourceChange",
+  "part": "CL-115 clips",
+  "to_supplier": "Viteria Lanzo",
+  "from_supplier": null,
+  "site": null,
+  "new_material": null,
+  "new_coating": null
+ },
+ "usage": {
+  "completion_tokens": 208,
+  "prompt_tokens": 1401,
+  "total_tokens": 1609,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 139,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0002441,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0002441,
+  "gateway_cost": 0.0002441
+ }
+}
