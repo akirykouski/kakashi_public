@@ -7,7 +7,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 # Live Context Collision ontology: change control at a tier-1 automotive supplier.
-# Scope: one process only - a change of source, material, process or coating for a part.
+# Scope: one process only - a change (source, material, process, coating, site, tooling, design...) for a part.
 # Profile: OWL 2 RL, so owlrl can compute the closure. Checks live in core/rules.py (SPARQL)
 # and ontology/shapes.ttl (SHACL integrity shapes).
 # Upper-ontology alignment is by name only (skos:closeMatch), nothing is imported:
@@ -57,13 +57,49 @@ lcc:InternalProcedure a owl:Class ; rdfs:subClassOf lcc:Requirement .
 lcc:Standard a owl:Class ; rdfs:subClassOf lcc:Requirement .
 
 # Change types a requirement can cover.
+# vocabLevel says which vocabulary size offers the type to the extractor (1 = the original 6, 2 = about 11,
+# 3 = 17). The ontology always holds all of them; the level only limits what the extractor may emit.
+# Sources are public and paraphrased: AIAG PPAP 4th ed. (2006), section 3.1 and Table 3.1, the situations in
+# which a supplier must tell the customer or resubmit; IATF 16949:2016 clauses 8.5.6 and 8.5.6.1 (control of
+# changes, temporary changes, customer notification and approval); the four real documents of data_real/SOURCES.md.
 lcc:ChangeType a owl:Class .
-lcc:SourceChange a lcc:ChangeType ; rdfs:label "Change of supplier (source)" .
-lcc:MaterialChange a lcc:ChangeType ; rdfs:label "Change of material" .
-lcc:ProcessChange a lcc:ChangeType ; rdfs:label "Change of manufacturing process" .
-lcc:CoatingChange a lcc:ChangeType ; rdfs:label "Change of coating / surface treatment" .
-lcc:ScheduleChange a lcc:ChangeType ; rdfs:label "Change of delivery date or quantity" .
-lcc:PackagingChange a lcc:ChangeType ; rdfs:label "Change of packaging" .
+lcc:vocabLevel a owl:AnnotationProperty ; rdfs:label "smallest vocabulary size that offers this change type" .
+lcc:SourceChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of supplier (source)" ;
+    rdfs:comment "Original type. PPAP lists a change of source for parts, materials or services as a notification situation." .
+lcc:MaterialChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of material" ;
+    rdfs:comment "Original type. PPAP: change in construction or material." .
+lcc:ProcessChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of manufacturing process" ;
+    rdfs:comment "Original type. IATF 16949 8.5.6.1: changes to the production process, equipment or method." .
+lcc:CoatingChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of coating / surface treatment" ;
+    rdfs:comment "Original type. A surface treatment is a subcontracted special process in PPAP (e.g. plating)." .
+lcc:ScheduleChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of delivery date or quantity" ;
+    rdfs:comment "Original type. Commercial term, not an IATF category; customer terms of delivery." .
+lcc:PackagingChange a lcc:ChangeType ; lcc:vocabLevel 1 ; rdfs:label "Change of packaging" ;
+    rdfs:comment "Original type. Packaging and labelling are part of the PPAP submission package." .
+# Level 2 (adds 5).
+lcc:LocationChange a lcc:ChangeType ; lcc:vocabLevel 2 ; rdfs:label "Change of manufacturing site" ;
+    rdfs:comment "PPAP: production from tooling or equipment moved to another plant, or a new or additional site. IATF 16949 8.5.6.1." .
+lcc:ToolingChange a lcc:ChangeType ; lcc:vocabLevel 2 ; rdfs:label "Change of tooling" ;
+    rdfs:comment "PPAP: new or modified tooling, or upgrade or rearrangement of existing tooling (perishable tools excepted)." .
+lcc:DesignChange a lcc:ChangeType ; lcc:vocabLevel 2 ; rdfs:label "Change of design or specification" ;
+    rdfs:comment "PPAP: engineering change to design records, specifications or materials. IATF 16949 8.5.6.1." .
+lcc:SubTierSupplierChange a lcc:ChangeType ; lcc:vocabLevel 2 ; rdfs:label "Change of sub-tier supplier" ;
+    rdfs:comment "PPAP: change to sub-supplier parts, materials or services that affects fit, form, function or durability. Distinct from SourceChange: the changed party is the supplier's own supplier." .
+lcc:TestMethodChange a lcc:ChangeType ; lcc:vocabLevel 2 ; rdfs:label "Change of test or inspection method" ;
+    rdfs:comment "PPAP: change in test or inspection method, such as a new technique." .
+# Level 3 (adds 6 more).
+lcc:ShippingLocationChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Change of shipping location" ;
+    rdfs:comment "Seen in the real documents (ship-from point). Kept apart from LocationChange: where it is made vs where it is sent from." .
+lcc:EquipmentChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Change of production equipment" ;
+    rdfs:comment "IATF 16949 8.5.6.1 lists equipment among process changes; the real documents name production equipment on its own." .
+lcc:SoftwareChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Change of process or product software" ;
+    rdfs:comment "Seen in the real documents (any process or software). Not a separate IATF category." .
+lcc:ProductionResumptionChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Resumption after a long production stop" ;
+    rdfs:comment "PPAP: product made after tooling was inactive for twelve months or more." .
+lcc:PriceChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Change of price" ;
+    rdfs:comment "Seen in the real documents (price, date or place of delivery). Commercial term, not an IATF category." .
+lcc:SpecialProcessChange a lcc:ChangeType ; lcc:vocabLevel 3 ; rdfs:label "Change of a special process (heat treat, plating, welding)" ;
+    rdfs:comment "AIAG CQI-9, CQI-11, CQI-12 name these processes; PPAP treats them as subcontracted services. Overlaps ProcessChange and CoatingChange on purpose: tests whether finer types cause confusion." .
 
 # Records. Every record is a prov:Entity: it has an author, a date and a source document.
 lcc:Record a owl:Class ; rdfs:subClassOf prov:Entity .
@@ -135,6 +171,37 @@ lcc:containsSubstanceVia a owl:ObjectProperty ; rdfs:label "part contains substa
 # Requirement scope.
 lcc:requiresCustomerApprovalFor a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType .
 lcc:requiresNotificationFor a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType .
+# Advance notice: the change must be announced before it is made (IATF 16949 8.5.6.1 customer notification;
+# PPAP "notify before"). It may come on top of an approval. requiresNotificationFor means notification alone.
+lcc:requiresNoticeFor a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType .
+# Days of advance notice the requirement's notice clause asks for. One value per requirement: when a document
+# gives different periods per change type, the extractor leaves this out rather than guess which applies.
+lcc:leadTimeDays a owl:DatatypeProperty ; rdfs:domain lcc:Requirement ; rdfs:range xsd:string .
+
+# Consequence the customer's own document names for shipping a change without its approval.
+# Asserted only from a quote of that document; never inferred or invented.
+lcc:ConsequenceType a owl:Class ; rdfs:label "Consequence named by a customer requirement for an unapproved change" .
+lcc:NewBusinessHold a lcc:ConsequenceType ; rdfs:label "New business hold" .
+lcc:RegistrarNotification a lcc:ConsequenceType ; rdfs:label "Notification to the IATF registrar" .
+lcc:Chargeback a lcc:ConsequenceType ; rdfs:label "Chargeback or financial consequences" .
+lcc:ControlledShipping a lcc:ConsequenceType ; rdfs:label "Controlled shipping" .
+lcc:hasConsequence a owl:ObjectProperty ; rdfs:domain lcc:CustomerRequirement ; rdfs:range lcc:ConsequenceType ;
+    rdfs:label "consequence of shipping a change without the approval this requirement demands" .
+
+# Tiers. suppliesTo is asserted (supplier -> the supplier it delivers to); feedsInto is its transitive closure,
+# so a sub-sub-supplier reaches the tier-1 supplier of a part. (Recall pattern: tier 3 changes its process,
+# tier 2 is never told, tier 1 finds out at lot acceptance.)
+lcc:suppliesTo a owl:ObjectProperty ; rdfs:domain lcc:Supplier ; rdfs:range lcc:Supplier ;
+    rdfs:subPropertyOf lcc:feedsInto ;
+    rdfs:comment "Direct delivery: the subject delivers material or service to the object, one tier up the chain." .
+lcc:feedsInto a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:comment "Delivers to, directly or through other suppliers (any number of tiers)." .
+
+# Requirement scope for changes made by a sub-tier supplier (not by the supplier itself).
+lcc:requiresCustomerApprovalForSubTier a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType ;
+    rdfs:comment "Customer approval is needed when this change type happens at a sub-tier supplier (tier 2, 3, ...)." .
+lcc:requiresNotificationForSubTier a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType ;
+    rdfs:comment "Only a notification is needed when this change type happens at a sub-tier supplier." .
 
 # Records.
 lcc:approvedSupplier a owl:ObjectProperty ; rdfs:range lcc:Supplier .

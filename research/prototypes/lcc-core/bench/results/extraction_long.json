@@ -4,16 +4,10 @@
   "chars": 91336,
   "chunks": 6,
   "gold": 4,
-  "tp": 3,
+  "tp": 4,
   "fp": 1,
-  "fn": 1,
-  "missed": [
-   [
-    "8D-25-031",
-    "concernsPart",
-    "BR-310"
-   ]
-  ],
+  "fn": 0,
+  "missed": [],
   "extra": [
    [
     "8D-25-031",
@@ -23,20 +17,11 @@
   ],
   "trap_hits_accepted": [],
   "trap_hits_proposed": [],
-  "review": [
-   {
-    "s": "8D-25-031",
-    "p": "concernsPart",
-    "o": "BR-310",
-    "reason": "ungrounded: quote does not name BR-310"
-   }
-  ],
-  "review_reasons": {
-   "ungrounded:": 1
-  },
-  "tokens_in": 56924,
-  "tokens_out": 2419,
-  "seconds": 0.02150416374206543
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 57440,
+  "tokens_out": 2952,
+  "seconds": 0.011690855026245117
  },
  {
   "id": "8D-26-009",
@@ -52,9 +37,9 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 58339,
-  "tokens_out": 3051,
-  "seconds": 0.007921934127807617
+  "tokens_in": 58855,
+  "tokens_out": 3068,
+  "seconds": 0.021039962768554688
  },
  {
   "id": "CSR-AUR-R3",
@@ -70,9 +55,9 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 52114,
-  "tokens_out": 845,
-  "seconds": 0.010201215744018555
+  "tokens_in": 52630,
+  "tokens_out": 726,
+  "seconds": 0.006139993667602539
  },
  {
   "id": "CSR-AUR-R4",
@@ -94,9 +79,9 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 54370,
-  "tokens_out": 623,
-  "seconds": 0.01577281951904297
+  "tokens_in": 54886,
+  "tokens_out": 884,
+  "seconds": 0.016364097595214844
  },
  {
   "id": "CSR-NOR-R2",
@@ -112,9 +97,9 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 52181,
+  "tokens_in": 52697,
   "tokens_out": 631,
-  "seconds": 0.014923095703125
+  "seconds": 0.020484209060668945
  },
  {
   "id": "DEV-121",
@@ -122,7 +107,7 @@
   "chunks": 5,
   "gold": 5,
   "tp": 4,
-  "fp": 0,
+  "fp": 1,
   "fn": 1,
   "missed": [
    [
@@ -131,14 +116,20 @@
     "CoatingChange"
    ]
   ],
-  "extra": [],
+  "extra": [
+   [
+    "DEV-121",
+    "concernsCoating",
+    "COAT-ZNNI"
+   ]
+  ],
   "trap_hits_accepted": [],
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 49695,
-  "tokens_out": 1879,
-  "seconds": 0.020596027374267578
+  "tokens_in": 50125,
+  "tokens_out": 2333,
+  "seconds": 0.011781930923461914
  },
  {
   "id": "LAW-ELV",
@@ -154,9 +145,9 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 48956,
-  "tokens_out": 1077,
-  "seconds": 0.011538982391357422
+  "tokens_in": 49472,
+  "tokens_out": 1001,
+  "seconds": 0.017587900161743164
  },
  {
   "id": "NCR-26-017",
@@ -172,8 +163,8 @@
   "trap_hits_proposed": [],
   "review": [],
   "review_reasons": {},
-  "tokens_in": 40931,
-  "tokens_out": 1771,
-  "seconds": 0.004575014114379883
+  "tokens_in": 41275,
+  "tokens_out": 2091,
+  "seconds": 0.0045278072357177734
  }
 ]

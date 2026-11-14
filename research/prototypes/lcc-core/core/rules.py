@@ -9,11 +9,13 @@ A change is a dict:
   site          our receiving site (optional; default = sites where the part is approved today)
   new_material  material id (material change)
   new_coating   coating id or free text (coating change)
+  at_supplier   sub-tier supplier that makes the change (R8); type says what it changes
 
 Rules (see docs in ontology/RULES.md):
   R1a supplier qualification   R1b part approval       R2 customer approval (PPAP)
   R3 supplier issue on the part's alloy                R5 restricted substance (law)
   R6 material capability / special characteristic       R7 missing evidence -> question with owner
+  R8 change at a sub-tier supplier: notice up the chain to the plant, customer approval if the CSR covers it
   R4 supersession is applied by the projection; findings show what was replaced (info).
 """
 import json
@@ -24,7 +26,10 @@ from rdflib import Literal
 from explain import explain
 from project import ROOT, local_name
 
-APPROVAL_CHANGE_TYPES = {"SourceChange", "MaterialChange", "ProcessChange", "CoatingChange"}
+APPROVAL_CHANGE_TYPES = {"SourceChange", "MaterialChange", "ProcessChange", "CoatingChange", "LocationChange",
+                         "ToolingChange", "DesignChange", "SubTierSupplierChange", "TestMethodChange",
+                         "ShippingLocationChange", "EquipmentChange", "SoftwareChange",
+                         "ProductionResumptionChange", "SpecialProcessChange"}
 SEVERITY_ORDER = {"blocker": 0, "warning": 1, "question": 2, "info": 3}
 
 _corpus = {}
@@ -47,9 +52,22 @@ def cite(source, quote):
     return {"triple": f"policy {source}", "inferred": False, "fact_id": None, "source": source, "quote": quote}
 
 
-def finding(rule, severity, title, evidence, entities, owner=None, note=None):
+def finding(rule, severity, title, evidence, entities, owner=None, note=None, consequences=None):
     return {"rule": rule, "severity": severity, "title": title,
-            "evidence": [step for step in evidence if step], "entities": entities, "owner": owner, "note": note}
+            "evidence": [step for step in evidence if step], "entities": entities, "owner": owner, "note": note,
+            "consequences": consequences or []}
+
+
+def consequences_of(projection, requirement):
+    """What the customer's own document says happens if the change ships unapproved. Only asserted facts with
+    a quote; empty when the document names none."""
+    found = []
+    for consequence in sorted(projection.objects(requirement, "hasConsequence")):
+        step = explain(projection, requirement, "hasConsequence", consequence)
+        if step and not step["inferred"]:
+            found.append({"type": consequence, "label": projection.label(consequence), "source": step["source"],
+                          "quote": step["quote"].replace("\n", " "), "fact_id": step["fact_id"]})
+    return found
 
 
 # ---- graph helpers ---------------------------------------------------------------------------------------
@@ -199,6 +217,13 @@ def rule_customer_approval(projection, change):
                                     [explain(projection, record, "approvedForCustomer", customer)],
                                     {"requirement": requirement, "customer": customer, "record": record}))
             continue
+        if change_type in projection.objects(requirement, "requiresNoticeFor"):
+            days = projection.value(requirement, "leadTimeDays")
+            lead = f" at least {days} days before the change" if days else " before the change"
+            findings.append(finding("R2", "info", f"{change_type} on {part}: announce to the customer{lead}, "
+                                    f"per {requirement}",
+                                    [explain(projection, requirement, "requiresNoticeFor", change_type)],
+                                    {"requirement": requirement}))
         if change_type in projection.objects(requirement, "requiresCustomerApprovalFor"):
             evidence = [explain(projection, part, "subjectTo", requirement),
                         explain(projection, requirement, "requiresCustomerApprovalFor", change_type)]
@@ -214,7 +239,8 @@ def rule_customer_approval(projection, change):
                                     f"{change_type} on {part} needs written customer approval (PPAP resubmission) "
                                     f"before shipping, per {requirement}", evidence,
                                     {"requirement": requirement, "change_type": change_type,
-                                     "customer": customer}, note=note))
+                                     "customer": customer}, note=note,
+                                    consequences=consequences_of(projection, requirement)))
         elif change_type in projection.objects(requirement, "requiresNotificationFor"):
             evidence = [explain(projection, part, "subjectTo", requirement),
                         explain(projection, requirement, "requiresNotificationFor", change_type)]
@@ -365,7 +391,105 @@ def rule_missing_certificate(projection, change):
                     owner="PER-GALLO")]
 
 
+def not_checked(projection, change):
+    """Requirements in the change's scope that the extractor found but could not express in the ontology.
+    The reasoner never saw them, so the card lists them as NOT CHECKED. Scope = documents the part is subject to."""
+    scope = set(projection.objects(change["part"], "subjectTo")) if change.get("part") else set()
+    return [item for item in projection.unclassified if item["source"] in scope and item["source"] not in
+            projection.replaced]
+
+
+def tier_path(projection, start, goal):
+    """Shortest chain of suppliesTo edges from start to goal, as a list of supplier ids."""
+    queue, seen = [[start]], {start}
+    while queue:
+        path = queue.pop(0)
+        if path[-1] == goal:
+            return path
+        for nxt in sorted(projection.objects(path[-1], "suppliesTo")):
+            if nxt not in seen:
+                seen.add(nxt)
+                queue.append(path + [nxt])
+    return None
+
+
+QP14_UNLINKED = ("4.4 A change at a supplier whose link to a supplier of the part is not on file is an open "
+                 "question for the supplier quality engineer.")
+QP14_PASS_UP = "4.2 The supplier passes every sub-supplier change notice to Valsangone before the change is implemented."
+QP14_PLANT = ("4.3 The plant checks the notice against the customer requirement for the part and informs the "
+              "customer, or asks for written approval, before the first shipment.")
+
+
+def rule_subtier(projection, change):
+    """R8: a change at a sub-tier supplier of the part. The notice must travel up the chain to the plant; the
+    customer's requirement decides whether the customer must approve (same part -> requirement chain as R2)."""
+    sub, part, change_type = change["at_supplier"], change["part"], change["type"]
+    if not projection.is_a(sub, "Supplier"):
+        return [finding("R7", "question", f"Supplier '{sub}' is not in our supplier master: who does it deliver to?",
+                        [cite("QP-14", QP14_UNLINKED)], {"supplier": sub, "missing": "supplier_record"},
+                        owner="PER-GALLO"),
+                finding("R7", "question", f"No known chain from '{sub}' to a supplier of {part}",
+                        [cite("QP-14", QP14_UNLINKED)], {"supplier": sub, "missing": "tier_link"},
+                        owner="PER-GALLO")]
+    feeds = set(projection.objects(sub, "feedsInto"))
+    by_customer = {}
+    for item in approvals(projection, part=part):
+        if item["status"] == "approved" and item["supplier"] in feeds and item["supplier"] != sub:
+            by_customer.setdefault(item["customer"], []).append(item)
+    if not by_customer:
+        return [finding("R7", "question",
+                        f"{projection.label(sub)} has no recorded chain to an approved supplier of {part}: "
+                        f"whom does it deliver to?",
+                        [cite("QP-14", QP14_UNLINKED)], {"supplier": sub, "part": part, "missing": "tier_link"},
+                        owner="PER-GALLO")]
+    findings = []
+    for customer, items in sorted(by_customer.items()):
+        item = sorted(items, key=lambda entry: entry["id"])[0]
+        top = item["supplier"]
+        path = tier_path(projection, sub, top) or [sub, top]
+        evidence = [explain(projection, sub, "feedsInto", top),
+                    explain(projection, item["id"], "approvedSupplier", top),
+                    explain(projection, item["id"], "approvedPart", part),
+                    explain(projection, part, "deliveredTo", customer),
+                    cite("QP-14", QP14_PASS_UP), cite("QP-14", QP14_PLANT)]
+        imposed = set(projection.objects(customer, "imposes"))
+        requirements = [name for name in projection.objects(part, "subjectTo")
+                        if projection.is_a(name, "CustomerRequirement") and name in imposed]
+        approval = [name for name in requirements
+                    if change_type in projection.objects(name, "requiresCustomerApprovalForSubTier")]
+        notification = [name for name in requirements
+                        if change_type in projection.objects(name, "requiresNotificationForSubTier")]
+        chain_text = " -> ".join([projection.label(name) for name in path] + [f"plant {item['site']}"])
+        tier = f"{len(path)} tiers below the plant"
+        if approval:
+            evidence += [explain(projection, part, "subjectTo", approval[0]),
+                         explain(projection, approval[0], "requiresCustomerApprovalForSubTier", change_type)]
+            severity = "blocker"
+            title = (f"{change_type} at {projection.label(sub)} ({tier}): notice must travel up the chain and "
+                     f"{projection.label(customer)} must approve in writing before shipping, per {approval[0]}. "
+                     f"Chain: {chain_text}")
+        elif notification:
+            evidence += [explain(projection, part, "subjectTo", notification[0]),
+                         explain(projection, notification[0], "requiresNotificationForSubTier", change_type)]
+            severity = "warning"
+            title = (f"{change_type} at {projection.label(sub)} ({tier}): notice must travel up the chain and "
+                     f"{projection.label(customer)} is notified, per {notification[0]}. Chain: {chain_text}")
+        else:
+            severity = "warning"
+            title = (f"{change_type} at {projection.label(sub)} ({tier}): notice must travel up the chain to the "
+                     f"plant. No requirement of {projection.label(customer)} on file covers sub-tier changes of "
+                     f"this type. Chain: {chain_text}")
+        findings.append(finding("R8", severity, title, evidence,
+                                {"supplier": sub, "part": part, "customer": customer, "chain": path,
+                                 "approval": item["id"]}, owner="PER-GALLO"))
+    return findings
+
+
 def check(projection, change):
+    if change.get("at_supplier") and change["type"] in APPROVAL_CHANGE_TYPES:
+        findings = rule_subtier(projection, change)
+        findings.sort(key=lambda item: SEVERITY_ORDER[item["severity"]])
+        return findings
     findings = []
     supplier = change.get("to_supplier")
     if change["type"] == "SourceChange" and supplier:

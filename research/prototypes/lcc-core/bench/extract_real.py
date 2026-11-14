@@ -16,7 +16,7 @@ for sub in ("core", "bench", "data"):
 from extract import extract_document, read_document  # noqa: E402
 
 REAL = os.path.join(ROOT, "data_real")
-CACHE = os.path.join(REAL, "cache")
+CACHE = os.environ.get("LLM_CACHE_DIR") or os.path.join(REAL, "cache")
 
 
 def call(model, system_prompt, prompt, schema):
@@ -58,8 +58,8 @@ def run(doc_id):
     result = extract_document(path, registries, IDS, call=call, guarded=True)
     _, body = read_document(path)
     result["chars"] = len(body)
-    os.makedirs(os.path.join(REAL, "out"), exist_ok=True)
-    with open(os.path.join(REAL, "out", doc_id + os.environ.get("OUT_SUFFIX", "") + ".json"), "w") as file:
+    os.makedirs(os.environ.get("OUT_DIR") or os.path.join(REAL, "out"), exist_ok=True)
+    with open(os.path.join(os.environ.get("OUT_DIR") or os.path.join(REAL, "out"), doc_id + os.environ.get("OUT_SUFFIX", "") + ".json"), "w") as file:
         json.dump(result, file, indent=1, default=str)
     return doc_id, result
 

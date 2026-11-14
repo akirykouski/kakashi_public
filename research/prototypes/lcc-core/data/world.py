@@ -27,7 +27,7 @@ REGISTRIES["customers"] = {
     "columns": ["id", "name", "market", "imposes"],
     "class": "Customer",
     "rows": [
-        ["CUST-AUR", "Aurelia Automobili S.p.A.", "MKT-EU", "CSR-AUR-R3;CSR-AUR-R4"],
+        ["CUST-AUR", "Aurelia Automobili S.p.A.", "MKT-EU", "CSR-AUR-R3;CSR-AUR-R4;CSR-AUR-S1"],
         ["CUST-NOR", "Nordhavn Trucks AB", "MKT-EU", "CSR-NOR-R2"],
     ],
     "map": {"imposes": "imposes"},
@@ -130,6 +130,10 @@ REGISTRIES["suppliers"] = {
         ["SUP-F", "Plastiche Fenestrelle S.r.l.", "injection moulding"],
         ["SUP-G", "Minuterie Germanasca S.r.l.", "steel stampings, clips, pins"],
         ["SUP-H", "Fonderia Pellice S.r.l.", "aluminium die castings"],
+        # Sub-tier suppliers: they deliver to one of the suppliers above, never to us directly (links: SUBLIST-B, SUBLIST-C).
+        ["SUP-I", "Trattamenti Termici Sangone S.r.l.", "heat treatment and T6 ageing"],
+        ["SUP-J", "Billette Cumiana S.r.l.", "cast aluminium extrusion billets"],
+        ["SUP-K", "Omogeneizzazione Piossasco S.r.l.", "billet homogenisation"],
     ],
     "map": {},
 }
@@ -293,8 +297,14 @@ of coating or surface treatment.
 7.3 Approval is granted per part number and per manufacturing site. An approval for one part does not
 extend to another part, even if made of the same material.
 7.4 A temporary deviation may be requested from the Aurelia resident engineer. It is limited in
-quantity and time and requires 100% inspection of the affected characteristic.""",
+quantity and time and requires 100% inspection of the affected characteristic.
+7.5 Parts shipped after a change that Aurelia has not approved place Aurelia in a nonconforming
+position. Aurelia may place the supplier on New Business Hold, may notify the supplier's IATF
+registrar, and will charge back all resulting costs.""",
     facts=[
+        ("CSR-AUR-R4", "hasConsequence", "NewBusinessHold", "may place the supplier on New Business Hold"),
+        ("CSR-AUR-R4", "hasConsequence", "RegistrarNotification", "may notify the supplier's IATF\nregistrar"),
+        ("CSR-AUR-R4", "hasConsequence", "Chargeback", "will charge back all resulting costs"),
         ("CSR-AUR-R4", "requiresCustomerApprovalFor", "SourceChange", "a change of source"),
         ("CSR-AUR-R4", "requiresCustomerApprovalFor", "MaterialChange", "a change of material"),
         ("CSR-AUR-R4", "requiresCustomerApprovalFor", "ProcessChange", "a change of manufacturing process"),
@@ -316,6 +326,21 @@ in advance. Moving production to another site is a change of source.""",
         ("CSR-NOR-R2", "requiresCustomerApprovalFor", "MaterialChange", "a change of material requires Nordhavn approval"),
         ("CSR-NOR-R2", "requiresCustomerApprovalFor", "CoatingChange", "A change of coating requires Nordhavn approval"),
         ("CSR-NOR-R2", "requiresNotificationFor", "ProcessChange", "requires notification only, 30 days\nin advance"),
+    ])
+
+doc(id="CSR-AUR-S1", type="customer_requirement", title="Aurelia supplier quality manual, annex S: sub-suppliers (excerpt)",
+    date="2026-07-01", author="Aurelia Automobili, supplier quality", valid_from="2026-07-01",
+    valid_to=None, supersedes=None, mentions=["CUST-AUR"],
+    body="""Aurelia Automobili - Supplier Quality Manual, revision 4, annex S "Sub-suppliers". Supplements section 7.
+S.1 The supplier is responsible for every change at its sub-suppliers, at every tier, as if it had made the change itself.
+S.2 A change of material, a change of manufacturing process or a change of coating at a sub-supplier requires written approval from Aurelia (PPAP resubmission) before shipping parts.
+S.3 A change of source at a sub-supplier is notified to Aurelia at least 90 days before implementation.
+S.4 The supplier shall require each sub-supplier to report every planned change before implementation. A change learned of after implementation is reported to Aurelia within 24 hours.""",
+    facts=[
+        ("CSR-AUR-S1", "requiresCustomerApprovalForSubTier", "MaterialChange", "A change of material, a change of manufacturing process or a change of coating at a sub-supplier requires written approval from Aurelia"),
+        ("CSR-AUR-S1", "requiresCustomerApprovalForSubTier", "ProcessChange", "a change of manufacturing process or a change of coating at a sub-supplier requires written approval from Aurelia"),
+        ("CSR-AUR-S1", "requiresCustomerApprovalForSubTier", "CoatingChange", "a change of coating at a sub-supplier requires written approval from Aurelia"),
+        ("CSR-AUR-S1", "requiresNotificationForSubTier", "SourceChange", "A change of source at a sub-supplier is notified to Aurelia at least 90 days before implementation"),
     ])
 
 # --- Law and standards -----------------------------------------------------------------------------------
@@ -406,6 +431,36 @@ approved part or its process may be implemented without the written approval of 
 shipped after an unapproved change are treated as nonconforming and the cost of containment is
 charged to the supplier.""",
     facts=[])
+
+doc(id="QP-14", type="internal_procedure", title="QP-14 Changes at sub-suppliers",
+    date="2026-09-01", author="PER-BIANCHI", valid_from="2026-09-01", valid_to=None, supersedes=None,
+    mentions=["PER-BIANCHI", "PER-GALLO"],
+    body="""QP-14 Changes at sub-suppliers, revision A.
+4.1 A change of material, manufacturing process, coating or source at any sub-supplier of a part is a change of that part.
+4.2 The supplier passes every sub-supplier change notice to Valsangone before the change is implemented. A change learned of after implementation is reported to the plant within 24 hours.
+4.3 The plant checks the notice against the customer requirement for the part and informs the customer, or asks for written approval, before the first shipment.
+4.4 A change at a supplier whose link to a supplier of the part is not on file is an open question for the supplier quality engineer.""",
+    facts=[])
+
+doc(id="SUBLIST-B", type="contract", title="Sub-supplier list of Alluminio Bormida for BR-220 and BR-225 blanks (PPAP element)",
+    date="2024-01-30", author="PER-GALLO", valid_from="2024-01-30", valid_to=None, supersedes=None,
+    mentions=["SUP-B", "SUP-I", "BR-220", "BR-225"],
+    body="""Sub-supplier list of Alluminio Bormida S.r.l. to Valsangone Componenti, EN AW-6082-T6 blanks for BR-220 and BR-225.
+Sawing and packing are done at Alluminio Bormida. Solution heat treatment and T6 ageing of the sawn blanks are done by Trattamenti Termici Sangone S.r.l. (SUP-I), which delivers the treated blanks to Alluminio Bormida.""",
+    facts=[
+        ("SUP-I", "suppliesTo", "SUP-B", "Trattamenti Termici Sangone S.r.l. (SUP-I), which delivers the treated blanks to Alluminio Bormida"),
+    ])
+
+doc(id="SUBLIST-C", type="contract", title="Sub-supplier list of Meccanica Chisone for BR-310 extrusions (PPAP element)",
+    date="2024-08-01", author="PER-GALLO", valid_from="2024-08-01", valid_to=None, supersedes=None,
+    mentions=["SUP-C", "SUP-J", "SUP-K", "BR-310"],
+    body="""Sub-supplier list of Meccanica Chisone S.r.l. to Valsangone Componenti, EN AW-6082-T5 extrusions for BR-310.
+Extrusion, cutting and ageing are done at Meccanica Chisone. The extrusion billets are cast by Billette Cumiana S.r.l. (SUP-J), which delivers them to Meccanica Chisone.
+Billette Cumiana buys the homogenisation of its billets from Omogeneizzazione Piossasco S.r.l. (SUP-K), which delivers the homogenised billets to Billette Cumiana.""",
+    facts=[
+        ("SUP-J", "suppliesTo", "SUP-C", "Billette Cumiana S.r.l. (SUP-J), which delivers them to Meccanica Chisone"),
+        ("SUP-K", "suppliesTo", "SUP-J", "Omogeneizzazione Piossasco S.r.l. (SUP-K), which delivers the homogenised billets to Billette Cumiana"),
+    ])
 
 # --- Part cards and FMEA ---------------------------------------------------------------------------------
 

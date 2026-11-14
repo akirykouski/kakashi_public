@@ -10,8 +10,8 @@ import os
 
 BENCH_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR = os.path.join(BENCH_DIR, "results")
-INFERRED_RULES = {"R2", "R3", "R5"}
-CATEGORIES = ["direct", "inferred", "stale", "missing", "clean"]
+INFERRED_RULES = {"R2", "R3", "R5"}  # R8 findings are reported separately (bench/results/FIX_8.md)
+CATEGORIES = ["direct", "inferred", "stale", "missing", "clean", "subtier"]
 LABELS = {"gold": "C*. Gold parse → core (no model)", "ontology": "C. Model parses → core",
           "retrieval": "A. BM25 top-8 chunks → model", "full": "B. All documents → model"}
 

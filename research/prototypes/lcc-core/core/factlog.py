@@ -19,12 +19,20 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS facts (
     id TEXT PRIMARY KEY,
     s TEXT NOT NULL, p TEXT NOT NULL, o TEXT NOT NULL,
-    source TEXT NOT NULL, quote TEXT NOT NULL,
+    source TEXT NOT NULL, quote TEXT NOT NULL, context_quote TEXT,
     valid_from TEXT, valid_to TEXT,
     kind TEXT, author TEXT,
     recorded_at TEXT NOT NULL,
     review TEXT NOT NULL DEFAULT 'accepted',   -- proposed | accepted | rejected
     proposed_by TEXT, reviewed_by TEXT
+);
+-- Obligations the extractor found that fit no ontology predicate. Never read by the projection or the reasoner.
+CREATE TABLE IF NOT EXISTS unclassified (
+    id TEXT PRIMARY KEY,
+    source TEXT NOT NULL, quote TEXT NOT NULL, summary TEXT,
+    recorded_at TEXT NOT NULL,
+    review TEXT NOT NULL DEFAULT 'proposed',   -- proposed | dismissed | classified
+    proposed_by TEXT
 );
 CREATE INDEX IF NOT EXISTS facts_s ON facts(s);
 CREATE INDEX IF NOT EXISTS facts_p_o ON facts(p, o);
@@ -66,9 +74,10 @@ class FactLog:
 
     def _insert(self, fact, recorded_at, review, proposed_by=None):
         self.connection.execute(
-            "INSERT INTO facts (id, s, p, o, source, quote, valid_from, valid_to, kind, author, recorded_at,"
-            " review, proposed_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (fact["id"], fact["s"], fact["p"], fact["o"], fact["source"], fact["quote"], fact.get("valid_from"),
+            "INSERT INTO facts (id, s, p, o, source, quote, context_quote, valid_from, valid_to, kind, author,"
+            " recorded_at, review, proposed_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            (fact["id"], fact["s"], fact["p"], fact["o"], fact["source"], fact["quote"], fact.get("context_quote"),
+             fact.get("valid_from"),
              fact.get("valid_to"), fact.get("kind"), fact.get("author"), recorded_at, review, proposed_by))
 
     # ---- reading -------------------------------------------------------------------------------------
@@ -127,6 +136,23 @@ class FactLog:
             self._insert(fact, recorded_at=now_iso(), review="proposed", proposed_by=proposed_by)
             self.connection.commit()
 
+    def propose_unclassified(self, item, proposed_by):
+        """An unclassified requirement (quote + summary) goes to the review queue. It never reaches the reasoner."""
+        with self.lock:
+            self.connection.execute(
+                "INSERT OR REPLACE INTO unclassified (id, source, quote, summary, recorded_at, review, proposed_by)"
+                " VALUES (?,?,?,?,?,?,?)",
+                (item["id"], item["source"], item["quote"], item.get("summary", ""),
+                 item.get("recorded_at") or now_iso(), item.get("review", "proposed"), proposed_by))
+            self.connection.commit()
+
+    def unclassified_items(self, sources=None):
+        """Open unclassified requirements, optionally only those of the given source documents."""
+        with self.lock:
+            rows = [dict(row) for row in self.connection.execute(
+                "SELECT * FROM unclassified WHERE review = 'proposed' ORDER BY id")]
+        return [row for row in rows if sources is None or row["source"] in sources]
+
     def accept_proposed(self, source, reviewer):
         """A person accepts every proposed fact from one source at once."""
         with self.lock:
@@ -162,4 +188,9 @@ def default_log(data_dir=None):
     data_path = os.path.join(data_dir or os.path.join(root, "data"), "facts.jsonl")
     log = FactLog()
     log.load_jsonl(data_path)
+    extra = os.path.join(os.path.dirname(data_path), "unclassified.jsonl")
+    if os.path.exists(extra):
+        with open(extra) as file:
+            for line in file:
+                log.propose_unclassified(json.loads(line), proposed_by="extractor")
     return log

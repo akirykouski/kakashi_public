@@ -71,8 +71,10 @@ CHANGE_SCHEMA = {
                                             "ScheduleChange", "PackagingChange"]},
         "part": {"type": "string"}, "to_supplier": {"type": ["string", "null"]},
         "from_supplier": {"type": ["string", "null"]}, "site": {"type": ["string", "null"]},
-        "new_material": {"type": ["string", "null"]}, "new_coating": {"type": ["string", "null"]}},
-    "required": ["type", "part", "to_supplier", "from_supplier", "site", "new_material", "new_coating"],
+        "new_material": {"type": ["string", "null"]}, "new_coating": {"type": ["string", "null"]},
+        "at_supplier": {"type": ["string", "null"]}},
+    "required": ["type", "part", "to_supplier", "from_supplier", "site", "new_material", "new_coating",
+                 "at_supplier"],
 }
 
 SYSTEM_REVIEW = ("You review proposed engineering changes at Valsangone Componenti, a tier-1 automotive supplier. "
@@ -81,7 +83,10 @@ SYSTEM_REVIEW = ("You review proposed engineering changes at Valsangone Componen
 SYSTEM_PARSE = ("You turn a sentence said in an engineering change meeting into a structured change. Use the ids "
                 "from the glossary. If a supplier, coating or material is not in the glossary, write its name "
                 "exactly as said. site is null unless a receiving site is named. Moving deliveries to another of "
-                "our sites is a SourceChange with that site.")
+                "our sites is a SourceChange with that site. at_supplier is null unless the sentence says the change is "
+                "made by a sub-supplier, i.e. a company that delivers to one of our suppliers and not to us (its "
+                "heat treater, billet caster, coater). Then put it in at_supplier, the kind of change in type, and "
+                "leave to_supplier null. A supplier that delivers to us directly is never at_supplier.")
 
 
 def load_jsonl(path):
@@ -215,6 +220,8 @@ def engine_keys(findings, change):
             key = entities["substance"]
         elif rule == "R6":
             key = entities["material"]
+        elif rule == "R8":
+            key = f"{entities['supplier']}|{entities['part']}|{entities['customer']}"
         else:
             key = entities["missing"]
         sources = sorted({leaf["source"] for step in finding["evidence"] for leaf in leaves(step)})

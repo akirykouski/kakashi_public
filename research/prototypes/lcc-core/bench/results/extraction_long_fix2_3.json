@@ -1,0 +1,192 @@
+[
+ {
+  "id": "8D-25-031",
+  "chars": 91336,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 1,
+  "fn": 0,
+  "missed": [],
+  "extra": [
+   [
+    "8D-25-031",
+    "concernsMaterial",
+    "MAT-6082-T6"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 59000,
+  "tokens_out": 2562,
+  "seconds": 66.2579128742218
+ },
+ {
+  "id": "8D-26-009",
+  "chars": 93308,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 60415,
+  "tokens_out": 2210,
+  "seconds": 147.50389313697815
+ },
+ {
+  "id": "CSR-AUR-R3",
+  "chars": 97809,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 2,
+  "fn": 0,
+  "missed": [],
+  "extra": [
+   [
+    "CSR-AUR-R3",
+    "leadTimeDays",
+    "\"60\""
+   ],
+   [
+    "CSR-AUR-R3",
+    "requiresNoticeFor",
+    "CoatingChange"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 54190,
+  "tokens_out": 938,
+  "seconds": 69.57636094093323
+ },
+ {
+  "id": "CSR-AUR-R4",
+  "chars": 102392,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 4,
+  "fp": 1,
+  "fn": 1,
+  "missed": [
+   [
+    "CSR-AUR-R4",
+    "requiresNotificationFor",
+    "SourceChange"
+   ]
+  ],
+  "extra": [
+   [
+    "CSR-AUR-R4",
+    "leadTimeDays",
+    "\"90\""
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 56446,
+  "tokens_out": 942,
+  "seconds": 141.35809898376465
+ },
+ {
+  "id": "CSR-NOR-R2",
+  "chars": 96891,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 2,
+  "fn": 0,
+  "missed": [],
+  "extra": [
+   [
+    "CSR-NOR-R2",
+    "leadTimeDays",
+    "\"30\""
+   ],
+   [
+    "CSR-NOR-R2",
+    "requiresNoticeFor",
+    "ProcessChange"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 54257,
+  "tokens_out": 772,
+  "seconds": 42.432724952697754
+ },
+ {
+  "id": "DEV-121",
+  "chars": 87468,
+  "chunks": 5,
+  "gold": 5,
+  "tp": 4,
+  "fp": 0,
+  "fn": 1,
+  "missed": [
+   [
+    "DEV-121",
+    "permitsChangeType",
+    "CoatingChange"
+   ]
+  ],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 51425,
+  "tokens_out": 2460,
+  "seconds": 51.77850389480591
+ },
+ {
+  "id": "LAW-ELV",
+  "chars": 90750,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 5,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 51032,
+  "tokens_out": 1044,
+  "seconds": 41.19925808906555
+ },
+ {
+  "id": "NCR-26-017",
+  "chars": 71756,
+  "chunks": 4,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 42315,
+  "tokens_out": 2052,
+  "seconds": 37.126834869384766
+ }
+]

@@ -1,6 +1,6 @@
 """Command line: check a change against company memory.
 
-  python core/check.py --part BR-220 --type SourceChange --to SUP-C [--as-of 2026-11-14] [--json]
+  python core/check.py --part BR-220 --type SourceChange --to SUP-C [--at SUP-I] [--as-of 2026-11-14] [--json]
   python core/check.py --scenario main      (scenarios in data/scenarios.json)
 
 Never prints "approved": either blockers with sources, or "no blocker found in memory".
@@ -16,7 +16,17 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from explain import render  # noqa: E402
 from factlog import default_log  # noqa: E402
 from project import ROOT, Projection  # noqa: E402
-from rules import check  # noqa: E402
+from rules import check, not_checked  # noqa: E402
+
+
+def print_not_checked(items):
+    if not items:
+        return
+    print("\nNOT CHECKED (stated in the documents, no ontology predicate for it; a person must read these):")
+    for item in items:
+        print(f"  - [{item['source']}] \"{item['quote'].replace(chr(10), ' ')}\"")
+        if item.get("summary"):
+            print(f"    obligation: {item['summary']}")
 
 
 def print_report(projection, change, findings, elapsed_ms):
@@ -33,6 +43,12 @@ def print_report(projection, change, findings, elapsed_ms):
             print(f"  note: {item['note']}")
         for step in item["evidence"]:
             print(render(step, 1))
+        grouped = {}
+        for consequence in item.get("consequences", []):  # one line per quote, however many types it names
+            grouped.setdefault((consequence["source"], consequence["quote"]), []).append(consequence["label"])
+        for (source, quote), labels in grouped.items():
+            print(f"  Consequence if shipped: {'; '.join(labels)}  [{source}: \"{quote}\"]")
+    print_not_checked(not_checked(projection, change))
 
 
 def main():
@@ -41,6 +57,7 @@ def main():
     parser.add_argument("--part")
     parser.add_argument("--type", default="SourceChange")
     parser.add_argument("--to", dest="to_supplier")
+    parser.add_argument("--at", dest="at_supplier", help="sub-tier supplier that makes the change (R8)")
     parser.add_argument("--site")
     parser.add_argument("--material", dest="new_material")
     parser.add_argument("--coating", dest="new_coating")
@@ -53,7 +70,7 @@ def main():
         change = dict(scenarios[args.scenario]["change"])
         as_of = scenarios[args.scenario].get("as_of", args.as_of)
     else:
-        change = {key: getattr(args, key) for key in ("type", "part", "to_supplier", "site", "new_material",
+        change = {key: getattr(args, key) for key in ("type", "part", "to_supplier", "at_supplier", "site", "new_material",
                                                        "new_coating") if getattr(args, key)}
         as_of = args.as_of
     log = default_log()
@@ -62,7 +79,9 @@ def main():
     findings = check(projection, change)
     elapsed_ms = (time.time() - started) * 1000
     if args.json:
-        print(json.dumps({"change": change, "as_of": as_of, "findings": findings}, indent=2))
+        print(json.dumps({"change": change, "as_of": as_of, "findings": findings,
+                          "not_checked": [{key: item[key] for key in ("id", "source", "quote", "summary")}
+                                          for item in not_checked(projection, change)]}, indent=2))
     else:
         print_report(projection, change, findings, elapsed_ms)
 

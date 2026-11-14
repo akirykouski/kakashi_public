@@ -629,6 +629,9 @@ of coating or surface treatment.
 extend to another part, even if made of the same material.
 7.4 A temporary deviation may be requested from the Aurelia resident engineer. It is limited in
 quantity and time and requires 100% inspection of the affected characteristic.
+7.5 Parts shipped after a change that Aurelia has not approved place Aurelia in a nonconforming
+position. Aurelia may place the supplier on New Business Hold, may notify the supplier's IATF
+registrar, and will charge back all resulting costs.
 
 ## 7. Packaging, labelling and identification
 

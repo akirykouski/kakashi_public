@@ -14,5 +14,9 @@
   {"id": "silence", "title": "Postpone BR-220 delivery by one week",
    "utterance": "We postpone the BR-220 delivery to Aurelia by one week.",
    "as_of": "2026-11-14",
-   "change": {"type": "ScheduleChange", "part": "BR-220"}}
+   "change": {"type": "ScheduleChange", "part": "BR-220"}},
+  {"id": "subtier", "title": "Bormida's heat treater changes the T6 ageing cycle",
+   "utterance": "Trattamenti Termici Sangone, who age the BR-220 blanks for Bormida, will change their T6 ageing cycle from next month.",
+   "as_of": "2026-11-14",
+   "change": {"type": "ProcessChange", "part": "BR-220", "at_supplier": "SUP-I"}}
 ]

@@ -169,3 +169,111 @@ def test_extractor_quote_check_and_review_list(tmp_path):
     assert [(fact["p"], fact["o"]) for fact in result["accepted"]] == [("requiresCustomerApprovalFor", "CoatingChange")]
     reasons = sorted(fact["reason"].split(" ")[0] for fact in result["review"])
     assert reasons == ["predicate", "quote", "ungrounded:", "unknown"]
+
+
+def test_unclassified_requirement_is_listed_as_not_checked_and_never_reasoned():
+    from rules import not_checked
+    log = default_log()
+    base = Projection(log, "2026-11-14", reason=False)
+    part = "BR-220"
+    current = Projection(log, "2026-11-14")
+    source = sorted(set(current.objects(part, "subjectTo")) - current.replaced)[0]
+    log.propose_unclassified({"id": "U-T-000", "source": source, "quote": "x", "summary": "lead time 180 days"},
+                             proposed_by="extractor")
+    after = Projection(log, "2026-11-14")
+    assert [item["id"] for item in not_checked(after, {"part": part})] == ["U-T-000"]
+    assert after.asserted_count == base.asserted_count  # the reasoner never sees it
+    assert not_checked(after, {"part": "NO-SUCH-PART"}) == []
+
+
+def test_r2_blocker_quotes_the_customers_own_consequence_text(log):
+    findings = check(Projection(log, "2026-11-05"), {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-C"})
+    r2 = next(item for item in findings if item["rule"] == "R2" and item["severity"] == "blocker")
+    assert {item["type"] for item in r2["consequences"]} == {"NewBusinessHold", "RegistrarNotification", "Chargeback"}
+    text = " ".join(corpus()["CSR-AUR-R4"]["text"].split())
+    assert all(item["source"] == "CSR-AUR-R4" and " ".join(item["quote"].split()) in text
+               for item in r2["consequences"])
+    # nothing is invented for a blocker that does not come from a customer requirement
+    assert all(not item["consequences"] for item in findings if item["rule"] != "R2")
+
+
+# ---- R8: changes at sub-tier suppliers -------------------------------------------------------------------
+
+def test_subtier_change_needs_notice_up_the_chain_and_customer_approval(log):
+    findings = check(Projection(log, "2026-11-14"), {"type": "ProcessChange", "part": "BR-220", "at_supplier": "SUP-I"})
+    assert [(item["rule"], item["severity"]) for item in findings] == [("R8", "blocker")]
+    item = findings[0]
+    assert item["entities"]["chain"] == ["SUP-I", "SUP-B"] and item["entities"]["customer"] == "CUST-AUR"
+    sources = corpus()
+    leaves = [leaf for step in item["evidence"] for leaf in flatten(step)]
+    assert {"SUBLIST-B", "REG-ASL", "QP-14", "CSR-AUR-S1"} <= {leaf["source"] for leaf in leaves}
+    assert all(leaf["quote"] in sources[leaf["source"]]["text"] for leaf in leaves)
+
+
+def test_subtier_three_tiers_and_silent_customer_requirement(log):
+    findings = check(Projection(log, "2026-11-14"), {"type": "ProcessChange", "part": "BR-310", "at_supplier": "SUP-K"})
+    assert [(item["rule"], item["severity"]) for item in findings] == [("R8", "warning")]
+    assert findings[0]["entities"]["chain"] == ["SUP-K", "SUP-J", "SUP-C"]
+    leaves = [leaf for step in findings[0]["evidence"] for leaf in flatten(step)]
+    assert [leaf["source"] for leaf in leaves].count("SUBLIST-C") == 2  # one quote per tier hop
+
+
+def test_subtier_source_change_is_notification_only(log):
+    findings = check(Projection(log, "2026-11-14"), {"type": "SourceChange", "part": "BR-220", "at_supplier": "SUP-I"})
+    assert [(item["rule"], item["severity"]) for item in findings] == [("R8", "warning")]
+
+
+def test_subtier_unknown_link_is_a_question_not_a_finding(log):
+    findings = check(Projection(log, "2026-11-14"), {"type": "ProcessChange", "part": "BR-180", "at_supplier": "SUP-I"})
+    assert [(item["rule"], item["entities"]["missing"]) for item in findings] == [("R7", "tier_link")]
+    findings = check(Projection(log, "2026-11-14"),
+                     {"type": "ProcessChange", "part": "BR-310", "at_supplier": "Anodica Susa"})
+    assert sorted(item["entities"]["missing"] for item in findings) == ["supplier_record", "tier_link"]
+
+
+def test_subtier_chain_exists_only_after_the_declaration_is_valid(log):
+    findings = check(Projection(log, "2024-01-01"), {"type": "ProcessChange", "part": "BR-220", "at_supplier": "SUP-I"})
+    assert [item["entities"].get("missing") for item in findings] == ["tier_link"]
+
+
+def test_recall_pattern_tier3_process_change_tier2_not_informed():
+    """Recall 18V-806 shape: DEMO (tier 3) -> Eissmann (tier 2) -> Autoliv (tier 1) -> the vehicle maker."""
+    from factlog import FactLog
+    memory = FactLog()
+    facts = [("PRG-F", "forCustomer", "CUST-F"), ("PART-COVER", "usedIn", "PRG-F"), ("CUST-F", "imposes", "CSR-F"),
+             ("CSR-F", "type", "CustomerRequirement"),
+             ("CSR-F", "requiresCustomerApprovalForSubTier", "ProcessChange"),
+             ("PART-COVER", "type", "Part"), ("PRG-F", "type", "Program"), ("CUST-F", "type", "Customer"),
+             ("SUP-AUTOLIV", "type", "Supplier"), ("SUP-EISSMANN", "type", "Supplier"),
+             ("SUP-DEMO", "type", "Supplier"),
+             ("APR-F", "type", "PartApproval"), ("APR-F", "approvedSupplier", "SUP-AUTOLIV"),
+             ("APR-F", "approvedPart", "PART-COVER"), ("APR-F", "approvedSite", "PLT-1"),
+             ("APR-F", "approvedForCustomer", "CUST-F"), ("APR-F", "status", '"approved"'),
+             ("SUP-DEMO", "suppliesTo", "SUP-EISSMANN"), ("SUP-EISSMANN", "suppliesTo", "SUP-AUTOLIV")]
+    for index, (s, p, o) in enumerate(facts):
+        memory._insert({"id": f"R{index}", "s": s, "p": p, "o": o, "source": "QP-14", "quote": "x",
+                        "valid_from": None}, recorded_at="2026-01-01T00:00:00+00:00", review="accepted")
+    findings = check(Projection(memory, "2026-11-14"),
+                     {"type": "ProcessChange", "part": "PART-COVER", "at_supplier": "SUP-DEMO"})
+    assert [(item["rule"], item["severity"]) for item in findings] == [("R8", "blocker")]
+    assert findings[0]["entities"]["chain"] == ["SUP-DEMO", "SUP-EISSMANN", "SUP-AUTOLIV"]
+
+
+def test_extractor_suppliesto_needs_both_suppliers_in_the_quote():
+    from extract import check_fact, grounding_aliases, grounding_names, known_ids, ontology_predicates
+    registries = {"parts": {"rows": []},
+                  "suppliers": {"rows": [["SUP-DEMO", "DEMO, Tier 3 supplier of the cover", "x"],
+                                         ["SUP-EISSMANN", "Eissmann, Tier 2 supplier", "x"]],
+                                "aliases": {"SUP-DEMO": ["DEMO"], "SUP-EISSMANN": ["Eissmann"]}}}
+    names = grounding_names(registries)
+    aliases = grounding_aliases(registries)
+    ids = known_ids({"suppliers": registries["suppliers"]}, ["DOC-1"])
+    predicates = ontology_predicates()
+    text = "The Tier 3 supplier (DEMO) delivers to the Tier 2 supplier (Eissmann). DEMO changed its process."
+    fact = {"s": "SUP-DEMO", "p": "suppliesTo", "o": "SUP-EISSMANN"}
+    both = "The Tier 3 supplier (DEMO) delivers to the Tier 2 supplier (Eissmann)"
+    assert check_fact({**fact, "quote": both}, text, predicates, ids, names, aliases=aliases)[1] is None
+    assert check_fact({**fact, "quote": "Eissmann"}, text, predicates, ids, names, aliases=aliases)[1] == \
+        "ungrounded: quote does not name SUP-DEMO"
+    assert check_fact({**fact, "p": "feedsInto", "quote": "Eissmann"}, text, predicates, ids, names, aliases=aliases)[1] \
+        .startswith("predicate")

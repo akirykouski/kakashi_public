@@ -31,6 +31,8 @@ DATA_DIR = os.path.join(ROOT, "data")
 RESULTS_DIR = os.path.join(BENCH_DIR, "results")
 PYTHON = sys.executable
 TAG = "_long" if GUARDED else "_long_plain"
+EXTRACT_ONLY = bool(os.environ.get("EXTRACT_ONLY"))  # score extraction only: no memory rebuild, no benchmark calls
+SUFFIX = os.environ.get("RESULTS_SUFFIX", "")
 
 
 def gold_facts(doc_id):
@@ -84,7 +86,7 @@ def build_long_memory(results):
         for fact in to_log_facts(result, document_kind):
             log.propose_fact(fact, proposed_by="extractor")
         log.accept_proposed(doc_id, reviewer="bench-auto-accept")
-    columns = ("id", "s", "p", "o", "source", "quote", "valid_from", "valid_to", "kind", "author")
+    columns = ("id", "s", "p", "o", "source", "quote", "context_quote", "valid_from", "valid_to", "kind", "author")
     with open(os.path.join(OUT_DIR, "facts.jsonl"), "w") as file:
         for fact in log.all_facts():
             file.write(json.dumps({key: fact[key] for key in columns}, ensure_ascii=False) + "\n")
@@ -107,8 +109,9 @@ def main():
         results = dict(pool.map(extract_one, doc_ids))
     rows = [score_document(doc_id, results[doc_id], traps) for doc_id in doc_ids]
     os.makedirs(OUT_DIR, exist_ok=True)
-    build_long_memory(results)
-    with open(os.path.join(RESULTS_DIR, f"extraction{TAG}.json"), "w") as file:
+    if not EXTRACT_ONLY:
+        build_long_memory(results)
+    with open(os.path.join(RESULTS_DIR, f"extraction{TAG}{SUFFIX}.json"), "w") as file:
         json.dump(rows, file, indent=1)
 
     lines = ["| Document | ~tokens | Chunks | Gold | Found | Wrong extra | Missed | Precision | Recall | Traps taken "
@@ -132,9 +135,11 @@ def main():
                  f"{totals['tp'] / max(totals['gold'], 1):.2f} | {totals['traps']} | {totals['review']} | "
                  f"{totals['tokens_in']:,} |")
     print("\n".join(lines))
-    with open(os.path.join(RESULTS_DIR, f"extraction{TAG}_table.md"), "w") as file:
+    with open(os.path.join(RESULTS_DIR, f"extraction{TAG}{SUFFIX}_table.md"), "w") as file:
         file.write("\n".join(lines) + "\n")
 
+    if EXTRACT_ONLY:
+        return
     subprocess.run([PYTHON, os.path.join(BENCH_DIR, "run.py"), "--conditions", "gold,ontology", "--data-dir",
                     OUT_DIR, "--tag", TAG], check=True)
     subprocess.run([PYTHON, os.path.join(BENCH_DIR, "score.py"), "--conditions", "gold,ontology", "--tag", TAG],

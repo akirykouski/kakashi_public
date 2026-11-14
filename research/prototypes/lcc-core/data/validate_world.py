@@ -10,6 +10,7 @@ import sys
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 SCHEMA_INDIVIDUALS = {
     "SourceChange", "MaterialChange", "ProcessChange", "CoatingChange", "ScheduleChange", "PackagingChange",
+    "NewBusinessHold", "RegistrarNotification", "Chargeback", "ControlledShipping",
     "Series6xxx", "Series3xxxCast", "CrVI", "CrIII", "Lead", "Cadmium", "Mercury", "Zinc", "Nickel", "MKT-EU",
 }
 CLASS_NAMES = {

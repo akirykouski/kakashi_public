@@ -93,6 +93,7 @@ class Projection:
         self.as_of = as_of
         started = time.time()
         all_facts = log.all_facts()
+        self.unclassified = log.unclassified_items()  # review queue only; never added to the graph
         valid = [fact for fact in all_facts if is_valid(fact, as_of, known_at)]
         self.replaced = superseded_records(valid)
         self.current_facts = [fact for fact in valid if fact["s"] not in self.replaced]

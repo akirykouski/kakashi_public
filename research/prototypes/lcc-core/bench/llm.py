@@ -9,7 +9,7 @@ import subprocess
 import time
 
 BENCH_DIR = os.path.dirname(os.path.abspath(__file__))
-CACHE_DIR = os.path.join(BENCH_DIR, "cache")
+CACHE_DIR = os.environ.get("LLM_CACHE_DIR") or os.path.join(BENCH_DIR, "cache")
 TIMEOUT_S = 300
 
 
@@ -29,7 +29,10 @@ def call(model, system_prompt, prompt, schema):
     completed = subprocess.run(command, input=prompt, capture_output=True, text=True, timeout=TIMEOUT_S, cwd="/tmp")
     seconds = time.time() - started
     raw = completed.stdout
-    payload = json.loads(raw[raw.find("{"):])
+    start = min((i for i in (raw.find("["), raw.find("{")) if i >= 0), default=0)
+    payload = json.loads(raw[start:])
+    if isinstance(payload, list):  # newer CLI prints a JSON array of events
+        payload = [item for item in payload if item.get("type") == "result"][-1]
     if payload.get("is_error"):
         raise RuntimeError(str(payload.get("result"))[:500] + completed.stderr[-300:])
     output = payload.get("structured_output")

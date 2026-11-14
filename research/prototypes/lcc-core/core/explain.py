@@ -39,7 +39,8 @@ def asserted_step(projection, triple):
         return None
     fact = facts[0]
     return {"triple": text_of(*triple), "inferred": False, "fact_id": fact["id"], "source": fact["source"],
-            "quote": fact["quote"], "valid_from": fact["valid_from"], "author": fact["author"]}
+            "quote": fact["quote"], "context_quote": fact.get("context_quote"),
+            "valid_from": fact["valid_from"], "author": fact["author"]}
 
 
 def explain(projection, subject, predicate, obj, depth=0):
@@ -113,7 +114,11 @@ def render(step, indent=0):
         return ""
     pad = "  " * indent
     if not step["inferred"]:
-        return f"{pad}- {step['triple']}  [{step['source']}: \"{step['quote'].replace(chr(10), ' ')}\"]"
+        quote = step["quote"].replace(chr(10), " ")
+        if step.get("context_quote"):
+            context = step["context_quote"].replace(chr(10), " ")
+            return f"{pad}- {step['triple']}  [{step['source']}: \"...{context}...\" -> \"{quote}\"]"
+        return f"{pad}- {step['triple']}  [{step['source']}: \"{quote}\"]"
     lines = [f"{pad}- {step['triple']}  (inferred: {step['axiom']})"]
     lines += [render(premise, indent + 1) for premise in step["premises"]]
     return "\n".join(lines)

@@ -1,0 +1,173 @@
+[
+ {
+  "id": "8D-25-031",
+  "chars": 91336,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 3,
+  "fp": 1,
+  "fn": 1,
+  "missed": [
+   [
+    "8D-25-031",
+    "concernsPart",
+    "BR-310"
+   ]
+  ],
+  "extra": [
+   [
+    "8D-25-031",
+    "concernsMaterial",
+    "MAT-6082-T6"
+   ]
+  ],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [
+   {
+    "s": "8D-25-031",
+    "p": "concernsPart",
+    "o": "BR-310",
+    "reason": "ungrounded: quote does not name BR-310"
+   }
+  ],
+  "review_reasons": {
+   "ungrounded:": 1
+  },
+  "tokens_in": 57716,
+  "tokens_out": 2606,
+  "seconds": 33.560240030288696
+ },
+ {
+  "id": "8D-26-009",
+  "chars": 93308,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 59131,
+  "tokens_out": 2606,
+  "seconds": 35.82779502868652
+ },
+ {
+  "id": "CSR-AUR-R3",
+  "chars": 97809,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 52906,
+  "tokens_out": 726,
+  "seconds": 27.863775968551636
+ },
+ {
+  "id": "CSR-AUR-R4",
+  "chars": 102392,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 4,
+  "fp": 0,
+  "fn": 1,
+  "missed": [
+   [
+    "CSR-AUR-R4",
+    "requiresNotificationFor",
+    "SourceChange"
+   ]
+  ],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 55162,
+  "tokens_out": 649,
+  "seconds": 27.553544998168945
+ },
+ {
+  "id": "CSR-NOR-R2",
+  "chars": 96891,
+  "chunks": 6,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 52973,
+  "tokens_out": 724,
+  "seconds": 19.7122859954834
+ },
+ {
+  "id": "DEV-121",
+  "chars": 87468,
+  "chunks": 5,
+  "gold": 5,
+  "tp": 5,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 50355,
+  "tokens_out": 2731,
+  "seconds": 29.958313941955566
+ },
+ {
+  "id": "LAW-ELV",
+  "chars": 90750,
+  "chunks": 6,
+  "gold": 5,
+  "tp": 5,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 49748,
+  "tokens_out": 1123,
+  "seconds": 22.680933952331543
+ },
+ {
+  "id": "NCR-26-017",
+  "chars": 71756,
+  "chunks": 4,
+  "gold": 4,
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "missed": [],
+  "extra": [],
+  "trap_hits_accepted": [],
+  "trap_hits_proposed": [],
+  "review": [],
+  "review_reasons": {},
+  "tokens_in": 41459,
+  "tokens_out": 1869,
+  "seconds": 21.46250319480896
+ }
+]

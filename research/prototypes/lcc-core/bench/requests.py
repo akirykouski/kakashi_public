@@ -12,9 +12,12 @@ A finding is (rule, key):
   R5  coating contains a substance banned by law     key = substance id
   R6  material not qualified / below special char.   key = material id (drawing material for a source change,
                                                      new material for a material change)
+  R8  change at a sub-tier supplier of the part          key = "sub-tier supplier|part|customer"
   R7  missing evidence -> question with owner         key = supplier_record | coating_substances |
                                                      material_data | material_certificate
-Categories: direct, inferred, stale (supersession or time decides), missing (must ask), clean (must stay quiet).
+Categories: direct, inferred, stale (supersession or time decides), missing (must ask), clean (must stay quiet),
+subtier (T01-T03, appended later for the tier-chain rule R8; the first 36 lines of requests.jsonl are unchanged).
+R7 also has key tier_link (no known chain from the sub-tier supplier to a supplier of the part).
 """
 import json
 import os
@@ -146,6 +149,19 @@ REQUESTS = [
             {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-B"}, []),
     request("C08", "clean", NOW, "Move the BK-330 delivery slot from Monday to Wednesday.",
             {"type": "ScheduleChange", "part": "BK-330"}, []),
+    # ---- subtier (R8, appended after the first 36) -----------------------------------------------------
+    request("T01", "subtier", NOW,
+            "Trattamenti Termici Sangone, who age the BR-220 blanks for Bormida, will change their T6 ageing cycle from next month.",
+            {"type": "ProcessChange", "part": "BR-220", "at_supplier": "SUP-I"},
+            [("R8", "SUP-I|BR-220|CUST-AUR")]),
+    request("T02", "subtier", NOW,
+            "The billet homogeniser behind Chisone, Omogeneizzazione Piossasco, is moving to a new furnace and a shorter soak for the BR-310 billets.",
+            {"type": "ProcessChange", "part": "BR-310", "at_supplier": "SUP-K"},
+            [("R8", "SUP-K|BR-310|CUST-NOR")]),
+    request("T03", "subtier", NOW,
+            "A coater called Anodica Susa, who work for one of our suppliers, will change the passivation on BR-310.",
+            {"type": "CoatingChange", "part": "BR-310", "at_supplier": "Anodica Susa"},
+            [("R7", "supplier_record"), ("R7", "tier_link")]),
 ]
 
 
