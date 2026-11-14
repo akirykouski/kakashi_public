@@ -1,0 +1,66 @@
+{
+  "as_of": "2026-11-14",
+  "note": "POST /api/meeting/line against the real model, first (uncached) call; latency_ms is wall-clock of the whole request",
+  "results": [
+    {
+      "line": "Good morning, we have four items today.",
+      "speaker": "PER-CONTI",
+      "group": "nothing to check",
+      "stage": "prefilter",
+      "flagged": false,
+      "verdict": null,
+      "headline": null,
+      "latency_ms": 24
+    },
+    {
+      "line": "Beinasco ran at ninety-two percent last week.",
+      "speaker": "PER-CONTI",
+      "group": "nothing to check",
+      "stage": "prefilter",
+      "flagged": false,
+      "verdict": null,
+      "headline": null,
+      "latency_ms": 1
+    },
+    {
+      "line": "Let's take a five-minute break.",
+      "speaker": "PER-CONTI",
+      "group": "nothing to check",
+      "stage": "prefilter",
+      "flagged": false,
+      "verdict": null,
+      "headline": null,
+      "latency_ms": 1
+    },
+    {
+      "line": "Bormida is two weeks late, let's take the BR-220 blanks from Chisone.",
+      "speaker": "PER-FERRI",
+      "group": "change",
+      "stage": "model",
+      "flagged": true,
+      "verdict": "blockers_found",
+      "headline": "3 blockers. Supplier quality engineer decides.",
+      "latency_ms": 7903
+    },
+    {
+      "line": "Let's switch the CL-115 coating to cheaper yellow chromate.",
+      "speaker": "PER-ROSSI",
+      "group": "change",
+      "stage": "model",
+      "flagged": true,
+      "verdict": "blockers_found",
+      "headline": "2 blockers. Customer decides.",
+      "latency_ms": 2701
+    },
+    {
+      "line": "Move the BR-220 final inspection to the new CMM.",
+      "speaker": "PER-ROMANO",
+      "group": "change",
+      "stage": "model",
+      "flagged": true,
+      "verdict": "not_covered",
+      "headline": "No rule covers this. A person decides.",
+      "latency_ms": 4463
+    }
+  ]
+}

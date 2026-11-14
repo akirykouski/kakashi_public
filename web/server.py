@@ -151,6 +151,87 @@ def replaced_records(projection, findings):
     return found
 
 
+REG_NAMES = {"REG-ASL": "Approved supplier list", "REG-CAPABILITIES": "Supplier register",
+             "REG-SUPPLIER_QUALIFICATION": "Supplier register", "REG-CERTIFICATES": "Certificate register",
+             "REG-PARTS": "Parts register", "REG-PROGRAMS": "Programs register",
+             "REG-CUSTOMERS": "Customer register", "REG-MATERIALS": "Materials register"}
+DOC_TYPE_NAMES = {"customer_requirement": "Customer manual", "internal_procedure": "Quality procedure"}
+_doc_cache = {}
+
+
+def _doc(doc_id):
+    """(type, body lines) of data/docs/<id>.md, or None."""
+    if doc_id not in _doc_cache:
+        path = ROOT / "data" / "docs" / f"{doc_id}.md"
+        entry = None
+        if re.fullmatch(r"[A-Za-z0-9._-]+", doc_id or "") and path.exists():
+            text = path.read_text(encoding="utf-8")
+            kind = re.search(r"^type:\s*(\S+)", text, re.M)
+            body = text.split("\n---\n", 1)[1] if text.startswith("---") and "\n---\n" in text else text
+            entry = (kind.group(1) if kind else "", body.splitlines())
+        _doc_cache[doc_id] = entry
+    return _doc_cache[doc_id]
+
+
+def _clause(doc_id, quote):
+    """Section number ('7.1') of the body line holding the start of `quote`, else None."""
+    direct = re.match(r"\s*(\d+(?:\.\d+)+)\s", quote or "")
+    if direct:
+        return direct.group(1)
+    entry = _doc(doc_id)
+    if not entry or not quote:
+        return None
+    lines = entry[1]
+    needle = " ".join(quote.split())[:40].lower()
+    flat = [" ".join(line.split()).lower() for line in lines]
+    starts = [i for i, line in enumerate(flat) if needle[:20] in line] or \
+             [i for i in range(len(flat)) if needle in " ".join(flat[i:i + 2])]
+    for index in starts[:1]:
+        if True:
+            for back in range(index, -1, -1):
+                found = re.match(r"\s*(\d+(?:\.\d+)+)\s", lines[back])
+                if found:
+                    return found.group(1)
+            return None
+    return None
+
+
+def source_chips(finding):
+    """Source documents behind one finding: [{name, id, clause}], policy documents first, then the decisive
+    register rows (not the generic part -> program -> customer chain)."""
+    leaves = []
+
+    def walk(steps):
+        for step in steps or []:
+            if step.get("quote") and step.get("source"):
+                leaves.append(step)
+            walk(step.get("premises"))
+    walk(finding.get("evidence"))
+    chips, seen = [], set()
+    chain = {"REG-PROGRAMS", "REG-CUSTOMERS"}
+    for step in sorted(leaves, key=lambda l: l["source"].startswith("REG-")):
+        source, quote = step["source"], step["quote"]
+        if source.startswith("REG-"):
+            if source in chain or (source == "REG-PARTS" and any(not l["source"].startswith("REG-") or
+                                                                 l["source"] != "REG-PARTS" for l in leaves
+                                                                 if l is not step)):
+                continue
+            ident = quote.split(",", 1)[0]
+            chip = {"name": REG_NAMES.get(source, source[4:].replace("_", " ").title() + " register"), "id": ident}
+        else:
+            entry = _doc(source)
+            name = DOC_TYPE_NAMES.get(entry[0]) if entry else None
+            if not name:
+                name = ("Quality procedure" if source.startswith("QP-") else "8D report" if source.startswith("8D-")
+                        else "Deviation" if source.startswith("DEV-") else "Document")
+            chip = {"name": name, "id": source, "clause": _clause(source, quote)}
+        key = (chip["name"], chip["id"], chip.get("clause"))
+        if key not in seen:
+            seen.add(key)
+            chips.append(chip)
+    return chips[:4]
+
+
 def run_check(request, drop_rows=None, explain=True):
     """core.check.run with an optional in-memory table edit. Returns the response for the page. explain=True adds
     the verified counterfactuals and the two-register explanation to the card (core/explain_text.py)."""
@@ -169,6 +250,7 @@ def run_check(request, drop_rows=None, explain=True):
         "drop_rows": drop_rows,
         "replaced": replaced_records(projection, findings),
         "labels": labels(),
+        "finding_sources": [source_chips(f) if f.get("severity") == "blocker" else [] for f in findings],
     }
 
 
@@ -363,6 +445,7 @@ def handle_meeting_line(body):
         raise ValueError("send {line, speaker?, as_of?}")
     as_of = body.get("as_of") or check.DEFAULT_AS_OF
     response = {"line": line, "speaker": body.get("speaker"), "as_of": as_of, "flagged": False, "classified": True}
+    clock = time.perf_counter()
     try:
         result = classify_line(line)
     except ParseFailed as failure:
@@ -372,8 +455,11 @@ def handle_meeting_line(body):
         return response
     response.update({"flagged": result["is_change_proposal"], "reason": result["reason"], "stage": result["stage"],
                      "mentions": result["mentions"]})
+    timing = {"classify": round((time.perf_counter() - clock) * 1000)}  # wall-clock ms for the page's step trail
+    response["timing_ms"] = timing
     if not response["flagged"]:
         return response
+    clock = time.perf_counter()
     try:
         request = parse_remark(line, as_of)
     except ParseFailed as failure:
@@ -385,6 +471,7 @@ def handle_meeting_line(body):
         response.update({"request": request, "labels": labels(),
                          "card_error": "flagged, but the parser found no change type or part: a person reads it"})
         return response
+    timing["parse"] = round((time.perf_counter() - clock) * 1000)
     response.update(run_check(request))
     return response
 

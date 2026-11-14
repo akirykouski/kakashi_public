@@ -1,0 +1,40 @@
+{
+ "note": "Let's switch the scl115 coating to cheaper yellow chromate",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "is_change_proposal": true,
+  "reason": "The speaker directly proposes switching the SCL115 coating to a cheaper yellow chromate, a concrete change to how the part is coated that is still to be decided."
+ },
+ "usage": {
+  "completion_tokens": 72,
+  "prompt_tokens": 477,
+  "total_tokens": 549,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 0,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 8.37e-05,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 8.37e-05,
+  "gateway_cost": 8.37e-05
+ }
+}

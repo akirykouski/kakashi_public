@@ -4,82 +4,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Change Check</title>
-<script>try { if (localStorage.getItem("kva-theme") === "projector") document.documentElement.dataset.theme = "projector"; } catch (e) { /* storage blocked */ }</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M8 1l7 7-7 7-7-7z%27 fill=%27%232456c9%27/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/static/style.css">
 <link rel="stylesheet" href="/static/meeting.css">
 <link rel="stylesheet" href="/static/explain.css">
 <link rel="stylesheet" href="/static/documents.css">
-<link rel="stylesheet" href="/static/theme.css">
 <link rel="stylesheet" href="/static/demo.css">
+<link rel="stylesheet" href="/static/live.css">
+<link rel="stylesheet" href="/static/minimal.css">
+<link rel="stylesheet" href="/static/bento.css">
 </head>
 <body>
 <header class="top">
-  <div class="brand">
-    <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2l10 10-10 10L2 12z" fill="currentColor"/><path d="M8 12.2l2.6 2.6L16.2 9" fill="none" stroke="#0b1b3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <div>
-      <h1>Change Check</h1>
-      <p class="tag">Meeting remark → checked against company memory. It never approves: a person decides.</p>
-    </div>
-  </div>
-  <nav class="topnav" aria-label="Views">
-    <div class="tabs" role="tablist">
-      <button class="tab" id="tab-workspace" data-tab-for="workspace" role="tab">Workspace</button>
-      <button class="tab" id="open-documents" data-tab-for="documents" role="tab">Documents</button>
-      <button class="tab" id="open-table" data-tab-for="table" role="tab">Decision table</button>
-      <button class="tab" id="open-records" data-tab-for="records" role="tab">Records</button>
-    </div>
-    <button class="projector-toggle" id="projector-toggle" title="High-contrast dark theme for the projector" aria-pressed="false">Projector</button>
+  <div class="brand"><h1>Change check</h1></div>
+  <nav class="topnav" aria-label="Sections">
+    <button class="link" id="open-table">Rules</button>
+    <button class="link" id="open-documents">Documents</button>
+    <details class="menu" id="more-menu">
+      <summary aria-label="More">&#8943;</summary>
+      <div class="menu-pop" id="menu-pop"><button class="link" id="open-records">Decision records</button></div>
+    </details>
   </nav>
 </header>
 
-<main class="ws" id="workspace">
-  <section class="ws-left strip" aria-label="Meeting">
-    <div class="ws-head strip-head">
-      <div>
-        <span class="label">Meeting</span>
-        <div class="ws-title">Valsangone Componenti · change board</div>
-      </div>
-      <span class="asof">as of <input type="date" id="as-of" value="2026-11-14"></span>
+<main>
+  <section class="strip" aria-label="Check a remark">
+    <div class="remark-row">
+      <select id="speaker" aria-label="Speaker"></select>
+      <input id="remark" type="text" aria-label="Remark" placeholder="Say a change…" autocomplete="off">
+      <span class="asof"><input type="date" id="as-of" value="2026-11-14" aria-label="As of"></span>
+      <button class="primary" id="check-btn">Check</button>
     </div>
-    <div id="meeting-slot" class="meeting-slot"></div>
-    <div class="remark-box">
-      <div class="remark-row">
-        <select id="speaker" aria-label="Speaker"></select>
-        <textarea id="remark" rows="2" aria-label="Remark">Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.</textarea>
-        <button class="primary" id="check-btn">Check</button>
-      </div>
-      <details class="demos">
-        <summary class="label">Example remarks</summary>
-        <div id="demo-buttons" class="demo-buttons"></div>
+  </section>
+
+  <div id="status" class="status" hidden></div>
+
+  <section id="result" hidden>
+    <div id="parsed" class="parsed"></div>
+    <div class="card">
+      <div id="verdict" class="verdict"></div>
+      <div id="decision" class="decision"></div>
+      <h2 class="sec">Findings</h2>
+      <div id="findings"></div>
+      <div id="extra"></div>
+      <div id="not-checked"></div>
+      <details class="rec-details"><summary>Decision record</summary>
+        <div id="record"></div>
+        <div id="timings" class="timings"></div>
       </details>
     </div>
   </section>
 
-  <section class="ws-right" aria-label="Decision">
-    <div class="ws-right-head">
-      <span class="label">Decision for the selected change</span>
-      <div id="pane-switch" class="pane-switch" role="tablist"></div>
+<section id="documents-section" class="documents-section" hidden>
+    <div class="docs-head-row">
+      <h2>Bring your documents</h2>
+      <button class="link" id="docs-reset">Reset to the original memory</button>
     </div>
-    <div id="cards-slot" class="cards-slot"></div>
-    <div class="check-pane">
-      <div id="status" class="status" hidden></div>
-      <section id="result" hidden>
-        <div id="verdict" class="verdict"></div>
-        <div id="parsed" class="parsed"></div>
-        <div class="findings-head"><h2>Findings</h2><span class="muted small">click a line for the proof chain</span></div>
-        <div id="findings"></div>
-        <div class="grid">
-          <div id="decision" class="panel"></div>
-          <div id="record" class="panel"></div>
-        </div>
-        <div id="extra"></div>
-        <div id="not-checked"></div>
-        <div id="timings" class="timings"></div>
-      </section>
-  <section id="compare-section" class="compare-section">
+    <p class="muted">Facts are proposed with quotes. Nothing counts until you accept.</p>
+    <div class="docs-inputs">
+      <div><div id="docs-demo" class="demo-buttons"></div></div>
+      <details class="docs-own-wrap"><summary>Your own document</summary>
+      <div class="docs-own">
+        <div id="docs-own-real" class="docs-own-real"></div>
+        <input id="docs-name" placeholder="Document name" aria-label="Document name">
+        <select id="docs-type" aria-label="Document type">
+          <option value="customer_requirement">customer requirement (rank 1)</option>
+          <option value="deviation">controlled record (rank 2)</option>
+          <option value="email" selected>email / note (rank 3)</option>
+        </select>
+        <textarea id="docs-text" rows="3" placeholder="Paste a document (plain text or Markdown with front matter)" aria-label="Document text"></textarea>
+        <button id="docs-paste-btn">Read pasted text</button>
+        <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
+        <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
+      </div>
+      </details>
+    </div>
+    <div id="docs-status" class="status" hidden></div>
+    <div id="docs-view"></div>
+    <div id="docs-recheck" class="docs-recheck"></div>
+    <div id="docs-diff"></div>
+  </section>
+
+  <section id="compare-section" class="compare-section" hidden>
     <h2>Same request, different answer</h2>
     <p class="muted">Every answer names the facts and the rules version it rests on. Change the date or the rule, and the record shows why the answer moved.</p>
     <div class="compare-controls">
@@ -107,49 +113,19 @@
     </div>
     <div id="compare" class="compare"></div>
   </section>
-    </div>
-  </section>
 </main>
-
-  <section id="documents-section" class="documents-section page" hidden>
-    <div class="docs-head-row">
-      <h2>Bring your documents</h2>
-      <button class="link" id="docs-reset">Reset to the original memory</button>
-    </div>
-    <p class="muted">Upload, paste or link a document. The model proposes facts, each with a verbatim quote; code checks every quote and id. Nothing counts until a person accepts it. Then re-check the current change.</p>
-    <div class="docs-inputs">
-      <div><span class="label">Demo documents (synthetic, fictional company)</span><div id="docs-demo" class="demo-buttons"></div></div>
-      <div class="docs-own">
-        <input id="docs-name" placeholder="Document name" aria-label="Document name">
-        <select id="docs-type" aria-label="Document type">
-          <option value="customer_requirement">customer requirement (rank 1)</option>
-          <option value="deviation">controlled record (rank 2)</option>
-          <option value="email" selected>email / note (rank 3)</option>
-        </select>
-        <textarea id="docs-text" rows="3" placeholder="Paste a document (plain text or Markdown with front matter)" aria-label="Document text"></textarea>
-        <button id="docs-paste-btn">Read pasted text</button>
-        <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
-        <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
-      </div>
-    </div>
-    <div id="docs-status" class="status" hidden></div>
-    <div id="docs-view"></div>
-    <div id="docs-recheck" class="docs-recheck"></div>
-    <div id="docs-diff"></div>
-  </section>
-
 
 <div id="modal" class="modal" hidden>
   <div class="modal-box" role="dialog" aria-modal="true">
     <div class="modal-head">
       <h2 id="modal-title"></h2>
-      <button class="link" id="modal-close" aria-label="Back to the workspace">← Back to workspace</button>
+      <button class="link" id="modal-close" aria-label="Close">Close ✕</button>
     </div>
     <div id="modal-body"></div>
   </div>
 </div>
 
-<footer class="foot">Fictional company data (Valsangone Componenti S.p.A.). Deterministic checks over facts with verbatim quotes; the language model only reads the remark.</footer>
+<footer class="foot" id="foot">Fictional company data (Valsangone Componenti S.p.A.). Deterministic checks over facts with verbatim quotes; the language model only reads the remark.</footer>
 <script src="/static/offline.js"></script>
 <script src="/static/app.js"></script>
 <script src="/static/dmn.js"></script>
@@ -157,5 +133,8 @@
 <script src="/static/meeting.js"></script>
 <script src="/static/documents.js"></script>
 <script src="/static/demo.js"></script>
+<script src="/static/live.js"></script>
+<script src="/static/minimal.js"></script>
+<script src="/static/bento.js"></script>
 </body>
 </html>
