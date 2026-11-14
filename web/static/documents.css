@@ -39,3 +39,37 @@
 .diff-list li.diff-new { font-weight: 600; }
 .documents-section button:not(.link):not(.primary):not(.demo-btn) { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 5px 14px; cursor: pointer; }
 .documents-section button.primary.small-btn { padding: 3px 14px; }
+
+/* ---- design pass (ws/design) ------------------------------------------------------------------------ */
+.documents-section { margin: 1.4rem 0; padding: 20px 22px; border-radius: var(--radius); border-color: var(--line-soft); box-shadow: var(--shadow); }
+.docs-head-row h2 { font-size: 1.35rem; }
+.docs-inputs { gap: 14px; margin: 14px 0; padding: 14px 16px; background: var(--surface-2); border: 1px solid var(--line-soft); border-radius: var(--radius); }
+.docs-inputs .label { display: block; margin-bottom: 8px; }
+.docs-own { gap: 10px; }
+.docs-own textarea, .docs-own input:not([type=file]), .docs-own select { border-color: var(--line); border-radius: 8px; padding: 7px 10px; background: var(--surface); }
+.documents-section button:not(.link):not(.primary):not(.demo-btn) { border-color: var(--line); border-radius: 10px; padding: 7px 16px; font-weight: 600; }
+.documents-section button:not(.link):not(.primary):not(.demo-btn):hover { border-color: var(--accent); color: var(--accent-ink); }
+.documents-section .demo-buttons button.demo-btn { font-size: .875rem; }
+.doc-head { margin: 20px 0 12px; font-size: 1.05rem; }
+.doc-head .muted, .doc-head .small { font-size: .9rem; }
+.doc-grid { gap: 20px; }
+.doc-text { font-size: .98rem; line-height: 1.6; padding: 16px 18px; background: var(--surface-2); border-color: var(--line-soft); border-radius: var(--radius); }
+.doc-text mark.q { background: #fde68a; box-shadow: 0 0 0 1px #f6c945; color: var(--ink); }
+.doc-text mark.ctx { background: #fff3c4; }
+.doc-text mark.flash { outline: 3px solid var(--accent); background: #fcd34d; }
+.doc-review h3 { font-size: 1.1rem; }
+.doc-prop { border-color: var(--line-soft); border-left: 5px solid var(--accent); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; box-shadow: var(--shadow); }
+.doc-prop:hover { border-color: var(--line); }
+.doc-prop.st-accepted { border-left-color: var(--green); background: var(--green-soft); }
+.doc-prop.st-contested { border-left-color: var(--amber); background: var(--amber-soft); }
+.doc-prop-head { gap: 8px; align-items: center; }
+.doc-plain { font-size: 1.02rem; }
+.doc-rank { font-size: .825rem; border-radius: 6px; padding: 1px 8px; background: var(--surface); }
+.doc-actions { gap: 8px; margin-top: 10px; }
+.small-btn { padding: 5px 14px; font-size: .9rem; }
+.documents-section button.primary.small-btn { padding: 5px 16px; }
+.doc-status.st-accepted::before { content: "✓ "; }
+.doc-status.st-contested::before { content: "? "; }
+.doc-status.st-rejected::before { content: "✕ "; }
+.docs-recheck { margin-top: 18px; }
+.diff-list li.diff-gone { text-decoration-color: var(--red); text-decoration-thickness: 2px; }

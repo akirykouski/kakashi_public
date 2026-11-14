@@ -106,7 +106,13 @@ const Meeting = (function makeMeeting() {
   function speakerNode(id) {
     const person = state.people[id];
     if (!person) return el("span", { class: "mt-who" }, id || "Speaker");
-    return el("span", { class: "mt-who", title: person.role }, [person.name, el("span", { class: "mt-role" }, person.role)]);
+    const initials = String(person.name || "").split(/\s+/).filter(Boolean).slice(0, 2)
+      .map(function first(word) { return word[0]; }).join("").toUpperCase();
+    return el("span", { class: "mt-who", title: person.role }, [
+      el("span", { class: "mt-avatar", "aria-hidden": "true" }, initials),
+      el("span", { class: "mt-name" }, person.name),
+      el("span", { class: "mt-role" }, person.role),
+    ]);
   }
 
   function lineNode(item, index) {
