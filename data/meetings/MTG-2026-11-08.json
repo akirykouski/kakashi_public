@@ -1,0 +1,37 @@
+{
+  "id": "MTG-2026-11-08",
+  "title": "Quality weekly",
+  "date": "2026-11-08",
+  "participants": [
+    "PER-CONTI",
+    "PER-GALLO",
+    "PER-FERRI"
+  ],
+  "utterances": [
+    [
+      "PER-FERRI",
+      "Purchasing would like an RFQ to Meccanica Chisone for BR-225 as a second source."
+    ],
+    [
+      "PER-GALLO",
+      "In the system Chisone is still conditional under QS-C-2025."
+    ],
+    [
+      "PER-CONTI",
+      "Chisone is still conditional, no RFQ for BR-225."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-033",
+      "about": [
+        "SUP-C",
+        "BR-225"
+      ],
+      "by": "PER-CONTI",
+      "text": "No RFQ to SUP-C for BR-225.",
+      "reason": "Chisone is still conditional (QS-C-2025).",
+      "quote": "Chisone is still conditional, no RFQ for BR-225."
+    }
+  ]
+}

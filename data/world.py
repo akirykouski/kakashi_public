@@ -650,3 +650,60 @@ doc(id="EML-2026-10-29", type="email", title="Email: re BR-220 shortage",
 Meccanica Chisone told me on the phone they can make BR-220 blanks from the same alloy they use for
 BR-310, so it should be a formality. Can we put it on the agenda?""",
     facts=[])
+
+# ---------------------------------------------------------------------------------------------------------
+# Additions from issue #19 (maintenance: record time, promises, contradiction). Data additions for
+# Valentina's review. Rendered by build.py AFTER the meetings, so every existing fact id stays the same.
+# ---------------------------------------------------------------------------------------------------------
+
+# Record time (when the system learned a record) where it differs from valid time. Every other fact is taken
+# as recorded on its valid_from date (undated registry rows: on the first date of the world).
+RECORDED_AT = {
+    "QS-C-2026": "2026-11-10T09:00:00+00:00",  # re-audit passed 6 Nov, entered into the system on 10 Nov
+}
+
+# Decision reasons stored as links to the records they rely on, so a reason can be re-checked later.
+# decision id -> records the reason relies on.
+REASON_LINKS = {
+    "DEC-031": ["CAP-C-01", "CAP-C-02", "8D-25-031"],  # "no EN AW-6082-T6 capability and 8D-25-031 is open"
+    "DEC-033": ["QS-C-2025"],                          # "Chisone is still conditional (QS-C-2025)"
+}
+
+ADDITIONAL_DOCUMENTS = [
+    dict(id="EML-2026-11-12", type="email", title="Email from Meccanica Chisone: 8D-25-031 and 6082-T6",
+         date="2026-11-12", author="SUP-C", valid_from="2026-11-12", valid_to=None, supersedes=None,
+         mentions=["SUP-C", "8D-25-031", "MAT-6082-T6", "PER-GALLO"],
+         body="""From: Meccanica Chisone, quality office. To: Elena Gallo. Subject: 8D-25-031 and BR-220.
+We expect to have 8D-25-031 closed by 20 Nov: the corrective action on the ageing furnace is installed and in verification.
+We plan to be qualified for EN AW-6082-T6 from December, the first trial lot is planned for 1 December.
+Until then please keep us in mind for BR-220.""",
+         # Two promises, typed PLAN (class Commitment). Asserted: the e-mail is the record that the promise was
+         # made; it is not evidence that the 8D is closed or the capability exists.
+         facts=[
+             ("PRM-C-8D-CLOSE", "type", "Commitment", "8D-25-031 closed by 20 Nov", "assert"),
+             ("PRM-C-8D-CLOSE", "promisedBy", "SUP-C", "From: Meccanica Chisone", "assert"),
+             ("PRM-C-8D-CLOSE", "promisesClosureOf", "8D-25-031", "8D-25-031 closed by 20 Nov", "assert"),
+             ("PRM-C-8D-CLOSE", "horizon", '"2026-11-20"', "closed by 20 Nov", "assert"),
+             ("PRM-C-8D-CLOSE", "followedUpBy", "PER-GALLO", "To: Elena Gallo", "assert"),
+             ("PRM-C-6082T6", "type", "Commitment", "qualified for EN AW-6082-T6 from December", "assert"),
+             ("PRM-C-6082T6", "promisedBy", "SUP-C", "From: Meccanica Chisone", "assert"),
+             ("PRM-C-6082T6", "promisesCapability", "MAT-6082-T6", "qualified for EN AW-6082-T6 from December",
+              "assert"),
+             ("PRM-C-6082T6", "horizon", '"2026-12-01"', "the first trial lot is planned for 1 December", "assert"),
+             ("PRM-C-6082T6", "followedUpBy", "PER-GALLO", "To: Elena Gallo", "assert"),
+         ]),
+    dict(id="FMEA-BR220-B", type="fmea", title="Process FMEA BR-220, revision B (excerpt)",
+         date="2026-11-12", author="PER-ROMANO", valid_from="2026-11-12", valid_to=None, supersedes="FMEA-BR220",
+         mentions=["BR-220", "MAT-6082-T6", "SC-BR220-YS"],
+         body="""PFMEA BR-220 revision B, line 12. Failure mode: crack at the fastening holes under fatigue load.
+Cause: wrong alloy or temper of the blank (yield below 240 MPa). Severity 9.
+Special characteristic SC-BR220-YS: minimum yield 240 MPa.
+Prevention: blanks only from sources approved for EN AW-6082-T6; material certificate 3.1 per lot.
+Detection: hardness check per lot, control plan line 30.""",
+         # A mention: the FMEA restates the characteristic owned by the control plan (250 MPa). The control-plan
+         # value stays in force; core/memory.py shows the two side by side as a contradiction for a person.
+         facts=[
+             ("SC-BR220-YS", "minYieldMPa", '"240"', "Special characteristic SC-BR220-YS: minimum yield 240 MPa",
+              "mention"),
+         ]),
+]

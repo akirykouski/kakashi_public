@@ -254,6 +254,16 @@ lcc:ppapLevel a owl:DatatypeProperty .
 lcc:reason a owl:DatatypeProperty ; rdfs:domain lcc:Decision ; rdfs:label "why the decision was taken" .
 lcc:role a owl:DatatypeProperty ; rdfs:domain lcc:Person .
 
+# Memory maintenance (issue #19): promises with a horizon, decision reasons as links.
+lcc:Commitment a owl:Class ; rdfs:subClassOf lcc:Record ;
+    rdfs:label "Commitment (a promise someone made, with a horizon; a plan, not a fact)" .
+lcc:promisedBy a owl:ObjectProperty ; rdfs:domain lcc:Commitment .
+lcc:promisesClosureOf a owl:ObjectProperty ; rdfs:domain lcc:Commitment ; rdfs:label "promises to close this record" .
+lcc:promisesCapability a owl:ObjectProperty ; rdfs:domain lcc:Commitment ; rdfs:label "promises to become capable for this material" .
+lcc:followedUpBy a owl:ObjectProperty ; rdfs:domain lcc:Commitment ; rdfs:range lcc:Person .
+lcc:horizon a owl:DatatypeProperty ; rdfs:domain lcc:Commitment ; rdfs:label "date by which the promise is due" .
+lcc:reasonRef a owl:ObjectProperty ; rdfs:domain lcc:Decision ; rdfs:label "a record the decision's reason relies on" .
+
 ########################################################################
 # Reference data that belongs to the schema (EN 573 / EN 515, written by us, not imported)
 ########################################################################
@@ -294,6 +304,7 @@ lcc:MaterialCertificate lcc:epistemicType "EVIDENCE" .
 lcc:SupplierCapability lcc:epistemicType "EVIDENCE" .
 lcc:Document lcc:epistemicType "EVIDENCE" .
 lcc:ChangeRequest lcc:epistemicType "PLAN" .
+lcc:Commitment lcc:epistemicType "PLAN" .
 # Policy and completeness statements are rules_data records (rules_data/build.py): company rules.
 lcc:Policy lcc:epistemicType "CONSTRAINT" .
 lcc:CompletenessStatement lcc:epistemicType "CONSTRAINT" .

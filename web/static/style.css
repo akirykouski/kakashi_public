@@ -208,3 +208,17 @@ select { max-width: 100%; }
 .pf-field { display: flex; flex-direction: column; gap: 3px; font-size: .85rem; }
 .pf-field > span:first-child { color: var(--muted); text-transform: uppercase; font-size: .72rem; letter-spacing: .04em; }
 .pf-field input, .pf-field select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); min-width: 0; }
+/* memory of decisions and maintenance (core/memory.py, issue #19) */
+.maint-strip { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px 4px; margin: 1.2rem 0; }
+.maint-strip h2 { margin: 0 0 2px; }
+.maint-item { margin-bottom: 8px; padding: 8px 12px; }
+.maint-item:not(.related) { opacity: .8; }
+.maint-item .f-head { flex-wrap: wrap; }
+.maint-meta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.past-panel { margin-top: 1.2rem; }
+.past-decision .f-head { flex-wrap: wrap; }
+.past-status, .reason-state { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.past-status.holds, .reason-state.holds { background: var(--green-soft); color: var(--green); }
+.past-status.stale, .reason-state.stale { background: var(--amber-soft); color: var(--amber); }
+.reason-list { list-style: none; padding-left: 0; margin: 8px 0 0; }
+.reason-list li { margin: 6px 0; font-size: .93rem; }

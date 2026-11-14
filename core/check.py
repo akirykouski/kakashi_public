@@ -19,6 +19,7 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from core import decision, oida, rules  # noqa: E402
+from core import memory as decision_memory  # noqa: E402  (check.memory() is the fact log)
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.factlog import default_log  # noqa: E402
 from core.project import Projection  # noqa: E402
@@ -61,6 +62,8 @@ def scenario(scenario_id):
     item = scenarios[scenario_id]
     request = dict(item["change"])
     request.setdefault("as_of", item.get("as_of", DEFAULT_AS_OF))
+    if item.get("known_at"):
+        request.setdefault("known_at", item["known_at"])
     return request
 
 
@@ -83,7 +86,7 @@ def evaluate(request, record=True, table=None, rules_version_value=None, coverag
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
     as_of = request.get("as_of") or DEFAULT_AS_OF
     started = time.time()
-    projection = Projection(memory(), as_of)
+    projection = Projection(memory(), as_of, known_at=request.get("known_at"))
     projected = time.time()
     findings = sorted(rules.check(projection, request), key=severity_rank)
     not_checked = rules.not_checked(projection, request) if hasattr(rules, "not_checked") else []
@@ -110,7 +113,8 @@ def evaluate(request, record=True, table=None, rules_version_value=None, coverag
                 not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
                              for item in not_checked],
                 decision=row, coverage=coverage_value or coverage(), record_id=entry["record_id"] if entry else "",
-                timings_ms=timings, contested=contested_pairs(projection, request)).__dict__
+                timings_ms=timings, contested=contested_pairs(projection, request),
+                **decision_memory.annotate(projection, card_request, findings)).__dict__
     return card, entry, projection
 
 
@@ -150,6 +154,16 @@ def print_card(card):
     cover = card["coverage"]
     print(f"Table checked: {cover['input_sets']} input sets, {cover['to_person']} go to a person, "
           f"{cover['overlaps']} overlap")
+    for item in card.get("past_decisions") or []:
+        print(f"\nDECIDED BEFORE {item['id']} {item['date']} by {item['by']} ({item['status']}): \"{item['title']}\"")
+        for reason in item["reasons"]:
+            print(f"  reason {reason['record']}: {reason['detail']}  [{reason.get('source')}: \"{reason.get('quote')}\"]")
+    for item in card.get("maintenance") or []:
+        print(f"\nMAINTENANCE [{item['severity']}] {item['kind']}: {item['title']}"
+              + (f"  owner {item['owner']}" if item.get("owner") else "")
+              + (f"  urgency {item['urgency']}" if item.get("urgency") is not None else ""))
+        for step in item["evidence"]:
+            print(f"  [{step.get('source')}: \"{step.get('quote')}\"]")
     print(f"Record {card['record_id']}  timings {card['timings_ms']}")
 
 
@@ -172,6 +186,7 @@ def main():
     parser.add_argument("--material", dest="new_material")
     parser.add_argument("--coating", dest="new_coating")
     parser.add_argument("--as-of", default=None)
+    parser.add_argument("--known-at", default=None)
     parser.add_argument("--no-record", action="store_true")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
@@ -184,6 +199,8 @@ def main():
                                                        "new_coating") if getattr(args, key)}
     if args.as_of:
         request["as_of"] = args.as_of
+    if args.known_at:
+        request["known_at"] = args.known_at
     card, _ = run(request, record=not args.no_record)
     if args.json:
         print(json.dumps(card, indent=2, ensure_ascii=False))
