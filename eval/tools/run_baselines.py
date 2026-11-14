@@ -101,8 +101,11 @@ def csv_line(values):
 
 # ---- worlds: sources visible on a date ------------------------------------------------------------------
 
+M_DIR = EVAL / "worlds" / "M"  # --m-dir switches to eval/worlds/M_scale for H3
+
+
 def m_sources(as_of):
-    world = EVAL / "worlds" / "M"
+    world = M_DIR
     registries = json.load(open(world / "registries.json"))
     sources = []
     for item in load_jsonl(world / "corpus.jsonl"):
@@ -121,7 +124,7 @@ def m_sources(as_of):
 
 
 def m_glossary():
-    registries = json.load(open(EVAL / "worlds" / "M" / "registries.json"))
+    registries = json.load(open(M_DIR / "registries.json"))
     lines = ["Glossary of ids (names only, no relations):"]
     for name in ("parts", "suppliers", "customers", "sites", "materials", "coatings", "people"):
         lines.append(f"{name}: " + "; ".join(f"{row[0]} = {row[1]}" for row in registries[name]["rows"]))
@@ -256,8 +259,10 @@ def main():
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--raw-tag", required=True, help="e.g. dryrun or frozen")
+    parser.add_argument("--m-dir", default="M", help="world-M directory under eval/worlds (M_scale for H3)")
     args = parser.parse_args()
-    global RAW_DIR
+    global RAW_DIR, M_DIR
+    M_DIR = EVAL / "worlds" / args.m_dir
     RAW_DIR = RAW / args.raw_tag
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)

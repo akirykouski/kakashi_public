@@ -105,6 +105,9 @@ def to_gold_format(world, card, change):
 ALIASES = {}
 
 
+M_DIR_NAME = "M"  # --m-dir M_scale for H3
+
+
 def use_world(world, as_of_dates):
     """Point the core at this world's facts. Reads only; no core file is changed.
 
@@ -114,7 +117,7 @@ def use_world(world, as_of_dates):
     facts inside eval/worlds/A/core/facts.jsonl (eval/tools/encode_A.py)."""
     from core import check, factlog, rules
     from core.project import Projection
-    data_dir = EVAL / "worlds" / world / "core"
+    data_dir = EVAL / "worlds" / (M_DIR_NAME if world == "M" else world) / "core"
     log = factlog.default_log(data_dir=str(data_dir))
     if world == "M":
         log = rules.extend_log(log)
@@ -165,7 +168,7 @@ def model_parse(item, model, raw_dir, world):
     Raw answers are recorded as fixtures under eval/raw/<tag>/C_parse/<world>/, not in the core's tests."""
     from core import parse
     parse.FIXTURES_DIR = str(raw_dir)
-    registries = json.load(open(EVAL / "worlds" / world / ("core/registries.json" if world == "A" else "registries.json")))
+    registries = json.load(open(EVAL / "worlds" / (M_DIR_NAME if world == "M" else world) / ("core/registries.json" if world == "A" else "registries.json")))
     box = {"seconds": 0.0, "tokens_in": 0, "tokens_out": 0, "model_id": None}
     change = parse.parse(item["request_text"], as_of=item["as_of"], registries=registries, live=True,
                          call=cli_call(model, box))
@@ -207,7 +210,10 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--raw-tag", required=True)
     parser.add_argument("--model", default="sonnet")
+    parser.add_argument("--m-dir", default="M", help="world-M directory under eval/worlds (M_scale for H3)")
     args = parser.parse_args()
+    global M_DIR_NAME
+    M_DIR_NAME = args.m_dir
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     commit = __import__("subprocess").run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True,

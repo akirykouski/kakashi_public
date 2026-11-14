@@ -11,6 +11,9 @@ SHA-256 of every gold and input file, committed **before** any reported run. A r
 | `eval/worlds/M/core/facts.jsonl` (core input, world M) | ded2c61f8a98d697487cfd28fe5d389503d67781cec62fedede8e7ed05052bb9 | 510 facts |
 | `eval/worlds/A/core/facts.jsonl` (core input, world A) | df2f313dbb3041c95f32b3d0c095e7be2ce758e4f63c88f7fc521ca5d7e903da | 179 facts |
 | `eval/tools/run_baselines.py` (prompt, catalogue, schema) | 3a8f80e1c5b4b3ea3137c017c8ae3bd576859ab77161db165277590b1f79b38f | — |
+| `eval/worlds/M_scale/corpus.jsonl` (H3, B input; added 2026-11-14 12:42 CET, before the H3 run) | efd9415734bce55559011f91e629d69eda928a2a37154886515ab4cd8e0ed5da | 406 sources |
+| `eval/worlds/M_scale/core/facts.jsonl` (H3, core input) | 34b983716053142e66a10fe141c555a1787da8432b0e5344d70997d2b4d20883 | 4718 facts |
+| `eval/tools/run_baselines.py` after adding `--m-dir` (prompt, catalogue and schema unchanged) | 827ba33ce0e8c99b20ce2f03b3577828a20910e8c33a6f331ac98b841471aee5 | — |
 | `eval/gold/holdout.jsonl` (Valentina, #20) | — | 10 (5 per world), not yet written |
 
 Hold-out: written by Valentina after this freeze, seen by neither core author. Stored outside this repo until scored; its hash is added here when it is handed over, and it is published only after the reported run.
