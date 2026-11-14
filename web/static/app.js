@@ -21,7 +21,25 @@ const VERDICT_TEXT = {
 };
 const SEVERITY_TEXT = { blocker: "Blocker", warning: "Warning", question: "Question", info: "Info" };
 
-const state = { labels: {}, people: {}, scenarios: [], lastRequest: null, lastResponse: null, table: null };
+const state = { labels: {}, people: {}, scenarios: [], lastRequest: null, lastResponse: null, table: null,
+                names: { parts: {}, people: {}, change_types: {} } };
+
+// Decision-table deciders (core/decision_table.yaml) -> the person who holds the role (data/registries.json).
+const DECIDER_PERSON = { "supplier quality engineer": "PER-GALLO", "plant quality manager": "PER-CONTI" };
+const VERDICT_ICON = { blockers_found: "stop", needs_info: "question", no_blockers_found: "check", not_covered: "person" };
+const SEVERITY_ICON = { blocker: "stop", warning: "alert", question: "question", info: "info" };
+const ICONS = {
+  stop: '<circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>',
+  alert: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+  question: '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.8 1c0 2-3 2.5-3 4.5M12 18h.01"/>',
+  info: '<circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/>',
+  check: '<circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/>',
+  person: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+  action: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  doc: '<path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/>',
+  chevron: '<path d="M9 6l6 6-6 6"/>',
+};
+
 
 // ---- helpers -------------------------------------------------------------------------------------------
 
@@ -42,6 +60,183 @@ function el(tag, attrs, children) {
 }
 
 function $(id) { return document.getElementById(id); }
+
+function icon(name, extraClass) {
+  const span = document.createElement("span");
+  span.className = `ico ico-${name}${extraClass ? " " + extraClass : ""}`;
+  span.setAttribute("aria-hidden", "true");
+  span.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ""}</svg>`;
+  return span;
+}
+
+// ---- human names (front end only: the core findings are never rewritten) -------------------------------
+
+function shortName(id) {
+  const full = label(id);
+  if (!full || full === id) return id || "";
+  return full.replace(/\s*\([^)]*\)\s*$/, "").replace(/\s+(S\.r\.l\.|S\.p\.A\.|AB|GmbH|Ltd\.?)$/, "").trim();
+}
+
+function changeTypeText(type) {
+  const text = (state.names.change_types || {})[type];
+  return text ? text.replace(/\s*\([^)]*\)\s*$/, "") : (type || "Change");
+}
+
+function idChip(id) {
+  return id ? el("span", { class: "id-chip", title: id }, id) : null;
+}
+
+// Name first, the id as a small secondary chip.
+function nameWithId(id) {
+  if (!id) return null;
+  const name = shortName(id);
+  return el("span", { class: "named" }, [el("span", { class: "name" }, name), name !== id ? idChip(id) : null]);
+}
+
+function partCustomer(part) {
+  const info = (state.names.parts || {})[part];
+  return info ? info.customer : null;
+}
+
+function humanize(text) {
+  // Display only: ids that have a registry name read as that name; part ids and document ids stay.
+  return String(text || "").replace(/\b([A-Z][A-Za-z]+Change)\b/g, function typeName(match) {
+    const plain = (state.names.change_types || {})[match];
+    return plain ? changeTypeText(match).toLowerCase() : match;
+  }).replace(/\b(SUP|PLT|CUST|PER|PRG)-[A-Z0-9]+\b/g, function idName(match) { return shortName(match); })
+    .replace(/ (S\.r\.l\.|S\.p\.A\.)/g, "");
+}
+
+function changeSentence(request) {
+  const part = request.part || "";
+  const partInfo = (state.names.parts || {})[part];
+  const partText = part ? `${part}${partInfo ? ` ${partInfo.name.split(",")[0].toLowerCase()}s` : ""}` : "the part";
+  const customer = partCustomer(part);
+  const forWhom = customer ? `, for ${shortName(customer)}` : "";
+  const site = request.site ? `, ${shortName(request.site)}` : "";
+  const from = request.from_supplier ? ` from ${shortName(request.from_supplier)}` : "";
+  switch (request.type) {
+    case "SourceChange":
+      return `Move ${partText}${from} to ${request.to_supplier ? shortName(request.to_supplier) : "a new supplier"}${site}${forWhom}`;
+    case "CoatingChange":
+      return `Switch ${partText} to ${request.new_coating ? shortName(request.new_coating).toLowerCase() : "a new coating"}${forWhom}`;
+    case "MaterialChange":
+      return `Make ${partText} in ${request.new_material ? shortName(request.new_material) : "a new material"}${forWhom}`;
+    case "LocationChange":
+      return `Move ${partText} production${request.site ? ` to ${shortName(request.site)}` : ""}${forWhom}`;
+    default:
+      return `${changeTypeText(request.type)}${part ? ` on ${partText}` : ""}${request.to_supplier ? ` at ${shortName(request.to_supplier)}` : ""}${forWhom}`;
+  }
+}
+
+function deciderTile(decider, request) {
+  const personId = DECIDER_PERSON[decider];
+  const person = personId ? state.people[personId] : null;
+  let main = decider;
+  let sub = "";
+  if (person) { main = person.name; sub = decider.replace(/^./, function cap(c) { return c.toUpperCase(); }); }
+  else if (decider === "customer") {
+    const customer = partCustomer(request.part);
+    main = customer ? shortName(customer) : "The customer";
+    sub = "Customer approval";
+  } else if (decider) { main = decider.replace(/^./, function cap(c) { return c.toUpperCase(); }); sub = "a person decides"; }
+  return el("div", { class: "tile tile-who" }, [
+    el("div", { class: "tile-label" }, [icon("person"), "Who decides"]),
+    el("div", { class: "tile-main" }, main || "A person"),
+    sub ? el("div", { class: "tile-sub" }, [sub, personId ? idChip(personId) : null]) : null,
+  ]);
+}
+
+function actionsTile(actions) {
+  const list = el("ul", { class: "tile-actions" });
+  for (const action of actions) list.append(el("li", {}, [icon("action"), action.replace(/^./, function cap(c) { return c.toUpperCase(); })]));
+  if (!actions.length) list.append(el("li", { class: "muted" }, "None declared: a person decides"));
+  return el("div", { class: "tile tile-actions-box" }, [el("div", { class: "tile-label" }, [icon("action"), "Allowed actions"]), list]);
+}
+
+// The decision sheet at the top of every card: the change in plain words, verdict, who decides, what is allowed.
+function renderHero(box, card, record, compact) {
+  const request = card.request || {};
+  const [big, sub] = VERDICT_TEXT[card.verdict] || [card.verdict, ""];
+  const row = card.decision || { allowed_actions: [], row_id: "?" };
+  box.className = `verdict hero ${card.verdict}`;
+  box.innerHTML = "";
+  const who = request.speaker ? (state.people[request.speaker] || {}).name || request.speaker : "";
+  const parts = [
+    el("div", { class: "hero-kicker" }, [
+      el("span", { class: "hero-type" }, changeTypeText(request.type)), idChip(request.type),
+      epistemicBadge(request.epistemic),
+      el("span", { class: "hero-asof" }, `as of ${request.as_of || TODAY}`),
+    ]),
+    el("div", { class: "hero-change" }, changeSentence(request)),
+    request.utterance && !compact ? el("div", { class: "hero-quote" }, `${who ? who + ": " : ""}“${request.utterance}”`) : null,
+    el("div", { class: "hero-verdict" }, [icon(VERDICT_ICON[card.verdict] || "info"), el("div", {}, [
+      el("div", { class: "big" }, big),
+      el("div", { class: "sub" }, sub),
+    ])]),
+    el("div", { class: "hero-tiles" }, [deciderTile(row.decider, request), actionsTile(row.allowed_actions || [])]),
+    el("div", { class: "hero-meta" }, [
+      el("span", {}, ["Table row ", el("b", {}, row.row_id)]),
+      record && record.rules_version ? el("span", { title: record.rules_version }, ["Rules version ", el("b", { class: "mono" }, shortHash(record.rules_version))]) : null,
+      record && record.record_id ? el("span", {}, ["Record ", el("b", { class: "mono" }, record.record_id)]) : null,
+      el("span", { class: "hero-never" }, "Never an approval: a person decides"),
+    ]),
+  ];
+  for (const part of parts) if (part) box.append(part);
+}
+
+function firstDocument(finding) {
+  const seen = [];
+  (function walk(steps) {
+    for (const step of steps || []) {
+      if (step.source && !String(step.source).startsWith("REG-")) seen.push(step.source);
+      walk(step.premises);
+    }
+  })(finding.evidence);
+  if (finding.consequence && finding.consequence.source) seen.unshift(finding.consequence.source);
+  return seen[0] || null;
+}
+
+// ---- tabs: workspace, documents, decision table, records -------------------------------------------------
+
+state.modalTab = "table";
+
+function syncTab() {
+  const modalOpen = $("modal") && !$("modal").hidden;
+  const docsOpen = $("documents-section") && !$("documents-section").hidden;
+  const tab = modalOpen ? state.modalTab : docsOpen ? "documents" : "workspace";
+  document.body.dataset.tab = tab;
+  for (const button of document.querySelectorAll("[data-tab-for]")) {
+    const on = button.dataset.tabFor === tab;
+    button.classList.toggle("active", on);
+    button.setAttribute("aria-selected", on ? "true" : "false");
+  }
+}
+
+function toWorkspace() {
+  closeModal();
+  if ($("documents-section")) $("documents-section").hidden = true;
+  syncTab();
+  window.scrollTo({ top: 0 });
+}
+
+function setProjector(on) {
+  if (on) document.documentElement.dataset.theme = "projector";
+  else delete document.documentElement.dataset.theme;
+  try { localStorage.setItem("kva-theme", on ? "projector" : "light"); } catch (error) { /* storage blocked: theme still switches */ }
+  const button = $("projector-toggle");
+  if (button) { button.classList.toggle("on", on); button.setAttribute("aria-pressed", on ? "true" : "false"); }
+}
+
+async function loadNames() {
+  try {
+    const data = await Fallback.api("/api/names");
+    state.names = { parts: data.parts || {}, people: data.people || {}, change_types: data.change_types || {} };
+    Object.assign(state.people, data.people || {});
+  } catch (error) {
+    // names are a convenience: ids stay readable without them
+  }
+}
 
 function label(id) {
   if (!id) return "";
@@ -145,6 +340,7 @@ async function checkRemark() {
 }
 
 async function runCheck(body, what) {
+  if (window.Meeting) Meeting.show("check");
   setBusy(true);
   setStatus(`${what}…`);
   try {
@@ -176,7 +372,7 @@ function renderCard(data) {
   if (window.Explain) Explain.setCard(card);  // explain.js: counterfactuals + explanation of this card
   $("result").hidden = false;
   renderParsed(card.request);
-  renderVerdict($("verdict"), card.verdict, true);
+  renderHero($("verdict"), card, data.record, false);
   renderFindings(card.findings, data.replaced || {});
   renderContested(card.contested || []);
   renderExtra(card);
@@ -194,17 +390,13 @@ function chip(name, value, title) {
 function renderParsed(request) {
   const box = $("parsed");
   box.innerHTML = "";
-  if (request.utterance) {
-    const who = request.speaker ? `${personText(request.speaker)}: ` : "";
-    box.append(el("div", { class: "who" }, `${who}“${request.utterance}”`));
-  }
-  box.append(el("span", { class: "chip" }, [el("b", { text: "change" }), request.type, epistemicBadge(request.epistemic)]));
-  if (request.part) box.append(chip("part", `${request.part}`, label(request.part)));
-  if (request.from_supplier) box.append(chip("from", label(request.from_supplier), request.from_supplier));
-  if (request.to_supplier) box.append(chip("to", label(request.to_supplier), request.to_supplier));
-  if (request.site) box.append(chip("site", label(request.site), request.site));
-  if (request.new_material) box.append(chip("material", label(request.new_material), request.new_material));
-  if (request.new_coating) box.append(chip("coating", label(request.new_coating), request.new_coating));
+  box.append(el("span", { class: "chip" }, [el("b", { text: "change" }), changeTypeText(request.type), idChip(request.type)]));
+  if (request.part) box.append(chip("part", nameWithId(request.part), label(request.part)));
+  if (request.from_supplier) box.append(chip("from", nameWithId(request.from_supplier), request.from_supplier));
+  if (request.to_supplier) box.append(chip("to", nameWithId(request.to_supplier), request.to_supplier));
+  if (request.site) box.append(chip("site", nameWithId(request.site), request.site));
+  if (request.new_material) box.append(chip("material", nameWithId(request.new_material), request.new_material));
+  if (request.new_coating) box.append(chip("coating", nameWithId(request.new_coating), request.new_coating));
   if (request.scope) box.append(chip("scope", request.scope));
   box.append(chip("as of", request.as_of || TODAY));
   if (request.parse_confidence !== undefined) box.append(chip("names resolved", `${Math.round(request.parse_confidence * 100)}%`));
@@ -259,27 +451,39 @@ function renderFinding(finding, replacedItems) {
     ]));
   }
   if (finding.note) meta.append(el("div", { class: "note" }, `Note: ${finding.note}`));
-  const node = el("div", { class: `finding ${finding.severity}` }, [
-    el("div", { class: "f-head" }, [
-      el("span", { class: `sev ${finding.severity}` }, SEVERITY_TEXT[finding.severity] || finding.severity),
-      el("span", { class: "rule-id" }, finding.rule),
-      el("span", { class: "f-title" }, finding.title),
-      epistemicBadge(finding.epistemic),
-    ]),
-    meta,
+  const doc = firstDocument(finding);
+  const head = el("div", { class: "f-head", role: "button", tabindex: "0", title: finding.title }, [
+    el("span", { class: `sev ${finding.severity}` }, [icon(SEVERITY_ICON[finding.severity] || "info"), el("span", { class: "sev-text" }, SEVERITY_TEXT[finding.severity] || finding.severity)]),
+    el("span", { class: "f-title" }, humanize(finding.title)),
+    doc ? el("span", { class: "doc-chip" }, [icon("doc"), doc]) : null,
+    el("span", { class: "rule-id" }, finding.rule),
+    epistemicBadge(finding.epistemic),
+    icon("chevron", "f-chev"),
   ]);
-  for (const item of replacedItems) node.append(renderReplaced(item));
-  for (const item of replacedItems) if (item.source === item.id) node.append(impactButton(item.id));
+  const bodyBox = el("div", { class: "f-body" }, [meta]);
+  const node = el("div", { class: `finding ${finding.severity}` }, [head, bodyBox]);
+  const toggleOpen = function toggleFinding(event) {
+    if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    const open = !node.classList.contains("open");
+    node.classList.toggle("open", open);
+    const proof = node.querySelector("details.proof");
+    if (proof) proof.open = open;
+  };
+  head.addEventListener("click", toggleOpen);
+  head.addEventListener("keydown", toggleOpen);
+  for (const item of replacedItems) bodyBox.append(renderReplaced(item));
+  for (const item of replacedItems) if (item.source === item.id) bodyBox.append(impactButton(item.id));
   if ((finding.evidence || []).length) {
     const details = el("details", { class: "proof" }, [
       el("summary", {}, `Proof chain (${countLeaves(finding.evidence)} quotes)`),
       renderSteps(finding.evidence),
     ]);
     if (finding.severity === "blocker") details.open = false;
-    node.append(details);
+    bodyBox.append(details);
   }
   const clear = window.Explain ? Explain.lineFor(finding) : null;  // "What would clear this" (explain.js)
-  if (clear) node.append(clear);
+  if (clear) bodyBox.append(clear);
   return node;
 }
 
@@ -455,7 +659,7 @@ function renderDecision(card, data) {
   if (!row.allowed_actions.length) actions.append(el("li", { class: "muted" }, "none declared: a person decides"));
   box.append(el("dl", { class: "kv" }, [
     el("dt", {}, "Allowed"), el("dd", {}, actions),
-    el("dt", {}, "Decides"), el("dd", {}, el("b", {}, row.decider)),
+    el("dt", {}, "Decides"), el("dd", {}, [el("b", {}, row.decider), DECIDER_PERSON[row.decider] && state.people[DECIDER_PERSON[row.decider]] ? ` · ${state.people[DECIDER_PERSON[row.decider]].name}` : ""]),
     el("dt", {}, "Rests on"), el("dd", {}, row.rests_on.length ? row.rests_on.join(", ") : "—"),
   ]));
   if ((data.drop_rows || []).length) box.append(el("div", { class: "note small" }, `Table edited in memory: ${data.table_note}`));
@@ -674,15 +878,19 @@ async function showImpact(doc) {
 
 // ---- table and records ---------------------------------------------------------------------------------
 
-function openModal(title, body) {
+function openModal(title, body, tab) {
+  state.modalTab = tab || "panel";
+  if ($("documents-section")) $("documents-section").hidden = true;
   $("modal-title").textContent = title;
   const box = $("modal-body");
   box.innerHTML = "";
   box.append(body);
   $("modal").hidden = false;
+  syncTab();
+  window.scrollTo({ top: 0 });
 }
 
-function closeModal() { $("modal").hidden = true; }
+function closeModal() { $("modal").hidden = true; syncTab(); }
 
 function conditionText(when) {
   const parts = [];
@@ -720,7 +928,7 @@ async function showTable(hitRow, dropRows) {
     }
     body.append(el("table", { class: "dt" }, [el("thead", {}, head), tbody]));
     const view = typeof DmnTab !== "undefined" ? DmnTab.wrap(body, hitRow, dropRows) : body;  // DMN tab (dmn.js)
-    openModal(hitRow ? `Decision table — row ${hitRow} matched` : "Decision table", view);
+    openModal(hitRow ? `Decision table — row ${hitRow} matched` : "Decision table", view, "table");
   } catch (error) {
     setStatus(`Could not load the table: ${error.message}`, true);
   }
@@ -736,7 +944,7 @@ async function showRecords() {
       tbody.append(el("tr", {}, [
         el("td", { class: "mono" }, record.record_id),
         el("td", {}, (record.created_at || "").replace("T", " ").replace("+00:00", "")),
-        el("td", {}, `${request.type || ""} ${request.part || ""}${request.to_supplier ? " → " + label(request.to_supplier) : ""}`),
+        el("td", {}, `${changeTypeText(request.type)} ${request.part || ""}${request.to_supplier ? " → " + shortName(request.to_supplier) : ""}`),
         el("td", {}, record.as_of),
         el("td", {}, (VERDICT_TEXT[record.verdict] || [record.verdict])[0]),
         el("td", {}, record.decision_row),
@@ -749,7 +957,7 @@ async function showRecords() {
       el("p", { class: "muted" }, "Append-only log (data/decisions.jsonl): every check writes one record with the hash of the rules that produced it."),
       el("table", { class: "dt records" }, [el("thead", {}, head), tbody]),
     ]);
-    openModal("Decision records", body);
+    openModal("Decision records", body, "records");
   } catch (error) {
     setStatus(`Could not load records: ${error.message}`, true);
   }
@@ -759,6 +967,15 @@ async function showRecords() {
 
 async function start() {
   $("check-btn").addEventListener("click", checkRemark);
+  $("tab-workspace").addEventListener("click", toWorkspace);
+  $("projector-toggle").addEventListener("click", function flipTheme() {
+    setProjector(document.documentElement.dataset.theme !== "projector");
+  });
+  setProjector(document.documentElement.dataset.theme === "projector");
+  for (const id of ["modal", "documents-section"]) {
+    new MutationObserver(syncTab).observe($(id), { attributes: true, attributeFilter: ["hidden"] });
+  }
+  syncTab();
   $("remark").addEventListener("keydown", function onKey(event) {
     if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) checkRemark();
   });
@@ -775,7 +992,8 @@ async function start() {
   try {
     const data = await api("/api/scenarios");
     state.scenarios = data.scenarios || [];
-    state.people = data.people || {};
+    state.people = { ...state.people, ...(data.people || {}) };
+    await loadNames();
     fillSpeakers();
     renderDemoButtons();
     const table = await api("/api/table");

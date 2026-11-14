@@ -379,12 +379,12 @@ const Docs = (function makeDocs() {
   }
 
   function toggle() {
+    // a full-width tab: always opens (the Workspace tab goes back)
     const section = $("documents-section");
-    section.hidden = !section.hidden;
-    if (!section.hidden) {
-      renderRecheck();
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    if (!$("modal").hidden) closeModal();
+    section.hidden = false;
+    renderRecheck();
+    window.scrollTo({ top: 0 });
   }
 
   async function init() {
