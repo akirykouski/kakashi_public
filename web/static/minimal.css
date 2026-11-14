@@ -199,7 +199,7 @@ table.dt tr.hit td { background: var(--grey-soft) !important; } table.dt tr.hit 
 .mt-line.processing { background: var(--grey-soft); border-left: 0; border-color: var(--line-soft); }
 .mt-line.flagged { background: var(--red-soft); border: 0; border-top: 1px solid var(--red-line); }
 .mt-line.flagged .mt-avatar { background: var(--red); }
-.mt-line.flagged .mt-why::before { content: "Change proposed \00b7  "; font-weight: 600; }
+.mt-line.flagged .mt-why::before { content: none; }
 .mt-line.unclassified { background: none; border-left: 0; }
 .mt-text { font-size: 1.05rem; }
 .mt-session { color: var(--muted); font-size: .75rem; }
@@ -325,3 +325,52 @@ body.view-meeting .foot { display: none !important; }
 .mt-btn.primary.on { background: var(--red); border-color: var(--red); }
 .mt-interim { list-style: none; color: var(--muted); font-style: italic; padding: 8px 0 8px 48px; }
 .mt-interim[hidden] { display: none; }
+
+/* ---- Meeting first: Try saying, step trail, Why ---- */
+.mt-view { max-width: 1440px; padding: 24px 24px 48px; }
+.mt-bar, .mt-transcript-wrap, .mt-cards-wrap { box-shadow: none; border-radius: 4px; }
+.mt-btn { border-radius: 4px; padding: 0 16px; min-height: 40px; font-size: .9rem; font-weight: 500; }
+.mt-btn.primary { min-height: 44px; padding: 0 24px; font-size: 1rem; font-weight: 600; }
+.mt-hint { margin: 8px 0 12px; font-size: .9rem; }
+.mt-hint[hidden] { display: none; }
+.mt-try-panel { margin-top: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 12px 16px; }
+.mt-try-hint { font-size: .8rem; text-transform: none; letter-spacing: 0; font-weight: 400; margin-left: 8px; }
+.mt-try-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px; }
+@media (max-width: 900px) { .mt-try-groups { grid-template-columns: 1fr; } }
+.mt-try-title { font-size: .85rem; margin: 4px 0 6px; }
+.mt-try { display: block; width: 100%; text-align: left; font: inherit; font-size: .9rem; color: var(--ink); background: #fff;
+  border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; margin-bottom: 4px; min-height: 34px; cursor: pointer; }
+.mt-try:hover { border-color: var(--ink); }
+.mt-line.flagged { background: #fff; border-color: var(--line); border-left: 4px solid var(--red); }
+.mt-line.flagged .mt-avatar { background: var(--slate-soft); color: var(--slate); border-color: var(--slate-line); }
+.mt-line.processing { background: #fff; border-color: var(--line); border-left-color: var(--ink); }
+.mt-line.processing .mt-why::before { content: none; }
+.mt-line.flagged .mt-why::before { content: none; }
+.mt-line .mt-why { margin-top: 6px; }
+.mt-trace { list-style: none; margin: 8px 0 0; padding: 0; font-size: .85rem; color: var(--ink-2); display: flex; flex-direction: column; gap: 3px; }
+.mt-trace li { display: flex; align-items: baseline; gap: 8px; }
+.mt-trace .mt-step-on { animation: mt-in .25s ease-out; }
+.mt-tick { color: var(--green); font-weight: 700; width: 12px; flex: none; }
+.mt-step-time { color: var(--muted); font-family: var(--mono); font-size: .8rem; }
+.mt-wait { color: var(--muted); padding-left: 20px; }
+.mt-result { font-weight: 600; color: var(--ink); }
+.mt-result.blockers_found { color: var(--red); }
+.mt-result .mt-tick { color: inherit; }
+.mt-progress { height: 2px; background: var(--line-soft); margin-top: 8px; overflow: hidden; position: relative; }
+.mt-progress i { position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: var(--ink); animation: mt-slide 1.1s ease-in-out infinite; }
+@keyframes mt-slide { from { left: -30%; } to { left: 100%; } }
+@keyframes mt-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.mt-card.fresh { box-shadow: none; border-color: var(--ink); animation: mt-in .4s ease-out; }
+.mt-card { box-shadow: none; }
+.mt-card .verdict { padding: 8px 0; }
+.mt-card .verdict .big { font-size: 1.5rem; }
+.mt-card:not(.why) .finding > :not(.f-head) { display: none; }
+.mt-card:not(.why) .finding { padding: 8px 0; }
+.mt-card.why .mt-findings .proof { display: block; }
+.mt-decision { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 10px 0 0; }
+.mt-row { background: var(--grey-soft); color: var(--ink); border-radius: 3px; }
+.mt-why-btn { display: inline-block; margin-top: 10px; font-size: .9rem; border: 1px solid var(--accent); border-radius: 4px; padding: 6px 14px; background: none; color: var(--accent); cursor: pointer; }
+.mt-whybox { display: none; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: .92rem; }
+.mt-card.why .mt-whybox { display: block; }
+.mt-whybox p { margin: 4px 0 12px; }
+.mt-transcript, .mt-cards { max-height: calc(100vh - 330px); }

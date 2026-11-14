@@ -350,6 +350,7 @@ def handle_meeting_line(body):
         raise ValueError("send {line, speaker?, as_of?}")
     as_of = body.get("as_of") or check.DEFAULT_AS_OF
     response = {"line": line, "speaker": body.get("speaker"), "as_of": as_of, "flagged": False, "classified": True}
+    clock = time.perf_counter()
     try:
         result = classify_line(line)
     except ParseFailed as failure:
@@ -359,8 +360,11 @@ def handle_meeting_line(body):
         return response
     response.update({"flagged": result["is_change_proposal"], "reason": result["reason"], "stage": result["stage"],
                      "mentions": result["mentions"]})
+    timing = {"classify": round((time.perf_counter() - clock) * 1000)}  # wall-clock ms for the page's step trail
+    response["timing_ms"] = timing
     if not response["flagged"]:
         return response
+    clock = time.perf_counter()
     try:
         request = parse_remark(line, as_of)
     except ParseFailed as failure:
@@ -372,6 +376,7 @@ def handle_meeting_line(body):
         response.update({"request": request, "labels": labels(),
                          "card_error": "flagged, but the parser found no change type or part: a person reads it"})
         return response
+    timing["parse"] = round((time.perf_counter() - clock) * 1000)
     response.update(run_check(request))
     return response
 

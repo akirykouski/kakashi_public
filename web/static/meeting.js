@@ -18,11 +18,14 @@ const Meeting = (function makeMeeting() {
   function mountTabs() {
     const nav = document.querySelector(".topnav");
     const tabs = el("div", { class: "mt-tabs", role: "tablist" }, [
-      el("button", { class: "mt-tab active", id: "tab-check", onclick: function toCheck() { show("check"); } }, "Check"),
       el("button", { class: "mt-tab", id: "tab-meeting", onclick: function toMeeting() { show("meeting"); } }, "Meeting"),
+      el("button", { class: "mt-tab", id: "tab-check", onclick: function toCheck() { show("check"); } }, "Check"),
     ]);
     nav.prepend(tabs);
-    if (new URLSearchParams(location.search).get("view") === "meeting") show("meeting");
+    // Documents lives inside the Check view: opening it from Meeting switches there first
+    const docs = q("open-documents");
+    if (docs) docs.addEventListener("click", function toDocs() { if (document.body.classList.contains("view-meeting")) show("check"); });
+    show(new URLSearchParams(location.search).get("view") === "check" ? "check" : "meeting");
   }
 
   function show(view) {
@@ -50,7 +53,7 @@ const Meeting = (function makeMeeting() {
         el("div", { class: "mt-controls" }, [
           el("button", { id: "mt-mic", class: "mt-btn primary", onclick: toggleMic, title: "Speak: each finished sentence is checked like a line of the meeting (Chrome speech recognition)" }, "Talk live"),
           el("span", { id: "mt-listening", class: "mt-listening", hidden: true }, "\u25CF Listening"),
-          el("button", { id: "mt-play", class: "mt-btn", onclick: togglePlay }, "▶ Play"),
+          el("button", { id: "mt-play", class: "mt-btn", onclick: togglePlay, title: "Replay the recorded change board meeting" }, "▶ Play recorded meeting"),
           el("button", { id: "mt-step", class: "mt-btn", onclick: stepOnce }, "Step"),
           el("button", { id: "mt-reset", class: "mt-btn", onclick: reset }, "Reset"),
           el("label", { class: "mt-speed" }, ["Speed ", speed]),
@@ -58,9 +61,11 @@ const Meeting = (function makeMeeting() {
         el("div", { id: "mt-counter", class: "mt-counter" }),
       ]),
       el("div", { id: "mt-status", class: "mt-status", hidden: true }),
+      tryPanel(),
       el("div", { class: "mt-grid" }, [
         el("div", { class: "mt-transcript-wrap" }, [
           el("div", { class: "label" }, "Transcript"),
+          el("p", { id: "mt-hint", class: "muted mt-hint" }, "Click Talk live and say a sentence, or click one of the sentences above."),
           el("ol", { id: "mt-transcript", class: "mt-transcript" }),
         ]),
         el("div", { class: "mt-cards-wrap" }, [
@@ -73,6 +78,47 @@ const Meeting = (function makeMeeting() {
     ]);
     document.querySelector("main").after(view);
     m.loading = loadDemo();
+  }
+
+  // ---- "Try saying": sentences for jurors, verified against the running server (docs/demo-live/try-saying.json) --
+
+  const TRY_SAYING = [
+    { title: "Nothing to check", note: "Plain meeting talk. The product ignores it.", items: [
+      { text: "Good morning, we have four items today.", speaker: "PER-CONTI" },
+      { text: "Beinasco ran at ninety-two percent last week.", speaker: "PER-CONTI" },
+      { text: "Let's take a five-minute break.", speaker: "PER-CONTI" },
+    ] },
+    { title: "A change worth checking", note: "Flagged, checked against plant documents, and a card appears.", items: [
+      { text: "Bormida is two weeks late, let's take the BR-220 blanks from Chisone.", speaker: "PER-FERRI" },
+      { text: "Let's switch the CL-115 coating to cheaper yellow chromate.", speaker: "PER-ROSSI" },
+      { text: "Move the BR-220 final inspection to the new CMM.", speaker: "PER-ROMANO" },
+    ] },
+  ];
+
+  function tryPanel() {
+    const groups = TRY_SAYING.map(function group(g) {
+      return el("div", { class: "mt-try-group" }, [
+        el("div", { class: "mt-try-title" }, [el("b", {}, g.title), el("span", { class: "muted" }, ` · ${g.note}`)]),
+        ...g.items.map(function item(entry) {
+          return el("button", { class: "mt-try", title: "Click to send if the mic is off",
+            onclick: function send() { sendTyped(entry); } }, `\u201C${entry.text}\u201D`);
+        }),
+      ]);
+    });
+    return el("div", { class: "mt-try-panel" }, [
+      el("div", { class: "label" }, [
+        "Try saying ", el("span", { class: "muted mt-try-hint" }, "click to send if the mic is off"),
+      ]),
+      el("div", { class: "mt-try-groups" }, groups),
+    ]);
+  }
+
+  async function sendTyped(entry) {
+    if (m.listening && m.recognizer) m.recognizer.stop();
+    pause();
+    if (m.next > 0) { reset(); m.spoken = 0; }
+    status("");
+    await addSpokenLine(entry.text, entry.speaker);
   }
 
   async function loadDemo() {
@@ -163,6 +209,7 @@ const Meeting = (function makeMeeting() {
     });
     q("mt-cards").innerHTML = "";
     q("mt-cards").append(el("p", { class: "muted mt-empty", id: "mt-empty" }, "No change proposed yet. Ordinary lines pass; a line that proposes a change lights up here."));
+    q("mt-hint").hidden = false;
     status("");
     renderCounter();
     renderSessions();
@@ -181,7 +228,7 @@ const Meeting = (function makeMeeting() {
   function togglePlay() { if (m.playing) pause(); else play(); }
 
   function play() {
-    if (m.next >= m.lines.length) reset();
+    if (m.next >= m.lines.length || m.spoken) { reset(); m.spoken = 0; }
     m.playing = true;
     q("mt-play").textContent = "❚❚ Pause";
     tick();
@@ -206,6 +253,7 @@ const Meeting = (function makeMeeting() {
     const index = m.next;
     m.next += 1;
     const node = q(`mt-line-${index}`);
+    q("mt-hint").hidden = true;
     node.hidden = false;
     renderSessions();
     return processLine(m.lines[index], node);
@@ -213,28 +261,80 @@ const Meeting = (function makeMeeting() {
 
   // ---- one line ---------------------------------------------------------------------------------------------
 
+  function pad(ms) { return new Promise(function wait(resolve) { setTimeout(resolve, ms); }); }
+  function seconds(ms) { return `${(ms / 1000).toFixed(1)} s`; }
+
+  function traceStep(text, detail) {
+    const li = el("li", { class: "mt-step-on" }, [el("span", { class: "mt-tick", "aria-hidden": "true" }, "\u2713"), el("span", {}, text)]);
+    if (detail) li.append(el("span", { class: "mt-step-time" }, ` (${detail})`));
+    return li;
+  }
+
+  function resultText(card) {
+    const who = card.decision && card.decision.decider ? capitalize(card.decision.decider) : "";
+    if (card.verdict === "not_covered") return "No rule covers this. A person decides.";
+    return verdictHeadline(card.verdict, card.findings, { decider: card.decision && card.decision.decider }) || who;
+  }
+
+  // The trail under a flagged line. Timings are the server's wall-clock for the model steps and the card's own
+  // timings_ms.total for the document check; an offline replay has no timings, so the step shows none.
+  async function drawTrace(node, data, trail, held) {
+    const timing = data.timing_ms || {};
+    const modelMs = (timing.classify || 0) + (timing.parse || 0);
+    const checkMs = data.card && data.card.timings_ms ? data.card.timings_ms.total : null;
+    held.remove();
+    trail.append(traceStep(data.stage === "model" ? "change detected" : "change detected by code", data.stage === "model" && timing.classify !== undefined ? (modelMs < 100 ? "model, cached answer" : `model, ${seconds(modelMs)}`) : data.stage === "model" ? "model" : ""));
+    await pad(280);
+    if (data.card) {
+      trail.append(traceStep("checked against plant documents", checkMs !== null ? `${checkMs < 10 ? checkMs.toFixed(1) : Math.round(checkMs)} ms` : ""));
+      await pad(280);
+      const final = traceStep(resultText(data.card), "");
+      final.classList.add("mt-result", data.card.verdict);
+      trail.append(final);
+    } else {
+      const final = traceStep(data.card_error || "Flagged, not checked", "");
+      final.classList.add("mt-result");
+      trail.append(final);
+    }
+    await pad(260);
+  }
+
   async function processLine(item, node) {
     m.busy = true;
     node.className = "mt-line processing";
     node.scrollIntoView({ behavior: "smooth", block: "nearest" });
     const why = node.querySelector(".mt-why");
-    why.textContent = "listening…";
+    why.textContent = "Checking against plant documents\u2026";
+    const bar = el("div", { class: "mt-progress", "aria-hidden": "true" }, el("i"));
+    why.after(bar);
+    const old = node.querySelector(".mt-trace");
+    if (old) old.remove();
+    const trail = el("ol", { class: "mt-trace", "aria-label": "What happened to this sentence" });
+    trail.append(traceStep("heard", ""));
+    bar.before(trail);
+    const held = el("li", { class: "mt-wait" }, "model reading the sentence\u2026");
+    trail.append(held);
     let data = null;
     try {
       data = await Fallback.api("/api/meeting/line", { line: item.text, speaker: item.speaker, as_of: item.as_of });
     } catch (error) {
+      bar.remove();
+      trail.remove();
       node.className = "mt-line unclassified";
       why.textContent = `not classified: ${error.message}`;
-      if (item.you) offerRecorded("Could not check what you said (network or model credits).");
+      if (item.you) offerRecorded(/offline/.test(error.message) ? "Live checking needs network (this sentence is not in the offline recording)." : "Could not check what you said (network or model credits).");
       m.busy = false;
       return false;
     }
+    bar.remove();
     m.processed += 1;
     if (data.labels) Object.assign(state.labels, data.labels);
     if (!data.classified) {
+      trail.remove();
       node.className = "mt-line unclassified";
       why.textContent = data.reason;
     } else if (!data.flagged) {
+      trail.remove();
       node.className = `mt-line passed ${data.stage === "model" ? "by-model" : "by-code"}`;
       why.textContent = data.stage === "model" ? `model: ${data.reason}` : `skipped by code: ${data.reason}`;
       await recheckOpenCards(item, data, node);
@@ -242,6 +342,7 @@ const Meeting = (function makeMeeting() {
       m.flagged += 1;
       node.className = "mt-line flagged";
       why.textContent = flaggedReason(data);
+      await drawTrace(node, data, trail, held);
       addCard(item, data, node);
     }
     renderCounter();
@@ -308,11 +409,29 @@ const Meeting = (function makeMeeting() {
     if (!findings.childElementCount) findings.append(el("p", { class: "muted" }, "No rule fired."));
     holder.append(findings);
     const row = card.decision;
+    const whyBox = el("div", { class: "mt-whybox" }, [
+      el("div", { class: "label" }, "Decision table row that fired"),
+      el("p", {}, [el("b", {}, `Row ${row.row_id}`), ` \u2014 ${(data.row_meaning || "").trim()}`]),
+      el("div", { class: "label" }, "Proof, step by step: each blocker below opens to its quote and chain"),
+    ]);
     holder.append(el("div", { class: "mt-decision" }, [
       el("span", { class: "mt-row" }, `Row ${row.row_id}`),
       el("span", {}, [el("span", { class: "muted" }, "Decides: "), el("b", {}, row.decider)]),
       row.allowed_actions.length ? el("span", { class: "muted" }, ` · ${row.allowed_actions.join("; ")}`) : null,
     ]));
+    holder.append(el("button", { class: "mt-why-btn link", "aria-expanded": String(Boolean(entry.whyOpen)),
+      onclick: function toggleWhy(event) { event.stopPropagation(); entry.whyOpen = !entry.whyOpen; applyWhy(entry); if (entry.whyOpen) holder.scrollIntoView({ behavior: "smooth", block: "start" }); } },
+      entry.whyOpen ? "Hide" : "Why?"));
+    holder.append(whyBox);
+    applyWhy(entry);
+  }
+
+  function applyWhy(entry) {
+    const holder = entry.holder;
+    holder.classList.toggle("why", Boolean(entry.whyOpen));
+    const button = holder.querySelector(".mt-why-btn");
+    if (button) { button.textContent = entry.whyOpen ? "Hide" : "Why?"; button.setAttribute("aria-expanded", String(Boolean(entry.whyOpen))); }
+    for (const proof of holder.querySelectorAll("details.proof")) proof.open = Boolean(entry.whyOpen);
   }
 
   function cardEntities(request) {
@@ -427,9 +546,11 @@ const Meeting = (function makeMeeting() {
     try { recognizer.start(); } catch (error) { stopListening(); offerRecorded("Could not start the microphone."); }
   }
 
-  async function addSpokenLine(text) {
+  async function addSpokenLine(text, speaker) {
     while (m.busy) await new Promise(function wait(resolve) { setTimeout(resolve, 150); });
-    const item = { speaker: state.people["PER-FERRI"] ? "PER-FERRI" : undefined, you: true, text: text, as_of: TODAY };
+    q("mt-hint").hidden = true;
+    const who = speaker || "PER-FERRI";
+    const item = { speaker: state.people[who] ? who : undefined, you: true, text: text, as_of: TODAY };
     m.spoken += 1;
     const node = lineNode(item, `mic-${m.spoken}`);
     const interim = q("mt-interim");
@@ -443,5 +564,8 @@ const Meeting = (function makeMeeting() {
   function position() { return m.next; }
 
   document.addEventListener("DOMContentLoaded", function init() { mountTabs(); });
-  return { show: show, ready: ready, reset: reset, step: stepOnce, position: position };
+  return { show: show, ready: ready, say: sendTyped, toggleWhy: function toggleLastWhy() {
+    const entry = m.cards[m.cards.length - 1];
+    if (entry) { entry.whyOpen = !entry.whyOpen; applyWhy(entry); }
+  }, reset: reset, step: stepOnce, position: position };
 })();
