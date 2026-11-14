@@ -18,6 +18,10 @@ that touches `data/`, `core/` or `data/scenarios.json`; the label on the page sh
 
 Open http://localhost:8000 at 1440×900, click every demo button once (warms the cache), then reload.
 
+Presenter mode: http://localhost:8000/?demo=1 (→ / Space next, ← back, Esc exit); steps and lines in
+`docs/demo-script.md`. Start the server with `REMARKS_PER_IP_PER_10_MIN=1000` so that rehearsals do not hit the
+per-IP cap. If they do hit it, the page falls back to offline replay on its own.
+
 ## Offline replay
 
 The page answers from the snapshot when:

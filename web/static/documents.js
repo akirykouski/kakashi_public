@@ -405,7 +405,13 @@ const Docs = (function makeDocs() {
     renderRecheck();
   }
 
-  return { init: init, state: docState };
+  // Public hooks for the presenter mode (demo.js): the same actions as the buttons, awaitable.
+  function loadDemo(id) {
+    const item = docState.demo.find(function isIt(entry) { return entry.id === id; });
+    return upload({ demo: id }, item || null);
+  }
+  return { init: init, state: docState, reset: resetDemo, loadDemo: loadDemo, review: review, reviewMany: reviewMany,
+           recheck: recheck };
 })();
 
 window.addEventListener("DOMContentLoaded", function startDocs() { Docs.init(); });
