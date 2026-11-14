@@ -291,7 +291,8 @@ def test_covered(log):
     assert covered(SCENARIOS["main"]["change"], projection)
     assert covered(SCENARIOS["elv"]["change"], projection)
     assert covered(SCENARIOS["subtier"]["change"], projection)
-    assert not covered(SCENARIOS["silence"]["change"], projection)
+    assert covered(SCENARIOS["silence"]["change"], projection)  # QP-15 4.1
+    assert not covered({"type": "EquipmentChange", "part": "BR-220"}, projection)
     assert not covered({"type": "PriceChange", "part": "BR-220"}, projection)
 
 

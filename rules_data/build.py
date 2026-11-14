@@ -75,7 +75,7 @@ def facts():
                 "POL-QP11-4.3": ("QP-11", QP11_43), "POL-QP11-4.4": ("QP-11", QP11_44),
                 "POL-QP14-4.2": ("QP-14", QP14_42), "POL-QP14-4.3": ("QP-14", QP14_43),
                 "POL-QP14-4.4": ("QP-14", QP14_44)}
-    for number in ("1.1", "1.2", "2.1", "2.2", "3.1", "3.5"):
+    for number in ("1.1", "1.2", "2.1", "2.2", "3.1", "3.5", "4.1"):
         policies[f"POL-QP15-{number}"] = ("QP-15", qp15(number))
     for policy, (source, quote) in policies.items():
         add(policy, "type", "Policy", source, quote)
@@ -89,6 +89,8 @@ def facts():
     # Which change classes need a material certificate (keyed on change class, not on "new supplier").
     add("POL-QP11-4.4", "requiresCertificateFor", "SourceChange", "QP-11", QP11_44)
     add("POL-QP15-3.1", "requiresCertificateFor", "MaterialChange", "QP-15", qp15("3.1"))
+    # Change classes the procedure examines even when no customer requirement names them (rules.covered()).
+    add("POL-QP15-4.1", "checksChangeType", "ScheduleChange", "QP-15", qp15("4.1"))
 
     # Open-8D policy level: alloy | series | series+feature (exact alloy always counts, QP-15 1.2).
     add("POL-QP15-1.1", "policyValue", "series+feature", "QP-15", qp15("1.1"), literal=True)

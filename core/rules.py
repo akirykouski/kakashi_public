@@ -540,6 +540,12 @@ def certificate_policies(projection, change_type):
                   if change_type in projection.objects(policy_id, "requiresCertificateFor"))
 
 
+def checking_policies(projection, change_type):
+    """Policies in force that state this change class is examined (QP-15 4.1: delivery date or quantity)."""
+    return sorted(policy_id for policy_id in projection.instances("Policy")
+                  if change_type in projection.objects(policy_id, "checksChangeType"))
+
+
 def rule_missing_certificate(projection, change):
     """A change whose class needs a certificate (policy facts), from the supplier who will deliver the material
     (the new source, else the current approved sources of the part), for the material it will deliver (the new
@@ -724,6 +730,8 @@ def covered(change, projection=None):
     if change_type == "SourceChange" and change.get("to_supplier"):
         return True
     if certificate_policies(projection, change_type):
+        return True
+    if checking_policies(projection, change_type):
         return True
     if change_type == "CoatingChange" and change.get("new_coating"):
         return True

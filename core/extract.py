@@ -90,6 +90,25 @@ CHANGE_TYPE_LABELS = {
 }
 assert set(CHANGE_TYPE_LABELS) == set(CHANGE_TYPES)
 
+# Extraction vocabulary, as measured by Arseniy on 14 Nov (research/prototypes, docs/FIXES.md fix 2): offering
+# all 17 types gave the first wrong fact on real documents, and the notice / lead-time predicates dropped
+# synthetic precision to 0.84. Default: the 11 types of vocabulary levels 1-2, no notice predicates. The rules
+# and the parser still know all 17 types. Override with KVA_EXTRACT_VOCAB=17 / KVA_EXTRACT_NOTICE=1.
+VOCAB_11 = ("SourceChange", "MaterialChange", "ProcessChange", "CoatingChange", "ScheduleChange",
+            "PackagingChange", "LocationChange", "ToolingChange", "DesignChange", "SubTierSupplierChange",
+            "TestMethodChange")
+NOTICE_PREDICATES = {"requiresNoticeFor", "leadTimeDays"}
+
+
+def extract_change_types():
+    if os.environ.get("KVA_EXTRACT_VOCAB", "11") == "17":
+        return tuple(CHANGE_TYPES)
+    return VOCAB_11
+
+
+def notice_enabled():
+    return os.environ.get("KVA_EXTRACT_NOTICE", "0") == "1"
+
 # Document type -> rank of its facts (docs/architecture.md: 1 law/customer, 2 controlled record, 3 informal).
 RANK_1_TYPES = {"law", "customer_requirement", "contract", "standard"}
 RANK_3_TYPES = {"email", "meeting", "meeting_note", "chat", "note", "call"}
@@ -160,6 +179,8 @@ def ontology_predicates(path=ONTOLOGY_PATH):
 
 def allowed_predicates():
     predicates = set(DOCUMENT_PREDICATES)
+    if not notice_enabled():
+        predicates -= NOTICE_PREDICATES
     in_ontology = ontology_predicates()
     if in_ontology is not None:
         predicates &= in_ontology | LITERAL_PREDICATES
@@ -173,7 +194,7 @@ def known_ids(registries, document_ids):
             continue
         for row in registry.get("rows", []):
             ids.add(row[0])
-    return ids | set(CHANGE_TYPES) | set(SUBSTANCES)
+    return ids | set(extract_change_types()) | set(SUBSTANCES)
 
 
 def glossary(registries):
@@ -185,11 +206,13 @@ def glossary(registries):
     lines.append("Use ALY-* for an alloy named without temper (e.g. EN AW-6082), MAT-* for a named temper.")
     lines.append("substances: " + "; ".join(f"{key} = {value}" for key, value in SUBSTANCES.items()))
     lines.append("change types (use the most specific one that fits):")
-    for name, label in CHANGE_TYPE_LABELS.items():
-        lines.append(f"  {name} = {label}")
+    for name in extract_change_types():
+        lines.append(f"  {name} = {CHANGE_TYPE_LABELS[name]}")
     lines.append("predicates:")
+    allowed = allowed_predicates()
     for predicate, meaning in DOCUMENT_PREDICATES.items():
-        lines.append(f"  {predicate}: {meaning}")
+        if predicate in allowed:
+            lines.append(f"  {predicate}: {meaning}")
     return "\n".join(lines)
 
 
