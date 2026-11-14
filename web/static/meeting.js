@@ -73,7 +73,7 @@ const Meeting = (function makeMeeting() {
     document.querySelector("main").after(view);
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!Recognition) mic.hidden = true;
-    loadDemo();
+    m.loading = loadDemo();
   }
 
   async function loadDemo() {
@@ -383,6 +383,10 @@ const Meeting = (function makeMeeting() {
     await processLine(item, node);
   }
 
+  // Public hooks for the presenter mode (demo.js): build + wait for the transcript, reset, step one line.
+  function ready() { if (!m.built) build(); return m.loading; }
+  function position() { return m.next; }
+
   document.addEventListener("DOMContentLoaded", mountTabs);
-  return { show: show };
+  return { show: show, ready: ready, reset: reset, step: stepOnce, position: position };
 })();
