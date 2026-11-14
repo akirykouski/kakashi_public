@@ -1,0 +1,82 @@
+{
+ "note": "CSR-AUR-R5 part 1/1",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "facts": [
+   {
+    "s": "CSR-AUR-R5",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SourceChange",
+    "quote": "a change of source",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter any of: a change of source, a change of material, or a change of manufacturing process."
+   },
+   {
+    "s": "CSR-AUR-R5",
+    "p": "requiresCustomerApprovalFor",
+    "o": "MaterialChange",
+    "quote": "a change of material",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter any of: a change of source, a change of material, or a change of manufacturing process."
+   },
+   {
+    "s": "CSR-AUR-R5",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ProcessChange",
+    "quote": "a change of manufacturing process",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts\nafter any of: a change of source, a change of material, or a change of manufacturing process."
+   },
+   {
+    "s": "CSR-AUR-R5",
+    "p": "requiresNotificationFor",
+    "o": "CoatingChange",
+    "quote": "A change of coating or surface treatment requires notification to Aurelia only",
+    "context_quote": null
+   }
+  ],
+  "unclassified": [
+   {
+    "quote": "The notification shall reach Aurelia at least 60 days before implementation.",
+    "summary": "A coating change notification must reach Aurelia at least 60 days before the change is implemented."
+   },
+   {
+    "quote": "Approval is granted per part number and per manufacturing site.",
+    "summary": "Customer approvals are scoped per part number and per manufacturing site."
+   },
+   {
+    "quote": "An approval for one part does not extend to another part, even if made of the same material.",
+    "summary": "An approval given for one part does not cover any other part, even one made of the same material."
+   }
+  ]
+ },
+ "usage": {
+  "completion_tokens": 1957,
+  "prompt_tokens": 2854,
+  "total_tokens": 4811,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1327,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0012639,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0012639,
+  "gateway_cost": 0.0012639
+ }
+}

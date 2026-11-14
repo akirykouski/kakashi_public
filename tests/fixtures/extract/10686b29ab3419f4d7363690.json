@@ -1,0 +1,81 @@
+{
+ "note": "DEV-AUR-26-044 part 1/1",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "facts": [
+   {
+    "s": "DEV-AUR-26-044",
+    "p": "permitsChangeType",
+    "o": "SourceChange",
+    "quote": "This deviation permits the change of source only.",
+    "context_quote": null
+   },
+   {
+    "s": "DEV-AUR-26-044",
+    "p": "status",
+    "o": "valid",
+    "quote": "The deviation is valid from today.",
+    "context_quote": null
+   },
+   {
+    "s": "DEV-AUR-26-044",
+    "p": "concernsPart",
+    "o": "BR-220",
+    "quote": "You may ship BR-220 brackets made from blanks supplied by Meccanica Chisone (SUP-C) to Aurelia",
+    "context_quote": null
+   },
+   {
+    "s": "DEV-AUR-26-044",
+    "p": "concernsSupplier",
+    "o": "SUP-C",
+    "quote": "You may ship BR-220 brackets made from blanks supplied by Meccanica Chisone (SUP-C) to Aurelia",
+    "context_quote": null
+   },
+   {
+    "s": "SUP-C",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SourceChange",
+    "quote": "A full PPAP resubmission is still required before Chisone becomes a permanent source.",
+    "context_quote": null
+   }
+  ],
+  "unclassified": [
+   {
+    "quote": "Every part of the 2 lots needs 100% inspection of the yield strength",
+    "summary": "Supplier must perform 100% inspection of the yield strength certificate for every part in the two deviation lots."
+   }
+  ]
+ },
+ "usage": {
+  "completion_tokens": 2455,
+  "prompt_tokens": 3033,
+  "total_tokens": 5488,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1999,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0015308,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0015308,
+  "gateway_cost": 0.0015308
+ }
+}

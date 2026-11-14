@@ -1,0 +1,41 @@
+/* Bring your documents (ws/ingest). */
+.documents-section { margin: 1.2rem 0; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.docs-head-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.docs-head-row h2 { margin-top: 0; }
+.docs-inputs { display: grid; gap: 10px; margin: 10px 0; }
+.docs-own { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.docs-own textarea { flex: 1 1 100%; min-height: 3.5em; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; }
+.docs-own input:not([type=file]), .docs-own select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; }
+#docs-url { flex: 1 1 260px; }
+.demo-btn.live-only { border-style: dashed; }
+.doc-head { margin: 14px 0 8px; }
+.doc-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .doc-grid { grid-template-columns: 1fr; } }
+.doc-text { white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: .9rem; line-height: 1.55;
+  background: #fafbfd; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 0; max-height: 70vh; overflow: auto; }
+.doc-text mark.q { background: #ffe58a; border-radius: 2px; cursor: help; }
+.doc-text mark.ctx { background: #fff6cf; }
+.doc-text mark.flash { outline: 2px solid var(--accent); background: #ffd34d; }
+.doc-review h3 { margin: 4px 0 6px; font-size: 1rem; }
+.doc-prop { border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; cursor: pointer; background: var(--surface); }
+.doc-prop.st-accepted { border-left-color: var(--green); background: var(--green-soft); }
+.doc-prop.st-rejected, .doc-prop.st-dismissed { border-left-color: var(--grey); opacity: .6; }
+.doc-prop.st-contested { border-left-color: var(--amber); background: var(--amber-soft); }
+.doc-prop.st-not.checked, .doc-prop[class*="st-not"] { border-left-color: var(--grey); }
+.doc-prop-head { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.doc-plain { font-weight: 600; }
+.doc-rank { font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+.doc-actions { display: flex; gap: 6px; margin-top: 6px; align-items: center; }
+.small-btn { padding: 3px 12px; font-size: .85rem; }
+.doc-status { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.doc-status.st-accepted { color: var(--green); }
+.doc-status.st-contested { color: var(--amber); }
+.doc-status.st-rejected { color: var(--grey); }
+.notchecked-tag { color: var(--grey); text-transform: none; font-weight: 600; }
+.docs-recheck { margin-top: 14px; }
+.diff-list { list-style: none; padding: 0; margin: 6px 0; }
+.diff-list li { margin: 4px 0; }
+.diff-list li.diff-gone { text-decoration: line-through; color: var(--muted); }
+.diff-list li.diff-new { font-weight: 600; }
+.documents-section button:not(.link):not(.primary):not(.demo-btn) { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 5px 14px; cursor: pointer; }
+.documents-section button.primary.small-btn { padding: 3px 14px; }
