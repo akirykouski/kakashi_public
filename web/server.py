@@ -376,6 +376,19 @@ def handle_table_dmn(query):
     return dmn.export(table, rules_version_value=rules_version_for(table_text))
 
 
+def handle_names():
+    """Plain names for the page (read-only): short labels, part -> program -> customer, change-type labels."""
+    from core.extract import CHANGE_TYPE_LABELS
+    with open(ROOT / "data" / "registries.json", encoding="utf-8") as handle:
+        registries = json.load(handle)
+    programs = {row[0]: {"name": row[1], "customer": row[2]} for row in registries["programs"]["rows"]}
+    parts = {}
+    for row in registries["parts"]["rows"]:
+        program = programs.get(row[2], {})
+        parts[row[0]] = {"name": row[1], "program": row[2], "customer": program.get("customer")}
+    return {"parts": parts, "people": people(), "change_types": CHANGE_TYPE_LABELS}
+
+
 def handle_scenarios():
     with open(ROOT / "data" / "scenarios.json", encoding="utf-8") as handle:
         return {"scenarios": json.load(handle), "people": people()}
@@ -520,6 +533,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_static(url.path[len("/static/"):])
             elif url.path == "/api/scenarios":
                 self.send_json(handle_scenarios())
+            elif url.path == "/api/names":
+                self.send_json(handle_names())
             elif url.path == "/api/table.dmn" or (url.path == "/api/table" and query.get("format") == ["dmn"]):
                 with LOCK:
                     self.send_dmn(handle_table_dmn(query), download=url.path.endswith(".dmn"))

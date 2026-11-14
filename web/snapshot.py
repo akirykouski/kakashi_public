@@ -121,6 +121,7 @@ def request_of(card_request):
 
 def record_all(recorder, records_limit=40):
     scenarios = recorder.get("/api/scenarios")["scenarios"]
+    recorder.get("/api/names")
     table = recorder.get("/api/table")["table"]
     droppable = [row["id"] for row in table["rows"] if row["id"] != "R0"]
     ids = {item["id"] for item in scenarios}

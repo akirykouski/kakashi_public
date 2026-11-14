@@ -15,7 +15,12 @@ import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GATEWAY_URL = "https://ai-gateway.vercel.sh/v1"
+GATEWAY_URL = os.environ.get("LLM_BASE_URL", "https://ai-gateway.vercel.sh/v1")
+# Data privacy: point LLM_BASE_URL at any OpenAI-compatible endpoint inside the customer's network (e.g. a local
+# open-weight model served by Ollama or vLLM: http://localhost:11434/v1) and set LLM_MODEL to its model id. Only
+# parsing and extraction call a model; every quote is still checked against the document by code, so a weaker
+# local model yields fewer accepted facts, never unverified ones.
+LOCAL_MODEL = os.environ.get("LLM_MODEL")
 KEY_NAME = "AI_GATEWAY_API_KEY"
 
 
@@ -41,9 +46,9 @@ def fixture_key(model, system, prompt, schema):
 def gateway_call(model, system, prompt, schema, max_tokens=1200, schema_name="output"):
     """One structured-output call through the gateway. Returns (parsed dict, usage dict)."""
     from openai import OpenAI
-    client = OpenAI(base_url=GATEWAY_URL, api_key=os.environ[KEY_NAME])
+    client = OpenAI(base_url=GATEWAY_URL, api_key=os.environ.get(KEY_NAME) or "local")
     response = client.chat.completions.create(
-        model=model, temperature=0, max_tokens=max_tokens,
+        model=LOCAL_MODEL or model, temperature=0, max_tokens=max_tokens,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": prompt}],
         response_format={"type": "json_schema",
                          "json_schema": {"name": schema_name, "schema": schema, "strict": True}},
