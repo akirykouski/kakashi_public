@@ -31,6 +31,18 @@ Register `kakashi_public` with `set_team_repo` before 16:45.
 | Uncovered cases go to a person | ½ |
 | The decision model is declared explicitly | ½ |
 
+## Additions from KVA's research (`research/kva-oida-hooks.md`)
+
+| Addition | Where it goes |
+|---|---|
+| Formal coverage check of the decision table (DMN, Calvanese et al. 2016): enumerate every blocker set, list uncovered sets (→ R0, a person decides) and overlaps | Part of #3 and #4. Card line: "table checked: N input sets, M go to a person" |
+| OIDA epistemic type on every class, shown as a badge | New issue, below the cut line |
+| Question urgency with OIDA's formula + BLOCKS edges | New issue, below the cut line |
+| Contradictions stored as contested, shown side by side, not only refused | New issue, below the cut line |
+| "A document changed: what is affected" report over the supersession chain | New issue, below the cut line |
+
+Gate 1 weights for our track (from the jury interface): Fit 25, Explainability 25, Right-to-win 20, Willingness to invest 15, Sentiment 15. The video must carry an **AAC audio track** (silent is fine); a video built with `-an` has none.
+
 ## Schedule
 
 | Time | Maksim (core) | Arseniy | Valentina |
