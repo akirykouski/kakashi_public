@@ -356,12 +356,15 @@ class Memory:
         """Two current records of the same rank give two values for one single-valued key."""
         functional = functional_predicates()
         replaced = set(self.now["replaced"])
+        already = {tuple(item["key"]) for item in self.projection.contested}   # R7 questions already (#28)
+        owner_fact = (self.projection.facts_for("Q-contradiction", "questionOwner") or [None])[0]  # QP-15 5.1
         groups = {}
         for fact in self.known:
             if fact["p"] not in functional or not valid_on(fact, self.as_of) or fact["s"] in replaced \
                     or fact["source"] in replaced:
                 continue
-            groups.setdefault((fact["s"], fact["p"]), []).append(fact)
+            if (fact["s"], fact["p"]) not in already:
+                groups.setdefault((fact["s"], fact["p"]), []).append(fact)
         out = []
         for (subject, predicate), facts in sorted(groups.items()):
             by_rank = {}
@@ -371,15 +374,15 @@ class Memory:
                 if rank > 2 or len({fact["o"] for fact in tier}) < 2 or len({fact["source"] for fact in tier}) < 2:
                     continue
                 tier = sorted(tier, key=lambda fact: (fact.get("valid_from") or "", fact["id"]))
-                newest = tier[-1]
                 in_force = self.projection.value(subject, predicate)
                 sides = ", ".join(f"{self.literal(fact)} ({fact['source']})" for fact in tier)
                 out.append(self.item(
                     "contradiction", f"{subject}/{predicate}", "question",
                     f"{subject} {predicate}: {sides}; same rank, both current. In force now: "
-                    f"{in_force if in_force is not None else 'none'}. Which is right?",
-                    [evidence_of(fact) for fact in tier], [subject, *self.parts_of(subject)],
-                    newest.get("author"), values=[self.literal(fact) for fact in tier], epistemic="QUESTION"))
+                    f"{in_force if in_force is not None else 'none'} (stays until a person decides). Which is right?",
+                    [evidence_of(fact) for fact in tier] + ([evidence_of(owner_fact)] if owner_fact else []),
+                    [subject, *self.parts_of(subject)], owner_fact["o"] if owner_fact else None,
+                    values=[self.literal(fact) for fact in tier], in_force=in_force, epistemic="QUESTION"))
                 break
         return out
 
@@ -392,3 +395,23 @@ def annotate(projection, request, findings):
     """Card keys {past_decisions, maintenance} for one check."""
     memory = Memory(projection)
     return {"past_decisions": memory.past_decisions(request), "maintenance": memory.maintenance(request, findings)}
+
+
+# ---- generic readers (core/impact.py reads these: no-arg functions that list records) ------------------------
+
+def _today_memory(as_of=None, known_at=None):
+    from core import check  # lazy: core.check imports this module
+    from core.project import Projection
+    return Memory(Projection(check.memory(), as_of or check.DEFAULT_AS_OF, known_at=known_at))
+
+
+def past_decision_records(as_of=None, known_at=None):
+    """Every decision in force at as_of (default: today), each reason re-checked: for the impact report."""
+    memory = _today_memory(as_of, known_at)
+    return [memory.decision(decision_id) for decision_id in memory.projection.instances("Decision")
+            if (memory.decision_date(decision_id) or "9999") <= memory.as_of]
+
+
+def maintenance_items(as_of=None, known_at=None):
+    """The whole maintenance strip at as_of (default: today), not scoped to a change request."""
+    return _today_memory(as_of, known_at).maintenance({}, [])

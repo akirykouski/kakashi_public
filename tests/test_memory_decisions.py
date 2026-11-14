@@ -11,10 +11,11 @@ from core import check
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORPUS = {}
-with open(os.path.join(ROOT, "data", "corpus.jsonl")) as _file:
-    for _line in _file:
-        _item = json.loads(_line)
-        CORPUS[_item["id"]] = _item["text"]
+for _path in (os.path.join(ROOT, "data", "corpus.jsonl"), os.path.join(ROOT, "rules_data", "corpus.jsonl")):
+    with open(_path) as _file:
+        for _line in _file:
+            _item = json.loads(_line)
+            CORPUS[_item["id"]] = _item["text"]
 with open(os.path.join(ROOT, "data", "scenarios.json")) as _file:
     SCENARIO_IDS = [item["id"] for item in json.load(_file)]
 
@@ -170,8 +171,12 @@ def test_contradiction_side_by_side():
     assert len(found) == 1
     item = found[0]
     assert item["record"] == "SC-BR220-YS/minYieldMPa" and sorted(item["values"]) == ["240", "250"]
-    assert {step["source"] for step in item["evidence"]} == {"REG-SPECIAL_CHARACTERISTICS", "FMEA-BR220-B"}
-    assert item["owner"] == "PER-ROMANO" and item["related"]
+    assert {step["source"] for step in item["evidence"]} == {"REG-SPECIAL_CHARACTERISTICS", "FMEA-BR220-B", "QP-15"}
+    assert item["owner"] == "PER-GALLO" and item["related"]       # QP-15 5.1: the SQE decides which holds
+    assert item["in_force"] == "250"                             # the record in force stays in force (QP-15 5.1)
+    assert not card["contested"]                                 # a mention, not a same-date assert: no R7 pair
+    r6 = [finding for finding in card["findings"] if finding["rule"] == "R6"]
+    assert r6 and r6[0]["severity"] == "blocker"
     assert card["maintenance"][0]["kind"] == "contradiction"   # related to BR-220: first on the strip
 
 
