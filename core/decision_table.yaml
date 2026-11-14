@@ -1,0 +1,134 @@
+# The decision model of the product, declared as data.
+#
+# Input:  the change class of the request (one of CHANGE_TYPES in core/contracts.py) and the set of rule ids
+#         that fired at severity blocker, warning or question. Info findings (R4 "a record was replaced",
+#         R2 "notify the customer" / "a deviation covers this") are shown on the card but do not enter the
+#         table.
+# Output: the row id, the allowed actions, the role who decides, and what the row rests on.
+#
+# Hit policy: FIRST. Rows are read top to bottom; the first row whose condition holds is the answer.
+# Rows that would also match are listed by the coverage check (python -m core.decision), so the order is a
+# visible choice, not a hidden one. The last row R0 has no condition: "no rule covers this, a person decides".
+#
+# Condition keys (all optional, all must hold):
+#   classes: list of change classes, or a class group name below, or "any"
+#   all:     every listed rule id fired
+#   any:     at least one listed rule id fired
+#   none:    none of the listed rule ids fired
+#
+# Written 14 Nov 2026 after 10:30 (workstream D). Change a row here and the rules_version of every new
+# decision record changes with it.
+
+hit_policy: first
+version_note: "v1, 14 Nov 2026"
+
+# Rule ids the table reads. The coverage check enumerates every subset of these.
+rules: [R1a, R1b, R2, R3, R4, R5, R6, R7, R8]
+
+# Change classes that the checks in core/rules.py actually examine. Any other class goes to R0.
+class_groups:
+  checked: [SourceChange, MaterialChange, ProcessChange, CoatingChange, SubTierSupplierChange]
+  source: [SourceChange, SubTierSupplierChange]
+
+# Rule ids that mean "do not ship as proposed" when they fire.
+rule_groups:
+  blocking: [R1a, R1b, R2, R5, R6, R8]
+
+actions:
+  - stop
+  - expedite current approved source
+  - request customer deviation / PPAP resubmission
+  - re-audit supplier
+  - run internal part approval
+  - obtain material certificate
+  - proceed under standard change control
+
+deciders:
+  - plant quality manager
+  - supplier quality engineer
+  - customer
+
+rows:
+  - id: D1
+    meaning: "The new coating or material contains a substance the law restricts in the part's market. No deviation can lift a legal ban."
+    when: {classes: checked, all: [R5]}
+    actions: [stop]
+    decider: plant quality manager
+    rests_on: [R5, "Directive 2000/53/EC Annex II", "Regulation (EU) 2026/1738"]
+
+  - id: D2
+    meaning: "The new supplier is conditional: it may not receive new parts until the open 8D is closed and a re-audit passes."
+    when: {classes: source, all: [R1a]}
+    actions: [stop, expedite current approved source, re-audit supplier]
+    decider: supplier quality engineer
+    rests_on: [R1a, "QP-11 4.3"]
+
+  - id: D3
+    meaning: "The new supplier is not qualified for the material on the drawing."
+    when: {classes: [SourceChange], all: [R6]}
+    actions: [expedite current approved source, re-audit supplier]
+    decider: supplier quality engineer
+    rests_on: [R6, "IATF 16949 8.4.2"]
+
+  - id: D4
+    meaning: "The new material falls below a special characteristic of the part."
+    when: {classes: [MaterialChange], all: [R6]}
+    actions: [stop, request customer deviation / PPAP resubmission]
+    decider: customer
+    rests_on: [R6, "IATF 16949 8.3.6.1"]
+
+  - id: D5
+    meaning: "No part approval for this supplier, part, plant and customer, and the customer requires approval for this change."
+    when: {classes: [SourceChange], all: [R1b, R2]}
+    actions: [expedite current approved source, request customer deviation / PPAP resubmission]
+    decider: customer
+    rests_on: [R1b, R2, "IATF 16949 8.5.6.1", "AIAG PPAP triggers"]
+
+  - id: D6
+    meaning: "The customer's current requirement needs approval for this change class and no valid deviation covers it."
+    when: {classes: checked, all: [R2], none: [R1b]}
+    actions: [request customer deviation / PPAP resubmission]
+    decider: customer
+    rests_on: [R2, "IATF 16949 8.5.6.1", "AIAG PPAP triggers"]
+
+  - id: D7
+    meaning: "No internal part approval for this supplier, part and plant; the customer does not ask for one."
+    when: {classes: [SourceChange], all: [R1b], none: [R2]}
+    actions: [run internal part approval, expedite current approved source]
+    decider: plant quality manager
+    rests_on: [R1b, "IATF 16949 8.5.6.1"]
+
+  - id: D8
+    meaning: "A sub-tier supplier changes material, process, coating or source; notice must travel up the chain to the plant."
+    when: {classes: source, all: [R8]}
+    actions: [request customer deviation / PPAP resubmission, re-audit supplier]
+    decider: supplier quality engineer
+    rests_on: [R8, "QP-14"]
+
+  - id: D9
+    meaning: "No blocker, but the new supplier has an open 8D or NCR on the part's material."
+    when: {classes: checked, all: [R3], none: blocking}
+    actions: [re-audit supplier, expedite current approved source]
+    decider: supplier quality engineer
+    rests_on: [R3, "QP-11"]
+
+  - id: D10
+    meaning: "No blocker, but evidence is missing (certificate, supplier record, material or coating data): ask the named owner."
+    when: {classes: checked, all: [R7], none: blocking}
+    actions: [obtain material certificate]
+    decider: supplier quality engineer
+    rests_on: [R7, "QP-11"]
+
+  - id: D11
+    meaning: "The checks for this change class ran and none fired. Not an approval: the change goes through standard change control."
+    when: {classes: checked, none: [R1a, R1b, R2, R3, R5, R6, R7, R8]}
+    actions: [proceed under standard change control]
+    decider: plant quality manager
+    rests_on: ["IATF 16949 8.5.6.1"]
+
+  - id: R0
+    meaning: "No rule covers this change: a person decides."
+    when: {}
+    actions: []
+    decider: plant quality manager
+    rests_on: []
