@@ -1,0 +1,14 @@
+{"session": "Change board · Beinasco · 5 Nov 2026", "as_of": "2026-11-05", "speaker": "PER-CONTI", "text": "Good morning everyone, let's start, we have four items today.", "expect": false}
+{"as_of": "2026-11-05", "speaker": "PER-COSTA", "text": "Beinasco ran at ninety-two percent output last week, no line stops.", "expect": false}
+{"as_of": "2026-11-05", "speaker": "PER-GALLO", "text": "The 8D on the HB-620 porosity is closed, the Pellice castings look clean since October.", "expect": false}
+{"as_of": "2026-11-05", "speaker": "PER-FERRI", "text": "Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.", "expect": true}
+{"as_of": "2026-11-05", "speaker": "PER-ROMANO", "text": "Last spring Dora moved the HB-620 casting to their second cell, and that went through PPAP fine.", "expect": false}
+{"as_of": "2026-11-05", "speaker": "PER-FERRI", "text": "If Bormida slips again next quarter we might look at a second source for BR-225, but not today.", "expect": false}
+{"session": "Change board follow-up · Beinasco · 14 Nov 2026", "as_of": "2026-11-14", "speaker": "PER-CONTI", "text": "Thanks for joining, quick follow-up on the BR-220 supply.", "expect": false}
+{"as_of": "2026-11-14", "speaker": "PER-ROSSI", "text": "We re-audited Chisone last week, they passed with a score of 86.", "expect": false}
+{"as_of": "2026-11-14", "speaker": "PER-COSTA", "text": "We can run eight days on stock at Beinasco.", "expect": false}
+{"as_of": "2026-11-14", "speaker": "PER-ROMANO", "text": "Can we switch BR-220 from anodising to trivalent conversion coating?", "expect": true}
+{"as_of": "2026-11-14", "speaker": "PER-GALLO", "text": "Aurelia's resident engineer asked for the updated BR-220 control plan by Friday.", "expect": false}
+{"as_of": "2026-11-14", "speaker": "PER-ROSSI", "text": "Let's move the BR-220 final inspection to the new CMM next week.", "expect": true}
+{"as_of": "2026-11-14", "speaker": "PER-FERRI", "text": "Fonderia Valchiusella sent us a good quote, let's buy the HB-620 castings from them instead of Pellice.", "expect": true}
+{"as_of": "2026-11-14", "speaker": "PER-CONTI", "text": "Good, I'll bring these to the decision with the cards. Thanks everyone.", "expect": false}

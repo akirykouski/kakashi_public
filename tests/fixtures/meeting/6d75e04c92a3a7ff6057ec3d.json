@@ -1,0 +1,40 @@
+{
+ "note": "If Bormida slips again next quarter we might look at a second source for BR-225, but not today.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "is_change_proposal": false,
+  "reason": "The speaker raises a second source only as a hypothetical for next quarter and explicitly defers it (\"but not today\"), so no concrete change is put on the table now."
+ },
+ "usage": {
+  "completion_tokens": 72,
+  "prompt_tokens": 483,
+  "total_tokens": 555,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 0,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 8.43e-05,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 8.43e-05,
+  "gateway_cost": 8.43e-05
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "note": "Fonderia Valchiusella sent us a good quote, let's buy the HB-620 castings from them instead of Pellice.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "type": "SourceChange",
+  "part": "HB-620 castings",
+  "to_supplier": "Fonderia Valchiusella",
+  "from_supplier": "Pellice",
+  "site": null,
+  "new_material": null,
+  "new_coating": null
+ },
+ "usage": {
+  "completion_tokens": 220,
+  "prompt_tokens": 1411,
+  "total_tokens": 1631,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 146,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0002511,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0002511,
+  "gateway_cost": 0.0002511
+ }
+}
