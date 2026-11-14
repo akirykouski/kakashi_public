@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, rules  # noqa: E402
+from core import check, decision, oida, rules  # noqa: E402
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.project import Projection  # noqa: E402
 
@@ -141,6 +141,7 @@ def run_check(request, drop_rows=None):
     drop_rows = sorted(set(drop_rows or []))
     table, table_text = table_for(drop_rows)
     known = set(ChangeRequest.__dataclass_fields__)
+    known.discard("epistemic")  # derived on the card, never an input (as core.check.run)
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
     as_of = request.get("as_of") or check.DEFAULT_AS_OF
     version = rules_version_for(table_text)
@@ -156,13 +157,15 @@ def run_check(request, drop_rows=None):
         row, verdict = decision.to_decision_row(table["rows"][-1]), "not_covered"
     entry = decision.record(request, as_of, getattr(projection, "fact_ids_in_force", []), findings, row,
                             verdict, rules_version_value=version)
+    card_request = dict(request)
+    findings = oida.annotate(projection, card_request, findings)  # OIDA badges + question urgency (#26, #27)
     finished = time.time()
     timings = dict(projection.timings())
     timings.update({"projection": round((projected - started) * 1000, 1),
                     "rules": round((checked - projected) * 1000, 1),
                     "total": round((finished - started) * 1000, 1)})
     report = coverage_for(table, ",".join(drop_rows))
-    card = Card(request=request, verdict=verdict, findings=findings,
+    card = Card(request=card_request, verdict=verdict, findings=findings,
                 not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
                              for item in not_checked],
                 decision=row, coverage=decision.coverage_summary(report), record_id=entry["record_id"],

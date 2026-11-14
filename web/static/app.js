@@ -4,11 +4,19 @@
 const TODAY = "2026-11-14";
 const RULE_CHANGE_REMARK = "Can we switch BR-220 from anodising to trivalent conversion coating?";
 const NO_RULE_REMARK = "Let's move the BR-220 final inspection to the new CMM next week.";
+const NO_RULE_REQUEST = { type: "EquipmentChange", part: "BR-220" };
+const EPISTEMIC_TITLE = {
+  CONSTRAINT: "Constraint: a rule or requirement that must hold",
+  DECISION: "Decision: something a person or board decided",
+  EVIDENCE: "Evidence: a recorded fact or measurement",
+  PLAN: "Plan: a proposal or promise, not yet a fact",
+  QUESTION: "Question: open, needs an answer from its owner",
+};
 
 const VERDICT_TEXT = {
   blockers_found: ["Blockers found", "Do not proceed as proposed. Each blocker below cites the documents it rests on."],
   needs_info: ["Needs information", "No blocker, but open questions have a named owner."],
-  no_blockers_found: ["No blockers found", "The rules that cover this change ran and none fired. This is not an approval: a person decides."],
+  no_blockers_found: ["No blockers found", "Checked, nothing fired — not an approval. The change goes through standard change control; a person decides."],
   not_covered: ["Not covered: a person decides", "No rule covers this change. It goes to a person with the facts below."],
 };
 const SEVERITY_TEXT = { blocker: "Blocker", warning: "Warning", question: "Question", info: "Info" };
@@ -43,6 +51,23 @@ function label(id) {
 function personText(id) {
   const person = state.people[id];
   return person ? `${person.name} (${person.role})` : id;
+}
+
+function epistemicBadge(type) {
+  if (!type) return null;
+  return el("span", { class: `epi epi-${type.toLowerCase()}`, title: EPISTEMIC_TITLE[type] || type }, type.toLowerCase());
+}
+
+function urgencyLine(finding) {
+  if (finding.urgency === undefined || finding.urgency === null) return null;
+  const blocks = finding.blocks ? ` — blocks ${finding.blocks.part || ""} ${finding.blocks.change_type || ""}` : "";
+  const inputs = `urgency = clamp(age_days/30 × 0.3 + blocking_edges × 0.2 + stakes × 0.5, 0, 1)\n`
+    + `age_days ${finding.age_days ?? "?"} · blocking_edges ${finding.blocking_edges ?? "?"} · stakes ${finding.stakes ?? "?"}`;
+  const level = finding.urgency >= 0.7 ? "high" : finding.urgency >= 0.4 ? "mid" : "low";
+  return el("div", { class: `urgency u-${level}`, title: inputs }, [
+    el("span", { class: "u-bar" }, el("span", { style: `width:${Math.round(finding.urgency * 100)}%` })),
+    `urgency ${Number(finding.urgency).toFixed(2)}${blocks}`,
+  ]);
 }
 
 function shortHash(value) { return value ? value.slice(0, 10) : ""; }
@@ -92,7 +117,10 @@ function demoButtonsFor(scenarios) {
   }
   if (!ids.has("no_rule")) {
     buttons.push({ text: "Move final inspection to the new CMM", title: NO_RULE_REMARK,
-                   run: function runNoRule() { $("remark").value = NO_RULE_REMARK; $("as-of").value = TODAY; checkRemark(); } });
+                   run: function runNoRule() {
+                     $("remark").value = NO_RULE_REMARK; $("as-of").value = TODAY;
+                     runCheck({ request: { ...NO_RULE_REQUEST, utterance: NO_RULE_REMARK, as_of: TODAY } }, "Checking");
+                   } });
   }
   return buttons;
 }
@@ -162,7 +190,7 @@ function renderParsed(request) {
     const who = request.speaker ? `${personText(request.speaker)}: ` : "";
     box.append(el("div", { class: "who" }, `${who}“${request.utterance}”`));
   }
-  box.append(chip("change", request.type));
+  box.append(el("span", { class: "chip" }, [el("b", { text: "change" }), request.type, epistemicBadge(request.epistemic)]));
   if (request.part) box.append(chip("part", `${request.part}`, label(request.part)));
   if (request.from_supplier) box.append(chip("from", label(request.from_supplier), request.from_supplier));
   if (request.to_supplier) box.append(chip("to", label(request.to_supplier), request.to_supplier));
@@ -211,6 +239,8 @@ function renderFindings(findings, replaced) {
 
 function renderFinding(finding, replacedItems) {
   const meta = el("div", { class: "f-meta" });
+  const urgency = urgencyLine(finding);
+  if (urgency) meta.append(urgency);
   if (finding.owner) meta.append(el("div", {}, [el("span", { class: "muted" }, "Who answers: "), el("span", { class: "owner" }, personText(finding.owner))]));
   if (finding.consequence) {
     const consequence = finding.consequence;
@@ -226,6 +256,7 @@ function renderFinding(finding, replacedItems) {
       el("span", { class: `sev ${finding.severity}` }, SEVERITY_TEXT[finding.severity] || finding.severity),
       el("span", { class: "rule-id" }, finding.rule),
       el("span", { class: "f-title" }, finding.title),
+      epistemicBadge(finding.epistemic),
     ]),
     meta,
   ]);
@@ -266,6 +297,7 @@ function renderSteps(steps) {
     const item = el("li", { class: "step" }, [
       el("span", { class: "triple", title: tripleTitle(step.triple) }, step.triple),
       step.inferred ? el("span", { class: "inferred" }, `inferred by ${step.rule || "the ontology"}`) : null,
+      epistemicBadge(step.epistemic),
     ]);
     if (step.context_quote) item.append(el("div", { class: "context-quote" }, step.context_quote));
     if (step.quote) {
