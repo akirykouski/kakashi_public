@@ -96,6 +96,8 @@ Two facts from the documents:
 - **Option 1:** add C. M-on-A loses 1 FP; A-on-A loses 1 FP.
 - **Option 2:** keep as is. Both engines keep 1 FP.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add the certificate question).** Same part, same new source and same native change type as CR-01 and CR-18, which carry it. Drawing Rev C note 5 requires a 3.1 certificate with each BR-220 lot, and no A document holds one from Meccanica C.
+
 Decision (Valentina):  — time:
 
 ### 1.2 CR-10 (world A), certificate part
@@ -112,6 +114,8 @@ Decision (Valentina):  — time:
 - **Option 2:** keep as is. Both engines keep 1 FP.
 - CR-10 has a second disputed item in §3.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep).** No A document states a certificate requirement for BR-180; the question is for a *required* certificate that is missing (A's RULES.md), so nothing is required here.
+
 Decision (Valentina):  — time:
 
 ### 1.3 CR-12 (world A), certificate part
@@ -126,6 +130,8 @@ Decision (Valentina):  — time:
 - **Option 1:** add C. A-on-A loses 1 FP; M-on-A gains 1 FN (Core M asked for the supplier record here instead).
 - **Option 2:** keep as is. A-on-A keeps 1 FP.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add).** BR-220's certificate requirement (Rev C note 5, control plan line 20) applies, and the Rovereto plant is a location the approval does not cover ("An approval covers the named manufacturing location only."), so no certified lot from it exists — the same situation as a new source in CR-01.
+
 Decision (Valentina):  — time:
 
 ### 1.4 CR-16 (world A), certificate part
@@ -139,6 +145,8 @@ Decision (Valentina):  — time:
 
 - **Option 1:** add C. M-on-A loses 1 FP; A-on-A gains 1 FN (Core A did not fire it here).
 - **Option 2:** keep as is. M-on-A keeps 1 FP.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep).** No A document states a certificate requirement for BR-310.
 
 Decision (Valentina):  — time:
 
@@ -171,6 +179,8 @@ Decision (Valentina):  — time:
 **Options:**
 - **Option 1:** add `{rule: "B_CUSTOMER_APPROVAL_REQUIRED", rule_u: "U_CUSTOMER_APPROVAL", key: "STL", kind: "blocker", inferred: true}`. The verdict stays `blockers_found`. M-on-A loses 1 FP; A-on-A loses 1 FP.
 - **Option 2:** keep as is. Both engines keep 1 FP.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add customer approval).** CSR 8.3.6.1 names material explicitly: "Any change to a requirement stated on a customer drawing, including material and finish, needs written approval from Stellantis"; BR-220 is on STL-Torino-27 (BOM line 120).
 
 Decision (Valentina):  — time:
 
@@ -207,6 +217,8 @@ The CSR excerpt has six clauses: 8.3.6.1, 8.3.3.3, 7.1.5.3.2, 8.5.6.1, 8.4.2.1 a
 - **Option 1:** keep as is. A-on-A keeps 1 FP until f10 or the request typing is fixed. Core M is unaffected.
 - **Option 2:** add P. The verdict does not change. A-on-A loses 1 FP; M-on-A gains 1 FN.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** CSR 8.5.6.1 names a change of material source; Meccanica C is already the approved source for this exact part, plant and customer (AP-0207), and no CSR clause names a change of volume split.
+
 Decision (Valentina):  — time:
 
 ### 3.2 CR-11
@@ -230,6 +242,8 @@ Decision (Valentina):  — time:
 - **Option 1:** keep as is. Both engines keep 1 FP and a wrong verdict.
 - **Option 2:** add P. The verdict becomes `blockers_found`. Both engines lose 1 FP, and both verdicts become right, because both engines already answer `blockers_found`.
   - Watch out: this option moves the gold onto what the engines already output.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** No CSR clause names a change of our own receiving plant; the ASL says TO3 is out of its scope, so the gold's question is what the documents support. Option 2 would also move the gold onto what both engines already output.
 
 Decision (Valentina):  — time:
 
@@ -268,6 +282,8 @@ Decision (Valentina):  — time:
 - **Option 1:** add S. A-on-A loses 1 FP; M-on-A gains 1 FN (Core M read this as a process change with no supplier).
 - **Option 2:** keep as is. A-on-A keeps 1 FP.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. No A document states a qualification-record requirement for subcontractors, and A has no supplier master to be absent from; the clause that does apply (CSR 8.4.2.1, surface treatment) is already in the gold as customer approval. Adding it would bring a rule into A that A's vocabulary does not have.
+
 Decision (Valentina):  — time:
 
 ### 4.2 CR-12, supplier-record part
@@ -283,6 +299,8 @@ Decision (Valentina):  — time:
 - **Option 1:** add S. A-on-A loses 1 FP; M-on-A loses 1 FP.
 - **Option 2:** keep as is (REVIEW's proposal). Both engines keep 1 FP; REVIEW expects the engines to stop firing it.
 
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)**, as REVIEW proposes. The supplier is on record; only the location is new, and that is already the source-release blocker.
+
 Decision (Valentina):  — time:
 
 ### 4.3 CR-17
@@ -291,6 +309,8 @@ Decision (Valentina):  — time:
 - **Specific to this request:** Termica Nord would be a sub-supplier of Alluminio B. It appears in no document.
 - **Option 1:** add S. A-on-A loses 1 FP; M-on-A gains 1 FN.
 - **Option 2:** keep as is. A-on-A keeps 1 FP.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. Same reason as CR-02: no A document requires a record for a sub-supplier; CSR 8.5.6.1 (change of sub-supplier) is already in the gold as customer approval.
 
 Decision (Valentina):  — time:
 
@@ -303,6 +323,8 @@ Decision (Valentina):  — time:
 
 - **Option 1:** add S. A-on-A loses 1 FP; M-on-A gains 1 FN.
 - **Option 2:** keep as is. A-on-A keeps 1 FP.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. Same reason as CR-02; the clause that applies to an external laboratory (CSR 7.1.5.3.2, notification and acceptance of the lab scope) is already in the gold as customer approval.
 
 Decision (Valentina):  — time:
 
@@ -331,6 +353,8 @@ Decision (Valentina):  — time:
 - **Option 1:** keep as is. Both engines keep 1 FN and a wrong verdict.
 - **Option 2** (nobody has proposed this; listed because the gold claim already covers two things): split into two findings. Keep the current one and add `{rule_u: "U_CUSTOMER_APPROVAL", key: "STL", kind: "question"}` for the missing service-part requirements. The verdict stays `needs_info`. Both engines gain 1 FN.
 - **Option 3** (also not proposed): set the verdict to `not_covered`, as `eval/MAPPING.md` allows ("no rule covers the request"). Both engines still get the verdict wrong.
+
+Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** "Service and aftermarket parts are not in scope of this record" and "Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt": one open question is what the documents support.
 
 Decision (Valentina):  — time:
 
