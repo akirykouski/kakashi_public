@@ -277,3 +277,20 @@ def test_superseded_requirement_is_history(log):
     projection = Projection(log, "2026-11-14")
     assert "CSR-AUR-R3" in projection.replaced or not projection.facts_for("CSR-AUR-R3", "type")
     assert projection.history_by_subject.get("CSR-AUR-R3")
+
+
+def test_shacl_still_catches_two_current_qualifications(tmp_path):
+    """write_record now refuses the duplicate up front (prototype test_shacl_catches_two_current_qualifications
+    relied on it slipping through); a bulk load is not checked, so SHACL remains the second line."""
+    log = default_log()
+    with pytest.raises(ConflictError):
+        log.write_record("QS-C-DUP", "SupplierQualification", {"qualifiedSupplier": "SUP-C", "status": '"approved"'},
+                         source="MTG-LIVE", quote="dup", valid_from="2026-11-10", author="PER-GALLO")
+    path = tmp_path / "dup.jsonl"
+    rows = [fact("QS-C-DUP#0", "QS-C-DUP", "type", "SupplierQualification", valid_from="2026-11-10"),
+            fact("QS-C-DUP#1", "QS-C-DUP", "qualifiedSupplier", "SUP-C", valid_from="2026-11-10"),
+            fact("QS-C-DUP#2", "QS-C-DUP", "status", '"approved"', valid_from="2026-11-10")]
+    path.write_text("\n".join(json.dumps(row) for row in rows))
+    log.load_jsonl(str(path))
+    conforms, text, _ = run_integrity(Projection(log, "2026-11-14"))
+    assert not conforms and "more than one current qualification" in text
