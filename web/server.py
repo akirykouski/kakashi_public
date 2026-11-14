@@ -6,7 +6,10 @@
 Standard library HTTP server. The browser never calls core code: every check goes through the JSON routes below,
 and the model key stays on the server (core/llm.py reads .env).
 
-    POST /api/check     {remark, speaker?, as_of?} | {request} | {scenario, as_of?}
+    POST /api/check     {remark, speaker?, as_of?} | {form} | {request} | {scenario, as_of?}
+                        a remark whose parse fails (gateway down, HTTP 402, > 8 s) returns 503 with parse_failed,
+                        reason and a typed form prefilled from the closest demo request; {form} goes through
+                        core.parse.parse_form (no model call).
                         optional "drop_rows": ["D2"]  -> re-check under an edited decision table kept in memory
                         (core/decision_table.yaml is never written).
     GET  /api/scenarios
@@ -24,6 +27,9 @@ import re
 import sys
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
+from difflib import SequenceMatcher
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -32,8 +38,8 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, oida, rules  # noqa: E402
-from core.contracts import Card, ChangeRequest  # noqa: E402
+from core import check, decision, oida, parse, rules  # noqa: E402
+from core.contracts import CHANGE_TYPES, Card, ChangeRequest  # noqa: E402
 from core.project import Projection  # noqa: E402
 
 STATIC = Path(__file__).resolve().parent / "static"
@@ -156,21 +162,105 @@ def run_check(request, drop_rows=None):
     }
 
 
+# ---- model-gateway fallback (#17) ---------------------------------------------------------------------------
+
+PARSE_TIMEOUT_S = 8
+_parse_pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix="parse")
+# Remarks the demo page sends that are not scenario utterances (web/static/app.js).
+DEMO_REMARKS = [
+    {"remark": "Can we switch BR-220 from anodising to trivalent conversion coating?",
+     "change": {"type": "CoatingChange", "part": "BR-220", "new_coating": "COAT-TCP"}},
+    {"remark": "Let's move the BR-220 final inspection to the new CMM next week.",
+     "change": {"type": "EquipmentChange", "part": "BR-220"}},
+]
+
+
+class ParseFailed(Exception):
+    """The remark could not be parsed (model gateway down, out of credits, slow). The page offers the typed form."""
+
+    def __init__(self, reason, message):
+        super().__init__(message)
+        self.reason = reason
+
+
+def classify_parse_error(error):
+    """(reason, message) for the page. Never guesses a request."""
+    status = getattr(error, "status_code", None)
+    name = type(error).__name__
+    if status == 402:
+        return "credits", "Model gateway: credits used up (HTTP 402)."
+    if status in (401, 403):
+        return "auth", f"Model gateway refused the key (HTTP {status})."
+    if status is not None:
+        return "gateway", f"Model gateway error (HTTP {status})."
+    if name == "FixtureMissing":
+        return "no_key", "No recorded parse for this remark and no model key on the server."
+    if name in ("APIConnectionError", "APITimeoutError") or isinstance(error, OSError):
+        return "network", "Model gateway unreachable (network)."
+    return "error", f"Parse failed: {name}: {error}"
+
+
+def parse_remark(remark, as_of):
+    """check.from_remark with a hard timeout. Raises ParseFailed."""
+    future = _parse_pool.submit(check.from_remark, remark, as_of)
+    try:
+        return future.result(timeout=PARSE_TIMEOUT_S)
+    except FutureTimeout:
+        raise ParseFailed("timeout", f"Model gateway did not answer in {PARSE_TIMEOUT_S} s.")
+    except Exception as error:
+        reason, message = classify_parse_error(error)
+        raise ParseFailed(reason, message)
+
+
+def demo_requests():
+    """[(utterance, change dict)] for every demo remark: scenario utterances and the page's built-in remarks."""
+    with open(ROOT / "data" / "scenarios.json", encoding="utf-8") as handle:
+        scenarios = json.load(handle)
+    items = [(item.get("utterance") or item.get("title") or "", item["change"]) for item in scenarios]
+    items += [(item["remark"], item["change"]) for item in DEMO_REMARKS]
+    return items
+
+
+def closest_form(remark, as_of=None):
+    """The typed form prefilled with the demo request whose remark is closest to `remark` (difflib ratio)."""
+    text = (remark or "").lower()
+    best, best_score = None, -1.0
+    for utterance, change in demo_requests():
+        score = SequenceMatcher(None, text, utterance.lower()).ratio()
+        if score > best_score:
+            best, best_score = (utterance, change), score
+    utterance, change = best
+    form = {key: value for key, value in change.items() if key in parse.FORM_FIELDS and value}
+    form["as_of"] = as_of or time.strftime("%Y-%m-%d")
+    form["utterance"] = remark
+    return {"form": form, "closest_remark": utterance, "similarity": round(best_score, 2)}
+
+
+def parse_failure_payload(failure, body):
+    payload = {"error": str(failure), "parse_failed": True, "reason": failure.reason,
+               "change_types": list(CHANGE_TYPES), "form_fields": sorted(parse.FORM_FIELDS),
+               "labels": labels()}
+    payload.update(closest_form(body.get("remark"), body.get("as_of")))
+    return payload
+
+
 def handle_check(body):
     drop_rows = body.get("drop_rows") or []
     parse_ms = None
     if body.get("remark"):
         started = time.time()
-        request = check.from_remark(body["remark"], as_of=body.get("as_of"))
+        request = parse_remark(body["remark"], body.get("as_of"))
         parse_ms = round((time.time() - started) * 1000, 1)
         if body.get("speaker"):
             request["speaker"] = body["speaker"]
+    elif body.get("form"):
+        request = parse.parse_form({key: value for key, value in body["form"].items() if value not in (None, "")})
     elif body.get("scenario"):
         request = check.scenario(body["scenario"])
     elif body.get("request"):
         request = dict(body["request"])
     else:
-        raise ValueError("send one of: remark, scenario, request")
+        raise ValueError("send one of: remark, form, scenario, request")
     if body.get("as_of"):
         request["as_of"] = body["as_of"]
     response = run_check(request, drop_rows)
@@ -257,6 +347,8 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length) or b"{}")
             with LOCK:
                 self.send_json(handle_check(body))
+        except ParseFailed as failure:  # gateway down / 402 / slow: the page offers the typed form, never a fake
+            self.send_json(parse_failure_payload(failure, body), 503)
         except Exception as error:
             self.send_json({"error": f"{type(error).__name__}: {error}"}, 400)
 
