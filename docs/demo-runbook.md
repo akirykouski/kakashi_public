@@ -67,3 +67,10 @@ Play the recorded run from another laptop or a phone. It is not in the repo (loc
 - `~/Desktop/kva_hackathon/demo_backup/DEMO_SCRIPT.md` — each step: what to click, what the jury sees, one line to say
 
 Copy the folder to a USB stick and a second laptop before 17:00.
+
+## Live demo: one-click presets (web/static/live.js)
+
+No typing needed: the "One click" chips fill the remark and speaker and run the real check; "Play the meeting" streams
+the demo transcript. On every card: check time, Why (proof chain), What would clear it, Plain words, Decision table
+(with "Turn row off and re-check"), Add the audit email (then "Accept the facts and re-check"), What did we know on 8 Nov?
+All of it replays offline (`?offline=1`). Screenshots of each action: `docs/demo-live/`.

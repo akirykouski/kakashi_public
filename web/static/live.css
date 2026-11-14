@@ -1,0 +1,26 @@
+/* Live demo (live.js): one-click chips, card action bar, big check time, QR corner. Projector-first sizes. */
+.live-presets { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0 12px; }
+.live-chip {
+  font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; padding: 10px 16px; min-height: 44px;
+  border-radius: 999px; border: 1px solid var(--accent, #2456c9); background: #fff; color: var(--accent, #2456c9);
+}
+.live-chip:hover { background: var(--accent, #2456c9); color: #fff; }
+.live-chip.live-play { background: var(--accent, #2456c9); color: #fff; }
+.live-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 0 0 14px; }
+.live-time { display: flex; align-items: baseline; gap: 8px; padding: 6px 16px; border-radius: 12px; background: #0e1218; color: #7ee2a0; }
+.live-time-n { font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.live-time-u { font-size: 18px; color: #dfe5ee; }
+.live-actions { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
+.live-btn {
+  font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; padding: 10px 16px; min-height: 44px;
+  border-radius: 8px; border: 1px solid #c3cad6; background: #fff; color: #12161c;
+}
+.live-btn:hover { border-color: var(--accent, #2456c9); }
+.live-btn.accent { background: var(--accent, #2456c9); border-color: var(--accent, #2456c9); color: #fff; }
+.live-big { font: inherit; font-size: 22px; font-weight: 700; padding: 14px 22px; margin: 12px 0; cursor: pointer; border-radius: 10px;
+  border: 0; background: var(--accent, #2456c9); color: #fff; }
+.live-drop { display: block; margin-top: 8px; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; padding: 8px 12px;
+  border-radius: 8px; border: 1px solid #b42318; background: #fff; color: #b42318; }
+.live-qr { display: inline-flex; align-items: center; gap: 8px; margin-left: 12px; font-size: 13px; line-height: 1.2; color: inherit; text-decoration: none; }
+.live-qr img { background: #fff; border-radius: 4px; }
+@media (max-width: 700px) { .live-time-n { font-size: 32px; } .live-qr span { display: none; } }
