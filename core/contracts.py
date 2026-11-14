@@ -109,6 +109,9 @@ class Card:
     coverage: dict                             # {"input_sets": int, "to_person": int, "overlaps": int}
     record_id: str                             # id of the DecisionRecord written for this check
     timings_ms: dict                           # {"snapshot": .., "closure": .., "rules": .., "total": ..}
+    # #28, optional: two current values side by side. Each item: {key: [s, p] | record, reason, question,
+    # owner, sides: [{value, fact_id | record, source, quote, rank, valid_from, status}]}
+    contested: list = field(default_factory=list)
 
 
 @dataclass

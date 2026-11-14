@@ -161,6 +161,10 @@ class Projection:
         self.closure_ms = (time.perf_counter() - closure_started) * 1000
         self.reasoning_ms = (time.perf_counter() - started) * 1000  # prototype name: snapshot + closure
 
+        # #28: contradictions the fact log stored as contested (never in force), and contested keys rules read
+        self.contested_records = log.contested_records() if hasattr(log, "contested_records") else []
+        self.contested_reads = OrderedDict()
+
         self.history_by_subject = {}
         for fact in self.history_facts:
             self.history_by_subject.setdefault(fact["s"], []).append(fact)
@@ -172,7 +176,15 @@ class Projection:
         return list(self.graph.query(sparql, initNs={"lcc": LCC, "rdf": RDF, "rdfs": RDFS}, initBindings=init))
 
     def objects(self, subject, predicate):
-        return sorted(local_name(term) for term in self.graph.objects(node(subject), LCC[predicate]))
+        found = sorted(local_name(term) for term in self.graph.objects(node(subject), LCC[predicate]))
+        if self.contested:
+            self._note_contested_read(subject, predicate)
+        return found
+
+    def _note_contested_read(self, subject, predicate):
+        """#28: remember every contested (subject, predicate) a rule read, so it becomes a question, not a gap."""
+        for item in self.contested_for(subject, predicate):
+            self.contested_reads.setdefault(tuple(item["key"]), item)
 
     def value(self, subject, predicate):
         """The one value in force, or None. None also when the value is contested (see `contested_for`)."""

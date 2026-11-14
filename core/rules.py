@@ -685,7 +685,7 @@ def is_subtier(projection, change):
 def check(projection, change):
     """All findings for a change, blockers first. Finding dicts per core/contracts.py."""
     if is_subtier(projection, change):
-        return sort_findings(rule_subtier(projection, change))
+        return sort_findings(rule_subtier(projection, change) + contested_questions(projection, change))
     findings = []
     supplier = change.get("to_supplier")
     if change["type"] == "SourceChange" and supplier:
@@ -707,6 +707,7 @@ def check(projection, change):
         findings += rule_restricted_substance(projection, change)
     if change["type"] == "MaterialChange":
         findings += rule_material_change(projection, change)
+    findings += contested_questions(projection, change)
     return sort_findings(findings)
 
 
@@ -759,3 +760,120 @@ def default_projection(as_of=None):
     if as_of not in _projections:
         _projections[as_of] = Projection(extend_log(default_log()), as_of)
     return _projections[as_of]
+
+
+# ---- contested values (#28) ------------------------------------------------------------------------------
+# Two current values are a question for the person the policy names (Q-contradiction), never a gap and never
+# a guess. Sources: (1) a functional value a rule read that the snapshot reports contested
+# (projection.contested_reads, filled by Projection.objects); (2) a record the fact log stored as contested
+# (factlog.write_record(on_conflict="contest")) that names an entity of this change.
+
+def display_value(value):
+    if isinstance(value, str) and value.startswith('"'):
+        try:
+            return str(json.loads(value))
+        except ValueError:
+            return value
+    return value
+
+
+def graph_object(raw):
+    return Literal(json.loads(raw)) if isinstance(raw, str) and raw.startswith('"') else raw
+
+
+def _fact_index(projection):
+    found = getattr(projection, "_fact_index", None)
+    if found is None:
+        found = {fact["id"]: fact for fact in list(projection.current_facts) + list(projection.history_facts)}
+        projection._fact_index = found
+    return found
+
+
+def _side_from_fact(fact, status):
+    return {"value": display_value(fact["o"]), "raw": fact["o"], "fact_id": fact["id"], "record": fact["s"], "source": fact["source"],
+            "quote": (fact.get("quote") or "").replace("\n", " "), "rank": fact.get("rank"),
+            "valid_from": fact.get("valid_from"), "status": status}
+
+
+def _snapshot_pair(projection, item):
+    index = _fact_index(projection)
+    sides = []
+    for fact_id in item["facts"]:
+        fact = index.get(fact_id)
+        if fact:
+            in_force = item.get("head") == fact_id
+            sides.append(_side_from_fact(fact, "in force" if in_force else "contested, not in force"))
+    owner = projection.value("Q-contradiction", "questionOwner")
+    return {"key": list(item["key"]), "reason": item["reason"], "question": "Q-contradiction", "owner": owner,
+            "sides": sides}
+
+
+def _record_pair(entry, change_ids):
+    question = entry["question"]
+    current = [fact for fact in entry["current"] if fact["p"] not in ("type", "supersedes")]
+    contested = [fact for fact in entry["contested"] if fact["p"] not in ("type", "supersedes")]
+    mentioned = {fact["o"] for fact in current + contested}
+    if change_ids and not mentioned & change_ids:
+        return None
+    current_by = {fact["p"]: fact for fact in current}
+    differing = [fact for fact in contested if fact["p"] in current_by and current_by[fact["p"]]["o"] != fact["o"]]
+    differing = differing or contested
+    sides = [_side_from_fact(current_by[fact["p"]], "in force") for fact in differing if fact["p"] in current_by]
+    sides += [_side_from_fact(fact, "contested, not in force") for fact in differing]
+    predicate = differing[0]["p"] if differing else None
+    return {"key": [question["current_record"], predicate], "reason": "contested_record",
+            "records": [question["current_record"], question["contested_record"]],
+            "question": question["id"], "owner": question["owner"], "class_name": question["class_name"],
+            "owner_source": question["owner_source"], "owner_quote": question["owner_quote"], "sides": sides}
+
+
+def _change_ids(change):
+    return {change.get(key) for key in ("part", "to_supplier", "from_supplier", "at_supplier", "site",
+                                          "new_material", "new_coating")} - {None}
+
+
+def contested_pairs(projection, change):
+    """Card key `contested`: both versions with source and quote. Same pairs the questions are built from."""
+    pairs = getattr(projection, "contested_questioned", None)
+    if pairs is None:
+        pairs = _collect_contested(projection, change)
+    return pairs
+
+
+def _collect_contested(projection, change):
+    pairs = [_snapshot_pair(projection, item) for item in getattr(projection, "contested_reads", {}).values()]
+    change_ids = _change_ids(change)
+    for entry in getattr(projection, "contested_records", None) or []:
+        pair = _record_pair(entry, change_ids)
+        if pair:
+            pairs.append(pair)
+    return [pair for pair in pairs if len(pair["sides"]) >= 2]
+
+
+def side_text(side):
+    return f"{side['value']} ({side['source']}, \"{side['quote']}\")"
+
+
+def contested_questions(projection, change):
+    """R7 questions "two current values: X (source, quote) vs Y (source, quote)", owner from data."""
+    pairs = _collect_contested(projection, change)
+    projection.contested_questioned = pairs
+    findings = []
+    for pair in pairs:
+        subject, predicate = pair["key"]
+        title = (f"Two current values for {subject} {predicate}: "
+                 + " vs ".join(side_text(side) for side in pair["sides"]) + ". A person decides which one holds.")
+        if pair["reason"] == "contested_record":
+            item = finding("R7", "question", title, [], {"records": pair["records"], "question": pair["question"]},
+                           owner=pair["owner"], note=f"{pair['records'][1]} CONTRADICTS {pair['records'][0]}; "
+                                                     f"{pair['records'][0]} stays in force until decided")
+            findings.append(item)
+            continue
+        evidence = [explain(projection, side["record"], predicate, graph_object(side["raw"]))
+                    for side in pair["sides"] if side["status"] == "in force"]
+        item = question(projection, "contradiction", title, evidence,
+                        {"subject": subject, "facts": [side["fact_id"] for side in pair["sides"]]})
+        item["note"] = ("neither value is in force" if pair["reason"] == "same_rank_same_date"
+                        else "the higher-authority value stays in force; the newer lower-rank value is contested")
+        findings.append(item)
+    return findings

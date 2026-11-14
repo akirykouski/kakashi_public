@@ -12,6 +12,7 @@ and the model key stays on the server (core/llm.py reads .env).
     GET  /api/scenarios
     GET  /api/table     ?drop=D2,D5   decision table + coverage check + rules_version
     GET  /api/records   ?limit=50     decision records, newest first
+    GET  /api/impact    ?doc=CSR-AUR-R3   what a superseded document affects (core/impact.py, #29)
 
 Written 14 Nov 2026 (workstream UI).
 """
@@ -32,7 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, oida, rules  # noqa: E402
+from core import check, decision, impact, oida, rules  # noqa: E402
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.project import Projection  # noqa: E402
 
@@ -197,6 +198,15 @@ def handle_records(query):
     return {"records": list(reversed(decision.read_records()))[:limit]}
 
 
+def handle_impact(query):
+    """#29: facts, table rows, recorded and past decisions resting on a document; read-only."""
+    doc = (query.get("doc", [""])[0] or "").strip()
+    if not doc:
+        raise ValueError("send ?doc=<document id>")
+    facts = check.memory().all_facts(review=None)
+    return {"impact": impact.impact(doc, facts=facts), "labels": labels()}
+
+
 # ---- HTTP -------------------------------------------------------------------------------------------------
 
 class Handler(BaseHTTPRequestHandler):
@@ -242,6 +252,9 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_json(handle_table(query))
             elif url.path == "/api/records":
                 self.send_json(handle_records(query))
+            elif url.path == "/api/impact":
+                with LOCK:
+                    self.send_json(handle_impact(query))
             else:
                 self.send_json({"error": "not found"}, 404)
         except Exception as error:  # the demo shows the error, never a blank page

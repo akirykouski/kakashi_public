@@ -172,6 +172,7 @@ function renderCard(data) {
   renderParsed(card.request);
   renderVerdict($("verdict"), card.verdict, true);
   renderFindings(card.findings, data.replaced || {});
+  renderContested(card.contested || []);
   renderExtra(card);
   renderNotChecked(card.not_checked || []);
   renderDecision(card, data);
@@ -261,6 +262,7 @@ function renderFinding(finding, replacedItems) {
     meta,
   ]);
   for (const item of replacedItems) node.append(renderReplaced(item));
+  for (const item of replacedItems) if (item.source === item.id) node.append(impactButton(item.id));
   if ((finding.evidence || []).length) {
     const details = el("details", { class: "proof" }, [
       el("summary", {}, `Proof chain (${countLeaves(finding.evidence)} quotes)`),
@@ -507,6 +509,86 @@ async function runTableEdit() {
   await compare({ request: request }, { request: request, drop_rows: [drop] },
                 "Declared table (core/decision_table.yaml)", `Edited in memory: row ${drop} removed`,
                 "Same request and facts. One row of the decision table removed: a different row answers, and the rules version in the record changes.");
+}
+
+// ---- #28 contested values, side by side -----------------------------------------------------------------
+
+function contestedBox() {
+  let box = $("contested");
+  if (!box) {
+    box = el("div", { id: "contested" });
+    $("findings").after(box);
+  }
+  return box;
+}
+
+function renderContested(pairs) {
+  const box = contestedBox();
+  box.innerHTML = "";
+  if (!pairs.length) return;
+  box.append(el("h3", { class: "contested-head" }, `Two current values (${pairs.length}): a person decides`));
+  for (const pair of pairs) box.append(renderContestedPair(pair));
+}
+
+function renderContestedPair(pair) {
+  const [subject, predicate] = pair.key || [];
+  const sides = (pair.sides || []).map(function side(item) {
+    return el("div", { class: `contested-side ${item.status === "in force" ? "in-force" : ""}` }, [
+      el("div", { class: "contested-value" }, String(item.value)),
+      el("div", { class: "muted" }, item.status || ""),
+      el("div", {}, [el("span", { class: "doc" }, item.source || ""), " ", `“${item.quote || ""}”`]),
+      item.rank ? el("div", { class: "muted" }, `rank ${item.rank}${item.valid_from ? ` · from ${item.valid_from}` : ""}`) : null,
+    ]);
+  });
+  return el("div", { class: "contested-pair" }, [
+    el("div", { class: "contested-key" }, [el("b", {}, `${label(subject)} · ${predicate || ""}`),
+      el("span", { class: "muted" }, ` ${pair.reason || ""}`)]),
+    el("div", { class: "contested-sides" }, sides),
+    pair.owner ? el("div", {}, [el("span", { class: "muted" }, "Who decides: "), el("span", { class: "owner" }, personText(pair.owner))]) : null,
+  ]);
+}
+
+// ---- #29 a document changed: what is affected ----------------------------------------------------------
+
+function impactButton(doc) {
+  return el("button", { class: "link impact-btn", onclick: function openImpact() { showImpact(doc); } },
+            "What does this document change affect?");
+}
+
+function impactSection(title, items, line) {
+  const list = el("ul", { class: "impact-list" }, items.map(function li(item) { return el("li", {}, line(item)); }));
+  return el("div", {}, [el("h3", {}, `${title} (${items.length})`), items.length ? list : el("p", { class: "muted" }, "None.")]);
+}
+
+async function showImpact(doc) {
+  try {
+    const data = await api(`/api/impact?doc=${encodeURIComponent(doc)}`);
+    const report = data.impact;
+    const lead = report.superseded
+      ? `${doc} is superseded by ${report.replaced_by.join(", ")}. Each item below: ${report.status}.`
+      : `${doc} is not superseded by a record in force. Listing what cites it.`;
+    const body = el("div", { class: "impact" }, [
+      el("p", {}, lead),
+      impactSection("Facts", report.facts, function factLine(item) {
+        return [el("span", { class: "mono" }, `${item.s} ${item.p} ${item.o}`), " ", el("span", { class: "doc" }, item.source),
+                el("span", { class: "muted" }, ` ${item.why} · ${item.status}`)];
+      }),
+      impactSection("Decision-table rows", report.table_rows, function rowLine(row) {
+        const how = row.cites.length ? `cites ${row.cites.join(", ")}` : `via ${row.via_rules.join(", ")} (reads ${row.reads.join(", ")})`;
+        return [el("b", {}, row.row_id), ` ${row.meaning || ""} `, el("span", { class: "muted" }, `${how} · ${row.status}`)];
+      }),
+      impactSection("Recorded decisions", report.recorded_decisions, function recordLine(entry) {
+        return [el("span", { class: "mono" }, entry.record_id), ` as of ${entry.as_of}: row ${entry.decision_row}, ${entry.verdict} `,
+                el("span", { class: "muted" }, `${entry.facts_used.length} facts from ${doc} · ${entry.status}`)];
+      }),
+      impactSection("Past decisions", report.past_decisions, function pastLine(item) {
+        return [el("b", {}, item.id), ` ${item.reason || ""} `, el("span", { class: "muted" }, `${item.from} · ${item.status}`)];
+      }),
+    ]);
+    openModal(`What changes with ${doc}`, body);
+  } catch (error) {
+    setStatus(`Could not load the impact report: ${error.message}`, true);
+  }
 }
 
 // ---- table and records ---------------------------------------------------------------------------------
