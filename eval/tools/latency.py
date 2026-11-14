@@ -23,6 +23,8 @@ sys.path.insert(0, str(REPO / "data"))
 
 from core import check, factlog, project, rules  # noqa: E402
 
+project.REUSE_FULL = False   # measure the cold path of every request (a new as_of), never the warm closure
+
 VOLATILE = ("timings_ms", "record_id")
 
 
@@ -31,11 +33,19 @@ def strip(card):
                                  sort_keys=True, default=str))
 
 
-def timed(request, scoped):
+CONFIGS = {"before": (False, "owlrl"),        # main: whole snapshot, owlrl
+           "scoped_owlrl": (True, "owlrl"),   # request scope only
+           "after": (True, "rl")}            # request scope + core/rl.py (the default now)
+
+
+def timed(request, config):
+    scoped, reasoner = CONFIGS[config]
+    project.REASONER = reasoner
     project.clear_cache()
     started = time.perf_counter()
     card, _, projection = check.evaluate(dict(request), record=False, scoped=scoped)
-    return (time.perf_counter() - started) * 1000, strip(card), projection
+    elapsed = (time.perf_counter() - started) * 1000
+    return elapsed, strip(card), projection
 
 
 def p95(values):
@@ -58,25 +68,29 @@ def run_size(units, full_limit):
     check._LOG = log
     rules._projections.clear()
     scenarios = [item["id"] for item in json.load(open(REPO / "data" / "scenarios.json"))]
-    full_times, scoped_times, differing, scope_sizes = [], [], [], []
-    facts_in_force = None
+    times = {config: [] for config in CONFIGS}
+    closure = {config: [] for config in CONFIGS}
+    differing, scope_sizes, facts_in_force = [], [], None
     for index, scenario_id in enumerate(scenarios):
         request = check.scenario(scenario_id)
-        scoped_ms, scoped_card, projection = timed(request, True)
-        scoped_times.append(scoped_ms)
-        scope_sizes.append(projection.scoped_count)
-        facts_in_force = projection.asserted_count
-        if index < full_limit:
-            full_ms, full_card, _ = timed(request, False)
-            full_times.append(full_ms)
-            if full_card != scoped_card:
-                differing.append(scenario_id)
-        print(f"units {units} {scenario_id}: scoped {scoped_ms:.0f} ms ({projection.scoped_count} facts)"
-              + (f", full {full_times[-1]:.0f} ms" if index < full_limit else ""), flush=True)
+        cards = {}
+        for config in CONFIGS:
+            if config == "before" and index >= full_limit:
+                continue
+            elapsed, cards[config], projection = timed(request, config)
+            times[config].append(elapsed)
+            closure[config].append(projection.closure_ms)
+            if config == "after":
+                scope_sizes.append(projection.scoped_count)
+                facts_in_force = projection.asserted_count
+        if any(card != cards["after"] for card in cards.values()):
+            differing.append(scenario_id)
+        print(f"units {units} {scenario_id}: " + ", ".join(f"{config} {times[config][-1]:.0f} ms"
+              for config in cards), flush=True)
     return {"units": units, "facts_in_force": facts_in_force, "scope_facts_median": statistics.median(scope_sizes),
-            "full": summary(full_times), "scoped": summary(scoped_times),
-            "scoped_same_subset": summary(scoped_times[:len(full_times)]),
-            "compared": len(full_times), "differing": differing}
+            "check": {config: summary(values) for config, values in times.items()},
+            "closure": {config: summary(values) for config, values in closure.items()},
+            "compared": len(times["before"]), "differing": differing}
 
 
 def main():
