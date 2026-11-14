@@ -1,0 +1,159 @@
+# PREP (written 13 Nov 2026, before the event). Disclosed in docs/compliance.md.
+# Change-control core ontology. Profile: OWL 2 RL only (every axiom below is
+# covered by an OWL 2 RL rule, named in the comment), so a forward-chaining
+# reasoner materialises it in polynomial time.
+#
+# Design rules:
+#  1. n-ary facts (a release is supplier x part x plant) are reified as record
+#     individuals. A supplier is never "approved" as such.
+#  2. Functional properties (owl:FunctionalProperty) are the ones the memory
+#     treats as "one value in force at a time": the snapshot resolver uses this
+#     declaration, the reasoner does not need it.
+#  3. Nothing here says what is forbidden. Axioms only derive facts (open
+#     world). Demands live in cc-shapes.ttl (closed world, scoped).
+
+@prefix cc:   <https://example.org/ctxcol#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/ctxcol> a owl:Ontology ;
+    owl:versionInfo "0.1-prep" ;
+    rdfs:comment "Change-control ontology for supplier, material, process and location changes at an automotive supplier plant." .
+
+# ---------------------------------------------------------------- classes
+
+cc:Organization a owl:Class .
+cc:Supplier  a owl:Class ; rdfs:subClassOf cc:Organization .
+cc:Customer  a owl:Class ; rdfs:subClassOf cc:Organization .
+cc:Plant     a owl:Class .
+cc:Part      a owl:Class .
+cc:Programme a owl:Class .
+
+cc:MaterialSpec        a owl:Class .
+cc:AlloySeries         a owl:Class ; rdfs:subClassOf cc:MaterialSpec .
+cc:Alloy               a owl:Class ; rdfs:subClassOf cc:MaterialSpec .
+cc:MaterialDesignation a owl:Class ; rdfs:subClassOf cc:MaterialSpec ;
+    rdfs:comment "Alloy plus temper, e.g. EN AW-6082 T6 (designation grammar: EN 515, EN 573-3)." .
+
+cc:Requirement                 a owl:Class .
+cc:CustomerRequirement         a owl:Class ; rdfs:subClassOf cc:Requirement .
+cc:CustomerApprovalRequirement a owl:Class ; rdfs:subClassOf cc:CustomerRequirement ;
+    rdfs:comment "A customer clause that demands notification or approval before a class of change is implemented." .
+cc:CompanyPolicy               a owl:Class ; rdfs:subClassOf cc:Requirement .
+
+cc:SourceRelease a owl:Class ;
+    rdfs:comment "Release of one supplier for one part at one plant (the 'quality info record')." ;
+    owl:hasKey ( cc:releaseSupplier cc:releasePart cc:releasePlant ) .          # prp-key: same triple of keys -> owl:sameAs
+cc:CustomerPartApproval a owl:Class ;
+    rdfs:comment "Customer approval of a part as built from a given source (PPAP status)." .
+cc:Deviation            a owl:Class ;
+    rdfs:comment "Time- or quantity-limited customer concession. Its validity window is carried by the fact log, not by the graph." .
+cc:Report8D             a owl:Class .
+cc:MaterialOffer        a owl:Class .
+cc:MaterialCertificate  a owl:Class .
+cc:SpecialCharacteristic a owl:Class .
+
+cc:CompletenessStatement a owl:Class ;
+    rdfs:comment "A controlled document declaring that it lists every record of a class within a scope. It licenses a closed-world reading of that class in that scope, and only there." .
+
+# Change requests: the class hierarchy IS the customer's change classification.
+cc:ChangeRequest          a owl:Class .
+cc:ProductOrProcessChange a owl:Class ; rdfs:subClassOf cc:ChangeRequest .
+cc:SupplyChainChange      a owl:Class ; rdfs:subClassOf cc:ProductOrProcessChange .
+cc:RawMaterialSourceChange a owl:Class ; rdfs:subClassOf cc:SupplyChainChange .     # cax-sco
+cc:SubSupplierChange      a owl:Class ; rdfs:subClassOf cc:SupplyChainChange .
+cc:ProcessChange          a owl:Class ; rdfs:subClassOf cc:ProductOrProcessChange .
+cc:LocationChange         a owl:Class ; rdfs:subClassOf cc:ProductOrProcessChange .
+
+# ------------------------------------------------- programme and requirement
+
+cc:partOfProgramme a owl:ObjectProperty ; rdfs:domain cc:Part ; rdfs:range cc:Programme .   # prp-dom / prp-rng
+cc:forCustomer     a owl:ObjectProperty ; rdfs:domain cc:Programme ; rdfs:range cc:Customer .
+cc:imposes         a owl:ObjectProperty ; rdfs:domain cc:Customer ; rdfs:range cc:Requirement .
+cc:appliesToChangeClass a owl:ObjectProperty ; rdfs:domain cc:Requirement .
+cc:clause          a owl:DatatypeProperty .
+
+# A part is subject to every requirement of the customer of its programme.
+cc:subjectTo a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:partOfProgramme cc:forCustomer cc:imposes ) .                # prp-spo2
+
+# ------------------------------------------------------------------ material
+
+cc:requiresMaterial a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain cc:Part ; rdfs:range cc:MaterialDesignation ;
+    rdfs:comment "The designation called out on the drawing revision in force." .
+cc:refines a owl:ObjectProperty , owl:TransitiveProperty ;                                   # prp-trp
+    rdfs:comment "X refines Y: every lot meeting X also meets Y (6082-T651 refines 6082-T6 refines 6082)." .
+cc:ofAlloy a owl:ObjectProperty ; rdfs:range cc:Alloy ;
+    rdfs:comment "Alloy of a designation. Asserted for every node of the taxonomy, including the alloy itself." .
+
+cc:requiresAlloy   a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:requiresMaterial cc:ofAlloy ) .
+cc:alloyRequiredBy a owl:ObjectProperty ; owl:inverseOf cc:requiresAlloy .                    # prp-inv1/2
+
+# ------------------------------------------------------------ quality history
+
+cc:reportAgainst a owl:ObjectProperty ; rdfs:domain cc:Report8D ; rdfs:range cc:Supplier .
+cc:hasReport     a owl:ObjectProperty ; owl:inverseOf cc:reportAgainst .
+cc:concernsMaterial a owl:ObjectProperty ; rdfs:domain cc:Report8D ; rdfs:range cc:MaterialSpec .
+cc:concernsAlloy a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:concernsMaterial cc:ofAlloy ) .
+cc:reportStatus  a owl:DatatypeProperty , owl:FunctionalProperty .
+cc:failureFeature a owl:ObjectProperty ; rdfs:domain cc:Report8D ;
+    rdfs:comment "The feature the 8D failure mode sits on (e.g. fastener holes)." .
+cc:hasFeature    a owl:ObjectProperty ; rdfs:domain cc:Part ;
+    rdfs:comment "A feature the drawing or BOM gives the part." .
+
+# The inference no single document states: a supplier has quality history on a
+# part when one of its 8D reports concerns the alloy that part's drawing calls.
+cc:hasQualityHistoryOn a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:hasReport cc:concernsAlloy cc:alloyRequiredBy ) .
+
+# Series-level quality history (named rule SERIES-8D, see cc-policies.ttl and
+# cc-alloys.ttl): same series (alloy group), not same alloy. The alloy-level
+# link above stays declared so the two can be told apart: 6061 and 6082 are
+# different alloys and only share a series.
+cc:hasSeriesQualityHistoryOn a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:hasReport cc:concernsSeries cc:seriesRequiredBy ) .
+
+# ------------------------------------------------------------------- records
+
+cc:releaseSupplier a owl:ObjectProperty ; rdfs:domain cc:SourceRelease ; rdfs:range cc:Supplier .
+cc:releasePart     a owl:ObjectProperty ; rdfs:domain cc:SourceRelease ; rdfs:range cc:Part .
+cc:releasePlant    a owl:ObjectProperty ; rdfs:domain cc:SourceRelease ; rdfs:range cc:Plant .
+cc:releaseStatus   a owl:DatatypeProperty , owl:FunctionalProperty .
+
+cc:supplierStanding a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain cc:Supplier ;
+    rdfs:comment "Supplier-level standing: \"probation\" or \"good_standing\". Says nothing about any part approval." .
+
+cc:approvalForPart        a owl:ObjectProperty ; rdfs:domain cc:CustomerPartApproval ; rdfs:range cc:Part .
+cc:approvalCoversSupplier a owl:ObjectProperty ; rdfs:domain cc:CustomerPartApproval ; rdfs:range cc:Supplier .
+cc:approvalStatus         a owl:DatatypeProperty , owl:FunctionalProperty .
+
+cc:deviationForPart        a owl:ObjectProperty ; rdfs:domain cc:Deviation ; rdfs:range cc:Part .
+cc:deviationCoversSupplier a owl:ObjectProperty ; rdfs:domain cc:Deviation ; rdfs:range cc:Supplier .
+
+cc:offeredBy       a owl:ObjectProperty ; rdfs:domain cc:MaterialOffer ; rdfs:range cc:Supplier .
+cc:offerForPart    a owl:ObjectProperty ; rdfs:domain cc:MaterialOffer ; rdfs:range cc:Part .
+cc:offeredMaterial a owl:ObjectProperty , owl:FunctionalProperty ; rdfs:domain cc:MaterialOffer ; rdfs:range cc:MaterialDesignation .
+
+cc:certSupplier a owl:ObjectProperty ; rdfs:domain cc:MaterialCertificate ; rdfs:range cc:Supplier .
+cc:certForPart  a owl:ObjectProperty ; rdfs:domain cc:MaterialCertificate ; rdfs:range cc:Part .
+
+cc:characteristicOf a owl:ObjectProperty ; rdfs:domain cc:SpecialCharacteristic ; rdfs:range cc:Part .
+cc:constrainsMaterial a owl:DatatypeProperty ;
+    rdfs:comment "true when the special characteristic is a material property (so a material mismatch touches it)." .
+cc:controlPlanLine a owl:DatatypeProperty .
+
+cc:completeForClass a owl:ObjectProperty ; rdfs:domain cc:CompletenessStatement .
+cc:completeForPlant a owl:ObjectProperty ; rdfs:domain cc:CompletenessStatement ; rdfs:range cc:Plant .
+
+# ------------------------------------------------------------ change request
+
+cc:forPart          a owl:ObjectProperty ; rdfs:domain cc:ChangeRequest ; rdfs:range cc:Part .
+cc:atPlant          a owl:ObjectProperty ; rdfs:domain cc:ChangeRequest ; rdfs:range cc:Plant .
+cc:currentSupplier  a owl:ObjectProperty ; rdfs:domain cc:ChangeRequest ; rdfs:range cc:Supplier .
+cc:proposedSupplier a owl:ObjectProperty ; rdfs:domain cc:ChangeRequest ; rdfs:range cc:Supplier .

@@ -1,0 +1,7 @@
+id,name,substances
+COAT-ANOD,"Sulphuric acid anodising, clear",none
+COAT-TCP,Trivalent chromium conversion coating on aluminium,CrIII
+COAT-CCC-YELLOW,Yellow chromate conversion coating on aluminium,CrVI
+COAT-ZNNI,Zinc-nickel 8-12 um with trivalent (Cr(III)) passivation,Zinc;Nickel;CrIII
+COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI
+COAT-ZNFLAKE,"Zinc flake coating, Cr(VI)-free",Zinc

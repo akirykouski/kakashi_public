@@ -1,0 +1,18 @@
+[
+  {"id": "main", "title": "Bormida is late: take BR-220 blanks from Meccanica Chisone",
+   "utterance": "Alluminio Bormida is two weeks late. Let's take the BR-220 blanks from Meccanica Chisone, it's the same alloy.",
+   "as_of": "2026-11-05",
+   "change": {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-C", "from_supplier": "SUP-B"}},
+  {"id": "main_after_audit", "title": "Same request after the re-audit of Chisone (6 Nov)",
+   "utterance": "Quality approved Chisone last week, so we can move BR-220 to them.",
+   "as_of": "2026-11-14",
+   "change": {"type": "SourceChange", "part": "BR-220", "to_supplier": "SUP-C", "from_supplier": "SUP-B"}},
+  {"id": "elv", "title": "Cheaper yellow chromate passivation on CL-115",
+   "utterance": "Instead of zinc-nickel on CL-115, let's use the cheap yellow chromate passivation.",
+   "as_of": "2026-11-14",
+   "change": {"type": "CoatingChange", "part": "CL-115", "new_coating": "COAT-ZN-YELLOW"}},
+  {"id": "silence", "title": "Postpone BR-220 delivery by one week",
+   "utterance": "We postpone the BR-220 delivery to Aurelia by one week.",
+   "as_of": "2026-11-14",
+   "change": {"type": "ScheduleChange", "part": "BR-220"}}
+]

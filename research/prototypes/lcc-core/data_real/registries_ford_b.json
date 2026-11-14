@@ -1,0 +1,111 @@
+{
+ "_note": "ONBOARDING INPUT written by the team, not extracted. What a reader would enter when onboarding these customers: the customer, generic classes for 'the part', 'the supplier', 'the sub-supplier', and the named parties of the Ford recall. Real documents use real names that are not in the synthetic registry. Variant B (Ford only, diagnostic): supplier names reduced to the single token that appears in the text.",
+ "customers": {
+  "columns": [
+   "id",
+   "name"
+  ],
+  "rows": [
+   [
+    "CUST-ADIENT",
+    "Adient US LLC (and affiliates)"
+   ],
+   [
+    "CUST-ASTEMO",
+    "Astemo (Hitachi Astemo Americas)"
+   ],
+   [
+    "CUST-FORD",
+    "Ford Motor Company"
+   ]
+  ]
+ },
+ "markets": {
+  "columns": [
+   "id",
+   "name"
+  ],
+  "rows": [
+   [
+    "MKT-US",
+    "United States"
+   ]
+  ]
+ },
+ "parts": {
+  "columns": [
+   "id",
+   "name"
+  ],
+  "rows": [
+   [
+    "PART-ANY",
+    "Any product, part, component or Supplies delivered to the customer (generic class)"
+   ],
+   [
+    "PART-AIRBAG-COVER",
+    "Driver airbag cover (Ford 18V-806)"
+   ]
+  ]
+ },
+ "suppliers": {
+  "columns": [
+   "id",
+   "name",
+   "commodity"
+  ],
+  "rows": [
+   [
+    "SUP-ANY",
+    "Supplier / Seller delivering to the customer (generic class)",
+    "any"
+   ],
+   [
+    "SUP-SUBTIER",
+    "Sub-supplier / sub-tier supplier of the supplier (generic class)",
+    "any"
+   ],
+   [
+    "SUP-AUTOLIV",
+    "Autoliv",
+    "airbag module"
+   ],
+   [
+    "SUP-EISSMANN",
+    "Eissmann",
+    "airbag cover"
+   ],
+   [
+    "SUP-DEMO",
+    "DEMO",
+    "injection molding"
+   ]
+  ]
+ },
+ "materials": {
+  "columns": [
+   "id",
+   "name"
+  ],
+  "rows": [
+   [
+    "MAT-ANY",
+    "Any raw material or purchased material (generic class)"
+   ]
+  ]
+ },
+ "coatings": {
+  "columns": [
+   "id",
+   "name",
+   "substances"
+  ],
+  "rows": [
+   [
+    "COAT-ANY",
+    "Any coating, plating or surface treatment (generic class)",
+    "none"
+   ]
+  ]
+ }
+}

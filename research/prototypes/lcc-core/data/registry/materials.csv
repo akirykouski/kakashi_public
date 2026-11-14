@@ -1,0 +1,11 @@
+id,name,class,temper_of,series,typical_yield_mpa
+ALY-6082,EN AW-6082 (AlSi1MgMn),Alloy,,Series6xxx,
+ALY-6061,EN AW-6061 (AlMg1SiCu),Alloy,,Series6xxx,
+MAT-6082-T6,EN AW-6082-T6,AlloyTemper,ALY-6082,,260
+MAT-6082-T5,EN AW-6082-T5,AlloyTemper,ALY-6082,,230
+MAT-6061-T6,EN AW-6061-T6,AlloyTemper,ALY-6061,,240
+MAT-ALSI9CU3,EN AC-46000 (AlSi9Cu3(Fe)),Material,,Series3xxxCast,
+MAT-DC04,Steel DC04 (EN 10130),Steel,,,
+MAT-C67S,Spring steel C67S (EN 10132),Steel,,,
+MAT-42CRMO4,Steel 42CrMo4,Steel,,,
+MAT-PA66GF30,PA66-GF30,Polymer,,,

@@ -1,0 +1,54 @@
+# PREP (written 13 Nov 2026, before the event).
+# Wrought aluminium designations used by the scenario. AUTHORED BY US from the
+# designation grammar of EN 573-3 (alloy) and EN 515 (temper). It is not an
+# imported ontology: no open alloy/temper taxonomy was found (Wikidata has
+# Q19903153 "6082 aluminium alloy" with no series and no temper).
+#
+# Because we author it, this taxonomy is complete by construction, which is what
+# lets a shape say "X does not satisfy Y" when no refines-path exists.
+#
+# Assumption to check with a metallurgist: a Tx51 temper (stress-relieved by
+# stretching) is treated as meeting a Tx requirement. Drawings can forbid it.
+
+@prefix cc:   <https://example.org/ctxcol#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Named rule SERIES-8D (series-level match). The data's documents state the alloy
+# group ("alloy group 6xxx" in DWG-BR220-RevC and in 8D-25-031), so the 8D rule
+# compares series, not alloy. ofSeries lifts any node of the taxonomy to its
+# series through ofAlloy then refines. Alloy-level match stays separate
+# (hasQualityHistoryOn in cc-core.ttl) and does NOT fire for 6061 vs 6082.
+cc:ofSeries a owl:ObjectProperty ; rdfs:range cc:AlloySeries ;
+    owl:propertyChainAxiom ( cc:ofAlloy cc:refines ) .                                  # prp-spo2
+cc:concernsSeries a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:concernsMaterial cc:ofSeries ) .
+cc:requiresSeries a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( cc:requiresMaterial cc:ofSeries ) .
+cc:seriesRequiredBy a owl:ObjectProperty ; owl:inverseOf cc:requiresSeries .            # prp-inv1/2
+
+cc:Series6xxx a cc:AlloySeries ; rdfs:label "6xxx series (Al-Mg-Si)" .
+
+cc:Series5xxx a cc:AlloySeries ; rdfs:label "5xxx series (Al-Mg)" .
+
+cc:EN_AW_5083 a cc:Alloy ; rdfs:label "EN AW-5083" ;
+    cc:refines cc:Series5xxx ; cc:ofAlloy cc:EN_AW_5083 .
+cc:EN_AW_5083_H111 a cc:MaterialDesignation ; rdfs:label "EN AW-5083 H111" ;
+    cc:refines cc:EN_AW_5083 ; cc:ofAlloy cc:EN_AW_5083 .
+
+cc:EN_AW_6082 a cc:Alloy ; rdfs:label "EN AW-6082" ;
+    cc:refines cc:Series6xxx ; cc:ofAlloy cc:EN_AW_6082 .
+cc:EN_AW_6061 a cc:Alloy ; rdfs:label "EN AW-6061" ;
+    cc:refines cc:Series6xxx ; cc:ofAlloy cc:EN_AW_6061 .
+
+cc:EN_AW_6082_T5   a cc:MaterialDesignation ; rdfs:label "EN AW-6082 T5" ;
+    cc:refines cc:EN_AW_6082 ; cc:ofAlloy cc:EN_AW_6082 .
+cc:EN_AW_6082_T6   a cc:MaterialDesignation ; rdfs:label "EN AW-6082 T6" ;
+    cc:refines cc:EN_AW_6082 ; cc:ofAlloy cc:EN_AW_6082 .
+cc:EN_AW_6082_T651 a cc:MaterialDesignation ; rdfs:label "EN AW-6082 T651" ;
+    cc:refines cc:EN_AW_6082_T6 ; cc:ofAlloy cc:EN_AW_6082 .
+
+cc:EN_AW_6061_T6   a cc:MaterialDesignation ; rdfs:label "EN AW-6061 T6" ;
+    cc:refines cc:EN_AW_6061 ; cc:ofAlloy cc:EN_AW_6061 .
+cc:EN_AW_6061_T651 a cc:MaterialDesignation ; rdfs:label "EN AW-6061 T651" ;
+    cc:refines cc:EN_AW_6061_T6 ; cc:ofAlloy cc:EN_AW_6061 .

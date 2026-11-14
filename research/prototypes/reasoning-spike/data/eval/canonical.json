@@ -1,0 +1,631 @@
+{
+ "CR-01": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "material_source_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Meccanica\\ C",
+   "Alluminio\\ B",
+   "billet"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_NO_SOURCE_RELEASE",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "blocker",
+    "rule": "B_MATERIAL_MISMATCH",
+    "docs": [
+     "ASL-TO-2026-04",
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_OPEN_8D_SAME_ALLOY",
+    "docs": [
+     "8D-25-031",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   },
+   {
+    "kind": "question",
+    "rule": "Q_NO_MATERIAL_CERT",
+    "docs": [
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   },
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "1. Material: EN AW-6061-T6 billet."
+   }
+  ]
+ },
+ "CR-02": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "subcontracted_process_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "anodising",
+   "Rivestimenti\\ Nord",
+   "3\\ lots"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CP-BR220-R3",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 4
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-03": {
+  "verdict": "no_blockers_found",
+  "part": "BR-310",
+  "change_type": "source_allocation_increase",
+  "request_must_contain": [
+   "BR\\-310",
+   "Meccanica\\ C",
+   "Plant\\ 2",
+   "2\\ extra\\ pallets"
+  ],
+  "items": [],
+  "cleared_rules": [
+   "B_SUPPLIER_NOT_QUALIFIED"
+  ],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   }
+  ]
+ },
+ "CR-04": {
+  "verdict": "no_blockers_found",
+  "part": "BR-220",
+  "change_type": "expedite_approved_source",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "expedite"
+  ],
+  "items": [],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-05": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "material_source_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Meccanica\\ C",
+   "6061\\-T6",
+   "alternate\\ source"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_NO_SOURCE_RELEASE",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "blocker",
+    "rule": "B_MATERIAL_MISMATCH",
+    "docs": [
+     "ASL-TO-2026-04",
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_OPEN_8D_SAME_ALLOY",
+    "docs": [
+     "8D-25-031",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "1. Material: EN AW-6061-T6 billet."
+   },
+   {
+    "doc_id": "EML-SQ-2026-1105",
+    "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene."
+   },
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   }
+  ]
+ },
+ "CR-06": {
+  "verdict": "needs_info",
+  "part": "BR-220",
+  "change_type": "lot_release",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "H\\-4471"
+  ],
+  "items": [
+   {
+    "kind": "question",
+    "rule": "Q_NO_MATERIAL_CERT",
+    "docs": [
+     "CP-BR220-R3"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-07": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "inspection_frequency_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "tensile",
+   "1\\ per\\ 3\\ heats"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CP-BR220-R3",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 4
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-08": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "yield_acceptance",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "245\\ MPa",
+   "240\\ MPa"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "special_characteristic_violation",
+    "docs": [
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "2. Yield strength Rp0.2 >= 240 MPa. Verified by material certificate."
+   },
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "1. Material: EN AW-6061-T6 billet."
+   }
+  ]
+ },
+ "CR-09": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "deviation_request",
+  "request_must_contain": [
+   "BR\\-220",
+   "3,500\\ BR\\-220\\ pieces",
+   "10\\ weeks",
+   "Alluminio\\ B"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "deviation_limit_exceeded",
+    "docs": [
+     "PRC-DEV-007"
+    ],
+    "n_quotes": 1
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-10": {
+  "verdict": "blockers_found",
+  "part": "BR-180",
+  "change_type": "source_volume_shift",
+  "request_must_contain": [
+   "BR\\-180",
+   "Meccanica\\ C",
+   "Alluminio\\ B",
+   "40%",
+   "Plant\\ 1"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_OPEN_8D_SAME_ALLOY",
+    "docs": [
+     "8D-25-031",
+     "BOM-STL-TORINO-27"
+    ],
+    "n_quotes": 3
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   }
+  ]
+ },
+ "CR-11": {
+  "verdict": "needs_info",
+  "part": "BR-180",
+  "change_type": "new_plant_pilot",
+  "request_must_contain": [
+   "BR\\-180",
+   "Plant\\ 3",
+   "Alluminio\\ B"
+  ],
+  "items": [
+   {
+    "kind": "question",
+    "rule": "Q_SOURCE_RELEASE_UNKNOWN",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 1
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-12": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "source_location_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "Rovereto",
+   "Plant\\ 1",
+   "6082\\-T6"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_NO_SOURCE_RELEASE",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 3
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-13": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "material_grade_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "6061\\-T6",
+   "240\\ MPa"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_MATERIAL_MISMATCH",
+    "docs": [
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-1105",
+    "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene."
+   },
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "1. Material: EN AW-6061-T6 billet."
+   },
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "2. Yield strength Rp0.2 >= 240 MPa. Verified by material certificate."
+   }
+  ]
+ },
+ "CR-14": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "finish_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "chromate\\ conversion"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-15": {
+  "verdict": "no_blockers_found",
+  "part": "BR-220",
+  "change_type": "deviation_request",
+  "request_must_contain": [
+   "BR\\-220",
+   "1,800\\ pieces",
+   "5\\ weeks",
+   "Alluminio\\ B"
+  ],
+  "items": [],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-16": {
+  "verdict": "blockers_found",
+  "part": "BR-310",
+  "change_type": "source_plant_change",
+  "request_must_contain": [
+   "BR\\-310",
+   "Meccanica\\ C",
+   "Plant\\ 1",
+   "Plant\\ 2"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_NO_SOURCE_RELEASE",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 3
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   }
+  ]
+ },
+ "CR-17": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "sub_supplier_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "Termica\\ Nord",
+   "6082\\-T6"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 3
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-18": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "material_source_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Meccanica\\ C",
+   "audit",
+   "probation"
+  ],
+  "items": [
+   {
+    "kind": "blocker",
+    "rule": "B_NO_SOURCE_RELEASE",
+    "docs": [
+     "ASL-TO-2026-04"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "blocker",
+    "rule": "B_MATERIAL_MISMATCH",
+    "docs": [
+     "ASL-TO-2026-04",
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 3
+   },
+   {
+    "kind": "inferred",
+    "rule": "B_OPEN_8D_SAME_ALLOY",
+    "docs": [
+     "8D-25-031",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 4
+   },
+   {
+    "kind": "question",
+    "rule": "Q_NO_MATERIAL_CERT",
+    "docs": [
+     "CP-BR220-R3",
+     "DWG-BR220-RevC"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [
+   "B_SUPPLIER_NOT_QUALIFIED"
+  ],
+  "must_not_cite": [
+   {
+    "doc_id": "EML-SQ-2026-0814",
+    "quote": "During probation Meccanica C S.p.A. receives no new business and no new part approvals until the surveillance audit is closed."
+   },
+   {
+    "doc_id": "DWG-BR220-RevB",
+    "quote": "1. Material: EN AW-6061-T6 billet."
+   },
+   {
+    "doc_id": "EML-SQ-2026-1105",
+    "quote": "per il BR-220 il materiale e' EN AW-6061-T6 con Rp0.2 minimo 240 MPa, quindi il billet di C va bene."
+   }
+  ]
+ },
+ "CR-19": {
+  "verdict": "needs_info",
+  "part": "BR-220",
+  "change_type": "service_parts_shipment",
+  "request_must_contain": [
+   "BR\\-220",
+   "Alluminio\\ B",
+   "300\\ BR\\-220",
+   "service\\ parts"
+  ],
+  "items": [
+   {
+    "kind": "question",
+    "rule": "Q_SOURCE_RELEASE_UNKNOWN",
+    "docs": [
+     "ASL-TO-2026-04",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 2
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ },
+ "CR-20": {
+  "verdict": "blockers_found",
+  "part": "BR-220",
+  "change_type": "test_lab_change",
+  "request_must_contain": [
+   "BR\\-220",
+   "Laboratorio\\ Sigma",
+   "line\\ 30",
+   "tensile"
+  ],
+  "items": [
+   {
+    "kind": "inferred",
+    "rule": "B_CUSTOMER_APPROVAL_REQUIRED",
+    "docs": [
+     "BOM-STL-TORINO-27",
+     "CP-BR220-R3",
+     "CSR-STL-2026-02"
+    ],
+    "n_quotes": 5
+   }
+  ],
+  "cleared_rules": [],
+  "must_not_cite": []
+ }
+}

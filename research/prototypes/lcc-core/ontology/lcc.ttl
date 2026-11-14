@@ -1,0 +1,203 @@
+@prefix lcc:  <https://lcc.example/ont#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Live Context Collision ontology: change control at a tier-1 automotive supplier.
+# Scope: one process only - a change of source, material, process or coating for a part.
+# Profile: OWL 2 RL, so owlrl can compute the closure. Checks live in core/rules.py (SPARQL)
+# and ontology/shapes.ttl (SHACL integrity shapes).
+# Upper-ontology alignment is by name only (skos:closeMatch), nothing is imported:
+#   IOF Core / IOF Supply Chain  https://spec.industrialontologies.org/
+#   PROV-O                        http://www.w3.org/ns/prov#
+
+<https://lcc.example/ont> a owl:Ontology ;
+    rdfs:label "Live Context Collision - change control ontology" ;
+    owl:versionInfo "0.1 (2026-11-13)" .
+
+########################################################################
+# Classes
+########################################################################
+
+lcc:Part a owl:Class ; rdfs:label "Part" ;
+    rdfs:comment "A component the plant produces and ships, identified by part number and drawing revision." ;
+    skos:closeMatch <https://spec.industrialontologies.org/ontology/core/Core/MaterialProduct> .
+
+lcc:Material a owl:Class ; rdfs:label "Material" .
+lcc:AlloySeries a owl:Class ; rdfs:subClassOf lcc:Material ; rdfs:label "Alloy series (EN 573, e.g. 6xxx)" .
+lcc:Alloy a owl:Class ; rdfs:subClassOf lcc:Material ; rdfs:label "Alloy (EN 573 designation, e.g. EN AW-6082)" .
+lcc:AlloyTemper a owl:Class ; rdfs:subClassOf lcc:Material ;
+    rdfs:label "Alloy in a temper (EN 515, e.g. EN AW-6082-T6)" ;
+    rdfs:comment "6061 and 6082 are different alloys; T5 and T6 of the same alloy have different strength." .
+lcc:Steel a owl:Class ; rdfs:subClassOf lcc:Material .
+lcc:Polymer a owl:Class ; rdfs:subClassOf lcc:Material .
+
+lcc:Coating a owl:Class ; rdfs:label "Coating or surface treatment" .
+lcc:Substance a owl:Class ; rdfs:label "Chemical substance" .
+lcc:RestrictedSubstance a owl:Class ; rdfs:subClassOf lcc:Substance ;
+    rdfs:label "Substance restricted by a law" .
+
+lcc:Organisation a owl:Class ; skos:closeMatch prov:Organization .
+lcc:Supplier a owl:Class ; rdfs:subClassOf lcc:Organisation ;
+    skos:closeMatch <https://spec.industrialontologies.org/ontology/supplychain/SupplyChain/Supplier> .
+lcc:Customer a owl:Class ; rdfs:subClassOf lcc:Organisation ; rdfs:label "Customer (vehicle maker)" .
+lcc:Site a owl:Class ; rdfs:label "Production site of our company" .
+lcc:Program a owl:Class ; rdfs:label "Vehicle program of a customer" .
+lcc:Market a owl:Class ; rdfs:label "Market where vehicles are sold (e.g. EU)" .
+lcc:Person a owl:Class ; skos:closeMatch prov:Person .
+
+# Rules of the game. Rank: Law > CustomerRequirement > InternalProcedure > Standard (paraphrase).
+lcc:Requirement a owl:Class ; rdfs:label "Requirement" .
+lcc:Law a owl:Class ; rdfs:subClassOf lcc:Requirement .
+lcc:CustomerRequirement a owl:Class ; rdfs:subClassOf lcc:Requirement ; rdfs:label "Customer-specific requirement (CSR)" .
+lcc:InternalProcedure a owl:Class ; rdfs:subClassOf lcc:Requirement .
+lcc:Standard a owl:Class ; rdfs:subClassOf lcc:Requirement .
+
+# Change types a requirement can cover.
+lcc:ChangeType a owl:Class .
+lcc:SourceChange a lcc:ChangeType ; rdfs:label "Change of supplier (source)" .
+lcc:MaterialChange a lcc:ChangeType ; rdfs:label "Change of material" .
+lcc:ProcessChange a lcc:ChangeType ; rdfs:label "Change of manufacturing process" .
+lcc:CoatingChange a lcc:ChangeType ; rdfs:label "Change of coating / surface treatment" .
+lcc:ScheduleChange a lcc:ChangeType ; rdfs:label "Change of delivery date or quantity" .
+lcc:PackagingChange a lcc:ChangeType ; rdfs:label "Change of packaging" .
+
+# Records. Every record is a prov:Entity: it has an author, a date and a source document.
+lcc:Record a owl:Class ; rdfs:subClassOf prov:Entity .
+lcc:PartApproval a owl:Class ; rdfs:subClassOf lcc:Record ;
+    rdfs:label "Approved source: supplier x part x our site x customer" ;
+    rdfs:comment "Approval is never global: it holds for one part, at one of our sites, for one customer." .
+lcc:SupplierQualification a owl:Class ; rdfs:subClassOf lcc:Record ;
+    rdfs:label "Supplier-level qualification status (after audit)" ;
+    rdfs:comment "A passed audit qualifies the supplier, it does not approve any part." .
+lcc:PPAPRecord a owl:Class ; rdfs:subClassOf lcc:Record ; rdfs:label "Customer part approval (PPAP) status" .
+lcc:Issue a owl:Class ; rdfs:subClassOf lcc:Record ; rdfs:label "Quality issue" .
+lcc:Deviation a owl:Class ; rdfs:subClassOf lcc:Issue ; rdfs:label "Deviation (temporary permit to ship off-spec)" .
+lcc:NCR a owl:Class ; rdfs:subClassOf lcc:Issue ; rdfs:label "Nonconformance report" .
+lcc:EightD a owl:Class ; rdfs:subClassOf lcc:Issue ; rdfs:label "8D problem-solving report" .
+lcc:MaterialCertificate a owl:Class ; rdfs:subClassOf lcc:Record ; rdfs:label "Material certificate (EN 10204 3.1)" .
+lcc:SupplierCapability a owl:Class ; rdfs:subClassOf lcc:Record ; rdfs:label "Material a supplier is qualified to deliver" .
+lcc:Decision a owl:Class ; rdfs:subClassOf lcc:Record ; rdfs:label "Decision taken in a meeting" .
+lcc:Meeting a owl:Class ; rdfs:subClassOf prov:Activity .
+lcc:Document a owl:Class ; rdfs:subClassOf prov:Entity .
+lcc:SpecialCharacteristic a owl:Class ; rdfs:label "Special characteristic (safety/fit/function), e.g. minimum yield strength" .
+
+lcc:ChangeRequest a owl:Class ; rdfs:label "Proposed change being discussed" .
+
+########################################################################
+# Object properties
+########################################################################
+
+lcc:usedIn a owl:ObjectProperty ; rdfs:domain lcc:Part ; rdfs:range lcc:Program .
+lcc:forCustomer a owl:ObjectProperty ; rdfs:domain lcc:Program ; rdfs:range lcc:Customer .
+lcc:soldIn a owl:ObjectProperty ; rdfs:domain lcc:Program ; rdfs:range lcc:Market .
+lcc:imposes a owl:ObjectProperty ; rdfs:domain lcc:Customer ; rdfs:range lcc:CustomerRequirement .
+lcc:appliesInMarket a owl:ObjectProperty ; rdfs:domain lcc:Law ; rdfs:range lcc:Market .
+lcc:hasLaw a owl:ObjectProperty ; owl:inverseOf lcc:appliesInMarket ; rdfs:label "market has law" .
+
+lcc:madeOf a owl:ObjectProperty ; rdfs:domain lcc:Part ; rdfs:range lcc:Material ;
+    rdfs:label "drawing material (alloy and temper)" .
+lcc:temperOf a owl:ObjectProperty ; rdfs:domain lcc:AlloyTemper ; rdfs:range lcc:Alloy .
+lcc:inSeries a owl:ObjectProperty ; rdfs:domain lcc:Alloy ; rdfs:range lcc:AlloySeries .
+lcc:hasCoating a owl:ObjectProperty ; rdfs:domain lcc:Part ; rdfs:range lcc:Coating .
+lcc:containsSubstance a owl:ObjectProperty ; rdfs:range lcc:Substance .
+lcc:restricts a owl:ObjectProperty ; rdfs:domain lcc:Law ; rdfs:range lcc:Substance .
+lcc:hasSpecialCharacteristic a owl:ObjectProperty ; rdfs:domain lcc:Part ; rdfs:range lcc:SpecialCharacteristic .
+
+# --- Inferred links (property chains). These are the "two or three documents combined" conclusions.
+
+# Part -> customer requirement: part is used in a program, the program belongs to a customer,
+# the customer imposes the requirement.  (drawing/part card + program list + CSR)
+lcc:subjectTo a owl:ObjectProperty ; rdfs:label "part is subject to requirement" ;
+    owl:propertyChainAxiom ( lcc:usedIn lcc:forCustomer lcc:imposes ) .
+
+# Part -> law: part used in a program, program sold in a market, the market has the law (inverse).
+lcc:subjectToLaw a owl:ObjectProperty ; rdfs:subPropertyOf lcc:subjectTo ;
+    owl:propertyChainAxiom ( lcc:usedIn lcc:soldIn lcc:hasLaw ) .
+
+# Part -> customer.
+lcc:deliveredTo a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( lcc:usedIn lcc:forCustomer ) .
+
+# Part -> alloy (ignores temper): an 8D that names only "EN AW-6082" reaches a part drawn in EN AW-6082-T6.
+lcc:madeOfAlloy a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( lcc:madeOf lcc:temperOf ) .
+lcc:madeOfSeries a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( lcc:madeOfAlloy lcc:inSeries ) .
+
+# Part -> substance through its coating.
+lcc:containsSubstanceVia a owl:ObjectProperty ; rdfs:label "part contains substance (via coating)" ;
+    owl:propertyChainAxiom ( lcc:hasCoating lcc:containsSubstance ) .
+
+# Requirement scope.
+lcc:requiresCustomerApprovalFor a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType .
+lcc:requiresNotificationFor a owl:ObjectProperty ; rdfs:domain lcc:Requirement ; rdfs:range lcc:ChangeType .
+
+# Records.
+lcc:approvedSupplier a owl:ObjectProperty ; rdfs:range lcc:Supplier .
+lcc:approvedPart a owl:ObjectProperty ; rdfs:range lcc:Part .
+lcc:approvedSite a owl:ObjectProperty ; rdfs:range lcc:Site .
+lcc:approvedForCustomer a owl:ObjectProperty ; rdfs:range lcc:Customer .
+lcc:qualifiedSupplier a owl:ObjectProperty ; rdfs:domain lcc:SupplierQualification ; rdfs:range lcc:Supplier .
+lcc:capableSupplier a owl:ObjectProperty ; rdfs:domain lcc:SupplierCapability ; rdfs:range lcc:Supplier .
+lcc:capableMaterial a owl:ObjectProperty ; rdfs:domain lcc:SupplierCapability ; rdfs:range lcc:Material .
+lcc:certSupplier a owl:ObjectProperty ; rdfs:domain lcc:MaterialCertificate ; rdfs:range lcc:Supplier .
+lcc:certMaterial a owl:ObjectProperty ; rdfs:domain lcc:MaterialCertificate ; rdfs:range lcc:Material .
+lcc:ppapPart a owl:ObjectProperty ; rdfs:range lcc:Part .
+lcc:ppapCustomer a owl:ObjectProperty ; rdfs:range lcc:Customer .
+lcc:ppapSupplier a owl:ObjectProperty ; rdfs:range lcc:Supplier .
+
+lcc:concernsSupplier a owl:ObjectProperty ; rdfs:domain lcc:Issue ; rdfs:range lcc:Supplier .
+lcc:hasIssue a owl:ObjectProperty ; owl:inverseOf lcc:concernsSupplier ; rdfs:label "supplier has issue" .
+lcc:concernsMaterial a owl:ObjectProperty ; rdfs:domain lcc:Issue ; rdfs:range lcc:Material .
+lcc:concernsPart a owl:ObjectProperty ; rdfs:domain lcc:Issue ; rdfs:range lcc:Part .
+lcc:concernsCoating a owl:ObjectProperty ; rdfs:domain lcc:Issue ; rdfs:range lcc:Coating .
+lcc:permitsCoating a owl:ObjectProperty ; rdfs:domain lcc:Deviation ; rdfs:range lcc:Coating .
+lcc:permitsChangeType a owl:ObjectProperty ; rdfs:domain lcc:Deviation ; rdfs:range lcc:ChangeType .
+
+lcc:decidedIn a owl:ObjectProperty ; rdfs:domain lcc:Decision ; rdfs:range lcc:Meeting .
+lcc:decidedBy a owl:ObjectProperty ; rdfs:range lcc:Person ; rdfs:subPropertyOf prov:wasAttributedTo .
+lcc:about a owl:ObjectProperty ; rdfs:domain lcc:Decision .
+
+lcc:author a owl:ObjectProperty ; rdfs:range lcc:Person ; rdfs:subPropertyOf prov:wasAttributedTo .
+lcc:owner a owl:ObjectProperty ; rdfs:range lcc:Person ; rdfs:label "person who owns open questions of this kind" .
+
+# Supersession: the newer record replaces the older one. Older is demoted, never deleted.
+lcc:supersedes a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:subPropertyOf prov:wasRevisionOf ;
+    rdfs:comment "Transitive: rev D supersedes rev C supersedes rev B, so rev D supersedes rev B." .
+lcc:supersededBy a owl:ObjectProperty ; owl:inverseOf lcc:supersedes .
+
+########################################################################
+# Data properties
+########################################################################
+
+lcc:status a owl:DatatypeProperty ;
+    rdfs:comment "approved | conditional | revoked | rejected | open | closed | valid | expired" .
+lcc:validFrom a owl:DatatypeProperty ; rdfs:range xsd:date ; rdfs:comment "Valid time: when it became true in the world." .
+lcc:validTo a owl:DatatypeProperty ; rdfs:range xsd:date .
+lcc:recordedAt a owl:DatatypeProperty ; rdfs:range xsd:dateTime ; rdfs:comment "Transaction time: when we learned it." .
+lcc:minYieldMPa a owl:DatatypeProperty ; rdfs:domain lcc:SpecialCharacteristic .
+lcc:typicalYieldMPa a owl:DatatypeProperty ; rdfs:domain lcc:AlloyTemper .
+lcc:drawingRevision a owl:DatatypeProperty ; rdfs:domain lcc:Part .
+lcc:ppapLevel a owl:DatatypeProperty .
+lcc:reason a owl:DatatypeProperty ; rdfs:domain lcc:Decision ; rdfs:label "why the decision was taken" .
+lcc:role a owl:DatatypeProperty ; rdfs:domain lcc:Person .
+
+########################################################################
+# Reference data that belongs to the schema (EN 573 / EN 515, written by us, not imported)
+########################################################################
+
+lcc:Series6xxx a lcc:AlloySeries ; rdfs:label "6xxx (Al-Mg-Si)" .
+lcc:Series3xxxCast a lcc:AlloySeries ; rdfs:label "AlSiCu casting alloys" .
+
+lcc:CrVI a lcc:RestrictedSubstance ; rdfs:label "Hexavalent chromium, Cr(VI)" .
+lcc:Lead a lcc:RestrictedSubstance ; rdfs:label "Lead" .
+lcc:Cadmium a lcc:RestrictedSubstance ; rdfs:label "Cadmium" .
+lcc:Mercury a lcc:RestrictedSubstance ; rdfs:label "Mercury" .
+lcc:CrIII a lcc:Substance ; rdfs:label "Trivalent chromium, Cr(III)" .
+lcc:Zinc a lcc:Substance .
+lcc:Nickel a lcc:Substance .
