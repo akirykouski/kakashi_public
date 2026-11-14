@@ -1,0 +1,37 @@
+{
+  "id": "MTG-2026-11-06",
+  "title": "Supplier quality review",
+  "date": "2026-11-06",
+  "participants": [
+    "PER-BIANCHI",
+    "PER-GALLO",
+    "PER-ROSSI"
+  ],
+  "utterances": [
+    [
+      "PER-BIANCHI",
+      "Meccanica Chisone passed the re-audit yesterday, score 86. I set them back to approved."
+    ],
+    [
+      "PER-GALLO",
+      "The 8D on the 6082 cracks is not closed yet, corrective action still being verified."
+    ],
+    [
+      "PER-BIANCHI",
+      "Correct, the audit qualifies the company. Part approvals stay as they are."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-034",
+      "about": [
+        "SUP-C",
+        "QS-C-2026"
+      ],
+      "by": "PER-BIANCHI",
+      "text": "SUP-C supplier qualification back to approved.",
+      "reason": "Re-audit passed with score 86; part approvals unchanged.",
+      "quote": "Meccanica Chisone passed the re-audit yesterday, score 86. I set them back to approved."
+    }
+  ]
+}

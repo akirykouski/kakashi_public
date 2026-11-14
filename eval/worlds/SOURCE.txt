@@ -1,0 +1,2 @@
+Imported from torino_kakashi (private), branch night-shift/2026-11-13-kva-plan, commit fe3b4952102fbe54908d79165c3fb7234e4b9979
+by eval/tools/import_worlds.py. Synthetic data only. Engine code and data_real/ are not imported.

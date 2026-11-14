@@ -1,0 +1,43 @@
+{
+  "id": "MTG-2026-09-15",
+  "title": "Change board, Pinerolo",
+  "date": "2026-09-15",
+  "participants": [
+    "PER-CONTI",
+    "PER-BIANCHI",
+    "PER-GALLO",
+    "PER-FERRI"
+  ],
+  "utterances": [
+    [
+      "PER-GALLO",
+      "Third porosity escape on HB-620 from Fonderia Dora this quarter, the 8D is still open."
+    ],
+    [
+      "PER-BIANCHI",
+      "Then I revoke Dora's approval for HB-620 today and set Dora to conditional."
+    ],
+    [
+      "PER-CONTI",
+      "Agreed. We move HB-620 to Fonderia Pellice once their audit and PPAP are through."
+    ],
+    [
+      "PER-FERRI",
+      "Pellice can start in October if the audit passes."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-028",
+      "about": [
+        "HB-620",
+        "SUP-D",
+        "SUP-H"
+      ],
+      "by": "PER-CONTI",
+      "text": "Revoke SUP-D approval for HB-620, move HB-620 to SUP-H after qualification.",
+      "reason": "Three porosity escapes with 8D-26-009 still open.",
+      "quote": "We move HB-620 to Fonderia Pellice once their audit and PPAP are through."
+    }
+  ]
+}

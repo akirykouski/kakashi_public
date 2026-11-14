@@ -1,0 +1,244 @@
+{
+ "ASL-TO-2026-04": {
+  "header": {
+   "doc_id": "ASL-TO-2026-04",
+   "revision": "4",
+   "status": "CONTROLLED, EFFECTIVE",
+   "effective_date": "2026-09-15"
+  },
+  "must_contain": [
+   "^status: CONTROLLED, EFFECTIVE",
+   "This record is the complete list of approved material sources",
+   "A source that is not listed for a part, plant and customer has no approval\\.",
+   "never per supplier",
+   "A supplier audit result does not grant a part approval\\.",
+   "Torino Plant 3 \\(TO3\\) is not in scope",
+   "Service and aftermarket parts are not in scope",
+   "^APPROVAL AP-0311: part BR-220; plant TO1; customer STL; supplier Alluminio B S\\.r\\.l\\. \\(Settimo Torinese\\)",
+   "^APPROVAL AP-0207: part BR-180; plant TO1; customer STL; supplier Meccanica C",
+   "^APPROVAL AP-0344: part BR-310; plant TO2; customer CLM; supplier Meccanica C",
+   "^Meccanica C S\\.p\\.A\\. holds approvals for: BR-180 \\(TO1, STL\\); BR-310 \\(TO2, CLM\\)\\.$",
+   "^BR-220 at TO1 for STL has one approved material source: Alluminio B S\\.r\\.l\\.",
+   "^APPROVAL\\ AP\\-0311:\\ part\\ BR\\-220;\\ plant\\ TO1;\\ customer\\ STL;\\ supplier\\ Alluminio\\ B\\ S\\.r\\.l\\.\\ \\(Settimo\\ Torinese\\);\\ billet\\ grade\\ EN\\ AW\\-6082\\-T6;\\ status\\ APPROVED\\ 2026\\-07\\-20\\ \\(PPAP\\-2026\\-118,\\ drawing\\ Rev\\ C\\)$",
+   "^APPROVAL\\ AP\\-0207:\\ part\\ BR\\-180;\\ plant\\ TO1;\\ customer\\ STL;\\ supplier\\ Meccanica\\ C\\ S\\.p\\.A\\.\\ \\(Chieri\\);\\ billet\\ grade\\ EN\\ AW\\-6061\\-T6;\\ status\\ APPROVED\\ 2024\\-09\\-02\\ \\(PPAP\\-2024\\-077\\)$",
+   "^APPROVAL\\ AP\\-0208:\\ part\\ BR\\-180;\\ plant\\ TO1;\\ customer\\ STL;\\ supplier\\ Alluminio\\ B\\ S\\.r\\.l\\.\\ \\(Settimo\\ Torinese\\);\\ billet\\ grade\\ EN\\ AW\\-6061\\-T6;\\ status\\ APPROVED\\ 2024\\-10\\-14\\ \\(PPAP\\-2024\\-091\\)$",
+   "^APPROVAL\\ AP\\-0212:\\ part\\ BR\\-180;\\ plant\\ TO1;\\ customer\\ CLM;\\ supplier\\ Alluminio\\ B\\ S\\.r\\.l\\.\\ \\(Settimo\\ Torinese\\);\\ billet\\ grade\\ EN\\ AW\\-6061\\-T6;\\ status\\ APPROVED\\ 2025\\-01\\-20\\ \\(PPAP\\-2025\\-006\\)$",
+   "^APPROVAL\\ AP\\-0344:\\ part\\ BR\\-310;\\ plant\\ TO2;\\ customer\\ CLM;\\ supplier\\ Meccanica\\ C\\ S\\.p\\.A\\.\\ \\(Chieri\\);\\ billet\\ grade\\ EN\\ AW\\-5083\\-H111;\\ status\\ APPROVED\\ 2025\\-06\\-11\\ \\(PPAP\\-2025\\-052\\)$",
+   "^APPROVAL\\ AP\\-0351:\\ part\\ HS\\-040;\\ plant\\ TO2;\\ customer\\ CLM;\\ supplier\\ Ferrotec\\ D\\ S\\.r\\.l\\.\\ \\(Pinerolo\\);\\ bar\\ grade\\ S355J2;\\ status\\ APPROVED\\ 2025\\-02\\-03\\ \\(PPAP\\-2025\\-019\\)$",
+   "^APPROVAL\\ AP\\-0402:\\ part\\ CV\\-015;\\ plant\\ TO1;\\ customer\\ STL;\\ supplier\\ Trafilerie\\ E\\ S\\.p\\.A\\.\\ \\(Biella\\);\\ bar\\ grade\\ CuZn39Pb3;\\ status\\ APPROVED\\ 2023\\-11\\-27\\ \\(PPAP\\-2023\\-140\\)$"
+  ],
+  "must_not_match": [
+   "BR-220[^\\n]*Meccanica C",
+   "Meccanica C[^\\n]*BR-220"
+  ],
+  "exactly": [
+   {
+    "pattern": "^APPROVAL AP-",
+    "count": 7
+   },
+   {
+    "pattern": "^APPROVAL [^\\n]*part BR-220;",
+    "count": 1
+   },
+   {
+    "pattern": "^APPROVAL [^\\n]*Meccanica C",
+    "count": 2
+   },
+   {
+    "pattern": "^APPROVAL AP-[^\\n]*; status APPROVED ",
+    "count": 7
+   }
+  ]
+ },
+ "DWG-BR220-RevC": {
+  "header": {
+   "doc_id": "DWG-BR220-RevC",
+   "revision": "C",
+   "status": "RELEASED, EFFECTIVE",
+   "effective_date": "2026-06-01"
+  },
+  "must_contain": [
+   "^status: RELEASED, EFFECTIVE",
+   "Material: EN AW-6082-T6 billet",
+   "Yield strength Rp0\\.2 >= 250 MPa\\. SPECIAL CHARACTERISTIC SC-01",
+   "Rev B is superseded and withdrawn as of 2026-06-01"
+  ],
+  "must_not_match": [
+   "^status: (SUPERSEDED|WITHDRAWN|DRAFT)",
+   "Material: EN AW-6061"
+  ]
+ },
+ "DWG-BR220-RevB": {
+  "header": {
+   "doc_id": "DWG-BR220-RevB",
+   "revision": "B",
+   "status": "SUPERSEDED (withdrawn 2026-06-01, replaced by DWG-BR220-RevC)",
+   "effective_date": "2025-09-04"
+  },
+  "must_contain": [
+   "^status: SUPERSEDED",
+   "Material: EN AW-6061-T6 billet",
+   "Yield strength Rp0\\.2 >= 240 MPa"
+  ],
+  "must_not_match": [
+   "^status: (RELEASED|CONTROLLED|EFFECTIVE)"
+  ]
+ },
+ "CP-BR220-R3": {
+  "header": {
+   "doc_id": "CP-BR220-R3",
+   "revision": "3",
+   "status": "CONTROLLED, EFFECTIVE",
+   "effective_date": "2026-06-15"
+  },
+  "must_contain": [
+   "^status: CONTROLLED, EFFECTIVE",
+   "^\\| 20 \\|[^\\n]*EN AW-6082-T6",
+   "^\\| 30 \\|[^\\n]*>= 250 MPa, SPECIAL CHARACTERISTIC SC-01",
+   "Tensile tests are performed in the Plant 1 internal materials laboratory"
+  ],
+  "must_not_match": [
+   "EN AW-6061"
+  ]
+ },
+ "CSR-STL-2026-02": {
+  "header": {
+   "doc_id": "CSR-STL-2026-02",
+   "revision": "2",
+   "status": "CONTROLLED, EFFECTIVE",
+   "effective_date": "2026-01-01"
+  },
+  "must_contain": [
+   "^status: CONTROLLED, EFFECTIVE",
+   "Annex A: programs STL-Torino-27",
+   "^8\\.3\\.6\\.1 Any change to a requirement stated on a customer drawing",
+   "^8\\.3\\.3\\.3 Any change to a characteristic designated special",
+   "^7\\.1\\.5\\.3\\.2 Verification of a special characteristic by an external laboratory",
+   "^8\\.5\\.6\\.1 A change of material source, of a sub-supplier, or of the manufacturing location of a sub-supplier needs a documented risk analysis and written approval",
+   "^8\\.4\\.2\\.1 A change of subcontracted process"
+  ]
+ },
+ "8D-25-031": {
+  "header": {
+   "doc_id": "8D-25-031",
+   "revision": "3",
+   "status": "OPEN",
+   "effective_date": "2026-10-02"
+  },
+  "must_contain": [
+   "^status: OPEN",
+   "EN AW-6061-T6 \\(alloy group 6xxx\\)",
+   "Cracks at fastener holes",
+   "Report status: OPEN",
+   "^issuer: Meccanica C S\\.p\\.A\\. \\(Chieri\\)$",
+   "^Cracks at fastener holes found on machined brackets made from EN AW-6061-T6 \\(alloy group 6xxx\\)\\.$",
+   "^owner: Quality Manager, Meccanica C S\\.p\\.A\\.$"
+  ],
+  "must_not_match": [
+   "^status: (CLOSED|CANCELLED)",
+   "BR-220"
+  ]
+ },
+ "EML-SQ-2026-0814": {
+  "header": {
+   "doc_id": "EML-SQ-2026-0814",
+   "revision": "1",
+   "status": "SENT (informal correspondence)",
+   "effective_date": "2026-08-14"
+  },
+  "must_contain": [
+   "on probation",
+   "no new part approvals"
+  ],
+  "must_not_match": [
+   "revocata"
+  ]
+ },
+ "EML-SQ-2026-1105": {
+  "header": {
+   "doc_id": "EML-SQ-2026-1105",
+   "revision": "1",
+   "status": "SENT (informal correspondence)",
+   "effective_date": "2026-11-05"
+  },
+  "must_contain": [
+   "La probation comunicata con EML-SQ-2026-0814 e' revocata da oggi",
+   "l'audit riguarda il fornitore, non le singole parti",
+   "La 8D-25-031 resta aperta",
+   "EN AW-6061-T6 con Rp0\\.2 minimo 240 MPa"
+  ],
+  "must_not_match": [
+   "8D-25-031 (e'|è) chiusa"
+  ]
+ },
+ "PRC-DEV-007": {
+  "header": {
+   "doc_id": "PRC-DEV-007",
+   "revision": "2",
+   "status": "CONTROLLED, EFFECTIVE",
+   "effective_date": "2025-11-01"
+  },
+  "must_contain": [
+   "^status: CONTROLLED, EFFECTIVE",
+   "at most 2000 pieces and at most 6 weeks",
+   "does not approve a new material source"
+  ]
+ },
+ "BOM-STL-TORINO-27": {
+  "header": {
+   "doc_id": "BOM-STL-TORINO-27",
+   "revision": "7",
+   "status": "CONTROLLED, EFFECTIVE",
+   "effective_date": "2026-08-31"
+  },
+  "must_contain": [
+   "^status: CONTROLLED, EFFECTIVE",
+   "^BOM-LINE 120: part BR-220 \\(drawing Rev C\\); program STL-Torino-27; customer STL; material EN AW-6082-T6",
+   "BR-310 is not part of STL-Torino-27"
+  ],
+  "exactly": [
+   {
+    "pattern": "^BOM-LINE \\d+: part BR-310",
+    "count": 0
+   }
+  ]
+ },
+ "_pairs": [
+  {
+   "kind": "older_than",
+   "older": "DWG-BR220-RevB",
+   "newer": "DWG-BR220-RevC",
+   "why": "Rev B is superseded by Rev C"
+  },
+  {
+   "kind": "older_than",
+   "older": "EML-SQ-2026-0814",
+   "newer": "EML-SQ-2026-1105",
+   "why": "1105 revokes the 0814 probation"
+  },
+  {
+   "kind": "lower_authority",
+   "weak": "DWG-BR220-RevB",
+   "controlled": "DWG-BR220-RevC",
+   "why": "superseded drawing vs released drawing"
+  },
+  {
+   "kind": "lower_authority",
+   "weak": "EML-SQ-2026-1105",
+   "controlled": "DWG-BR220-RevC",
+   "why": "informal email restates stale 6061 value, cannot override the drawing"
+  },
+  {
+   "kind": "lower_authority",
+   "weak": "EML-SQ-2026-1105",
+   "controlled": "ASL-TO-2026-04",
+   "why": "informal email, audit does not grant part approval"
+  },
+  {
+   "kind": "lower_authority",
+   "weak": "EML-SQ-2026-0814",
+   "controlled": "ASL-TO-2026-04",
+   "why": "informal probation email vs controlled list"
+  }
+ ]
+}
