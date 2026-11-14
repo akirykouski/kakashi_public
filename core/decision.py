@@ -37,6 +37,7 @@ RULES_VERSION_PATTERNS = (
     "ontology/RULES.md",
     "core/decision_table.yaml",
     "core/rules.py",
+    "rules_data/facts.jsonl",  # policy facts the rules read (8D level, completeness scope, owners)
 )
 
 # Findings at these severities enter the table. Info findings are shown, but decide nothing.
