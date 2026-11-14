@@ -1,25 +1,59 @@
-# kakashi_public
+# Change check: a decision model over company memory
 
-Team project for the Control8 hackathon, 14 November 2026 (Valentina, Maksim & Arseniy).
+KVA hackathon "AI brain for industry", Turin, 14 November 2026 · track **Decision models** · Valentina, Maksim & Arseniy.
 
-Track: **Decision models**. A remark in a supplier-quality meeting is parsed into a change request and checked against company memory (ontology + rules over quoted facts). The system returns blockers with a proof chain and a quote under every step, or open questions with an owner. It never approves: a person decides.
+In a supplier-quality meeting someone says *"Bormida is two weeks late, let's take the BR-220 blanks from Chisone,
+same alloy."* Before the decision is taken, the system answers with the blockers it can prove from the company's
+own records, each with the chain of reasoning and a verbatim quote under every step, the open questions and who
+owns them, and the row of a declared decision table that says what may be done and who decides. It never approves:
+a person decides.
 
-| Where | What |
+## How it works
+
+- **The model listens and reads; the company's rules decide.** One LLM call turns the remark into a typed change
+  request; names are mapped to registry ids by code (a name in none of our records goes to the rules as unknown,
+  never guessed). Documents become proposed facts the same way; a fact counts only after code finds its quote
+  verbatim in the source and a person accepts it.
+- **Memory with time.** An append-only fact log with valid time and record time ("what did we know on 8 Nov?");
+  a newer record replaces an older one by date and document rank, the old one stays in history.
+- **Reasoning over an ontology.** OWL 2 RL chains from the part to the customer's requirement and to the law of
+  the market (part → programme → customer → requirement; part → market → law); rules R1a–R8 read the result.
+- **A declared decision model.** `core/decision_table.yaml`: change class × fired rules → allowed actions and the
+  role who decides; if no rule covers a change, row R0 sends it to a person. The table is exhaustively checked
+  (`python -m core.decision`: 8,704 input sets; the ones no row covers go to a person, overlaps resolved by order).
+- **Reproducible decisions.** Each check writes a decision record: request, date, facts in force, rules fired,
+  row, and a hash of the rules version. Same request, facts and rules → same answer.
+- **Memory maintenance.** Past decisions with their reasons re-checked today, promises past their date,
+  deviations about to expire, contradictions shown side by side, "a document changed: what is affected".
+
+Code map: `docs/architecture.md`. Decision model: `docs/decision-model.md`.
+
+## Results (pre-registered, frozen gold)
+
+Protocol `docs/methodology.md` (committed before the run); results `docs/benchmarks/RESULTS.md`. Two synthetic
+companies, 56 change requests; model baselines: A' = hybrid retrieval → model, B = all documents → model.
+
+| Hypothesis | Result |
 |---|---|
-| `docs/plan.md` | Decisions and the build plan for the day |
-| `docs/research/` | Reviews done before the event: memory systems, ontology + deductive checking |
-| `docs/benchmarks/` | Benchmarks done before the event, and the cross-benchmark of the two prepared cores |
-| `HACK.md` | The canvas |
+| H1 · blockers that need several documents: our core beats retrieval by ≥ 20 points | **pass**: recall 0.90 vs 0.19 (47/52 vs 10/52) |
+| H4 · overall, not worse than a model reading all documents (−5 points) | **pass** on both worlds together: exact 0.68 vs 0.68; world M 0.78 vs 0.67, world A 0.50 vs 0.70 |
+| H2 · replaced rules and missing data: better than all documents → model | **fail**: 0.39 vs 0.67. Cause found: the parser dropped unknown names, so the rules never asked "not in our records". Fixed after the freeze (`CHANGES.md`); the frozen result stands |
+| H3 · scale | not run under this protocol; exploratory latency in `docs/benchmarks/latency.md` |
 
-Prepared before 10:30 (organisers confirmed it may be used): the research, the benchmarks, a synthetic dataset and a reference core. Product code is written on the day.
+Synthetic data, gold written by the team, small n: differences under ~10 points are noise. Earlier research and
+benchmarks (memory libraries, the two prepared prototypes, extraction on four real public documents):
+`docs/benchmarks/`, `research/prototypes/`.
 
-## Setup
+## Models and tools
 
-```sh
-cp .env.example .env   # paste the team key from /me («Show the key»)
-```
+Claude Haiku 5.5 through the Vercel AI Gateway (team key, server side) parses remarks and extracts facts; Claude
+Sonnet 5.5 via the Claude Code CLI for the model baselines; Claude Code to build. Python: rdflib, owlrl, pySHACL.
 
-The team key is used server side only. Never commit `.env`.
+## Prepared before the event vs built today
+
+Prepared before 10:30 (organisers confirmed it may be used): the research, the benchmarks, the synthetic companies
+and two reference prototypes, now in `research/prototypes/` with their dates. Everything in `core/`, `web/`,
+`rules_data/` and `eval/` was written on 14 November; each piece ported from a prototype says so in its commit.
 
 ## Run the demo
 
