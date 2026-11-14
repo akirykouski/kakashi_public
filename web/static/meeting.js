@@ -15,25 +15,24 @@ const Meeting = (function makeMeeting() {
 
   // ---- view switch ------------------------------------------------------------------------------------------
 
+  // The workspace: the meeting is always on the left; the right pane shows either the cards flagged in the
+  // meeting ("meeting") or the typed check ("check"). show() keeps its old names for demo.js.
   function mountTabs() {
-    const nav = document.querySelector(".topnav");
     const tabs = el("div", { class: "mt-tabs", role: "tablist" }, [
-      el("button", { class: "mt-tab active", id: "tab-check", onclick: function toCheck() { show("check"); } }, "Check"),
-      el("button", { class: "mt-tab", id: "tab-meeting", onclick: function toMeeting() { show("meeting"); } }, "Meeting"),
+      el("button", { class: "mt-tab active", id: "tab-meeting", onclick: function toMeeting() { show("meeting"); } }, "From the meeting"),
+      el("button", { class: "mt-tab", id: "tab-check", onclick: function toCheck() { show("check"); } }, "Typed check"),
     ]);
-    nav.prepend(tabs);
-    if (new URLSearchParams(location.search).get("view") === "meeting") show("meeting");
+    q("pane-switch").append(tabs);
+    build();
+    show(new URLSearchParams(location.search).get("view") === "check" ? "check" : "meeting");
   }
 
   function show(view) {
     const meeting = view === "meeting";
-    document.querySelector("main").hidden = meeting;
+    if (!m.built) build();
+    document.body.dataset.pane = meeting ? "meeting" : "check";
     q("tab-check").classList.toggle("active", !meeting);
     q("tab-meeting").classList.toggle("active", meeting);
-    if (meeting && !m.built) build();
-    if (!meeting && m.built) pause();
-    const box = q("meeting-view");
-    if (box) box.hidden = !meeting;
   }
 
   // ---- layout -----------------------------------------------------------------------------------------------
@@ -57,20 +56,15 @@ const Meeting = (function makeMeeting() {
         el("div", { id: "mt-counter", class: "mt-counter" }),
       ]),
       el("div", { id: "mt-status", class: "mt-status", hidden: true }),
-      el("div", { class: "mt-grid" }, [
-        el("div", { class: "mt-transcript-wrap" }, [
-          el("div", { class: "label" }, "Transcript"),
-          el("ol", { id: "mt-transcript", class: "mt-transcript" }),
-        ]),
-        el("div", { class: "mt-cards-wrap" }, [
-          el("div", { class: "label" }, "Change proposals · checked before the decision"),
-          el("div", { id: "mt-cards", class: "mt-cards" }, [
-            el("p", { class: "muted mt-empty", id: "mt-empty" }, "No change proposed yet. Ordinary lines pass; a line that proposes a change lights up here."),
-          ]),
-        ]),
+      el("div", { class: "mt-transcript-wrap" }, [
+        el("ol", { id: "mt-transcript", class: "mt-transcript" }),
       ]),
     ]);
-    document.querySelector("main").after(view);
+    const cards = el("div", { class: "mt-cards-wrap" }, [
+      el("div", { id: "mt-cards", class: "mt-cards" }, [emptyNode()]),
+    ]);
+    q("meeting-slot").append(view);
+    q("cards-slot").append(cards);
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!Recognition) mic.hidden = true;
     m.loading = loadDemo();
@@ -85,6 +79,13 @@ const Meeting = (function makeMeeting() {
     } catch (error) {
       status(`Could not load the demo transcript: ${error.message}`, true);
     }
+  }
+
+  function emptyNode() {
+    return el("div", { class: "mt-empty", id: "mt-empty" }, [
+      el("div", { class: "mt-empty-title" }, "No change proposed yet"),
+      el("p", { class: "muted" }, "Press ▶ Play or speak. Ordinary lines pass; a line that proposes a change is checked against company memory and its decision sheet appears here."),
+    ]);
   }
 
   function status(text, isError) {
@@ -143,7 +144,7 @@ const Meeting = (function makeMeeting() {
       list.append(node);
     });
     q("mt-cards").innerHTML = "";
-    q("mt-cards").append(el("p", { class: "muted mt-empty", id: "mt-empty" }, "No change proposed yet. Ordinary lines pass; a line that proposes a change lights up here."));
+    q("mt-cards").append(emptyNode());
     status("");
     renderCounter();
     renderSessions();
@@ -234,7 +235,9 @@ const Meeting = (function makeMeeting() {
   function addCard(item, data, node) {
     const empty = q("mt-empty");
     if (empty) empty.remove();
-    const holder = el("article", { class: "mt-card fresh" });
+    show("meeting");
+    for (const old of document.querySelectorAll("#mt-cards .mt-card.current")) old.classList.remove("current");
+    const holder = el("article", { class: "mt-card fresh current" });
     const entry = { item: item, data: data, holder: holder, node: node, history: [] };
     m.cards.push(entry);
     node.addEventListener("click", function focusCard() { flash(holder); });
@@ -252,12 +255,12 @@ const Meeting = (function makeMeeting() {
   }
 
   function requestChips(request) {
-    const chips = [el("span", { class: "chip" }, [el("b", {}, "change"), request.type || "?"])];
-    if (request.part) chips.push(el("span", { class: "chip", title: label(request.part) }, [el("b", {}, "part"), request.part]));
-    if (request.from_supplier) chips.push(el("span", { class: "chip" }, [el("b", {}, "from"), label(request.from_supplier)]));
-    if (request.to_supplier) chips.push(el("span", { class: "chip" }, [el("b", {}, "to"), label(request.to_supplier)]));
-    if (request.new_coating) chips.push(el("span", { class: "chip" }, [el("b", {}, "coating"), label(request.new_coating)]));
-    if (request.new_material) chips.push(el("span", { class: "chip" }, [el("b", {}, "material"), label(request.new_material)]));
+    const chips = [el("span", { class: "chip" }, [el("b", {}, "change"), changeTypeText(request.type), idChip(request.type)])];
+    if (request.part) chips.push(el("span", { class: "chip", title: label(request.part) }, [el("b", {}, "part"), nameWithId(request.part)]));
+    if (request.from_supplier) chips.push(el("span", { class: "chip" }, [el("b", {}, "from"), nameWithId(request.from_supplier)]));
+    if (request.to_supplier) chips.push(el("span", { class: "chip" }, [el("b", {}, "to"), nameWithId(request.to_supplier)]));
+    if (request.new_coating) chips.push(el("span", { class: "chip" }, [el("b", {}, "coating"), nameWithId(request.new_coating)]));
+    if (request.new_material) chips.push(el("span", { class: "chip" }, [el("b", {}, "material"), nameWithId(request.new_material)]));
     chips.push(el("span", { class: "chip" }, [el("b", {}, "as of"), request.as_of || ""]));
     for (const item of request.unresolved || []) {
       chips.push(el("span", { class: "chip unresolved", title: item.reason }, [el("b", {}, `${item.field}?`), `“${item.text}” — ${item.reason}`]));
@@ -276,10 +279,9 @@ const Meeting = (function makeMeeting() {
       return;
     }
     const card = data.card;
-    holder.append(requestChips(card.request));
-    const verdict = el("div");
-    renderVerdict(verdict, card.verdict, false);
-    holder.append(verdict);
+    const hero = el("div");
+    renderHero(hero, card, data.record || null, true);
+    holder.append(hero);
     for (const update of entry.history) holder.append(update);
     const findings = el("div", { class: "mt-findings" });
     for (const finding of card.findings.filter(function notInfo(f) { return f.severity !== "info"; })) {
@@ -287,12 +289,7 @@ const Meeting = (function makeMeeting() {
     }
     if (!findings.childElementCount) findings.append(el("p", { class: "muted" }, "No rule fired."));
     holder.append(findings);
-    const row = card.decision;
-    holder.append(el("div", { class: "mt-decision" }, [
-      el("span", { class: "mt-row" }, `Row ${row.row_id}`),
-      el("span", {}, [el("span", { class: "muted" }, "Decides: "), el("b", {}, row.decider)]),
-      row.allowed_actions.length ? el("span", { class: "muted" }, ` · ${row.allowed_actions.join("; ")}`) : null,
-    ]));
+    holder.append(requestChips(card.request));
   }
 
   function cardEntities(request) {
@@ -321,9 +318,10 @@ const Meeting = (function makeMeeting() {
       node.classList.add("rechecked");
       node.querySelector(".mt-why").textContent += ` · re-checked the ${label(request.to_supplier || request.part)} card as of ${item.as_of}`;
       entry.history = [updateNote(before, fresh.card, item)];
-      entry.data = { ...entry.data, card: fresh.card };
+      entry.data = { ...entry.data, card: fresh.card, record: fresh.record || entry.data.record };
       drawCard(entry);
-      entry.holder.classList.add("fresh");
+      for (const old of document.querySelectorAll("#mt-cards .mt-card.current")) old.classList.remove("current");
+      entry.holder.classList.add("fresh", "current");
       setTimeout(function settle() { entry.holder.classList.remove("fresh"); }, 1600);
       q("mt-cards").prepend(entry.holder);
     }
@@ -346,8 +344,8 @@ const Meeting = (function makeMeeting() {
     const count = function blockers(card) { return card.findings.filter(function b(f) { return f.severity === "blocker"; }).length; };
     const parts = [`Re-checked as of ${after.request.as_of} (was ${before.request.as_of}) after “${item.text}”`,
                    `blockers ${count(before)} → ${count(after)}`];
-    const lines = gone.map(function g(f) { return el("div", { class: "mt-gone" }, [el("s", {}, `${f.rule} ${f.title}`), " — no longer fires"]); });
-    lines.push(...added.map(function a(f) { return el("div", { class: "mt-added" }, `+ ${f.rule} ${f.title}`); }));
+    const lines = gone.map(function g(f) { return el("div", { class: "mt-gone" }, [el("s", {}, `${f.rule} ${humanize(f.title)}`), el("span", { class: "mt-gone-tag" }, " — no longer fires")]); });
+    lines.push(...added.map(function a(f) { return el("div", { class: "mt-added" }, `+ ${f.rule} ${humanize(f.title)}`); }));
     return el("div", { class: "mt-update" }, [el("b", {}, parts.join(" · ")), ...lines]);
   }
 

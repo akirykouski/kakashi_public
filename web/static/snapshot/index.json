@@ -340,7 +340,8 @@
 "GET /api/impact?doc=CSR-AUR-R3": "39235e01f70322f7.json",
 "GET /api/impact?doc=QS-C-2023": "4321870e61704f46.json",
 "GET /api/impact?doc=QS-C-2025": "660af3c365f9701f.json",
-"GET /api/records?limit=40": "9a70626e4bcc9355.json"
+"GET /api/records?limit=40": "9a70626e4bcc9355.json",
+"GET /api/names": "72015c8b76c94abc.json"
 },
 "failures": []
 }

@@ -4,93 +4,81 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Change Check</title>
+<script>try { if (localStorage.getItem("kva-theme") === "projector") document.documentElement.dataset.theme = "projector"; } catch (e) { /* storage blocked */ }</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M8 1l7 7-7 7-7-7z%27 fill=%27%232456c9%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/static/style.css">
 <link rel="stylesheet" href="/static/meeting.css">
 <link rel="stylesheet" href="/static/explain.css">
 <link rel="stylesheet" href="/static/documents.css">
+<link rel="stylesheet" href="/static/theme.css">
 <link rel="stylesheet" href="/static/demo.css">
 </head>
 <body>
 <header class="top">
   <div class="brand">
-    <span class="logo">◆</span>
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2l10 10-10 10L2 12z" fill="currentColor"/><path d="M8 12.2l2.6 2.6L16.2 9" fill="none" stroke="#0b1b3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     <div>
-      <h1>Change check</h1>
-      <p class="tag">Supplier-quality meeting remark → checked against company memory. It never approves: a person decides.</p>
+      <h1>Change Check</h1>
+      <p class="tag">Meeting remark → checked against company memory. It never approves: a person decides.</p>
     </div>
   </div>
-  <nav class="topnav">
-    <button class="link" id="open-table">Decision table</button>
-    <button class="link" id="open-records">Decision records</button>
-    <button class="link" id="open-documents">Documents</button>
+  <nav class="topnav" aria-label="Views">
+    <div class="tabs" role="tablist">
+      <button class="tab" id="tab-workspace" data-tab-for="workspace" role="tab">Workspace</button>
+      <button class="tab" id="open-documents" data-tab-for="documents" role="tab">Documents</button>
+      <button class="tab" id="open-table" data-tab-for="table" role="tab">Decision table</button>
+      <button class="tab" id="open-records" data-tab-for="records" role="tab">Records</button>
+    </div>
+    <button class="projector-toggle" id="projector-toggle" title="High-contrast dark theme for the projector" aria-pressed="false">Projector</button>
   </nav>
 </header>
 
-<main>
-  <section class="strip" aria-label="Meeting">
-    <div class="strip-head">
-      <span class="label">Meeting · Valsangone Componenti change board</span>
+<main class="ws" id="workspace">
+  <section class="ws-left strip" aria-label="Meeting">
+    <div class="ws-head strip-head">
+      <div>
+        <span class="label">Meeting</span>
+        <div class="ws-title">Valsangone Componenti · change board</div>
+      </div>
       <span class="asof">as of <input type="date" id="as-of" value="2026-11-14"></span>
     </div>
-    <div class="remark-row">
-      <select id="speaker" aria-label="Speaker"></select>
-      <textarea id="remark" rows="2" aria-label="Remark">Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.</textarea>
-      <button class="primary" id="check-btn">Check</button>
-    </div>
-    <div class="demos">
-      <span class="label">Demo</span>
-      <div id="demo-buttons" class="demo-buttons"></div>
+    <div id="meeting-slot" class="meeting-slot"></div>
+    <div class="remark-box">
+      <div class="remark-row">
+        <select id="speaker" aria-label="Speaker"></select>
+        <textarea id="remark" rows="2" aria-label="Remark">Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.</textarea>
+        <button class="primary" id="check-btn">Check</button>
+      </div>
+      <details class="demos">
+        <summary class="label">Example remarks</summary>
+        <div id="demo-buttons" class="demo-buttons"></div>
+      </details>
     </div>
   </section>
 
-  <div id="status" class="status" hidden></div>
-
-  <section id="result" hidden>
-    <div id="parsed" class="parsed"></div>
-    <div class="grid">
-      <div class="col-main">
+  <section class="ws-right" aria-label="Decision">
+    <div class="ws-right-head">
+      <span class="label">Decision for the selected change</span>
+      <div id="pane-switch" class="pane-switch" role="tablist"></div>
+    </div>
+    <div id="cards-slot" class="cards-slot"></div>
+    <div class="check-pane">
+      <div id="status" class="status" hidden></div>
+      <section id="result" hidden>
         <div id="verdict" class="verdict"></div>
-        <h2>Findings</h2>
+        <div id="parsed" class="parsed"></div>
+        <div class="findings-head"><h2>Findings</h2><span class="muted small">click a line for the proof chain</span></div>
         <div id="findings"></div>
+        <div class="grid">
+          <div id="decision" class="panel"></div>
+          <div id="record" class="panel"></div>
+        </div>
         <div id="extra"></div>
         <div id="not-checked"></div>
-      </div>
-      <aside class="col-side">
-        <div id="decision" class="panel"></div>
-        <div id="record" class="panel"></div>
         <div id="timings" class="timings"></div>
-      </aside>
-    </div>
-  </section>
-
-  <section id="documents-section" class="documents-section" hidden>
-    <div class="docs-head-row">
-      <h2>Bring your documents</h2>
-      <button class="link" id="docs-reset">Reset to the original memory</button>
-    </div>
-    <p class="muted">Upload, paste or link a document. The model proposes facts, each with a verbatim quote; code checks every quote and id. Nothing counts until a person accepts it. Then re-check the current change.</p>
-    <div class="docs-inputs">
-      <div><span class="label">Demo documents (synthetic, fictional company)</span><div id="docs-demo" class="demo-buttons"></div></div>
-      <div class="docs-own">
-        <input id="docs-name" placeholder="Document name" aria-label="Document name">
-        <select id="docs-type" aria-label="Document type">
-          <option value="customer_requirement">customer requirement (rank 1)</option>
-          <option value="deviation">controlled record (rank 2)</option>
-          <option value="email" selected>email / note (rank 3)</option>
-        </select>
-        <textarea id="docs-text" rows="3" placeholder="Paste a document (plain text or Markdown with front matter)" aria-label="Document text"></textarea>
-        <button id="docs-paste-btn">Read pasted text</button>
-        <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
-        <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
-      </div>
-    </div>
-    <div id="docs-status" class="status" hidden></div>
-    <div id="docs-view"></div>
-    <div id="docs-recheck" class="docs-recheck"></div>
-    <div id="docs-diff"></div>
-  </section>
-
+      </section>
   <section id="compare-section" class="compare-section">
     <h2>Same request, different answer</h2>
     <p class="muted">Every answer names the facts and the rules version it rests on. Change the date or the rule, and the record shows why the answer moved.</p>
@@ -119,13 +107,43 @@
     </div>
     <div id="compare" class="compare"></div>
   </section>
+    </div>
+  </section>
 </main>
+
+  <section id="documents-section" class="documents-section page" hidden>
+    <div class="docs-head-row">
+      <h2>Bring your documents</h2>
+      <button class="link" id="docs-reset">Reset to the original memory</button>
+    </div>
+    <p class="muted">Upload, paste or link a document. The model proposes facts, each with a verbatim quote; code checks every quote and id. Nothing counts until a person accepts it. Then re-check the current change.</p>
+    <div class="docs-inputs">
+      <div><span class="label">Demo documents (synthetic, fictional company)</span><div id="docs-demo" class="demo-buttons"></div></div>
+      <div class="docs-own">
+        <input id="docs-name" placeholder="Document name" aria-label="Document name">
+        <select id="docs-type" aria-label="Document type">
+          <option value="customer_requirement">customer requirement (rank 1)</option>
+          <option value="deviation">controlled record (rank 2)</option>
+          <option value="email" selected>email / note (rank 3)</option>
+        </select>
+        <textarea id="docs-text" rows="3" placeholder="Paste a document (plain text or Markdown with front matter)" aria-label="Document text"></textarea>
+        <button id="docs-paste-btn">Read pasted text</button>
+        <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
+        <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
+      </div>
+    </div>
+    <div id="docs-status" class="status" hidden></div>
+    <div id="docs-view"></div>
+    <div id="docs-recheck" class="docs-recheck"></div>
+    <div id="docs-diff"></div>
+  </section>
+
 
 <div id="modal" class="modal" hidden>
   <div class="modal-box" role="dialog" aria-modal="true">
     <div class="modal-head">
       <h2 id="modal-title"></h2>
-      <button class="link" id="modal-close" aria-label="Close">Close ✕</button>
+      <button class="link" id="modal-close" aria-label="Back to the workspace">← Back to workspace</button>
     </div>
     <div id="modal-body"></div>
   </div>

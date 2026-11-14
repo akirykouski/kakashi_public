@@ -319,8 +319,8 @@ const Docs = (function makeDocs() {
     const request = state.lastRequest;
     box.append(el("div", { class: "inline" }, [
       el("button", { class: "primary", onclick: recheck, disabled: request ? null : "disabled" }, "Re-check the current change"),
-      el("span", { class: "muted small" }, request ? ` ${request.type} · ${request.part || ""}${request.to_supplier ? " → " + request.to_supplier : ""}${request.new_coating ? " → " + request.new_coating : ""} · as of ${request.as_of || ""}`
-                                                  : " Check a change first (top of the page)."),
+      el("span", { class: "muted small" }, request ? ` ${changeSentence(request)} · as of ${request.as_of || ""}`
+                                                  : " Check a change first (Workspace tab)."),
     ]));
   }
 
@@ -355,11 +355,11 @@ const Docs = (function makeDocs() {
     box.innerHTML = "";
     box.append(el("div", { class: "panel" }, [
       el("h3", {}, "What changed on the card"),
-      el("p", { class: "small" }, [`Verdict: ${before.card.verdict} → `, el("strong", {}, after.card.verdict)]),
+      el("p", { class: "small" }, [`Verdict: ${(VERDICT_TEXT[before.card.verdict] || [before.card.verdict])[0]} → `, el("strong", {}, (VERDICT_TEXT[after.card.verdict] || [after.card.verdict])[0])]),
       added.length || removed.length ? el("ul", { class: "diff-list" }, [
         ...removed.map(function r(f) { return line(f, "−"); }), ...added.map(function a(f) { return line(f, "+"); })])
         : el("p", { class: "muted small" }, "No finding changed."),
-      el("p", { class: "muted small" }, "The full card is at the top of the page."),
+      el("p", { class: "muted small" }, "The full card is on the Workspace tab."),
     ]));
     docState.before = after;
   }
@@ -379,12 +379,12 @@ const Docs = (function makeDocs() {
   }
 
   function toggle() {
+    // a full-width tab: always opens (the Workspace tab goes back)
     const section = $("documents-section");
-    section.hidden = !section.hidden;
-    if (!section.hidden) {
-      renderRecheck();
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    if (!$("modal").hidden) closeModal();
+    section.hidden = false;
+    renderRecheck();
+    window.scrollTo({ top: 0 });
   }
 
   async function init() {
