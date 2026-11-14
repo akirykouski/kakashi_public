@@ -3,3 +3,4 @@ owlrl>=6.0
 pyshacl>=0.25
 pyyaml>=6.0
 pytest>=8.0
+pdfplumber>=0.11

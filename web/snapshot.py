@@ -248,6 +248,8 @@ def main():
     recorder = Recorder(base)
     try:
         scenario_count, request_count = record_all(recorder)
+        from web import documents  # ws/ingest: the two synthetic demo documents (upload, cards before/after)
+        documents.record_offline(recorder, OUT)
     finally:
         if process:
             process.terminate()

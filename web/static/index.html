@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M8 1l7 7-7 7-7-7z%27 fill=%27%232456c9%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="/static/style.css">
 <link rel="stylesheet" href="/static/meeting.css">
+<link rel="stylesheet" href="/static/documents.css">
 </head>
 <body>
 <header class="top">
@@ -20,6 +21,7 @@
   <nav class="topnav">
     <button class="link" id="open-table">Decision table</button>
     <button class="link" id="open-records">Decision records</button>
+    <button class="link" id="open-documents">Documents</button>
   </nav>
 </header>
 
@@ -58,6 +60,33 @@
         <div id="timings" class="timings"></div>
       </aside>
     </div>
+  </section>
+
+  <section id="documents-section" class="documents-section" hidden>
+    <div class="docs-head-row">
+      <h2>Bring your documents</h2>
+      <button class="link" id="docs-reset">Reset to the original memory</button>
+    </div>
+    <p class="muted">Upload, paste or link a document. The model proposes facts, each with a verbatim quote; code checks every quote and id. Nothing counts until a person accepts it. Then re-check the current change.</p>
+    <div class="docs-inputs">
+      <div><span class="label">Demo documents (synthetic, fictional company)</span><div id="docs-demo" class="demo-buttons"></div></div>
+      <div class="docs-own">
+        <input id="docs-name" placeholder="Document name" aria-label="Document name">
+        <select id="docs-type" aria-label="Document type">
+          <option value="customer_requirement">customer requirement (rank 1)</option>
+          <option value="deviation">controlled record (rank 2)</option>
+          <option value="email" selected>email / note (rank 3)</option>
+        </select>
+        <textarea id="docs-text" rows="3" placeholder="Paste a document (plain text or Markdown with front matter)" aria-label="Document text"></textarea>
+        <button id="docs-paste-btn">Read pasted text</button>
+        <input type="file" id="docs-file" accept=".pdf,.txt,.md" aria-label="File"><button id="docs-file-btn">Upload file</button>
+        <input id="docs-url" placeholder="https://… public PDF" aria-label="URL"><button id="docs-url-btn">Read URL</button>
+      </div>
+    </div>
+    <div id="docs-status" class="status" hidden></div>
+    <div id="docs-view"></div>
+    <div id="docs-recheck" class="docs-recheck"></div>
+    <div id="docs-diff"></div>
   </section>
 
   <section id="compare-section" class="compare-section">
@@ -104,5 +133,6 @@
 <script src="/static/offline.js"></script>
 <script src="/static/app.js"></script>
 <script src="/static/meeting.js"></script>
+<script src="/static/documents.js"></script>
 </body>
 </html>

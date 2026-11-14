@@ -44,6 +44,7 @@ if str(ROOT) not in sys.path:
 from core import check, decision, impact, meeting, oida, parse, rules  # noqa: E402
 from core.contracts import CHANGE_TYPES, Card, ChangeRequest  # noqa: E402
 from core.project import Projection, warm  # noqa: E402
+from web import documents  # noqa: E402  (bring your documents: /api/documents, /api/proposals)
 
 STATIC = Path(__file__).resolve().parent / "static"
 LOCK = threading.Lock()  # the core keeps per-process caches; one check at a time
@@ -400,6 +401,10 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(handle_records(query))
             elif url.path == "/api/meeting/demo":
                 self.send_json(handle_meeting_demo())
+            elif documents.handle_get(url.path) is not None:
+                with LOCK:
+                    payload, status = documents.handle_get(url.path)
+                self.send_json(payload, status)
             elif url.path == "/api/impact":
                 with LOCK:
                     self.send_json(handle_impact(query))
@@ -410,6 +415,16 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         url = urlparse(self.path)
+        if url.path.startswith(("/api/documents", "/api/proposals")):
+            length = int(self.headers.get("Content-Length") or 0)
+            if length > documents.MAX_BYTES + 65536:
+                self.send_json({"error": "document larger than 5 MB"}, 413)
+                return
+            raw = self.rfile.read(length)
+            with LOCK:
+                payload, status = documents.handle_post(url.path, self.headers.get("Content-Type"), raw)
+            self.send_json(payload, status)
+            return
         if url.path not in ("/api/check", "/api/meeting/line"):
             self.send_json({"error": "not found"}, 404)
             return
