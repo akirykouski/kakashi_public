@@ -173,6 +173,7 @@ async function runCheck(body, what) {
 
 function renderCard(data) {
   const card = data.card;
+  if (window.Explain) Explain.setCard(card);  // explain.js: counterfactuals + explanation of this card
   $("result").hidden = false;
   renderParsed(card.request);
   renderVerdict($("verdict"), card.verdict, true);
@@ -182,6 +183,7 @@ function renderCard(data) {
   renderNotChecked(card.not_checked || []);
   renderDecision(card, data);
   renderRecord(data.record, card);
+  if (window.Explain) Explain.decorate($("record"), card);
   renderTimings(card.timings_ms || {});
 }
 
@@ -276,6 +278,8 @@ function renderFinding(finding, replacedItems) {
     if (finding.severity === "blocker") details.open = false;
     node.append(details);
   }
+  const clear = window.Explain ? Explain.lineFor(finding) : null;  // "What would clear this" (explain.js)
+  if (clear) node.append(clear);
   return node;
 }
 
@@ -724,7 +728,7 @@ async function showTable(hitRow, dropRows) {
 async function showRecords() {
   try {
     const data = await api("/api/records?limit=40");
-    const head = el("tr", {}, ["Record", "Created (UTC)", "Change", "As of", "Verdict", "Row", "Rules fired", "Rules version"].map(function th(text) { return el("th", {}, text); }));
+    const head = el("tr", {}, ["Record", "Created (UTC)", "Change", "As of", "Verdict", "Row", "Rules fired", "Rules version", ""].map(function th(text) { return el("th", {}, text); }));
     const tbody = el("tbody");
     for (const record of data.records) {
       const request = record.request || {};
@@ -737,6 +741,7 @@ async function showRecords() {
         el("td", {}, record.decision_row),
         el("td", {}, (record.rules_fired || []).join(", ")),
         el("td", { class: "mono" }, shortHash(record.rules_version)),
+        el("td", {}, window.Explain ? el("button", { class: "link", onclick: function explainRecord() { Explain.showRecord(record.record_id); } }, "Explain") : ""),
       ]));
     }
     const body = el("div", {}, [

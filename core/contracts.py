@@ -116,6 +116,15 @@ class Card:
     # core/memory.py (issue #19); empty when nothing applies
     past_decisions: list = field(default_factory=list)  # earlier decisions on the same part/supplier, reasons re-checked
     maintenance: list = field(default_factory=list)     # promises past horizon, expiring deviations, stale reasons...
+    # core/counterfactual.py + core/explain_text.py (ws/counterfactual), set only when check.evaluate(explain=True).
+    # counterfactuals: one per blocker/warning: {blocker_rule, severity, title, hypothetical: true, verified,
+    #   edits: [{action: add|remove|change_request, triple, plain, hypothetical: true}], row_if_applied,
+    #   verdict_if_applied, clears, alternatives, side_effects} or {..., verified: false, reason}
+    # counterfactual_all: {row_id, verdict, decider, allowed_actions, remaining, edits, changes, hypothetical: true}
+    # explanation: {customer, auditor, rules_version, row_id, record_id}
+    counterfactuals: list = field(default_factory=list)
+    counterfactual_all: Optional[dict] = None
+    explanation: Optional[dict] = None
 
 
 @dataclass
