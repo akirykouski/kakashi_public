@@ -41,6 +41,7 @@ class ChangeRequest:
     to_supplier: Optional[str] = None          # supplier id of the proposed source
     from_supplier: Optional[str] = None
     site: Optional[str] = None                 # receiving plant id
+    at_supplier: Optional[str] = None          # sub-tier: the supplier where the change happens (rule R8)
     new_material: Optional[str] = None
     new_coating: Optional[str] = None
     scope: str = "series"                      # series | service

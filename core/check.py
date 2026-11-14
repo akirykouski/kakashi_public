@@ -81,7 +81,9 @@ def run(request, record=True):
     findings = sorted(rules.check(projection, request), key=severity_rank)
     not_checked = rules.not_checked(projection, request) if hasattr(rules, "not_checked") else []
     checked = time.time()
-    if rules.covered(request, projection):
+    # A change is covered when a rule applies to it, and always when a rule actually fired.
+    fired = any(item["severity"] != "info" for item in findings)
+    if fired or rules.covered(request, projection):
         row, verdict = decision.decide(findings, request)
     else:
         row, verdict = fallback_row(), "not_covered"  # no rule applies to this change: a person decides

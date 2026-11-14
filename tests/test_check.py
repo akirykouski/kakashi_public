@@ -31,3 +31,10 @@ def test_schedule_change_is_checked_not_approved():
 def test_never_approved():
     for scenario_id in ("main", "main_after_audit", "elv", "silence", "subtier"):
         assert run(check.scenario(scenario_id))["verdict"] != "approved"
+
+
+def test_subtier_change_fires_r8_and_is_covered():
+    card = run(check.scenario("subtier"))
+    assert "R8" in {item["rule"] for item in card["findings"]}
+    assert card["verdict"] == "blockers_found"
+    assert card["decision"]["row_id"] != "R0"
