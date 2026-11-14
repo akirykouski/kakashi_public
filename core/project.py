@@ -25,8 +25,10 @@ import owlrl
 from rdflib import OWL, RDF, RDFS, Graph, Literal, Namespace, URIRef
 
 try:
+    from . import rl
     from .snapshot import snapshot as take_snapshot
 except ImportError:  # run as a script from core/
+    import rl
     from snapshot import snapshot as take_snapshot
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +36,9 @@ ONTOLOGY_PATH = os.path.join(ROOT, "ontology", "lcc.ttl")
 LCC = Namespace("https://lcc.example/ont#")
 ID = Namespace("https://lcc.example/id/")
 CACHE_SIZE = 64
+# "rl": core/rl.py (schema closed once, instance rules only; falls back to owlrl by itself when the ontology or the
+# facts need more); "owlrl": owlrl over ontology + facts, as before. Same graph, triple for triple (tests).
+REASONER = os.environ.get("LCC_REASONER", "rl")
 
 _ontology_cache = {}
 _closure_cache = OrderedDict()  # (ontology hash, snapshot hash, reason) -> (graph, provenance)
@@ -121,6 +126,9 @@ def _build_graph(facts, reason):
         graph.add(triple)
         provenance.setdefault(triple, []).append(fact)
     if reason:
+        closed = rl.close(list(provenance), ontology_graph()) if REASONER == "rl" else None
+        if closed is not None:
+            return closed, provenance
         owlrl.DeductiveClosure(owlrl.OWLRL_Semantics, axiomatic_triples=False,
                                datatype_axioms=False).expand(graph)
     return graph, provenance
@@ -266,8 +274,8 @@ class Projection:
             graph_facts = scope_facts(self.current_facts, self.scope)
             scope_hash = hashlib.sha256(json.dumps([fact["id"] for fact in graph_facts]).encode()).hexdigest()
         self.scoped_count = len(graph_facts)
-        key = (ontology_hash(), self.snapshot_hash, bool(reason), scope_hash)
-        full_key = (ontology_hash(), self.snapshot_hash, bool(reason), None)
+        key = (ontology_hash(), REASONER, self.snapshot_hash, bool(reason), scope_hash)
+        full_key = (ontology_hash(), REASONER, self.snapshot_hash, bool(reason), None)
         if REUSE_FULL and scope_hash is not None and key not in _closure_cache and full_key in _closure_cache:
             key = full_key           # the warm full closure of this snapshot answers every scoped reader the same
             self.scoped_count = len(self.current_facts)

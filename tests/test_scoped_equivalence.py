@@ -32,6 +32,8 @@ VOLATILE = ("timings_ms", "record_id")
 
 
 def card_of(request, scoped):
+    """scoped=False is the reference: the whole snapshot closed by owlrl, as before this change."""
+    project.REASONER = "rl" if scoped else "owlrl"
     card, _, projection = check.evaluate(dict(request), record=False, scoped=scoped)
     assert (projection.scope is not None) == scoped
     if scoped:
@@ -106,6 +108,7 @@ WORLD_M = scenario_requests() + file_requests() + random_requests()
 def scoped_closures_really_scoped(monkeypatch):
     """Else a scoped check reuses the cached full closure of the same snapshot (the warm path) and proves nothing."""
     monkeypatch.setattr(project, "REUSE_FULL", False)
+    monkeypatch.setattr(project, "REASONER", project.REASONER)
 
 
 @pytest.fixture(scope="module")
@@ -169,3 +172,27 @@ def test_warm_full_closure_is_recomputed_on_acceptance(monkeypatch):
     after = Projection(log, "2026-11-14")
     assert after.snapshot_hash != warmed.snapshot_hash
     assert after.cache_hit                                               # recomputed at acceptance, not now
+
+
+GRAPH_CASES = [(None, as_of) for as_of in ("2026-11-14", "2026-10-01", "2025-06-01", "2027-03-01")] + \
+    [("eval/worlds/M/core", "2026-11-14"), ("eval/worlds/A/core", "2026-11-14")]
+
+
+@pytest.mark.parametrize("data_dir,as_of", GRAPH_CASES)
+def test_rl_closure_equals_owlrl_triple_for_triple(data_dir, as_of):
+    import owlrl
+    from rdflib import Graph
+    from core import factlog, rl
+    from core.project import ontology_graph, triple_for
+    log = factlog.default_log(data_dir=str(ROOT / data_dir) if data_dir else None)
+    if not data_dir or data_dir.endswith("/M/core"):
+        rules.extend_log(log)
+    facts = Projection(log, as_of, reason=False).current_facts
+    triples = [triple_for(fact) for fact in facts]
+    reference = Graph()
+    for triple in list(ontology_graph()) + triples:
+        reference.add(triple)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics, axiomatic_triples=False, datatype_axioms=False).expand(reference)
+    closed = rl.close(triples, ontology_graph())
+    assert closed is not None
+    assert set(closed) == set(reference)
