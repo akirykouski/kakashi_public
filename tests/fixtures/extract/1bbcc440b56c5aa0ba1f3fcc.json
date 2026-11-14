@@ -1,0 +1,190 @@
+{
+ "note": "CSR-NOR-SYN part 1/1",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "facts": [
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SourceChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "MaterialChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ProcessChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "CoatingChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "LocationChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ToolingChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "DesignChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SubTierSupplierChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "TestMethodChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ShippingLocationChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "EquipmentChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SoftwareChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ProductionResumptionChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SpecialProcessChange",
+    "quote": "The supplier shall obtain written consent from Nordhavn before any change to its products or processes.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SubTierSupplierChange",
+    "quote": "Change in sub-supplier",
+    "context_quote": "The following changes require Nordhavn approval:"
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "TestMethodChange",
+    "quote": "Change of the test or inspection method",
+    "context_quote": "The following changes require Nordhavn approval:"
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ToolingChange",
+    "quote": "New or modified tooling",
+    "context_quote": "The following changes require Nordhavn approval:"
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresNotificationFor",
+    "o": "PackagingChange",
+    "quote": "Nordhavn shall be notified of a change of packaging.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "requiresNoticeFor",
+    "o": "PriceChange",
+    "quote": "shall be quoted 60 days before it applies",
+    "context_quote": "A change of price is subject to a commercial agreement and shall be quoted 60 days before it applies."
+   },
+   {
+    "s": "CSR-NOR-SYN",
+    "p": "leadTimeDays",
+    "o": "60",
+    "quote": "shall be quoted 60 days before it applies",
+    "context_quote": "A change of price is subject to a commercial agreement and shall be quoted 60 days before it applies."
+   }
+  ],
+  "unclassified": [
+   {
+    "quote": "A change of price is subject to a commercial agreement",
+    "summary": "A price change is conditioned on a commercial agreement with Nordhavn before it applies."
+   },
+   {
+    "quote": "Parts made after the supplier has transferred the work to a sister company are subject to a capacity audit at the new company.",
+    "summary": "After work is transferred to a sister company, parts are subject to a capacity audit at the new company."
+   }
+  ]
+ },
+ "usage": {
+  "completion_tokens": 3318,
+  "prompt_tokens": 2986,
+  "total_tokens": 6304,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1464,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0019576,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0019576,
+  "gateway_cost": 0.0019576
+ }
+}

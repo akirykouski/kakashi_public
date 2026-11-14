@@ -1,0 +1,204 @@
+{
+ "note": "CSR-AUR-R4 part 1/1",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "facts": [
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresCustomerApprovalFor",
+    "o": "SourceChange",
+    "quote": "a change of source",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts"
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresCustomerApprovalFor",
+    "o": "MaterialChange",
+    "quote": "a change of material",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts"
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresCustomerApprovalFor",
+    "o": "ProcessChange",
+    "quote": "a change of manufacturing process",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts"
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresCustomerApprovalFor",
+    "o": "CoatingChange",
+    "quote": "of coating or surface treatment",
+    "context_quote": "The supplier shall obtain written approval from Aurelia (PPAP resubmission) before shipping parts"
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "SourceChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "MaterialChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "ProcessChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "CoatingChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "ScheduleChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "PackagingChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "LocationChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "ToolingChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "DesignChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "SubTierSupplierChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "TestMethodChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "ShippingLocationChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "EquipmentChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "SoftwareChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "ProductionResumptionChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "PriceChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "requiresNoticeFor",
+    "o": "SpecialProcessChange",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   },
+   {
+    "s": "CSR-AUR-R4",
+    "p": "leadTimeDays",
+    "o": "90",
+    "quote": "Aurelia shall be notified of every planned change at least 90 days before implementation.",
+    "context_quote": null
+   }
+  ],
+  "unclassified": [
+   {
+    "quote": "Approval is granted per part number and per manufacturing site.",
+    "summary": "Approvals are scoped per part number and per manufacturing site; an approval for one part does not extend to another part, even of the same material."
+   },
+   {
+    "quote": "A temporary deviation may be requested from the Aurelia resident engineer.",
+    "summary": "A temporary deviation may be requested from the Aurelia resident engineer; it is limited in quantity and time and requires 100% inspection of the affected characteristic."
+   }
+  ]
+ },
+ "usage": {
+  "completion_tokens": 3905,
+  "prompt_tokens": 3034,
+  "total_tokens": 6939,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1951,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 0.0022559,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 0.0022559,
+  "gateway_cost": 0.0022559
+ }
+}
