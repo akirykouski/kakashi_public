@@ -14,6 +14,8 @@ and the model key stays on the server (core/llm.py reads .env).
                         (core/decision_table.yaml is never written).
     GET  /api/scenarios
     GET  /api/table     ?drop=D2,D5   decision table + coverage check + rules_version
+    GET  /api/table.dmn ?drop=D2  the same table as an OMG DMN 1.3 file (download; core/dmn.py)
+    GET  /api/table?format=dmn    the same XML, inline
     GET  /api/records   ?limit=50     decision records, newest first
     GET  /api/impact    ?doc=CSR-AUR-R3   what a superseded document affects (core/impact.py, #29)
     POST /api/meeting/line  {line, speaker?, as_of?} -> {flagged, reason, stage, mentions, card?}  (#32, core/meeting.py)
@@ -41,7 +43,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, impact, meeting, oida, parse, rules  # noqa: E402
+from core import check, decision, dmn, impact, meeting, oida, parse, rules  # noqa: E402
 from core.contracts import CHANGE_TYPES, Card, ChangeRequest  # noqa: E402
 from core.project import Projection, warm  # noqa: E402
 
@@ -49,7 +51,8 @@ STATIC = Path(__file__).resolve().parent / "static"
 LOCK = threading.Lock()  # the core keeps per-process caches; one check at a time
 CONTENT_TYPES = {".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8",
                  ".css": "text/css; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png",
-                 ".ico": "image/x-icon"}
+                 ".ico": "image/x-icon", ".dmn": "application/xml; charset=utf-8",
+                 ".woff": "font/woff", ".woff2": "font/woff2", ".ttf": "font/ttf", ".eot": "application/vnd.ms-fontobject"}
 SUPERSEDES = re.compile(r"([A-Z][A-Za-z0-9-]+) supersedes ([A-Z][A-Za-z0-9-]+)")
 
 _labels = None
@@ -280,6 +283,13 @@ def handle_table(query):
             "drop_rows": drop_rows, "labels": labels()}
 
 
+def handle_table_dmn(query):
+    """The same table (and the same in-memory edit) as /api/table, as an OMG DMN 1.3 XML string (core/dmn.py)."""
+    drop_rows = sorted(set(filter(None, (query.get("drop", [""])[0]).split(","))))
+    table, table_text = table_for(drop_rows)
+    return dmn.export(table, rules_version_value=rules_version_for(table_text))
+
+
 def handle_scenarios():
     with open(ROOT / "data" / "scenarios.json", encoding="utf-8") as handle:
         return {"scenarios": json.load(handle), "people": people()}
@@ -368,6 +378,17 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def send_dmn(self, xml_text, download):
+        data = xml_text.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/xml; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-store")
+        if download:
+            self.send_header("Content-Disposition", 'attachment; filename="decision.dmn"')
+        self.end_headers()
+        self.wfile.write(data)
+
     def send_static(self, relative):
         path = (STATIC / relative).resolve()
         if STATIC.resolve() not in path.parents or not path.is_file():
@@ -393,6 +414,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_static(url.path[len("/static/"):])
             elif url.path == "/api/scenarios":
                 self.send_json(handle_scenarios())
+            elif url.path == "/api/table.dmn" or (url.path == "/api/table" and query.get("format") == ["dmn"]):
+                with LOCK:
+                    self.send_dmn(handle_table_dmn(query), download=url.path.endswith(".dmn"))
             elif url.path == "/api/table":
                 with LOCK:
                     self.send_json(handle_table(query))
