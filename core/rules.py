@@ -694,6 +694,9 @@ def check(projection, change):
                                      f"Supplier '{supplier}' is not in our supplier master: no audit, capability or "
                                      f"approval on record", [], {"supplier": supplier}))
             findings += rule_part_approval(projection, change)
+            # QP-11 4.4: a change of source needs the new supplier's material certificate. An unknown supplier
+            # has none on file either, so that question is asked too (eval re-gold M01/M04, CHANGES.md).
+            findings += rule_missing_certificate(projection, change)
         else:
             findings += rule_supplier_qualification(projection, change)
             findings += rule_part_approval(projection, change)
