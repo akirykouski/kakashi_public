@@ -1,0 +1,48 @@
+{
+  "id": "MTG-2026-10-02",
+  "title": "Change board, Beinasco",
+  "date": "2026-10-02",
+  "participants": [
+    "PER-CONTI",
+    "PER-BIANCHI",
+    "PER-ROSSI",
+    "PER-FERRI",
+    "PER-GRECO"
+  ],
+  "utterances": [
+    [
+      "PER-FERRI",
+      "Deviation request DEV-127: Meccanica Chisone as temporary source for BR-220, six weeks."
+    ],
+    [
+      "PER-ROSSI",
+      "Chisone is qualified for 6061-T6 and 6082-T5 only. BR-220 is drawn in 6082-T6, yield at least 250."
+    ],
+    [
+      "PER-BIANCHI",
+      "And Chisone is conditional, the cracking 8D on their 6082 material is still open."
+    ],
+    [
+      "PER-CONTI",
+      "Rejected. No temporary source for BR-220 without 6082-T6 capability and a closed 8D."
+    ],
+    [
+      "PER-GRECO",
+      "Then we expedite Bormida and I tell Aurelia the plan."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-031",
+      "about": [
+        "BR-220",
+        "SUP-C",
+        "DEV-127"
+      ],
+      "by": "PER-CONTI",
+      "text": "Reject DEV-127. Expedite SUP-B for BR-220.",
+      "reason": "SUP-C has no EN AW-6082-T6 capability and 8D-25-031 is open.",
+      "quote": "Rejected. No temporary source for BR-220 without 6082-T6 capability and a closed 8D."
+    }
+  ]
+}

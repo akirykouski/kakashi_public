@@ -1,0 +1,39 @@
+{
+  "id": "MTG-2026-10-20",
+  "title": "Quality weekly",
+  "date": "2026-10-20",
+  "participants": [
+    "PER-CONTI",
+    "PER-GALLO",
+    "PER-ROMANO",
+    "PER-COSTA"
+  ],
+  "utterances": [
+    [
+      "PER-GALLO",
+      "NCR-26-017: CL-115 lot from Germanasca at 52 HRC, tolerance is 44 to 50."
+    ],
+    [
+      "PER-COSTA",
+      "We have stock for four days."
+    ],
+    [
+      "PER-CONTI",
+      "Block the lot, 100% hardness check on the next three lots, keep Germanasca as source."
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-032",
+      "about": [
+        "CL-115",
+        "SUP-G",
+        "NCR-26-017"
+      ],
+      "by": "PER-CONTI",
+      "text": "Block lot 26-0412, 100% hardness check on next three lots.",
+      "reason": "Hardness above tolerance, four days of stock left.",
+      "quote": "Block the lot, 100% hardness check on the next three lots, keep Germanasca as source."
+    }
+  ]
+}
