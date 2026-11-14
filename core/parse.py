@@ -169,6 +169,11 @@ def resolve(registries, table, text):
     return {"id": None, "reason": f"not in {table}", "candidates": []}
 
 
+# Fields where an unknown name is passed on to the rules (they ask "not in our supplier master / coating catalogue
+# / material master"). Ambiguous names and names not written in the remark are never passed on.
+UNKNOWN_NAME_FIELDS = ("to_supplier", "from_supplier", "new_material", "new_coating")
+
+
 def resolve_fields(registries, surface, utterance=None):
     """Surface strings -> ({field: id}, [unresolved entries]). With an utterance, each name must be written in it."""
     resolved, unresolved = {}, []
@@ -182,11 +187,17 @@ def resolve_fields(registries, surface, utterance=None):
                                "candidates": []})
             continue
         outcome = resolve(registries, table, text)
-        if outcome["id"] is None:
+        if outcome["id"] is not None:
+            resolved[field] = outcome["id"]
+        elif outcome["reason"].startswith("not in ") and field in UNKNOWN_NAME_FIELDS:
+            # A name said in the meeting that is in none of our records is information, not noise: pass it to
+            # the rules verbatim so they raise "not in our records" with an owner, instead of dropping it.
+            resolved[field] = text
+            unresolved.append({"field": field, "text": text, "reason": "not in our records: passed to the rules",
+                               "candidates": []})
+        else:
             unresolved.append({"field": field, "text": text, "reason": outcome["reason"],
                                "candidates": outcome["candidates"]})
-        else:
-            resolved[field] = outcome["id"]
     return resolved, unresolved
 
 
@@ -227,7 +238,8 @@ def parse(remark, as_of=None, speaker=None, registries=None, live=False, call=No
     surface, _ = call_model(remark, live=live, call=call)
     resolved, unresolved = resolve_fields(registries, surface, utterance=remark)
     named = sum(1 for field in FIELD_TABLES if surface.get(field))
-    confidence = round(len(resolved) / named, 2) if named else 0.0
+    passed_on = sum(1 for item in unresolved if item["reason"] == "not in our records: passed to the rules")
+    confidence = round((len(resolved) - passed_on) / named, 2) if named else 0.0
     if surface.get("type") not in CHANGE_TYPES:
         confidence = 0.0
     return build_request(surface.get("type"), resolved, unresolved, as_of=as_of, utterance=remark,

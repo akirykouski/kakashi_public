@@ -51,3 +51,8 @@ Every deviation from `docs/methodology.md`, every interpretation fixed before a 
 | Time | What | Why | Who |
 |---|---|---|---|
 | 2026-11-14 12:29 CET | Methodology §2 says disputed items are re-golded by the non-author with Valentina arbitrating. All 17 items were decided by the eval track on Maksim's instruction, on document quotes only; Valentina did not arbitrate and Arseniy gave no proposals. For world A the decider is on the non-author side (Maksim); for world M (I02, I03, M01, M04, §8) the decider is on the author's side. Net effect on M: two findings added against the author's own gold (M01, M04), the author's 8D reading kept (I02, I03). Listed as a threat to validity in RESULTS.md. | Team time before the 16:45 pitch. | Maksim (instruction), eval track (decisions) |
+
+## 12:44 — post-freeze product fix (does not change the reported run)
+- **What:** the parser now passes a name that is in none of our records (supplier, material, coating) to the rules verbatim, so they raise "not in our records" with an owner; ambiguous names and names not written in the remark are still never passed on (`core/parse.py`, `UNKNOWN_NAME_FIELDS`).
+- **Why:** H2 failed on missing data because the parser dropped unknown names to `unresolved` and the rules never saw them (M01–M04 lost every finding; RESULTS.md, H2).
+- **Rule:** the frozen results in RESULTS.md stand as reported (cecba57). The fix is not re-scored on the frozen set (no tuning on frozen gold); its effect is measured only on the hold-out set (#20) and stated as post-hoc.
