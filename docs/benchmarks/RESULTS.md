@@ -63,6 +63,19 @@ H4 passes on the two worlds together at a difference of exactly 0, and fails on 
 | World M | 0.94 [0.82–0.98] (34/36) | 0.78 [0.62–0.88] (28/36) | +0.17 | 0/6, p = 0.0312 |
 | World A | 0.50 [0.30–0.70] (10/20) | 0.50 [0.30–0.70] (10/20) | +0.00 | 1/1, p = 1.0 |
 
+## Ablations (methodology §4): C* with one component switched off
+
+Run after the reported run on the same frozen gold and hand parses (`eval/tools/run_ablations.py`; switches applied in-process, no core file changed). Both worlds summed over requests; per world in `eval/results/frozen_ablations/*/REPORT.md`. McNemar exact against full C* on exact match: b = full right only, c = ablation right only.
+
+| C* variant | Exact match | Inferred recall | Exact, stale | Exact, missing | Precision | McNemar vs full |
+|---|---|---|---|---|---|---|
+| Full core | 0.79 [0.66–0.87] (44/56) | 1.00 [0.93–1.00] (52/52) | 0.82 [0.52–0.95] (9/11) | 0.29 [0.08–0.64] (2/7) | 0.93 [0.87–0.96] (107/115) | — |
+| No ontology inference (direct facts only) | 0.21 [0.13–0.34] (12/56) | 0.00 [0.00–0.07] (0/52) | 0.18 [0.05–0.48] (2/11) | 0.00 [0.00–0.35] (0/7) | 0.87 [0.68–0.95] (20/23) | 32/0, p = 0.0 |
+| No supersession (every fact stays in force) | 0.61 [0.48–0.72] (34/56) | 0.98 [0.90–1.00] (51/52) | 0.45 [0.21–0.72] (5/11) | 0.29 [0.08–0.64] (2/7) | 0.84 [0.77–0.90] (101/120) | 10/0, p = 0.002 |
+| No question outcome (missing evidence = no blocker) | 0.61 [0.48–0.72] (34/56) | 1.00 [0.93–1.00] (52/52) | 0.64 [0.35–0.85] (7/11) | 0.00 [0.00–0.35] (0/7) | 0.99 [0.94–1.00] (90/91) | 14/4, p = 0.0309 |
+
+Reading: inference carries the blockers that need several documents (inferred recall 1.00 → 0.00 without it; exact match 44 → 12 of 56). Supersession carries the replaced-rule cases (stale exact 9 → 5 of 11). The question outcome carries the missing-data cases (missing exact 2 → 0 of 7). Each component is needed for a different category; none is decorative.
+
 ## Secondary metrics (both worlds)
 
 | Condition | Precision | Recall | Verdict accuracy | False alarm on clean | must_not_cite hits (A) | Tokens in / request | s / request |

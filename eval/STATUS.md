@@ -26,7 +26,7 @@ Nothing. Reported run finished: `eval/results/frozen/` (1650459).
 
 1. Done: `docs/benchmarks/RESULTS.md`.
 2. Done: H3 on world M at 8× (`eval/results/frozen_scale/`).
-3. Ablations (methodology §4) only if everything above is done by 14:45.
+3. Done: ablations (`eval/results/frozen_ablations/`, RESULTS.md).
 
 ## Decisions taken (so nobody has to ask)
 
