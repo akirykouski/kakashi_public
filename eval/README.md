@@ -2,6 +2,7 @@
 
 Follows `docs/methodology.md` (pre-registered). Owner of this track: the eval owner; gold decisions: Valentina (#21); hold-out: Valentina (#20).
 
+- `STATUS.md` — what is done, running and next (start here).
 - `MAPPING.md` — one gold format for both worlds and the rule-vocabulary mapping.
 - `worlds/M`, `worlds/A` — the two synthetic worlds, data only, never pooled.
 - `gold/` — the golds that are re-golded (`REGOLD.md`) and then frozen (`docs/benchmarks/FROZEN.md`).
