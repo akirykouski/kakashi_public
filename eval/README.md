@@ -1,6 +1,6 @@
 # Evaluation
 
-Follows `docs/methodology.md` (pre-registered). Owner of this track: the eval owner; gold decisions: Valentina (#21); hold-out: Valentina (#20).
+Follows `docs/methodology.md` (pre-registered). Owner of this track: Maksim. Re-gold decided by the eval track on Maksim's instruction (#21, closed); hold-out (#20) skipped unless written by someone who has seen neither gold nor core.
 
 - `STATUS.md` — what is done, running and next (start here).
 - `MAPPING.md` — one gold format for both worlds and the rule-vocabulary mapping.
