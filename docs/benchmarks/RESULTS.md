@@ -53,7 +53,7 @@ With the hand parse (C*) the same core gets 11 of 18: the parser accounts for 4 
 |---|---|---|---|---|---|
 | Reported run (cecba57) | — | 7 | 38 | 0.91 | 44 |
 | main a771378 | parser passes names in none of our records to the rules (b144aca, 12:44, written by the core track after the reported run) plus the other core commits since | 9 | 38 | 0.88 | 44 |
-| branch `fix/h2-unknown-names` 3733ebe | + certificate question for a supplier not in our records (3 lines in `rules.check`; core tests 321 passed) | **11** | **40** | 0.87 | 46 |
+| branch `fix/h2-unknown-names` 3733ebe (merged to main as 47467ab, PR #34) | + certificate question for a supplier not in our records (3 lines in `rules.check`; core tests 321 passed) | **11** | **40** | 0.87 | 46 |
 | B, reported run | — | 12 | 38 | 0.85 | — |
 
 What the fixes did: missing-data requests 0 → 4 of 7 (M01–M04 now right). What they did not: stale requests stay 7 of 11, and C is still one request behind B on stale + missing (11 vs 12), so H2 would still fail. Still open: S04/S07 (parse reading of "order again"), CR-06/CR-08 (schema), CR-11/CR-13/CR-19 (core behaviour). Precision drops slightly (0.91 → 0.87) because the passed-on names also raise "not in our records" questions where the gold has none (CR-11).
