@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Check</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M8 1l7 7-7 7-7-7z%27 fill=%27%232456c9%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="logo">◆</span>
+    <div>
+      <h1>Change Check</h1>
+      <p class="tag">Supplier-quality meeting remark → checked against company memory. It never approves: a person decides.</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <button class="link" id="open-table">Decision table</button>
+    <button class="link" id="open-records">Decision records</button>
+  </nav>
+</header>
+
+<main>
+  <section class="strip" aria-label="Meeting">
+    <div class="strip-head">
+      <span class="label">Meeting · Valsangone Componenti change board</span>
+      <span class="asof">as of <input type="date" id="as-of" value="2026-11-14"></span>
+    </div>
+    <div class="remark-row">
+      <select id="speaker" aria-label="Speaker"></select>
+      <textarea id="remark" rows="2" aria-label="Remark">Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.</textarea>
+      <button class="primary" id="check-btn">Check</button>
+    </div>
+    <div class="demos">
+      <span class="label">Demo</span>
+      <div id="demo-buttons" class="demo-buttons"></div>
+    </div>
+  </section>
+
+  <div id="status" class="status" hidden></div>
+
+  <section id="result" hidden>
+    <div id="parsed" class="parsed"></div>
+    <div id="verdict" class="verdict"></div>
+    <div class="grid">
+      <div class="col-main">
+        <h2>Findings</h2>
+        <div id="findings"></div>
+        <div id="extra"></div>
+        <div id="not-checked"></div>
+      </div>
+      <aside class="col-side">
+        <div id="decision" class="panel"></div>
+        <div id="record" class="panel"></div>
+        <div id="timings" class="timings"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="compare-section" class="compare-section">
+    <h2>Same request, different answer</h2>
+    <p class="muted">Every answer names the facts and the rules version it rests on. Change the date or the rule, and the record shows why the answer moved.</p>
+    <div class="compare-controls">
+      <div class="ctl">
+        <div class="ctl-title">The rule changed</div>
+        <div class="muted small">BR-220 anodising → trivalent conversion coating, asked under Aurelia manual rev 3 (June) and rev 4 (today).</div>
+        <button id="cmp-rule">Compare 15 Jun vs 14 Nov</button>
+      </div>
+      <div class="ctl">
+        <div class="ctl-title">Time travel</div>
+        <div class="muted small">The current request asked on two dates (before and after Chisone's re-audit).</div>
+        <div class="inline">
+          <input type="date" id="cmp-a" value="2026-11-05"> vs <input type="date" id="cmp-b" value="2026-11-14">
+          <button id="cmp-time">Compare</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-title">Edit the decision table</div>
+        <div class="muted small">Drop one row in memory (the table file is never written) and re-check the current request.</div>
+        <div class="inline">
+          <select id="drop-row"></select>
+          <button id="cmp-table">Re-check</button>
+        </div>
+      </div>
+    </div>
+    <div id="compare" class="compare"></div>
+  </section>
+</main>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h2 id="modal-title"></h2>
+      <button class="link" id="modal-close" aria-label="Close">Close ✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<footer class="foot">Fictional company data (Valsangone Componenti S.p.A.). Deterministic checks over facts with verbatim quotes; the language model only reads the remark.</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>
