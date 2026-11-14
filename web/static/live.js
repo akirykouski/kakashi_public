@@ -8,13 +8,13 @@ const Live = (function makeLive() {
   const AUDIT_DOC = "DEV-AUR-26-044";
   const WRONG_PROPOSAL = "X-DEV-AUR-26-044-004";
   const PRESETS = [
-    { label: "Bormida is late: take BR-220 from Chisone", speaker: "PER-FERRI",
+    { label: "Switch supplier", speaker: "PER-FERRI",
       remark: "Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy." },
-    { label: "Coating: June vs today", speaker: "PER-ROSSI", rule: true,
+    { label: "Coating rule changed", speaker: "PER-ROSSI", rule: true,
       remark: "Can we switch BR-220 from anodising to trivalent conversion coating?" },
-    { label: "Final inspection to the new CMM", speaker: "PER-ROMANO",
+    { label: "New CMM", speaker: "PER-ROMANO",
       remark: "Let's move the BR-220 final inspection to the new CMM next week." },
-    { label: "Postpone BR-220 delivery a week", speaker: "PER-FERRI",
+    { label: "Delay delivery", speaker: "PER-FERRI",
       remark: "We postpone the BR-220 delivery to Aurelia by one week." },
   ];
 
@@ -48,21 +48,23 @@ const Live = (function makeLive() {
   function mountPresets() {
     const strip = document.querySelector(".strip");
     if (!strip || $("live-presets")) return;
-    const row = el("div", { id: "live-presets", class: "live-presets" }, [el("span", { class: "label" }, "One click")]);
+    const row = el("div", { id: "live-presets", class: "live-presets" });
     for (const preset of PRESETS) {
       row.append(el("button", { class: "live-chip", title: preset.remark, onclick: function click() { runPreset(preset); } }, preset.label));
     }
-    row.append(el("button", { class: "live-chip live-play", onclick: playMeeting }, "▶ Play the meeting"));
-    strip.querySelector(".remark-row").before(row);
+    row.append(el("button", { class: "live-chip live-play", onclick: playMeeting }, "Play meeting"));
+    row.append(el("select", { id: "more-select", class: "more-select", "aria-label": "More scenarios" }, [el("option", { value: "" }, "More\u2026")]));
+    strip.prepend(row);
+    if (typeof renderDemoButtons === "function" && state.scenarios.length) renderDemoButtons();
   }
 
   function mountQr() {
-    const nav = document.querySelector(".topnav");
-    if (!nav || $("live-qr")) return;
-    nav.append(el("a", { id: "live-qr", class: "live-qr", href: `https://${SITE}`, target: "_blank", rel: "noopener",
+    const top = document.querySelector(".top");
+    if (!top || $("live-qr")) return;
+    top.append(el("a", { id: "live-qr", class: "live-qr", href: `https://${SITE}`, target: "_blank", rel: "noopener",
                          title: "Scan to try it yourself" }, [
-      el("img", { src: "/static/vendor/qr-change-check.svg", alt: `QR code for ${SITE}`, width: 56, height: 56 }),
-      el("span", {}, ["Try it:", el("br"), SITE]),
+      el("img", { src: "/static/vendor/qr-change-check.svg", alt: `QR code for ${SITE}`, width: 36, height: 36 }),
+      el("span", {}, SITE),
     ]));
   }
 
@@ -141,7 +143,7 @@ const Live = (function makeLive() {
     await Docs.reviewMany(rest);
     await pause(300);
     await Docs.recheck();
-    $("live-bar").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("verdict").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   async function know8Nov() {
@@ -152,28 +154,40 @@ const Live = (function makeLive() {
     $("compare").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  function turnOff() {
+    const row = firedRow();
+    if (!row || row === "R0") { openTable(); return; }
+    dropRow(row);
+  }
+
+  function openCompare() {
+    const section = $("compare-section");
+    section.hidden = false;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function renderBar(data) {
     let bar = $("live-bar");
     if (!bar) {
       bar = el("div", { id: "live-bar", class: "live-bar" });
-      $("result").prepend(bar);
+      $("verdict").after(bar);
     }
     const total = ((data.card.timings_ms || {}).total);
-    const button = function btn(text, action, cls) { return el("button", { class: `live-btn ${cls || ""}`, onclick: action }, text); };
+    const verdict = $("verdict");
+    if (total !== undefined) {
+      verdict.append(el("span", { class: "v-time", title: "Server time: snapshot, closure, rules" },
+                        `checked in ${total < 10 ? total.toFixed(1) : Math.round(total)} ms`));
+    }
+    const button = function btn(text, action) { return el("button", { class: "live-btn", onclick: action }, text); };
     bar.innerHTML = "";
     bar.append(
-      el("div", { class: "live-time", title: "Server time: snapshot, closure, rules" }, [
-        el("span", { class: "live-time-n" }, total === undefined ? "" : (total < 10 ? total.toFixed(1) : String(Math.round(total)))),
-        el("span", { class: "live-time-u" }, total === undefined ? "" : "ms to check"),
-      ]),
-      el("div", { class: "live-actions" }, [
-        button("Why? Proof chain", why),
-        button("What would clear it", clears),
-        button("Plain words", plain),
-        button(`Decision table (${firedRow()})`, openTable),
-        button("Add the audit email", addAudit, "accent"),
-        button("What did we know on 8 Nov?", know8Nov),
-      ]));
+      button("Why", why),
+      button("What would clear it", clears),
+      button("Plain words", plain),
+      button("Turn this rule off", turnOff),
+      button("Add the audit email", addAudit),
+      button("What did we know on 8 Nov", know8Nov),
+      button("Compare\u2026", openCompare));
   }
 
   // Wrap the table modal: a one-click "turn this row off" next to the fired row.
@@ -190,6 +204,13 @@ const Live = (function makeLive() {
   window.renderCard = function renderCardWithBar(data) {
     baseRenderCard(data);
     renderBar(data);
+    document.body.classList.add("has-result");
+  };
+
+  const baseCompare = window.compare;
+  window.compare = function compareShown() {
+    $("compare-section").hidden = false;
+    return baseCompare.apply(this, arguments);
   };
 
   window.addEventListener("DOMContentLoaded", function init() { mountPresets(); mountQr(); });

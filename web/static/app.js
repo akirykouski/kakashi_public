@@ -87,7 +87,7 @@ function setStatus(text, isError) {
 }
 
 function setBusy(busy) {
-  for (const button of document.querySelectorAll("button.primary, .ctl button, .demo-buttons button")) {
+  for (const button of document.querySelectorAll("button.primary, .ctl button, .demo-buttons button, .live-chip, #more-select")) {
     button.disabled = busy;
   }
 }
@@ -101,6 +101,7 @@ function fillSpeakers() {
   for (const [id, person] of Object.entries(state.people)) {
     select.append(el("option", { value: id, text: `${person.name} · ${person.role}` }));
   }
+  if (state.people["PER-FERRI"]) select.value = "PER-FERRI";  // the purchasing lead
 }
 
 function demoButtonsFor(scenarios) {
@@ -123,12 +124,28 @@ function demoButtonsFor(scenarios) {
   return buttons;
 }
 
+const SHORT_LABEL = {
+  main: "Supplier switch", main_after_audit: "After the re-audit", elv: "Cheaper passivation", silence: "Postpone delivery",
+  subtier: "Sub-tier heat treat", rule_change_r3: "Coating, June rule", rule_change_r4: "Coating, today",
+  no_rule: "New CMM inspection", known_at_11_08: "Known on 8 Nov", dev_expired: "Expired deviation", contradiction: "Yield contradiction",
+};
+
 function renderDemoButtons() {
-  const box = $("demo-buttons");
-  box.innerHTML = "";
-  for (const demo of demoButtonsFor(state.scenarios)) {
-    box.append(el("button", { title: demo.title, onclick: demo.run }, demo.text));
-  }
+  const select = $("more-select");
+  if (!select) return;
+  select.innerHTML = "";
+  select.append(el("option", { value: "", text: "More\u2026" }));
+  const demos = demoButtonsFor(state.scenarios);
+  demos.forEach(function add(demo, index) {
+    const scenario = state.scenarios[index];
+    const short = scenario && SHORT_LABEL[scenario.id] || demo.text.split(" ").slice(0, 4).join(" ");
+    select.append(el("option", { value: String(index), text: short, title: demo.title }));
+  });
+  select.onchange = function pick() {
+    const demo = demos[Number(select.value)];
+    select.value = "";
+    if (demo) demo.run();
+  };
 }
 
 async function runScenarioDemo(item) {
@@ -176,7 +193,7 @@ function renderCard(data) {
   if (window.Explain) Explain.setCard(card);  // explain.js: counterfactuals + explanation of this card
   $("result").hidden = false;
   renderParsed(card.request);
-  renderVerdict($("verdict"), card.verdict, true);
+  renderVerdict($("verdict"), card.verdict, true, card.findings);
   renderFindings(card.findings, data.replaced || {});
   renderContested(card.contested || []);
   renderExtra(card);
@@ -218,12 +235,19 @@ function renderParsed(request) {
   }
 }
 
-function renderVerdict(box, verdict, withSub) {
-  const [big, sub] = VERDICT_TEXT[verdict] || [verdict, ""];
+function verdictHeadline(verdict, findings) {
+  const blockers = (findings || []).filter(function isBlocker(f) { return f.severity === "blocker"; }).length;
+  if (verdict === "blockers_found" && findings) return `${blockers} blocker${blockers === 1 ? "" : "s"} \u2014 a person decides`;
+  if (verdict === "needs_info") return "Needs information \u2014 a person decides";
+  if (verdict === "no_blockers_found") return "No blockers found \u2014 not an approval";
+  if (verdict === "not_covered") return "Not covered \u2014 a person decides";
+  return (VERDICT_TEXT[verdict] || [verdict])[0];
+}
+
+function renderVerdict(box, verdict, withSub, findings) {
   box.className = `verdict ${verdict}`;
   box.innerHTML = "";
-  box.append(el("div", { class: "big" }, big));
-  if (withSub) box.append(el("div", { class: "sub" }, sub));
+  box.append(el("div", { class: "big" }, verdictHeadline(verdict, findings)));
 }
 
 function renderFindings(findings, replaced) {
@@ -245,38 +269,106 @@ function renderFindings(findings, replaced) {
   }
 }
 
+// ---- plain-language sources (frontend only; built from fields the card already carries) -------------------
+
+const SOURCE_NAMES = {
+  "REG-ASL": "Approved supplier list", "REG-PARTS": "Parts register", "REG-PROGRAMS": "Programs register",
+  "REG-CUSTOMERS": "Customer register", "REG-CAPABILITIES": "Supplier capability register",
+  "REG-MATERIALS": "Materials register", "REG-SUPPLIER_QUALIFICATION": "Supplier qualification register",
+};
+
+function sourceName(id) {
+  if (!id) return "";
+  if (SOURCE_NAMES[id]) return SOURCE_NAMES[id];
+  if (/^REG-/.test(id)) return id.slice(4).replace(/_/g, " ").toLowerCase().replace(/^./, function up(c) { return c.toUpperCase(); }) + " register";
+  if (/^QP-/.test(id)) return `Quality procedure ${id}`;
+  if (/^CSR-/.test(id)) return `Customer requirement ${id}`;
+  if (/^8D-/.test(id)) return `8D report ${id}`;
+  if (/^DEV-/.test(id)) return `Deviation ${id}`;
+  const named = state.labels[id];
+  return named && named !== id ? named : id;
+}
+
+function csvFields(line) {
+  const out = [];
+  let cur = "", quoted = false;
+  for (const ch of line) {
+    if (ch === '"') quoted = !quoted;
+    else if (ch === "," && !quoted) { out.push(cur); cur = ""; }
+    else cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+function readableQuote(source, quote) {
+  const text = String(quote || "").replace(/\s+/g, " ").trim();
+  if (!/^REG-/.test(source || "") || !text.includes(",")) return { text: text, raw: false };
+  const f = csvFields(text);
+  const L = function lab(x) { return x ? label(x) : ""; };
+  const join = function j(parts) { return parts.filter(Boolean).join(", "); };
+  let out = null;
+  if (source === "REG-PARTS" && f.length >= 6) out = `${f[0]} ${f[1]}: rev ${f[3]}, made of ${L(f[4])}, coating ${L(f[5])}`;
+  else if (source === "REG-ASL" && f.length >= 7) out = `${L(f[1])} is ${f[5]} for ${f[2]} at ${L(f[3])} for ${L(f[4])}, since ${f[6]}`;
+  else if (source === "REG-CAPABILITIES" && f.length >= 4) out = `${L(f[1])} is qualified for ${L(f[2])}, since ${f[3]}`;
+  else if (source === "REG-PROGRAMS" && f.length >= 3) out = join([f[1], `customer ${L(f[2])}`, L(f[3])]);
+  else if (source === "REG-CUSTOMERS" && f.length >= 4) out = join([f[1], L(f[2]), `requirements ${f[3].replace(/;/g, ", ")}`]);
+  else if (source === "REG-MATERIALS" && f.length >= 6) out = join([f[1], f[5] ? `typical yield ${f[5]} MPa` : ""]);
+  else if (source === "REG-SUPPLIER_QUALIFICATION" && f.length >= 4) out = join([`${L(f[1])} ${f[2]} since ${f[3]}`, f[7]]);
+  return out ? { text: out, raw: false } : { text: text, raw: true };
+}
+
+function bestQuote(steps) {
+  const leaves = [];
+  (function walk(list) {
+    for (const step of list || []) {
+      if (step.quote) leaves.push(step);
+      walk(step.premises);
+    }
+  })(steps);
+  return leaves.find(function policy(step) { return !/^REG-/.test(step.source || ""); }) || leaves[0] || null;
+}
+
 function renderFinding(finding, replacedItems) {
   const meta = el("div", { class: "f-meta" });
-  const urgency = urgencyLine(finding);
-  if (urgency) meta.append(urgency);
   if (finding.owner) meta.append(el("div", {}, [el("span", { class: "muted" }, "Who answers: "), el("span", { class: "owner" }, personText(finding.owner))]));
   if (finding.consequence) {
     const consequence = finding.consequence;
     meta.append(el("div", { class: "consequence" }, [
-      el("b", {}, `Customer's consequence: ${consequence.type}`), " ",
-      el("span", { class: "doc" }, consequence.source), " ",
-      `“${consequence.quote}”`,
+      `Customer consequence: ${consequence.type}. `, `\u201c${consequence.quote}\u201d `,
+      el("span", { class: "f-src" }, sourceName(consequence.source)),
     ]));
   }
-  if (finding.note) meta.append(el("div", { class: "note" }, `Note: ${finding.note}`));
+  if (finding.note) meta.append(el("div", { class: "note" }, finding.note));
   const node = el("div", { class: `finding ${finding.severity}` }, [
     el("div", { class: "f-head" }, [
       el("span", { class: `sev ${finding.severity}` }, SEVERITY_TEXT[finding.severity] || finding.severity),
-      el("span", { class: "rule-id" }, finding.rule),
       el("span", { class: "f-title" }, finding.title),
-      epistemicBadge(finding.epistemic),
+      el("span", { class: "rule-id", title: "Rule code" }, finding.rule),
     ]),
-    meta,
   ]);
+  const best = bestQuote(finding.evidence);
+  if (best) {
+    const shown = readableQuote(best.source, best.quote);
+    const clipped = shown.text.length > 220 ? shown.text.slice(0, 217).trimEnd() + "\u2026" : shown.text;
+    node.append(el("div", { class: "f-source" }, [
+      el("span", { class: shown.raw ? "f-quote mono" : "f-quote" }, `\u201c${clipped}\u201d`),
+      el("span", { class: "f-src" }, ` ${sourceName(best.source)}`),
+    ]));
+  }
+  node.append(meta);
   for (const item of replacedItems) node.append(renderReplaced(item));
   for (const item of replacedItems) if (item.source === item.id) node.append(impactButton(item.id));
-  if ((finding.evidence || []).length) {
-    const details = el("details", { class: "proof" }, [
-      el("summary", {}, `Proof chain (${countLeaves(finding.evidence)} quotes)`),
-      renderSteps(finding.evidence),
-    ]);
-    if (finding.severity === "blocker") details.open = false;
-    node.append(details);
+  if ((finding.evidence || []).length || finding.urgency !== undefined && finding.urgency !== null) {
+    const body = el("div", { class: "proof-body" });
+    const urgency = urgencyLine(finding);
+    if (urgency) body.append(urgency);
+    if (finding.epistemic) body.append(el("div", { class: "proof-epi" }, ["kind ", epistemicBadge(finding.epistemic)]));
+    if ((finding.evidence || []).length) body.append(renderSteps(finding.evidence));
+    node.append(el("details", { class: "proof" }, [
+      el("summary", {}, `Show proof (${countLeaves(finding.evidence)} quotes)`),
+      body,
+    ]));
   }
   const clear = window.Explain ? Explain.lineFor(finding) : null;  // "What would clear this" (explain.js)
   if (clear) node.append(clear);
@@ -289,7 +381,7 @@ function renderReplaced(item) {
   return el("div", { class: "replaced" }, [
     el("s", {}, `${item.id}${item.status ? ` (${String(item.status).replace(/"/g, "")})` : ""}`),
     el("span", { class: "by" }, ` replaced by ${item.replaced_by}${when ? ` · was in force ${when}` : ""}${author}`),
-    item.quote ? el("div", {}, [el("span", { class: "doc" }, item.source), " ", el("s", {}, `“${item.quote}”`)]) : null,
+    item.quote ? el("div", {}, [el("s", {}, `“${readableQuote(item.source, item.quote).text}”`), el("span", { class: "f-src" }, sourceName(item.source))]) : null,
   ]);
 }
 
@@ -448,7 +540,7 @@ function renderDecision(card, data) {
   const row = card.decision;
   const box = $("decision");
   box.innerHTML = "";
-  box.append(el("h3", {}, `Decision table row ${row.row_id}`));
+  box.append(el("h3", {}, `Decision \u00b7 table row ${row.row_id}`));
   if (data.row_meaning) box.append(el("div", { class: "meaning" }, data.row_meaning));
   const actions = el("ul", { class: "actions" });
   for (const action of row.allowed_actions) actions.append(el("li", {}, action));
@@ -528,7 +620,7 @@ function compareColumn(data, other, title) {
   }
   if (!card.findings.length) findings.append(el("li", { class: "muted" }, "no rule fired"));
   const verdict = el("div");
-  renderVerdict(verdict, card.verdict, false);
+  renderVerdict(verdict, card.verdict, false, card.findings);
   const diffClass = function differs(a, b) { return a !== b ? "diff" : null; };
   const row = card.decision;
   return el("div", { class: "cmp-col" }, [
@@ -760,7 +852,7 @@ async function showRecords() {
 async function start() {
   $("check-btn").addEventListener("click", checkRemark);
   $("remark").addEventListener("keydown", function onKey(event) {
-    if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) checkRemark();
+    if (event.key === "Enter") checkRemark();
   });
   $("cmp-rule").addEventListener("click", runRuleChange);
   $("cmp-time").addEventListener("click", runTimeTravel);

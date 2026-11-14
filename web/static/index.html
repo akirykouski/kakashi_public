@@ -11,37 +11,28 @@
 <link rel="stylesheet" href="/static/documents.css">
 <link rel="stylesheet" href="/static/demo.css">
 <link rel="stylesheet" href="/static/live.css">
+<link rel="stylesheet" href="/static/minimal.css">
 </head>
 <body>
 <header class="top">
-  <div class="brand">
-    <span class="logo">◆</span>
-    <div>
-      <h1>Change check</h1>
-      <p class="tag">Supplier-quality meeting remark → checked against company memory. It never approves: a person decides.</p>
-    </div>
-  </div>
-  <nav class="topnav">
-    <button class="link" id="open-table">Decision table</button>
-    <button class="link" id="open-records">Decision records</button>
+  <div class="brand"><h1>Change check</h1></div>
+  <nav class="topnav" aria-label="Sections">
+    <button class="link" id="open-table">Rules</button>
     <button class="link" id="open-documents">Documents</button>
+    <details class="menu" id="more-menu">
+      <summary aria-label="More">&#8943;</summary>
+      <div class="menu-pop" id="menu-pop"><button class="link" id="open-records">Decision records</button></div>
+    </details>
   </nav>
 </header>
 
 <main>
-  <section class="strip" aria-label="Meeting">
-    <div class="strip-head">
-      <span class="label">Meeting · Valsangone Componenti change board</span>
-      <span class="asof">as of <input type="date" id="as-of" value="2026-11-14"></span>
-    </div>
+  <section class="strip" aria-label="Check a remark">
     <div class="remark-row">
       <select id="speaker" aria-label="Speaker"></select>
-      <textarea id="remark" rows="2" aria-label="Remark">Bormida is two weeks late. Let's take the BR-220 blanks from Chisone, same alloy.</textarea>
+      <input id="remark" type="text" aria-label="Remark" placeholder="Say a change…" autocomplete="off">
+      <span class="asof"><input type="date" id="as-of" value="2026-11-14" aria-label="As of"></span>
       <button class="primary" id="check-btn">Check</button>
-    </div>
-    <div class="demos">
-      <span class="label">Demo</span>
-      <div id="demo-buttons" class="demo-buttons"></div>
     </div>
   </section>
 
@@ -49,23 +40,21 @@
 
   <section id="result" hidden>
     <div id="parsed" class="parsed"></div>
-    <div class="grid">
-      <div class="col-main">
-        <div id="verdict" class="verdict"></div>
-        <h2>Findings</h2>
-        <div id="findings"></div>
-        <div id="extra"></div>
-        <div id="not-checked"></div>
-      </div>
-      <aside class="col-side">
-        <div id="decision" class="panel"></div>
-        <div id="record" class="panel"></div>
+    <div class="card">
+      <div id="verdict" class="verdict"></div>
+      <div id="decision" class="decision"></div>
+      <h2 class="sec">Findings</h2>
+      <div id="findings"></div>
+      <div id="extra"></div>
+      <div id="not-checked"></div>
+      <details class="rec-details"><summary>Decision record</summary>
+        <div id="record"></div>
         <div id="timings" class="timings"></div>
-      </aside>
+      </details>
     </div>
   </section>
 
-  <section id="documents-section" class="documents-section" hidden>
+<section id="documents-section" class="documents-section" hidden>
     <div class="docs-head-row">
       <h2>Bring your documents</h2>
       <button class="link" id="docs-reset">Reset to the original memory</button>
@@ -92,7 +81,7 @@
     <div id="docs-diff"></div>
   </section>
 
-  <section id="compare-section" class="compare-section">
+  <section id="compare-section" class="compare-section" hidden>
     <h2>Same request, different answer</h2>
     <p class="muted">Every answer names the facts and the rules version it rests on. Change the date or the rule, and the record shows why the answer moved.</p>
     <div class="compare-controls">
@@ -132,7 +121,7 @@
   </div>
 </div>
 
-<footer class="foot">Fictional company data (Valsangone Componenti S.p.A.). Deterministic checks over facts with verbatim quotes; the language model only reads the remark.</footer>
+<footer class="foot" id="foot">Fictional company data (Valsangone Componenti S.p.A.). Deterministic checks over facts with verbatim quotes; the language model only reads the remark.</footer>
 <script src="/static/offline.js"></script>
 <script src="/static/app.js"></script>
 <script src="/static/dmn.js"></script>
@@ -141,5 +130,6 @@
 <script src="/static/documents.js"></script>
 <script src="/static/demo.js"></script>
 <script src="/static/live.js"></script>
+<script src="/static/minimal.js"></script>
 </body>
 </html>

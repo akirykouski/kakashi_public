@@ -278,7 +278,7 @@ const Meeting = (function makeMeeting() {
     const card = data.card;
     holder.append(requestChips(card.request));
     const verdict = el("div");
-    renderVerdict(verdict, card.verdict, false);
+    renderVerdict(verdict, card.verdict, false, card.findings);
     holder.append(verdict);
     for (const update of entry.history) holder.append(update);
     const findings = el("div", { class: "mt-findings" });
