@@ -34,7 +34,7 @@ EXPECTED = {
 }
 
 FINDING_KEYS = set(Finding.__dataclass_fields__)
-STEP_KEYS = set(EvidenceStep.__dataclass_fields__)
+STEP_KEYS = set(EvidenceStep.__dataclass_fields__) - {"epistemic"}  # leaf badge is set by check.run (core/oida.py)
 
 
 def fact(s, p, o, source="TEST", quote=None, literal=False, valid_from=None, fact_id=None):

@@ -294,6 +294,9 @@ lcc:MaterialCertificate lcc:epistemicType "EVIDENCE" .
 lcc:SupplierCapability lcc:epistemicType "EVIDENCE" .
 lcc:Document lcc:epistemicType "EVIDENCE" .
 lcc:ChangeRequest lcc:epistemicType "PLAN" .
+# Policy and completeness statements are rules_data records (rules_data/build.py): company rules.
+lcc:Policy lcc:epistemicType "CONSTRAINT" .
+lcc:CompletenessStatement lcc:epistemicType "CONSTRAINT" .
 
 lcc:OpenQuestion a owl:Class ; rdfs:label "Open question (an information need a person must answer)" ;
     lcc:epistemicType "QUESTION" ;

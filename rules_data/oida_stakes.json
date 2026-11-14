@@ -1,0 +1,13 @@
+{
+  "_doc": "Stakes of an open question for the OIDA urgency formula (docs/research/kva-oida-hooks.md section 4.2): h = clamp(age_days/30*0.3 + blocking_edges*0.2 + stakes*0.5, 0, 1). Policy data, not code: core/oida.py reads this file. A question's scope is its entities, the ids in its proof steps and the fields of the change it blocks listed in scope_from_change, expanded one hop along expand_via. The highest matching entry wins; nothing matches -> default.",
+  "scope_from_change": ["part", "to_supplier", "new_material", "new_coating"],
+  "expand_via": ["hasSpecialCharacteristic", "subjectTo", "subjectToLaw"],
+  "stakes": [
+    {"when_class": "SpecialCharacteristic", "stakes": 1.0, "why": "a special characteristic is involved"},
+    {"when_class": "Law", "stakes": 1.0, "why": "a law is involved"},
+    {"when_requires_for_change": "requiresCustomerApprovalFor", "stakes": 0.5,
+     "why": "the change needs customer approval"}
+  ],
+  "default": 0.3,
+  "age_window_days": 30
+}

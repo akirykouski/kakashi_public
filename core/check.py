@@ -18,7 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from core import decision, rules  # noqa: E402
+from core import decision, oida, rules  # noqa: E402
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.factlog import default_log  # noqa: E402
 from core.project import Projection  # noqa: E402
@@ -72,6 +72,7 @@ def from_remark(remark, as_of=None):
 def run(request, record=True):
     """Check one change request. Returns (card, decision_record)."""
     known = set(ChangeRequest.__dataclass_fields__)
+    known.discard("epistemic")  # derived on the card, never an input
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
     as_of = request.get("as_of") or DEFAULT_AS_OF
     started = time.time()
@@ -88,12 +89,14 @@ def run(request, record=True):
     if record:
         entry = decision.record(request, as_of, getattr(projection, "fact_ids_in_force", []), findings, row,
                                 verdict)
+    card_request = dict(request)
+    findings = oida.annotate(projection, card_request, findings)  # OIDA badges + question urgency (#26, #27)
     finished = time.time()
     timings = dict(projection.timings()) if hasattr(projection, "timings") else {}
     timings.update({"projection": round((projected - started) * 1000, 1),
                     "rules": round((checked - projected) * 1000, 1),
                     "total": round((finished - started) * 1000, 1)})
-    card = Card(request=request, verdict=verdict, findings=findings,
+    card = Card(request=card_request, verdict=verdict, findings=findings,
                 not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
                              for item in not_checked],
                 decision=row, coverage=coverage(), record_id=entry["record_id"] if entry else "",
