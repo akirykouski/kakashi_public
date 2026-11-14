@@ -11,7 +11,7 @@ payback 7.9 months, first-year return 2.71x, coverage complete (no sales team: f
 | `v4/control8_payload.json` | The document saved in Control8 |
 | `reviews/` | Two independent reviews (arithmetic and go-to-market) and the consolidated decisions applied in v3 |
 | `evidence/` | Problem evidence: practitioner threads, Astemo and Adient supplier documents, comparable software prices |
-| `skills/` | The method: the organisers' economic-model and rubric skills, wshobson/agents startup-financial-modeling (MIT), lyndonkl financial-unit-economics |
+| `skills/` | The method: the organisers' economic-model and rubric skills, wshobson/agents startup-financial-modeling (MIT), lyndonkl financial-unit-economics (no licence on its repo, so linked, not copied: https://github.com/lyndonkl/claude/tree/main/skills/financial-unit-economics) |
 
 How it was built: v1 (overnight draft) → v2 recalculated with the skills and today's measured costs → two reviews →
 consolidation → v3 → v4 with the team's evidence and founder stipend. Price and funnel are team estimates: a paid pilot tests them.
