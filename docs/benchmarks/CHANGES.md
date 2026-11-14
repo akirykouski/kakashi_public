@@ -27,3 +27,26 @@ Every deviation from `docs/methodology.md`, every interpretation fixed before a 
 
 | Time | Item | Decision | Why | Who |
 |---|---|---|---|---|
+| 2026-11-14 12:29 CET | CR-05 | add certificate question | DWG-BR220-RevC note 5 requires a 3.1 certificate with each lot; none from Meccanica C in the documents; same case as CR-01/CR-18. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-10 (certificate) | keep | No A document states a certificate requirement for BR-180. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-12 (certificate) | add certificate question | BR-220 note 5 applies; the Rovereto location is not covered by any approval, so no certified lot from it exists. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-16 (certificate) | keep | No A document states a certificate requirement for BR-310. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-13 | add customer approval (STL) | CSR 8.3.6.1: any change to a drawing requirement, "including material", needs written approval. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-10 (customer approval) | keep | 8.5.6.1 names a change of material source; Meccanica C is already approved for this part, plant and customer (AP-0207). | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-11 | keep | No CSR clause names a change of our receiving plant; TO3 is outside the ASL, so a question is what the documents support. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-02 | keep | No A document requires a qualification record for subcontractors; 8.4.2.1 is already in the gold as customer approval. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-12 (supplier record) | keep | The supplier is on record; the new location is already covered by the source-release blocker. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-17 | keep | Same as CR-02 (8.5.6.1 already in the gold). | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-20 | keep | Same as CR-02 (7.1.5.3.2 already in the gold). | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | CR-19 | keep | ASL excludes service parts and the service-part CSR is not provided: one open question. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | I02 | keep (author's alloy-level reading) | No world-M document in the frozen snapshot states an 8D level (QP-15 was written after the gold); the 8D is on EN AW-6082 and BR-225 is 6082-T6. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | I03 | keep | Same: no snapshot document states a series-level rule; BR-180 is 6061-T6. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | M01 | add certificate question | QP-11 4.4: "A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier … Missing certificates are an open question". | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | M04 | add certificate question | Same as M01. | eval track (Claude) on Maksim's instruction |
+| 2026-11-14 12:29 CET | §8 schedule/packaging (C01, C03, C06, C08, CR-03, CR-04) | keep no_blockers_found | Both golds say no finding and no blocker; sending a delivery-date change to a person is an escalation the documents do not ask for. The gold is not moved onto the core's output. | eval track (Claude) on Maksim's instruction |
+
+## Deviation: who re-golded
+
+| Time | What | Why | Who |
+|---|---|---|---|
+| 2026-11-14 12:29 CET | Methodology §2 says disputed items are re-golded by the non-author with Valentina arbitrating. All 17 items were decided by the eval track on Maksim's instruction, on document quotes only; Valentina did not arbitrate and Arseniy gave no proposals. For world A the decider is on the non-author side (Maksim); for world M (I02, I03, M01, M04, §8) the decider is on the author's side. Net effect on M: two findings added against the author's own gold (M01, M04), the author's 8D reading kept (I02, I03). Listed as a threat to validity in RESULTS.md. | Team time before the 16:45 pitch. | Maksim (instruction), eval track (decisions) |

@@ -98,7 +98,7 @@ Two facts from the documents:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add the certificate question).** Same part, same new source and same native change type as CR-01 and CR-18, which carry it. Drawing Rev C note 5 requires a 3.1 certificate with each BR-220 lot, and no A document holds one from Meccanica C.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **add certificate question**. DWG-BR220-RevC note 5 requires a 3.1 certificate with each lot; none from Meccanica C in the documents; same case as CR-01/CR-18.
 
 ### 1.2 CR-10 (world A), certificate part
 - **Request:** "Meccanica C is approved for BR-180 and has capacity. Move 40% of BR-180 volume at Plant 1 for STL from Alluminio B to C."
@@ -116,7 +116,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep).** No A document states a certificate requirement for BR-180; the question is for a *required* certificate that is missing (A's RULES.md), so nothing is required here.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. No A document states a certificate requirement for BR-180.
 
 ### 1.3 CR-12 (world A), certificate part
 - **Request:** "Alluminio B wants to ship the BR-220 billet from its Rovereto plant to catch up. Same alloy 6082-T6. OK for Plant 1?"
@@ -132,7 +132,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add).** BR-220's certificate requirement (Rev C note 5, control plan line 20) applies, and the Rovereto plant is a location the approval does not cover ("An approval covers the named manufacturing location only."), so no certified lot from it exists — the same situation as a new source in CR-01.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **add certificate question**. BR-220 note 5 applies; the Rovereto location is not covered by any approval, so no certified lot from it exists.
 
 ### 1.4 CR-16 (world A), certificate part
 - **Request:** "Run BR-310 for Cantieri Lombardi at Plant 1 using Meccanica C billet, the Plant 2 line is down."
@@ -148,7 +148,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep).** No A document states a certificate requirement for BR-310.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. No A document states a certificate requirement for BR-310.
 
 ---
 
@@ -182,7 +182,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (add customer approval).** CSR 8.3.6.1 names material explicitly: "Any change to a requirement stated on a customer drawing, including material and finish, needs written approval from Stellantis"; BR-220 is on STL-Torino-27 (BOM line 120).
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **add customer approval (STL)**. CSR 8.3.6.1: any change to a drawing requirement, "including material", needs written approval.
 
 ---
 
@@ -219,7 +219,7 @@ The CSR excerpt has six clauses: 8.3.6.1, 8.3.3.3, 7.1.5.3.2, 8.5.6.1, 8.4.2.1 a
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** CSR 8.5.6.1 names a change of material source; Meccanica C is already the approved source for this exact part, plant and customer (AP-0207), and no CSR clause names a change of volume split.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. 8.5.6.1 names a change of material source; Meccanica C is already approved for this part, plant and customer (AP-0207).
 
 ### 3.2 CR-11
 - **Request:** "Plant 3 starts BR-180 pilot builds for STL next month. Billet from Alluminio B Settimo, OK?"
@@ -245,7 +245,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** No CSR clause names a change of our own receiving plant; the ASL says TO3 is out of its scope, so the gold's question is what the documents support. Option 2 would also move the gold onto what both engines already output.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. No CSR clause names a change of our receiving plant; TO3 is outside the ASL, so a question is what the documents support.
 
 ---
 
@@ -284,7 +284,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. No A document states a qualification-record requirement for subcontractors, and A has no supplier master to be absent from; the clause that does apply (CSR 8.4.2.1, surface treatment) is already in the gold as customer approval. Adding it would bring a rule into A that A's vocabulary does not have.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. No A document requires a qualification record for subcontractors; 8.4.2.1 is already in the gold as customer approval.
 
 ### 4.2 CR-12, supplier-record part
 - **Request:** see 1.3.
@@ -301,7 +301,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)**, as REVIEW proposes. The supplier is on record; only the location is new, and that is already the source-release blocker.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. The supplier is on record; the new location is already covered by the source-release blocker.
 
 ### 4.3 CR-17
 - **Request:** "Alluminio B wants to move homogenisation of our BR-220 billet to a toll processor, Termica Nord S.r.l. Same 6082-T6 spec. Accept?"
@@ -312,7 +312,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. Same reason as CR-02: no A document requires a record for a sub-supplier; CSR 8.5.6.1 (change of sub-supplier) is already in the gold as customer approval.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. Same as CR-02 (8.5.6.1 already in the gold).
 
 ### 4.4 CR-20
 - **Request:** "The Plant 1 tensile machine is down. Send BR-220 tensile tests for the line 30 check to Laboratorio Sigma in Milan."
@@ -326,7 +326,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 2 (keep)** — policy call. Same reason as CR-02; the clause that applies to an external laboratory (CSR 7.1.5.3.2, notification and acceptance of the lab scope) is already in the gold as customer approval.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. Same as CR-02 (7.1.5.3.2 already in the gold).
 
 ---
 
@@ -356,7 +356,7 @@ Decision (Valentina):  — time:
 
 Proposal (Maksim, non-author of world A; based on the documents only): **Option 1 (keep).** "Service and aftermarket parts are not in scope of this record" and "Service parts are governed by a separate document, STL-CSR-SP-01, which is not part of this excerpt": one open question is what the documents support.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. ASL excludes service parts and the service-part CSR is not provided: one open question.
 
 ---
 
@@ -416,7 +416,7 @@ The parts register gives BR-225 the material `MAT-6082-T6` (row `BR-225,"Rear su
 - **Option 1:** keep as is (reading a or b). A-on-M keeps 1 FN.
 - **Option 2:** remove `{rule: "R3", rule_u: "U_OPEN_ISSUE", key: "8D-25-031"}` (reading c). The verdict stays `blockers_found`. A-on-M loses 1 FN, and I02 becomes an exact match for Core A. Core M gains 1 FP. For consistency, apply the same removal to S05, where Core M gains another FP.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep (author's alloy-level reading)**. No world-M document in the frozen snapshot states an 8D level (QP-15 was written after the gold); the 8D is on EN AW-6082 and BR-225 is 6082-T6.
 
 ### 6.2 I03
 - **Request** (as of 2026-11-14): "Chisone will deliver BR-180 to Pinerolo from now on instead of Beinasco."
@@ -439,7 +439,7 @@ The parts register gives BR-180 the material `MAT-6061-T6`. Chisone already supp
 - **Option 1:** keep as is (reading a or c).
 - **Option 2:** add `{rule: "R3", rule_u: "U_OPEN_ISSUE", key: "8D-25-031", kind: "blocker", inferred: true}` (reading b). The verdict stays `blockers_found`. Core M today gains 1 FN; a merged engine that matches on series without the feature check would score it as a hit.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep**. Same: no snapshot document states a series-level rule; BR-180 is 6061-T6.
 
 ---
 
@@ -473,7 +473,7 @@ Decision (Valentina):  — time:
 - **Option 1:** add U. A-on-M loses 1 FP; Core M gains 1 FN.
 - **Option 2:** keep as is. A-on-M keeps 1 FP.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **add certificate question**. QP-11 4.4: "A change of source requires a material certificate (EN 10204 type 3.1) from the new supplier … Missing certificates are an open question".
 
 ### 7.2 M04
 - **Request:** "Viteria Lanzo can also cast HB-620, let's ask them for the next batch."
@@ -485,7 +485,7 @@ Decision (Valentina):  — time:
 - **Option 1:** add U. Core M gains 1 FN.
 - **Option 2:** keep as is.
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **add certificate question**. Same as M01.
 
 ---
 
@@ -504,4 +504,4 @@ Decision (Valentina):  — time:
 - **Option 2:** set the verdict of these four to `not_covered`. Model baselines, which cannot answer `not_covered`, get 4 wrong verdicts. Watch out: this moves the gold onto the core's output.
 - **Option 3:** score both answers as right on clean schedule/packaging requests (a scoring rule, logged in CHANGES.md).
 
-Decision (Valentina):  — time:
+Decision (eval track for Maksim, 2026-11-14 12:29 CET; not arbitrated by Valentina): **keep no_blockers_found**. Both golds say no finding and no blocker; sending a delivery-date change to a person is an escalation the documents do not ask for. The gold is not moved onto the core's output.
