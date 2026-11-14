@@ -81,9 +81,11 @@ def run(request, record=True):
     return card, entry
 
 
-def evaluate(request, record=True, table=None, rules_version_value=None, coverage_value=None, scoped=None):
+def evaluate(request, record=True, table=None, rules_version_value=None, coverage_value=None, scoped=None,
+             explain=False):
     """The one pipeline. table / rules_version_value / coverage_value let the demo page re-check under an
-    edited decision table without writing core/decision_table.yaml. Returns (card, record, projection)."""
+    edited decision table without writing core/decision_table.yaml. explain=True adds the card keys
+    counterfactuals / counterfactual_all / explanation (core/explain_text.py). Returns (card, record, projection)."""
     known = set(ChangeRequest.__dataclass_fields__)
     known.discard("epistemic")  # derived on the card, never an input
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
@@ -120,6 +122,9 @@ def evaluate(request, record=True, table=None, rules_version_value=None, coverag
                 decision=row, coverage=coverage_value or coverage(), record_id=entry["record_id"] if entry else "",
                 timings_ms=timings, contested=contested_pairs(projection, request),
                 **decision_memory.annotate(projection, card_request, findings)).__dict__
+    if explain:
+        from core import explain_text  # verified counterfactuals (hypothetical re-runs) + two-register text
+        explain_text.attach(card, entry, table=table)
     return card, entry, projection
 
 

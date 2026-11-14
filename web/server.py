@@ -17,6 +17,8 @@ and the model key stays on the server (core/llm.py reads .env).
     GET  /api/table.dmn ?drop=D2  the same table as an OMG DMN 1.3 file (download; core/dmn.py)
     GET  /api/table?format=dmn    the same XML, inline
     GET  /api/records   ?limit=50     decision records, newest first
+    GET  /api/explain   ?record_id=DR-…   plain-words explanation (customer + auditor) of a past record, with
+                        verified counterfactuals (core/explain_text.py); POST /api/check cards carry the same keys
     GET  /api/impact    ?doc=CSR-AUR-R3   what a superseded document affects (core/impact.py, #29)
     POST /api/meeting/line  {line, speaker?, as_of?} -> {flagged, reason, stage, mentions, card?}  (#32, core/meeting.py)
     GET  /api/meeting/demo  the demo transcript (data/meetings/demo_meeting.jsonl)
@@ -148,13 +150,14 @@ def replaced_records(projection, findings):
     return found
 
 
-def run_check(request, drop_rows=None):
-    """core.check.run with an optional in-memory table edit. Returns the response for the page."""
+def run_check(request, drop_rows=None, explain=True):
+    """core.check.run with an optional in-memory table edit. Returns the response for the page. explain=True adds
+    the verified counterfactuals and the two-register explanation to the card (core/explain_text.py)."""
     drop_rows = sorted(set(drop_rows or []))
     table, table_text = table_for(drop_rows)
     report = coverage_for(table, ",".join(drop_rows))
     card, entry, projection = check.evaluate(request, table=table, rules_version_value=rules_version_for(table_text),
-                                             coverage_value=decision.coverage_summary(report))
+                                             coverage_value=decision.coverage_summary(report), explain=explain)
     row = card["decision"]
     findings = card["findings"]
     return {
@@ -269,7 +272,7 @@ def handle_check(body):
         raise ValueError("send one of: remark, form, scenario, request")
     if body.get("as_of"):
         request["as_of"] = body["as_of"]
-    response = run_check(request, drop_rows)
+    response = run_check(request, drop_rows, explain=body.get("explain", True) is not False)
     if parse_ms is not None:
         response["card"]["timings_ms"] = {"parse": parse_ms, **response["card"]["timings_ms"]}
     return response
@@ -293,6 +296,21 @@ def handle_table_dmn(query):
 def handle_scenarios():
     with open(ROOT / "data" / "scenarios.json", encoding="utf-8") as handle:
         return {"scenarios": json.load(handle), "people": people()}
+
+
+def handle_explain(query):
+    """Two-register explanation of any past decision record (core/explain_text.py for_record); writes nothing."""
+    from core import explain_text
+    record_id = (query.get("record_id", [""])[0] or "").strip()
+    if not record_id:
+        raise ValueError("send ?record_id=<decision record id>")
+    try:
+        result = explain_text.for_record(record_id)
+    except KeyError as error:
+        return {"error": str(error)}, 404
+    return {"record": result["record"], "explanation": result["explanation"],
+            "counterfactuals": result["card"].get("counterfactuals"),
+            "counterfactual_all": result["card"].get("counterfactual_all")}, 200
 
 
 def handle_records(query):
@@ -422,6 +440,10 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_json(handle_table(query))
             elif url.path == "/api/records":
                 self.send_json(handle_records(query))
+            elif url.path == "/api/explain":
+                with LOCK:
+                    payload, status = handle_explain(query)
+                self.send_json(payload, status)
             elif url.path == "/api/meeting/demo":
                 self.send_json(handle_meeting_demo())
             elif url.path == "/api/impact":
