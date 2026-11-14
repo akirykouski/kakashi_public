@@ -105,7 +105,7 @@ rows:
 
   - id: D8
     meaning: "A sub-tier supplier changes material, process, coating or source; notice must travel up the chain to the plant."
-    when: {classes: source, all: [R8]}
+    when: {classes: checked, all: [R8]}  # a change at a sub-tier supplier can be of any class (QP-14 4.1)
     actions: [request customer deviation / PPAP resubmission, re-audit supplier]
     decider: supplier quality engineer
     rests_on: [R8, "QP-14"]
