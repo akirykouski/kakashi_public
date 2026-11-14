@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" id="Definitions_change_check" name="Change Check decision model" namespace="https://github.com/akirykouski/kakashi_public/decision" exporter="kakashi core.dmn" exporterVersion="1">
+  <decision id="Decision_change" name="Change decision">
+    <description>What may be done about a proposed supplier change and who decides. Never an approval: the best outcome is 'proceed under standard change control'.</description>
+    <decisionTable id="DecisionTable_change" hitPolicy="FIRST">
+      <input id="Input_change_class" label="Change class">
+        <inputExpression id="InputExpression_change_class" typeRef="string">
+          <text>change_class</text>
+        </inputExpression>
+        <inputValues id="InputValues_change_class">
+          <text>"SourceChange","SubTierSupplierChange","LocationChange","ShippingLocationChange","MaterialChange","CoatingChange","SpecialProcessChange","ProcessChange","EquipmentChange","ToolingChange","TestMethodChange","SoftwareChange","DesignChange","PackagingChange","ProductionResumptionChange","ScheduleChange","PriceChange"</text>
+        </inputValues>
+      </input>
+      <input id="Input_R1a" label="R1a fired">
+        <inputExpression id="InputExpression_R1a" typeRef="boolean">
+          <text>fired_R1a</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R1b" label="R1b fired">
+        <inputExpression id="InputExpression_R1b" typeRef="boolean">
+          <text>fired_R1b</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R2" label="R2 fired">
+        <inputExpression id="InputExpression_R2" typeRef="boolean">
+          <text>fired_R2</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R3" label="R3 fired">
+        <inputExpression id="InputExpression_R3" typeRef="boolean">
+          <text>fired_R3</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R4" label="R4 fired">
+        <inputExpression id="InputExpression_R4" typeRef="boolean">
+          <text>fired_R4</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R5" label="R5 fired">
+        <inputExpression id="InputExpression_R5" typeRef="boolean">
+          <text>fired_R5</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R6" label="R6 fired">
+        <inputExpression id="InputExpression_R6" typeRef="boolean">
+          <text>fired_R6</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R7" label="R7 fired">
+        <inputExpression id="InputExpression_R7" typeRef="boolean">
+          <text>fired_R7</text>
+        </inputExpression>
+      </input>
+      <input id="Input_R8" label="R8 fired">
+        <inputExpression id="InputExpression_R8" typeRef="boolean">
+          <text>fired_R8</text>
+        </inputExpression>
+      </input>
+      <output id="Output_row_id" label="Row" name="row_id" typeRef="string" />
+      <output id="Output_allowed_actions" label="Allowed actions" name="allowed_actions" />
+      <output id="Output_decider" label="Decides" name="decider" typeRef="string" />
+      <output id="Output_rests_on" label="Rests on" name="rests_on" />
+      <rule id="Rule_D1">
+        <description>The new coating or material contains a substance the law restricts in the part's market. No deviation can lift a legal ban.</description>
+        <inputEntry id="Rule_D1_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in6">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D1_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D1_out0">
+          <text>"D1"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D1_out1">
+          <text>["stop"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D1_out2">
+          <text>"plant quality manager"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D1_out3">
+          <text>["R5", "Directive 2000/53/EC Annex II", "Regulation (EU) 2026/1738"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D2">
+        <description>The new supplier is conditional: it may not receive new parts until the open 8D is closed and a re-audit passes.</description>
+        <inputEntry id="Rule_D2_in0">
+          <text>"SourceChange","SubTierSupplierChange"</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in1">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D2_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D2_out0">
+          <text>"D2"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D2_out1">
+          <text>["stop", "expedite current approved source", "re-audit supplier"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D2_out2">
+          <text>"supplier quality engineer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D2_out3">
+          <text>["R1a", "QP-11 4.3"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D3">
+        <description>The new supplier is not qualified for the material on the drawing.</description>
+        <inputEntry id="Rule_D3_in0">
+          <text>"SourceChange"</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D3_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D3_out0">
+          <text>"D3"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D3_out1">
+          <text>["expedite current approved source", "re-audit supplier"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D3_out2">
+          <text>"supplier quality engineer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D3_out3">
+          <text>["R6", "IATF 16949 8.4.2"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D4">
+        <description>The new material falls below a special characteristic of the part.</description>
+        <inputEntry id="Rule_D4_in0">
+          <text>"MaterialChange"</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D4_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D4_out0">
+          <text>"D4"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D4_out1">
+          <text>["stop", "request customer deviation / PPAP resubmission"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D4_out2">
+          <text>"customer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D4_out3">
+          <text>["R6", "IATF 16949 8.3.6.1"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D5">
+        <description>No part approval for this supplier, part, plant and customer, and the customer requires approval for this change.</description>
+        <inputEntry id="Rule_D5_in0">
+          <text>"SourceChange"</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in2">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in3">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D5_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D5_out0">
+          <text>"D5"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D5_out1">
+          <text>["expedite current approved source", "request customer deviation / PPAP resubmission"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D5_out2">
+          <text>"customer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D5_out3">
+          <text>["R1b", "R2", "IATF 16949 8.5.6.1", "AIAG PPAP triggers"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D6">
+        <description>The customer's current requirement needs approval for this change class and no valid deviation covers it.</description>
+        <inputEntry id="Rule_D6_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in3">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D6_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D6_out0">
+          <text>"D6"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D6_out1">
+          <text>["request customer deviation / PPAP resubmission"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D6_out2">
+          <text>"customer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D6_out3">
+          <text>["R2", "IATF 16949 8.5.6.1", "AIAG PPAP triggers"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D7">
+        <description>No internal part approval for this supplier, part and plant; the customer does not ask for one.</description>
+        <inputEntry id="Rule_D7_in0">
+          <text>"SourceChange"</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in2">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D7_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_D7_out0">
+          <text>"D7"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D7_out1">
+          <text>["run internal part approval", "expedite current approved source"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D7_out2">
+          <text>"plant quality manager"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D7_out3">
+          <text>["R1b", "IATF 16949 8.5.6.1"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D8">
+        <description>A sub-tier supplier changes material, process, coating or source; notice must travel up the chain to the plant.</description>
+        <inputEntry id="Rule_D8_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D8_in9">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="Rule_D8_out0">
+          <text>"D8"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D8_out1">
+          <text>["request customer deviation / PPAP resubmission", "re-audit supplier"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D8_out2">
+          <text>"supplier quality engineer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D8_out3">
+          <text>["R8", "QP-14"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D9">
+        <description>No blocker, but the new supplier has an open 8D or NCR on the part's material.</description>
+        <inputEntry id="Rule_D9_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in1">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in4">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in6">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D9_in9">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="Rule_D9_out0">
+          <text>"D9"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D9_out1">
+          <text>["re-audit supplier", "expedite current approved source"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D9_out2">
+          <text>"supplier quality engineer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D9_out3">
+          <text>["R3", "QP-11"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D10">
+        <description>No blocker, but evidence is missing (certificate, supplier record, material or coating data): ask the named owner.</description>
+        <inputEntry id="Rule_D10_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in1">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in6">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in8">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="Rule_D10_in9">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="Rule_D10_out0">
+          <text>"D10"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D10_out1">
+          <text>["obtain material certificate"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D10_out2">
+          <text>"supplier quality engineer"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D10_out3">
+          <text>["R7", "QP-11"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_D11">
+        <description>The checks for this change class ran and none fired. Not an approval: the change goes through standard change control.</description>
+        <inputEntry id="Rule_D11_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in1">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in4">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in6">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in8">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="Rule_D11_in9">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="Rule_D11_out0">
+          <text>"D11"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D11_out1">
+          <text>["proceed under standard change control"]</text>
+        </outputEntry>
+        <outputEntry id="Rule_D11_out2">
+          <text>"plant quality manager"</text>
+        </outputEntry>
+        <outputEntry id="Rule_D11_out3">
+          <text>["IATF 16949 8.5.6.1"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_R0">
+        <description>No rule covers this change: a person decides.</description>
+        <inputEntry id="Rule_R0_in0">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in4">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in5">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in7">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in8">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="Rule_R0_in9">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="Rule_R0_out0">
+          <text>"R0"</text>
+        </outputEntry>
+        <outputEntry id="Rule_R0_out1">
+          <text>[]</text>
+        </outputEntry>
+        <outputEntry id="Rule_R0_out2">
+          <text>"plant quality manager"</text>
+        </outputEntry>
+        <outputEntry id="Rule_R0_out3">
+          <text>[]</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="Annotation_rules_version">
+    <text>Exported from core/decision_table.yaml (v1, 14 Nov 2026). rules_version 5ec520cbb9fb3cd799f0ee58bf4119c0b0f7d4d2c9611ec92377f596d4fe2959. Hit policy FIRST: the first matching row answers; the last row R0 means no rule covers the change and a person decides. Inputs: the change class and, per rule id, whether that rule fired at severity blocker, warning or question.</text>
+  </textAnnotation>
+  <association id="Association_rules_version">
+    <sourceRef href="#Annotation_rules_version" />
+    <targetRef href="#Decision_change" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_change">
+      <dmndi:DMNShape id="DMNShape_decision" dmnElementRef="Decision_change">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_annotation" dmnElementRef="Annotation_rules_version">
+        <dc:Bounds height="160" width="420" x="420" y="60" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_association" dmnElementRef="Association_rules_version">
+        <di:waypoint x="420" y="140" />
+        <di:waypoint x="340" y="140" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

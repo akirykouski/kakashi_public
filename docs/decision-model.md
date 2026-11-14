@@ -94,3 +94,32 @@ who decided. `rules_version` is sha256 over `ontology/*.ttl`, `ontology/RULES.md
 (`python -m core.decision --version`). Tests prove: the same input under the same rules gives the same row
 and verdict; editing one row changes the answer for the main scenario (D2 → D3) and the two records carry
 different `rules_version` values.
+
+## Standard export (DMN)
+
+The table is also published as a standard **OMG DMN 1.3** model (namespace
+`https://www.omg.org/spec/DMN/20191111/MODEL/`), so the same rules open in Camunda Modeler, Drools, Trisotech
+or any DMN 1.3 tool: they are not locked in this product. Code: `core/dmn.py`. Tests: `tests/test_dmn.py`.
+
+- **Get it**: `python -m core.dmn --out decision.dmn`, or `GET /api/table.dmn` (download) /
+  `GET /api/table?format=dmn` (inline); both take `?drop=D2` for the in-memory edit. In the page: Decision
+  table → **DMN** tab (rendered with dmn-js 17.12.3, vendored under `web/static/vendor/`, the bpmn.io
+  watermark stays visible per its licence) → **Download .dmn**; the matched row is highlighted. Offline, the
+  page shows the committed copy `web/static/dmn/decision.dmn` (regenerate it with the command above after a
+  table change; a test checks it holds the current rules).
+- **Shape**: one decision "Change decision", hit policy FIRST. Inputs: `change_class` (string) and one
+  boolean per rule id, `fired_R1a` … `fired_R8` (labels "R1a fired" …). Outputs: `row_id`, `allowed_actions`
+  (FEEL list of strings), `decider`, `rests_on` (FEEL list). One DMN rule per table row in table order (rule
+  ids `Rule_D1` … `Rule_R0`); the row meaning is the rule's description (the annotations column). Cells are
+  FEEL unary tests of four forms only: `-`, `true`, `false`, `"SourceChange","SubTierSupplierChange"`. A text
+  annotation on the decision carries the version note and the `rules_version` hash. An `any` condition (unused
+  today) is written as one DMN rule per listed rule id, side by side, which is the same table under FIRST.
+- **Proof**: the export validates against the OMG DMN 1.3 XSD (`DMN13.xsd` with DMNDI/DC/DI, `xmllint
+  --schema`). `tests/test_dmn.py` reads the XML back with its own FEEL reader (independent of
+  `core/decision.py`) and evaluates all **8704 input sets** (2^9 rule sets × 17 change classes): equal to
+  `core.decision.match` on every one, also for an edited table with an `any` row. The same 8704 sets were run
+  through an independent engine, **pyDMNrules 1.4.5**: 8704 compared, 0 differences.
+- **Open it in Camunda Modeler** (desktop, free): File → Open File… → `decision.dmn`. The DRD shows the
+  decision and the rules-version note; double-click the decision (or the table icon) for the table. To run
+  it in a Camunda 7/8 engine, pass the variables `change_class` and `fired_R1a` … `fired_R8` (booleans); the
+  result's `row_id` is the row this product would answer with.

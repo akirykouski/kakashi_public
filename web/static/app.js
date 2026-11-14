@@ -715,7 +715,8 @@ async function showTable(hitRow, dropRows) {
       ]));
     }
     body.append(el("table", { class: "dt" }, [el("thead", {}, head), tbody]));
-    openModal(hitRow ? `Decision table — row ${hitRow} matched` : "Decision table", body);
+    const view = typeof DmnTab !== "undefined" ? DmnTab.wrap(body, hitRow, dropRows) : body;  // DMN tab (dmn.js)
+    openModal(hitRow ? `Decision table — row ${hitRow} matched` : "Decision table", view);
   } catch (error) {
     setStatus(`Could not load the table: ${error.message}`, true);
   }
