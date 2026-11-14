@@ -1,0 +1,5 @@
+id,part,description,min_yield_mpa
+SC-BR220-YS,BR-220,Yield strength Rp0.2 at least 250 MPa,250
+SC-BR225-YS,BR-225,Yield strength Rp0.2 at least 250 MPa,250
+SC-BK330-WELD,BK-330,Weld nugget diameter at least 5 mm,
+SC-HB620-POR,HB-620,Porosity grade 2 or better in mount bores,

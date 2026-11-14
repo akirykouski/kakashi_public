@@ -1,0 +1,11 @@
+id,name,program,drawing_rev,material,coating,special_characteristic
+BR-220,"Front subframe bracket, milled",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS
+BR-225,"Rear subframe bracket, milled",PRG-X,B,MAT-6082-T6,COAT-ANOD,SC-BR225-YS
+BR-180,"Battery tray bracket, milled",PRG-Z,D,MAT-6061-T6,COAT-ANOD,
+BR-310,"Roof rail bracket, extruded and cut",PRG-Y,A,MAT-6082-T5,COAT-TCP,
+HS-410,"Exhaust heat shield, stamped",PRG-X,B,MAT-DC04,COAT-ZNNI,
+CL-115,"Cable clip, spring steel",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,
+BK-330,"Seat rail bracket, stamped",PRG-Z,C,MAT-DC04,COAT-ZNNI,SC-BK330-WELD
+PN-050,Hinge pin,PRG-X,A,MAT-42CRMO4,COAT-ZNFLAKE,
+HB-620,"Gearbox mount housing, die cast",PRG-Y,C,MAT-ALSI9CU3,COAT-ANOD,SC-HB620-POR
+SP-700,"Battery spacer, injection moulded",PRG-Z,A,MAT-PA66GF30,,

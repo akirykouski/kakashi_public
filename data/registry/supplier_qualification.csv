@@ -1,0 +1,11 @@
+id,supplier,status,valid_from,valid_to,approved_by,supersedes,note
+QS-B-2023,SUP-B,approved,2023-01-20,,PER-BIANCHI,,audit score 91
+QS-C-2023,SUP-C,approved,2023-03-15,,PER-BIANCHI,,audit score 84
+QS-C-2025,SUP-C,conditional,2025-04-01,,PER-BIANCHI,QS-C-2023,no new parts until 8D-25-031 is closed and re-audit passed
+QS-C-2026,SUP-C,approved,2026-11-06,,PER-BIANCHI,QS-C-2025,"re-audit passed, score 86"
+QS-D-2022,SUP-D,approved,2022-09-01,,PER-BIANCHI,,audit score 88
+QS-D-2026,SUP-D,conditional,2026-09-15,,PER-BIANCHI,QS-D-2022,"porosity escapes, see 8D-26-009"
+QS-E-2023,SUP-E,approved,2023-02-10,,PER-BIANCHI,,audit score 89
+QS-F-2023,SUP-F,approved,2023-02-28,,PER-BIANCHI,,audit score 82
+QS-G-2022,SUP-G,approved,2022-05-11,,PER-BIANCHI,,audit score 90
+QS-H-2026,SUP-H,approved,2026-09-28,,PER-BIANCHI,,audit score 87

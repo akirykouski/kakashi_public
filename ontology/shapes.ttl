@@ -1,0 +1,55 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix lcc:  <https://lcc.example/ont#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# Integrity of company memory (closed-world). OWL classifies, SHACL decides what is missing.
+# Run: python core/integrity.py
+
+lcc:PartShape a sh:NodeShape ;
+    sh:targetClass lcc:Part ;
+    sh:property [ sh:path lcc:madeOf ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "Every part has exactly one drawing material." ] ;
+    sh:property [ sh:path lcc:usedIn ; sh:minCount 1 ;
+                  sh:message "Every part is used in at least one program." ] .
+
+lcc:PartApprovalShape a sh:NodeShape ;
+    sh:targetClass lcc:PartApproval ;
+    sh:property [ sh:path lcc:approvedSupplier ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path lcc:approvedPart ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path lcc:approvedSite ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "An approval is for one site: approval is never global." ] ;
+    sh:property [ sh:path lcc:approvedForCustomer ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path lcc:status ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "approved" "revoked" "conditional" ) ] .
+
+lcc:SupplierQualificationShape a sh:NodeShape ;
+    sh:targetClass lcc:SupplierQualification ;
+    sh:property [ sh:path lcc:qualifiedSupplier ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path lcc:status ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "approved" "conditional" "disqualified" ) ] .
+
+# At most one current qualification per supplier (superseded records are not in the current graph).
+lcc:OneCurrentQualificationShape a sh:NodeShape ;
+    sh:targetClass lcc:Supplier ;
+    sh:sparql [
+        sh:message "Supplier has more than one current qualification record: one must supersede the other." ;
+        sh:prefixes lcc: ;
+        sh:select """
+            SELECT $this WHERE {
+                ?a lcc:qualifiedSupplier $this . ?b lcc:qualifiedSupplier $this .
+                FILTER (STR(?a) < STR(?b))
+            }""" ] .
+
+lcc:IssueShape a sh:NodeShape ;
+    sh:targetClass lcc:Issue ;
+    sh:property [ sh:path lcc:concernsSupplier ; sh:minCount 1 ;
+                  sh:message "Every quality issue names the supplier it concerns." ] ;
+    sh:property [ sh:path lcc:status ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+lcc:DecisionShape a sh:NodeShape ;
+    sh:targetClass lcc:Decision ;
+    sh:property [ sh:path lcc:decidedBy ; sh:minCount 1 ; sh:message "Every decision names who decided." ] ;
+    sh:property [ sh:path lcc:reason ; sh:minCount 1 ; sh:message "Every decision records why." ] ;
+    sh:property [ sh:path lcc:decidedIn ; sh:minCount 1 ] .
+
+lcc: sh:declare [ sh:prefix "lcc" ; sh:namespace "https://lcc.example/ont#"^^xsd:anyURI ] .
