@@ -191,6 +191,22 @@ with open(os.path.join(OUT, "facts.jsonl"), "w") as out:
 with open(os.path.join(OUT, "key_names.json"), "w") as out:
     json.dump({"SUP-MC": "Meccanica C", "SUP-AB": "Alluminio B", "SUP-FD": "Ferrotec D", "SUP-TE": "Trafilerie E",
                "SUP-AV": "Anodica Veneta"}, out, indent=1)
+# registries for the core parser (names as the A documents write them), used by condition C
+REGISTRIES = {
+    "parts": {"rows": [["BR-180", "BR-180 bracket"], ["BR-220", "BR-220 bracket"], ["BR-310", "BR-310 bracket"],
+                       ["CV-015", "CV-015"], ["HS-040", "HS-040"]]},
+    "suppliers": {"rows": [["SUP-AB", "Alluminio B S.r.l."], ["SUP-MC", "Meccanica C S.p.A."],
+                           ["SUP-FD", "Ferrotec D S.r.l."], ["SUP-TE", "Trafilerie E S.p.A."],
+                           ["SUP-AV", "Anodica Veneta S.r.l."]]},
+    "sites": {"rows": [["TO1", "Torino Plant 1"], ["TO2", "Torino Plant 2"], ["TO3", "Torino Plant 3"]]},
+    "materials": {"rows": [["MAT-6082-T6", "EN AW-6082-T6"], ["MAT-6061-T6", "EN AW-6061-T6"],
+                           ["MAT-5083-H111", "EN AW-5083-H111"], ["MAT-S355J2", "S355J2"],
+                           ["MAT-CUZN39PB3", "CuZn39Pb3"]]},
+    "coatings": {"rows": [["COAT-ANOD-II", "anodise type II"]]},
+    "customers": {"rows": [["CUST-STL", "Stellantis"], ["CUST-CLM", "Cantieri Lombardi Mobility S.p.A."]]},
+}
+with open(os.path.join(OUT, "registries.json"), "w") as out:
+    json.dump(REGISTRIES, out, indent=1)
 with open(os.path.join(OUT, "aliases.json"), "w") as out:
     json.dump({"Meccanica C": "SUP-MC", "Alluminio B": "SUP-AB", "Alluminio B (Settimo Torinese)": "SUP-AB",
                "Anodica Veneta": "SUP-AV", "EN AW-6061-T6": "MAT-6061-T6", "EN AW-6082-T6": "MAT-6082-T6"}, out, indent=1)

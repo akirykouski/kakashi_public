@@ -135,32 +135,41 @@ def resolve(change):
     return {key: ALIASES.get(value, value) if isinstance(value, str) else value for key, value in change.items()}
 
 
-def model_parse(item, model, raw_dir):
-    """C: one structured parse through the subscription CLI with the core parser's prompt and schema."""
-    from core import parse
+def cli_call(model_arg, usage_box):
+    """A `call` for core.llm.cached_call that answers through the subscription CLI with the baselines' model."""
+    import subprocess
     from run_baselines import CLI
-    system, schema, prompt = parse.SYSTEM_PROMPT, parse.SCHEMA, parse.build_prompt(item["request_text"], item["as_of"])
-    raw_path = raw_dir / f"{item['id']}.json"
-    if raw_path.exists():
-        stored = json.load(open(raw_path))
-        response, seconds = stored["response"], stored["seconds"]
-    else:
-        import subprocess
-        command = CLI + ["--model", model, "--system-prompt", system, "--json-schema", json.dumps(schema)]
+
+    def call(_core_model, system, prompt, schema):
+        command = CLI + ["--model", model_arg, "--system-prompt", system, "--json-schema", json.dumps(schema)]
         started = time.time()
         completed = subprocess.run(command, input=prompt, capture_output=True, text=True, timeout=300, cwd="/tmp")
-        seconds = time.time() - started
+        usage_box["seconds"] = time.time() - started
         raw = completed.stdout
         response = json.loads(raw[raw.find("{"):]) if "{" in raw else {"is_error": True, "result": completed.stderr}
-        raw_path.parent.mkdir(parents=True, exist_ok=True)
-        json.dump({"seconds": seconds, "response": response}, open(raw_path, "w"), indent=1, ensure_ascii=False)
-    if response.get("is_error"):
-        raise RuntimeError(str(response.get("result"))[:300])
-    output = response.get("structured_output") or json.loads(response.get("result") or "{}")
-    change = parse.to_change_request(output, as_of=item["as_of"], utterance=item["request_text"])
-    usage = response.get("usage", {})
-    tokens_in = sum(usage.get(k, 0) for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
-    return change, seconds, tokens_in, usage.get("output_tokens", 0), ",".join(sorted(response.get("modelUsage", {})))
+        if response.get("is_error"):
+            raise RuntimeError(str(response.get("result"))[:300])
+        usage_box["model_id"] = ",".join(sorted(response.get("modelUsage", {})))
+        usage = response.get("usage", {})
+        usage_box["tokens_in"] = sum(usage.get(k, 0) for k in ("input_tokens", "cache_creation_input_tokens",
+                                                                "cache_read_input_tokens"))
+        usage_box["tokens_out"] = usage.get("output_tokens", 0)
+        output = response.get("structured_output") or json.loads(response.get("result") or "{}")
+        return output, {**usage, "model_id": usage_box["model_id"], "seconds": usage_box["seconds"]}
+    call.recorded_by = f"claude -p --model {model_arg} (eval track, subscription CLI)"
+    return call
+
+
+def model_parse(item, model, raw_dir, world):
+    """C: the core's own parser (prompt, schema, name resolution) with its model call routed to the CLI.
+    Raw answers are recorded as fixtures under eval/raw/<tag>/C_parse/<world>/, not in the core's tests."""
+    from core import parse
+    parse.FIXTURES_DIR = str(raw_dir)
+    registries = json.load(open(EVAL / "worlds" / world / ("core/registries.json" if world == "A" else "registries.json")))
+    box = {"seconds": 0.0, "tokens_in": 0, "tokens_out": 0, "model_id": None}
+    change = parse.parse(item["request_text"], as_of=item["as_of"], registries=registries, live=True,
+                         call=cli_call(model, box))
+    return change, box["seconds"], box["tokens_in"], box["tokens_out"], box["model_id"]
 
 
 def run_one(world, condition, item, hand, model, raw_dir):
@@ -172,7 +181,7 @@ def run_one(world, condition, item, hand, model, raw_dir):
             change = resolve(dict(hand[item["id"]]["change"]))
             result["schema_gap"] = hand[item["id"]].get("schema_gap")
         else:
-            change, seconds, tokens_in, tokens_out, model_id = model_parse(item, model, raw_dir)
+            change, seconds, tokens_in, tokens_out, model_id = model_parse(item, model, raw_dir, world)
             result.update(seconds=seconds, tokens_in=tokens_in, tokens_out=tokens_out, model_id=model_id)
         result["parsed"] = change
         if not change.get("type"):
