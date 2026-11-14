@@ -1,13 +1,13 @@
 # Economic model v4 (14 Nov 2026, 16:00, KVA hackathon, track Decision models)
 
-Source of every number: `python3 econ/v4/model.py` (stdlib; ASSUMPTIONS dict with value, unit, marker, source). Generated tables are appended below. v4 = v3 plus three changes: (1) founders on a EUR 2,000/month stipend, (2) verified market price band for comparable QMS software, (3) problem evidence from team research (`econ/evidence/problem_evidence_2026-11-14.md`). Everything else is v3. Markers: [verified: source] / [declared] / [unverified]. **Not saved to Control8** (payload ready in `econ/v4/control8_payload.json`).
+Source of every number: `python3 econ/v4/model.py` (stdlib; ASSUMPTIONS dict with value, unit, marker, source). Generated tables are appended below. v4 = v3 plus three changes: (1) founders on a EUR 2,000/month stipend, (2) verified market price band for comparable QMS software, (3) problem evidence from team research (`econ/evidence/problem_evidence_2026-11-14.md`). Everything else is v3. Markers: [verified: source] / [declared] / [unverified]. **Saved to Control8** on 14 Nov 2026 (model `em_ab34e3e0_e36`, v1). Control8 read-back: annual revenue EUR 43,000; blended CAC EUR 15,880 (it books 1 licence a year from 16 meetings); payback 7.9 months; first-year return 2.71x; coverage complete.
 
 ## PITCH NUMBERS (copy into the pitch exactly; equals Control8)
 
 ```
 Price: plant licence EUR 24,000 per plant per year; paid 8-week replay EUR 9,500, fully credited to the licence.
 Year 1 (billed): 3 paid pilots + 1 plant licence = EUR 43,000.
-Acquisition: outbound to supplier-quality directors, 16 meetings/yr, 8% to licence, EUR 992.50 per meeting -> CAC EUR 12,406.
+Acquisition: outbound to supplier-quality directors, 16 meetings/yr, 8% to licence -> 1 new licence a year, CAC EUR 15,880 (Control8), payback 7.9 months (Control8).
 Margin: 70% on shared EU SaaS (54% dedicated instance; on-prem with a local model offered, cost not yet measured).
 Payback: 8.9 months on gross profit (6.2 on revenue), plus a 3-6 month sales cycle; LTV/CAC 4.5x (20% churn, 5-year cap).
 Funding: seed round of about EUR 230k to reach 5-6 licensed plants (ARR EUR 137k) by year 3; founders on EUR 2k/month stipend until then.
@@ -73,7 +73,9 @@ Low = all bears at once (stress, not a forecast). Revenue is billed basis. Team 
 
 **Reading:** unit economics are unchanged from v3 (70% margin, 8.9-month payback, 4.5x); only the fixed cost fell (EUR 192k -> 84k a year). At base pace the 5.7 plants of year 3 cover team and tools (5.0 needed), but the sellers hired in year 3 keep the year negative (EUR -84k), so base does not break even inside 3 years. Funding need EUR 228k (v3: 552k).
 
-## 2. Control8 entry and read-back (econ/v4/control8_payload.json, NOT saved)
+## 2. Control8 entry and read-back (saved; Control8's own numbers win on stage)
+
+Control8 computed: annual revenue EUR 43,000; CAC EUR 15,880 (whole licences: 16 x 8% -> 1); payback 7.9 months; first-year return 2.71x. Our model's unrounded CAC is EUR 12,406 and payback 8.9 mo on gross profit; on stage quote Control8's.
 
 Lines and channel unchanged from v3: `plant_licence` licence_year EUR 24,000 x 1 (year) + `paid_pilot` project_fee EUR 9,500 x 2 (year). Channel: outbound, cplCents 99250, conversionPct 8, leadsPerPeriod 16. salesMachine empty (founders sell; stipend is fixed cost, in the note), adBudgetCents null. Only the note changed (items 1-3 of v4, markers + sources, 2,634 characters).
 
