@@ -119,7 +119,8 @@ def facts():
               ("Q-material_data", "PER-ROSSI", "QP-15", qp15("3.2")),
               ("Q-material_strength", "PER-ROSSI", "QP-15", qp15("3.6")),
               ("Q-coating_substances", "PER-ROMANO", "QP-15", qp15("3.3")),
-              ("Q-supplier_record", "PER-GALLO", "QP-15", qp15("3.4"))]
+              ("Q-supplier_record", "PER-GALLO", "QP-15", qp15("3.4")),
+              ("Q-contradiction", "PER-GALLO", "QP-15", qp15("5.1"))]
     for question, person, source, quote in owners:
         add(question, "questionOwner", person, source, quote)
     return rows

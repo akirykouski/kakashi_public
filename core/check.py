@@ -110,8 +110,13 @@ def evaluate(request, record=True, table=None, rules_version_value=None, coverag
                 not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
                              for item in not_checked],
                 decision=row, coverage=coverage_value or coverage(), record_id=entry["record_id"] if entry else "",
-                timings_ms=timings).__dict__
+                timings_ms=timings, contested=contested_pairs(projection, request)).__dict__
     return card, entry, projection
+
+
+def contested_pairs(projection, request):
+    """#28 card key `contested`: both versions with sources (rules.contested_pairs); [] when nothing is contested."""
+    return rules.contested_pairs(projection, request)
 
 
 def print_card(card):
@@ -134,6 +139,10 @@ def print_card(card):
         print("\nNOT CHECKED (requirements the ontology cannot express yet; a person reads them):")
         for item in card["not_checked"]:
             print(f"  - {item['source']}: \"{item['quote']}\"")
+    for pair in card.get("contested") or []:
+        print(f"\nCONTESTED {pair['key']} ({pair['reason']}), decides: {pair.get('owner') or 'a person'}")
+        for side in pair["sides"]:
+            print(f"  - {side['value']}  [{side.get('source')}: \"{side.get('quote')}\"] ({side.get('status')})")
     row = card["decision"]
     print(f"\nDecision table row {row['row_id']}: decided by {row['decider']}")
     for action in row["allowed_actions"]:

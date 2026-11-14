@@ -181,3 +181,13 @@ select { max-width: 100%; }
 .u-bar span { display: block; height: 100%; background: var(--amber); }
 .urgency.u-high { color: var(--red); }
 .urgency.u-high .u-bar span { background: var(--red); }
+/* #28 contested values side by side, #29 impact report */
+.contested-head { font-size: 1rem; margin: 1rem 0 .4rem; color: var(--amber); }
+.contested-pair { border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); background: var(--surface); padding: 10px 12px; margin-bottom: 10px; }
+.contested-sides { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 8px 0; }
+.contested-side { background: var(--amber-soft); border-radius: 6px; padding: 8px 10px; font-size: .9rem; overflow-wrap: anywhere; }
+.contested-side.in-force { background: var(--green-soft); }
+.contested-value { font-size: 1.2rem; font-weight: 700; }
+.impact-btn { display: inline-block; margin-top: 6px; font-size: .88rem; }
+.impact h3 { font-size: 1rem; margin: 1rem 0 .3rem; }
+.impact-list { margin: 0; padding-left: 1.1rem; font-size: .9rem; overflow-wrap: anywhere; }

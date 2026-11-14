@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS facts (
     supersedes TEXT,                           -- fact id this fact replaces (fact-level supersession)
     epistemic TEXT, author TEXT,
     recorded_at TEXT NOT NULL,
-    review TEXT NOT NULL DEFAULT 'accepted',   -- proposed | accepted | rejected
+    review TEXT NOT NULL DEFAULT 'accepted',   -- proposed | accepted | rejected | contested (#28)
     proposed_by TEXT, reviewed_by TEXT
 );
 -- Obligations the extractor found that fit no ontology predicate (fix/1). Never read by the projection.
@@ -43,6 +43,21 @@ CREATE TABLE IF NOT EXISTS unclassified (
     recorded_at TEXT NOT NULL,
     review TEXT NOT NULL DEFAULT 'proposed',   -- proposed | dismissed | classified
     proposed_by TEXT
+);
+-- Typed links between records (#28). CONTRADICTS: a contested record -> the current record it contradicts.
+CREATE TABLE IF NOT EXISTS links (
+    s TEXT NOT NULL, kind TEXT NOT NULL, o TEXT NOT NULL,
+    weight REAL, recorded_at TEXT NOT NULL,
+    PRIMARY KEY (s, kind, o)
+);
+-- Open questions the log itself raises (#28): who decides between a contested and a current record.
+CREATE TABLE IF NOT EXISTS questions (
+    id TEXT PRIMARY KEY,
+    kind TEXT NOT NULL,                        -- contradiction
+    contested_record TEXT NOT NULL, current_record TEXT NOT NULL, class_name TEXT,
+    owner TEXT, owner_source TEXT, owner_quote TEXT,
+    status TEXT NOT NULL DEFAULT 'open',       -- open | kept_current | took_contested
+    recorded_at TEXT NOT NULL, decided_by TEXT, decided_at TEXT
 );
 CREATE INDEX IF NOT EXISTS facts_s ON facts(s);
 CREATE INDEX IF NOT EXISTS facts_p_o ON facts(p, o);
@@ -60,8 +75,16 @@ SINGLE_CURRENT = {
 }
 
 
+CONTRADICTS_WEIGHT = -0.6   # OIDA edge weight (docs/research/kva-oida-hooks.md 4.3)
+ON_CONFLICT = ("refuse", "contest")
+
+
 class ConflictError(Exception):
     """Raised when a write contradicts a current record and does not supersede it."""
+
+    def __init__(self, message, record=None, current=None, class_name=None):
+        super().__init__(message)
+        self.record, self.current, self.class_name = record, current, class_name
 
 
 def now_iso():
@@ -180,7 +203,8 @@ class FactLog:
             if tuple(existing.get(predicate) for predicate in key_predicates) == wanted:
                 raise ConflictError(
                     f"{record_id} contradicts current record {candidate} ({class_name} with the same "
-                    f"{', '.join(key_predicates)}). Write it again with supersedes='{candidate}'.")
+                    f"{', '.join(key_predicates)}). Write it again with supersedes='{candidate}'.",
+                    record=record_id, current=candidate, class_name=class_name)
 
     def _check_records_in(self, fact_rows):
         """Group facts by subject; check every record that has a SINGLE_CURRENT class."""
@@ -204,7 +228,7 @@ class FactLog:
 
     def write_record(self, record_id, class_name, properties, source, quote, valid_from, author,
                      supersedes=None, proposed_by=None, as_of=None, current_records=None, rank=2,
-                     kind="assert", context_quote=None):
+                     kind="assert", context_quote=None, on_conflict="refuse"):
         """Write a new record (several facts with one subject).
 
         properties : dict predicate -> object (entity id or JSON literal string).
@@ -213,8 +237,15 @@ class FactLog:
         current_records: optional function(as_of) -> set of current record ids (prototype signature). When
                      omitted, the snapshot of the accepted log is used. Either way the check runs inside the
                      same transaction as the insert.
+        on_conflict: "refuse" (default) raises ConflictError; "contest" (#28) stores the record as `contested`
+                     (never in force), links it CONTRADICTS -> the current record, keeps the current one in force
+                     and opens a QUESTION owned by the person the policy data names (see open_questions()).
+                     Contest is allowed only against a current record of the same or higher authority (rank
+                     number <= the write's); a more authoritative write must supersede explicitly.
         Returns the list of fact ids written.
         """
+        if on_conflict not in ON_CONFLICT:
+            raise ValueError(f"on_conflict must be one of {ON_CONFLICT}")
         review = "proposed" if proposed_by else "accepted"
         recorded_at = now_iso()
         triples = [("type", class_name)] + list(properties.items())
@@ -225,8 +256,14 @@ class FactLog:
                 check_as_of = as_of or valid_from or today()
                 current_ids = (set(current_records(check_as_of)) if current_records is not None
                                else self._current_record_ids(check_as_of))
-                self._check_record(record_id, class_name, properties, {supersedes} if supersedes else set(),
-                                   check_as_of, current_ids)
+                try:
+                    self._check_record(record_id, class_name, properties, {supersedes} if supersedes else set(),
+                                       check_as_of, current_ids)
+                except ConflictError as conflict:
+                    if on_conflict != "contest" or self._record_rank(conflict.current) > int(rank):
+                        raise
+                    review = "contested"
+                    self._open_contradiction(record_id, conflict.current, class_name)
             written = []
             for index, (predicate, obj) in enumerate(triples):
                 fact_id = f"{record_id}#{index}"
@@ -248,6 +285,95 @@ class FactLog:
         with self._transaction():
             self._insert(fact, recorded_at=fact.get("recorded_at") or now_iso(), review="proposed",
                          proposed_by=proposed_by)
+
+    # ---- contested records (#28) -----------------------------------------------------------------------
+
+    def _record_rank(self, subject):
+        row = self.connection.execute(
+            "SELECT MIN(rank) AS rank FROM facts WHERE s = ? AND review = 'accepted'", (subject,)).fetchone()
+        return row["rank"] if row and row["rank"] is not None else 3
+
+    def _question_owner(self, class_name):
+        """Owner of a contradiction question, from policy data: `Q-contradiction-<Class> questionOwner`, else
+        `Q-contradiction questionOwner`. Returns (owner, source, quote); (None, None, None) if no fact says."""
+        for subject in (f"Q-contradiction-{class_name}", "Q-contradiction"):
+            row = self.connection.execute(
+                "SELECT o, source, quote FROM facts WHERE s = ? AND p = 'questionOwner' AND review = 'accepted'"
+                " ORDER BY rank, id LIMIT 1", (subject,)).fetchone()
+            if row:
+                return row["o"], row["source"], row["quote"]
+        return None, None, None
+
+    def _open_contradiction(self, record_id, current_id, class_name):
+        recorded_at = now_iso()
+        self.connection.execute(
+            "INSERT OR REPLACE INTO links (s, kind, o, weight, recorded_at) VALUES (?, 'CONTRADICTS', ?, ?, ?)",
+            (record_id, current_id, CONTRADICTS_WEIGHT, recorded_at))
+        owner, owner_source, owner_quote = self._question_owner(class_name)
+        self.connection.execute(
+            "INSERT OR REPLACE INTO questions (id, kind, contested_record, current_record, class_name, owner,"
+            " owner_source, owner_quote, status, recorded_at) VALUES (?, 'contradiction', ?, ?, ?, ?, ?, ?, 'open', ?)",
+            (f"Q-{record_id}", record_id, current_id, class_name, owner, owner_source, owner_quote, recorded_at))
+
+    def links(self, kind=None):
+        with self.lock:
+            if kind is None:
+                cursor = self.connection.execute("SELECT * FROM links ORDER BY s, kind, o")
+            else:
+                cursor = self.connection.execute("SELECT * FROM links WHERE kind = ? ORDER BY s, o", (kind,))
+            return [dict(row) for row in cursor]
+
+    def open_questions(self):
+        with self.lock:
+            return [dict(row) for row in self.connection.execute(
+                "SELECT * FROM questions WHERE status = 'open' ORDER BY id")]
+
+    def contested_records(self):
+        """Open contradictions with both sides: [{question, contested: [facts], current: [facts]}]."""
+        with self.lock:
+            questions = [dict(row) for row in self.connection.execute(
+                "SELECT * FROM questions WHERE status = 'open' ORDER BY id")]
+            result = []
+            for item in questions:
+                contested = [dict(row) for row in self.connection.execute(
+                    "SELECT * FROM facts WHERE s = ? AND review = 'contested' ORDER BY id", (item["contested_record"],))]
+                current = [dict(row) for row in self.connection.execute(
+                    "SELECT * FROM facts WHERE s = ? AND review = 'accepted' ORDER BY id", (item["current_record"],))]
+                result.append({"question": item, "contested": contested, "current": current})
+            return result
+
+    def resolve_contradiction(self, question_id, decision, decided_by):
+        """The question's owner decides. decision: 'keep_current' (contested facts rejected) or 'take_contested'
+        (contested facts accepted with a supersedes fact to the current record)."""
+        if decision not in ("keep_current", "take_contested"):
+            raise ValueError("decision must be keep_current or take_contested")
+        with self._transaction():
+            row = self.connection.execute("SELECT * FROM questions WHERE id = ? AND status = 'open'",
+                                          (question_id,)).fetchone()
+            if not row:
+                raise KeyError(f"no open question {question_id}")
+            if row["owner"] and row["owner"] != decided_by:
+                raise PermissionError(f"{question_id} is decided by {row['owner']}, not {decided_by}")
+            record_id, current_id = row["contested_record"], row["current_record"]
+            decided_at = now_iso()
+            if decision == "keep_current":
+                self.connection.execute("UPDATE facts SET review = 'rejected', reviewed_by = ? WHERE s = ? AND "
+                                        "review = 'contested'", (decided_by, record_id))
+                status = "kept_current"
+            else:
+                facts = [dict(item) for item in self.connection.execute(
+                    "SELECT * FROM facts WHERE s = ? AND review = 'contested' ORDER BY id", (record_id,))]
+                self.connection.execute("UPDATE facts SET review = 'accepted', reviewed_by = ?, recorded_at = ? "
+                                        "WHERE s = ? AND review = 'contested'", (decided_by, decided_at, record_id))
+                first = facts[0]
+                self._insert({"id": f"{record_id}#supersedes", "s": record_id, "p": "supersedes", "o": current_id,
+                              "source": first["source"], "quote": first["quote"], "valid_from": first["valid_from"],
+                              "kind": "assert", "rank": first["rank"], "epistemic": "decision", "author": decided_by},
+                             recorded_at=decided_at, review="accepted")
+                status = "took_contested"
+            self.connection.execute("UPDATE questions SET status = ?, decided_by = ?, decided_at = ? WHERE id = ?",
+                                    (status, decided_by, decided_at, question_id))
+        return status
 
     # ---- acceptance (people) -------------------------------------------------------------------------
 
