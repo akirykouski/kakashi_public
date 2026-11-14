@@ -41,7 +41,7 @@ if str(ROOT) not in sys.path:
 
 from core import check, decision, impact, oida, parse, rules  # noqa: E402
 from core.contracts import CHANGE_TYPES, Card, ChangeRequest  # noqa: E402
-from core.project import Projection  # noqa: E402
+from core.project import Projection, warm  # noqa: E402
 
 STATIC = Path(__file__).resolve().parent / "static"
 LOCK = threading.Lock()  # the core keeps per-process caches; one check at a time
@@ -408,6 +408,7 @@ def main():
     print("warming up (fact log, closure, table coverage)...", flush=True)
     with LOCK:
         check.memory()
+        warm(check.memory(), check.DEFAULT_AS_OF)  # full closure for today; recomputed when facts are accepted
         coverage_for(decision.load_table(), "")
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     print(f"demo on http://{args.host}:{args.port}", flush=True)

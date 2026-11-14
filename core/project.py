@@ -33,7 +33,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ONTOLOGY_PATH = os.path.join(ROOT, "ontology", "lcc.ttl")
 LCC = Namespace("https://lcc.example/ont#")
 ID = Namespace("https://lcc.example/id/")
-CACHE_SIZE = 16
+CACHE_SIZE = 64
 
 _ontology_cache = {}
 _closure_cache = OrderedDict()  # (ontology hash, snapshot hash, reason) -> (graph, provenance)
@@ -126,8 +126,119 @@ def _build_graph(facts, reason):
     return graph, provenance
 
 
+# ---- request-scoped reasoning ----------------------------------------------------------------------------
+# A check reads a bounded neighbourhood of the change's entities. Instead of closing the whole snapshot, a scoped
+# projection closes only that neighbourhood (plus the ontology). The neighbourhood, on the entity graph of the facts
+# in force (edges = facts whose object is an entity; type, label and literals are not edges):
+#   F  = forward closure (every outgoing edge, no depth limit) of the seeds: the property chains of lcc.ttl
+#        (usedIn.forCustomer.imposes, usedIn.soldIn.hasLaw, madeOf.temperOf, ...) and transitive suppliesTo /
+#        feedsInto / supersedes all run forward from the change's entities;
+#   B  = one step backward into F: the records that point at a reached entity (approvals, qualifications,
+#        capabilities, certificates, 8Ds/NCRs via concernsSupplier = hasIssue, deviations, laws via appliesInMarket
+#        = hasLaw, completeness statements via completeForPlant, sibling records of memory.py);
+#   F2 = forward closure of B.
+# `BACKWARD_ROUNDS` repeats (B, F2). Seeds: the request entities, plus every instance of a class that a reader scans
+# globally (policies, completeness statements, decisions, commitments, deviations) and every Q-* question key.
+# Then the source documents of the facts reached, forward. Facts in scope = facts in force whose subject is reached. tests/test_scoped_equivalence.py proves the cards equal.
+GLOBAL_CLASSES = frozenset({"Policy", "CompletenessStatement", "Decision", "Commitment", "Deviation"})
+REQUEST_KEYS = ("part", "to_supplier", "from_supplier", "at_supplier", "site", "new_material", "new_coating",
+                "sub_supplier", "customer", "program", "material", "coating", "supplier")
+BACKWARD_ROUNDS = 1
+# Shared entities (many records point at them): never walked backward, except along HUB_BACKWARD. Every reader
+# reaches records about a part or supplier through that part or supplier (approvals, qualifications, capabilities,
+# certificates, issues), never through the plant, customer, material or person they also name. Laws are the one
+# record reached from a hub: law appliesInMarket market (= market hasLaw law, chain usedIn.soldIn.hasLaw).
+HUB_CLASSES = frozenset({"Person", "Organisation", "Customer", "Market", "Site", "Program", "Document", "Meeting",
+                         "Material", "AlloySeries", "Alloy", "AlloyTemper", "Steel", "Polymer", "Coating",
+                         "Substance", "RestrictedSubstance", "Requirement", "Law", "CustomerRequirement",
+                         "InternalProcedure", "Standard"})
+HUB_BACKWARD = frozenset({"appliesInMarket"})
+REUSE_FULL = True   # a scoped check uses the cached full closure of the same snapshot when there is one
+
+
+def request_entities(request):
+    """The ids a change request names (any string value under a known entity key)."""
+    found = set()
+    for key, value in (request or {}).items():
+        if key in ("type", "as_of", "known_at", "epistemic", "utterance", "note", "scope", "speaker"):
+            continue
+        if isinstance(value, str) and value:
+            found.add(value)
+        elif isinstance(value, (list, tuple)):
+            found.update(item for item in value if isinstance(item, str) and item)
+    return found
+
+
+def _is_edge(fact):
+    return fact["p"] not in ("type", "label") and not fact["o"].startswith('"')
+
+
+def scope_subjects(facts, seeds, rounds=BACKWARD_ROUNDS):
+    """Subjects of the bounded neighbourhood of `seeds` (see the comment above)."""
+    outgoing, incoming, hubs = {}, {}, set(schema_names())
+    for fact in facts:
+        if fact["p"] == "type" and fact["o"] in GLOBAL_CLASSES:
+            seeds = set(seeds) | {fact["s"]}
+        if fact["p"] == "type" and fact["o"] in HUB_CLASSES:
+            hubs.add(fact["s"])
+    for fact in facts:
+        if not _is_edge(fact) or fact["o"] in schema_names():
+            continue
+        outgoing.setdefault(fact["s"], set()).add(fact["o"])
+        incoming.setdefault(fact["o"], set()).add((fact["s"], fact["p"]))
+    seeds = set(seeds) | {fact["s"] for fact in facts if fact["s"].startswith("Q-")}
+
+    def forward(start, reached):
+        stack = [item for item in start if item not in reached]
+        reached.update(stack)
+        while stack:
+            for nxt in outgoing.get(stack.pop(), ()):
+                if nxt not in reached:
+                    reached.add(nxt)
+                    stack.append(nxt)
+
+    reached = set()
+    forward(seeds, reached)
+    for _ in range(rounds):
+        back = {source for item in list(reached) for source, predicate in incoming.get(item, ())
+                if item not in hubs or predicate in HUB_BACKWARD} - reached
+        if not back:
+            break
+        forward(back, reached)
+    # the documents the facts in scope come from (oida reads their class for the evidence badge)
+    forward({fact["source"] for fact in facts if fact["s"] in reached and fact.get("source")}, reached)
+    return reached
+
+
+def scope_facts(facts, seeds, rounds=BACKWARD_ROUNDS):
+    subjects = scope_subjects(facts, seeds, rounds)
+    return [fact for fact in facts if fact["s"] in subjects]
+
+
+_warm = {}  # id(log) -> (log, as_of): full closures kept warm, recomputed when the log accepts facts
+
+
+def warm(log, as_of):
+    """Compute the full closure of `log` on `as_of` now (server start) and again whenever the fact log commits a
+    write (acceptance, a record written by a person, a review): the cache key is the snapshot hash, so the old
+    closure simply stops matching and the new one is ready before the next check. Returns the projection."""
+    _warm[id(log)] = (log, as_of)
+    if hasattr(log, "on_commit") and _rewarm not in log.on_commit:
+        log.on_commit.append(_rewarm)
+    return Projection(log, as_of)
+
+
+def _rewarm(log):
+    entry = _warm.get(id(log))
+    if entry and entry[0] is log:
+        Projection(log, entry[1])
+
+
 class Projection:
-    def __init__(self, log, as_of, known_at=None, reason=True):
+    def __init__(self, log, as_of, known_at=None, reason=True, scope=None):
+        """scope: None = close the whole snapshot; a set of entity ids = close only their neighbourhood
+        (scope_facts). Every other attribute (current_facts, history_facts, contested, provenance of the
+        facts in scope...) is the same as for the full projection."""
         self.as_of = as_of
         self.known_at = known_at
         started = time.perf_counter()
@@ -148,13 +259,24 @@ class Projection:
         self.asserted_count = len(self.current_facts)
 
         closure_started = time.perf_counter()
-        key = (ontology_hash(), self.snapshot_hash, bool(reason))
+        self.scope = None if scope is None else frozenset(scope)
+        graph_facts = self.current_facts
+        scope_hash = None
+        if self.scope is not None:
+            graph_facts = scope_facts(self.current_facts, self.scope)
+            scope_hash = hashlib.sha256(json.dumps([fact["id"] for fact in graph_facts]).encode()).hexdigest()
+        self.scoped_count = len(graph_facts)
+        key = (ontology_hash(), self.snapshot_hash, bool(reason), scope_hash)
+        full_key = (ontology_hash(), self.snapshot_hash, bool(reason), None)
+        if REUSE_FULL and scope_hash is not None and key not in _closure_cache and full_key in _closure_cache:
+            key = full_key           # the warm full closure of this snapshot answers every scoped reader the same
+            self.scoped_count = len(self.current_facts)
         self.cache_hit = key in _closure_cache
         if self.cache_hit:
             _closure_cache.move_to_end(key)
             self.graph, self.provenance = _closure_cache[key]
         else:
-            self.graph, self.provenance = _build_graph(self.current_facts, reason)
+            self.graph, self.provenance = _build_graph(graph_facts, reason)
             _closure_cache[key] = (self.graph, self.provenance)
             while len(_closure_cache) > CACHE_SIZE:
                 _closure_cache.popitem(last=False)
