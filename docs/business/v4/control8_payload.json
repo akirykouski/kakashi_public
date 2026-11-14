@@ -9,32 +9,38 @@
       "priceCents": 2400000,
       "period": "year",
       "volume": 1,
-      "recurring": true
+      "recurring": true,
+      "models": [
+        "b2b_licence"
+      ]
     },
     {
       "key": "paid_pilot",
-      "label": "Paid 8-week replay, EUR 9,500, fully credited to year-1 licence (third pilot is inside the licence line)",
+      "label": "Paid 8-week replay of last year's change requests, EUR 9,500, fully credited to the licence (the third year-1 pilot is inside the licence line)",
       "unit": "project_fee",
       "priceCents": 950000,
       "period": "year",
       "volume": 2,
-      "recurring": false
+      "recurring": false,
+      "models": [
+        "b2b_licence"
+      ]
     }
   ],
   "acquisition": {
     "channels": [
       {
         "key": "quality_director_outbound",
-        "label": "Outbound to supplier-quality directors, Italy IATF tier-1/2 plants (lead = meeting held; CPL incl. pilot management share)",
+        "label": "Outbound to supplier-quality directors, Italy IATF tier-1/2 plants (lead = meeting held; cost per lead includes pilot management time)",
         "channel": "outbound",
-        "cplCents": 99250,
-        "conversionPct": 8,
-        "leadsPerPeriod": 16
+        "costPerLeadCents": 99250,
+        "leadToConversionPct": 8,
+        "leads": 16,
+        "period": "year"
       }
     ],
     "salesMachine": [],
     "adBudgetCents": null,
     "adBudgetPeriod": "year"
-  },
-  "note": "1 VERIFIED: 1,589 IATF sites Italy, 93,713 world [verified: VDA QMC 23 Apr 2026]; LLM cost USD 0.0007 per change request, ~USD 0.05 per document [verified: our measurement 14 Nov, Claude Haiku 5.5]; synthetic benchmark, inferred-blocker recall 0.90 vs 0.19 RAG baseline [verified: our benchmark]. PROBLEM: failed change management caused 83% of significant supplier quality issues FY22-FY24 [verified: Astemo Supplier Change Mgmt Guidebook rev 4.0]; an unapproved change brings New Business Hold, notice to the IATF registrar, financial consequences [verified: Adient Supplier Manual rev 10.0]; 10 independent practitioner threads on late/missing supplier change notices [verified: team research, Elsmar Cove]. We do NOT claim change control is a top IATF audit finding (VDA QMC Apr 2026: not in top 10). 2 PRICE: licence EUR 24,000/plant/yr (EUR 30k upside), pilot EUR 9,500 / 8 weeks 100% credited [declared: no buyer has said it]. Market band it sits in: [verified: Vendr - Arena median $55,970/yr (31 purchases), Greenlight Guru median $43,989, MasterControl median $115,673; Monetizely Aug 2025 - mid-sized enterprise QMS $25-100k/yr]; EUR 24k ~ USD 27k = low end. Counterpoint: one forum called USD 35k unjustified. 3 HORIZON year 1, billed: 3 paid pilots (one credited into the licence) + 1 licence = EUR 43,000 (= 24,000 + 2 x 9,500). 4 FUNNEL: 16 meetings x 18.75% = 3 pilots; 16 x 8% = 1.28 licences, 1 billed in yr 1 [unverified]. CPL EUR 992.50 = outreach 187.50 + meeting 4 h x 70 + 0.1875 x 40 h pilot mgmt x 70 [declared]; CAC EUR 12,406. Founders sell, salesMachine empty; 3 founders on a EUR 2,000/month stipend until a seed round [declared: team decision 14 Nov]. 5 COST TO SERVE per plant/yr: shared EU SaaS EUR 7,217 = support 8 h/month x EUR 70 [declared] + hosting 480 [declared] + LLM ~17 [verified] -> gross margin 70%; dedicated instance 54%; on-prem with local open-weight model: cost null [unverified]. 6 PAYBACK 8.9 months on gross profit, 6.2 on revenue, plus 3-6 month sales cycle. Churn 20%/yr [unverified]; LTV 5-yr cap EUR 56.4k, LTV/CAC 4.5x. 3-yr base: yr-1 result EUR -76.7k, cumulative EUR -227.8k; funding need ~EUR 228k (seed) to reach 5.7 plants / ARR EUR 137k by yr 3 (High EUR 48k; no yr-1 profit in any case). 7 VALUE: one escaped unapproved change ~EUR 29,400 [unverified build-up]; its sorting part EUR 6,000 = ~140-230 sorter-hours at $30-50/h charge-back (one practitioner account) [unverified]; 0.8 caught changes/plant/yr pay the licence. SAM 556 Italian IATF plants [unverified 35% share]. NEXT STEP: partner channel via IATF consultancies/ANFIA, none signed. Model: econ/v4/model.py."
+  }
 }
