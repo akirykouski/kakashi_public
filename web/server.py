@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, rules  # noqa: E402
+from core import check, decision, oida, rules  # noqa: E402
 from core.contracts import Card, ChangeRequest  # noqa: E402
 from core.project import Projection  # noqa: E402
 
@@ -140,33 +140,11 @@ def run_check(request, drop_rows=None):
     """core.check.run with an optional in-memory table edit. Returns the response for the page."""
     drop_rows = sorted(set(drop_rows or []))
     table, table_text = table_for(drop_rows)
-    known = set(ChangeRequest.__dataclass_fields__)
-    request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
-    as_of = request.get("as_of") or check.DEFAULT_AS_OF
-    version = rules_version_for(table_text)
-    started = time.time()
-    projection = Projection(check.memory(), as_of)
-    projected = time.time()
-    findings = sorted(rules.check(projection, request), key=check.severity_rank)
-    not_checked = rules.not_checked(projection, request) if hasattr(rules, "not_checked") else []
-    checked = time.time()
-    if rules.covered(request, projection):
-        row, verdict = decision.decide(findings, request, table)
-    else:
-        row, verdict = decision.to_decision_row(table["rows"][-1]), "not_covered"
-    entry = decision.record(request, as_of, getattr(projection, "fact_ids_in_force", []), findings, row,
-                            verdict, rules_version_value=version)
-    finished = time.time()
-    timings = dict(projection.timings())
-    timings.update({"projection": round((projected - started) * 1000, 1),
-                    "rules": round((checked - projected) * 1000, 1),
-                    "total": round((finished - started) * 1000, 1)})
     report = coverage_for(table, ",".join(drop_rows))
-    card = Card(request=request, verdict=verdict, findings=findings,
-                not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
-                             for item in not_checked],
-                decision=row, coverage=decision.coverage_summary(report), record_id=entry["record_id"],
-                timings_ms=timings).__dict__
+    card, entry, projection = check.evaluate(request, table=table, rules_version_value=rules_version_for(table_text),
+                                             coverage_value=decision.coverage_summary(report))
+    row = card["decision"]
+    findings = card["findings"]
     return {
         "card": card,
         "record": entry,

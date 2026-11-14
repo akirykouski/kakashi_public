@@ -71,6 +71,13 @@ def from_remark(remark, as_of=None):
 
 def run(request, record=True):
     """Check one change request. Returns (card, decision_record)."""
+    card, entry, _ = evaluate(request, record=record)
+    return card, entry
+
+
+def evaluate(request, record=True, table=None, rules_version_value=None, coverage_value=None):
+    """The one pipeline. table / rules_version_value / coverage_value let the demo page re-check under an
+    edited decision table without writing core/decision_table.yaml. Returns (card, record, projection)."""
     known = set(ChangeRequest.__dataclass_fields__)
     known.discard("epistemic")  # derived on the card, never an input
     request = ChangeRequest(**{key: value for key, value in request.items() if key in known}).to_dict()
@@ -84,13 +91,14 @@ def run(request, record=True):
     # A change is covered when a rule applies to it, and always when a rule actually fired.
     fired = any(item["severity"] != "info" for item in findings)
     if fired or rules.covered(request, projection):
-        row, verdict = decision.decide(findings, request)
+        row, verdict = decision.decide(findings, request, table)
     else:
-        row, verdict = fallback_row(), "not_covered"  # no rule applies to this change: a person decides
+        rows = (table or decision.load_table())["rows"]
+        row, verdict = decision.to_decision_row(rows[-1]), "not_covered"  # no rule applies: a person decides
     entry = None
     if record:
         entry = decision.record(request, as_of, getattr(projection, "fact_ids_in_force", []), findings, row,
-                                verdict)
+                                verdict, rules_version_value=rules_version_value)
     card_request = dict(request)
     findings = oida.annotate(projection, card_request, findings)  # OIDA badges + question urgency (#26, #27)
     finished = time.time()
@@ -101,9 +109,9 @@ def run(request, record=True):
     card = Card(request=card_request, verdict=verdict, findings=findings,
                 not_checked=[{key: item.get(key) for key in ("id", "source", "quote", "summary")}
                              for item in not_checked],
-                decision=row, coverage=coverage(), record_id=entry["record_id"] if entry else "",
+                decision=row, coverage=coverage_value or coverage(), record_id=entry["record_id"] if entry else "",
                 timings_ms=timings).__dict__
-    return card, entry
+    return card, entry, projection
 
 
 def print_card(card):

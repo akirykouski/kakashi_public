@@ -170,3 +170,14 @@ table.dt tr.dropped td { color: var(--red); text-decoration: line-through; }
 .remark-row > *, .grid > *, .compare > * { min-width: 0; }
 select { max-width: 100%; }
 .quote, .context-quote, .triple, .mono, .f-title, .replaced { overflow-wrap: anywhere; }
+.epi { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 1px 6px; border-radius: 4px; margin-left: 6px; white-space: nowrap; border: 1px solid var(--line); color: var(--muted); background: #fff; cursor: help; align-self: center; }
+.epi-constraint { color: #5b3fa8; border-color: #d8cff0; }
+.epi-decision { color: var(--accent); border-color: #c9d6f3; }
+.epi-evidence { color: #2b6a5a; border-color: #c8e2da; }
+.epi-plan { color: #8a5a00; border-color: #f0d9a8; background: #fffaf0; }
+.epi-question { color: var(--amber); border-color: #f0c674; }
+.urgency { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--amber); cursor: help; }
+.u-bar { display: inline-block; width: 70px; height: 7px; border-radius: 4px; background: var(--grey-soft); overflow: hidden; }
+.u-bar span { display: block; height: 100%; background: var(--amber); }
+.urgency.u-high { color: var(--red); }
+.urgency.u-high .u-bar span { background: var(--red); }
