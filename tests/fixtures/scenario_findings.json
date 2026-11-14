@@ -1,0 +1,825 @@
+{
+ "main": {
+  "change": {
+   "type": "SourceChange",
+   "part": "BR-220",
+   "to_supplier": "SUP-C",
+   "from_supplier": "SUP-B"
+  },
+  "as_of": "2026-11-05",
+  "findings": [
+   {
+    "rule": "R1a",
+    "severity": "blocker",
+    "title": "Meccanica Chisone S.r.l. is conditional as a supplier: no new parts",
+    "evidence": [
+     {
+      "triple": "QS-C-2025 qualifiedSupplier SUP-C",
+      "inferred": false,
+      "fact_id": "F0287",
+      "source": "REG-SUPPLIER_QUALIFICATION",
+      "quote": "QS-C-2025,SUP-C,conditional,2025-04-01,,PER-BIANCHI,QS-C-2023,no new parts until 8D-25-031 is closed and re-audit passed",
+      "valid_from": "2025-04-01",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "QS-C-2025 status conditional",
+      "inferred": false,
+      "fact_id": "F0288",
+      "source": "REG-SUPPLIER_QUALIFICATION",
+      "quote": "QS-C-2025,SUP-C,conditional,2025-04-01,,PER-BIANCHI,QS-C-2023,no new parts until 8D-25-031 is closed and re-audit passed",
+      "valid_from": "2025-04-01",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "4.3 A supplier with status conditional may not receive new parts."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "record": "QS-C-2025"
+    },
+    "owner": null,
+    "note": "QS-C-2025 supersedes QS-C-2023 (was: approved)"
+   },
+   {
+    "rule": "R1b",
+    "severity": "blocker",
+    "title": "Meccanica Chisone S.r.l. has no approval for BR-220 at PLT-BEI for Aurelia Automobili S.p.A. (approved only for BR-180@PLT-BEI, BR-310@PLT-PIN)",
+    "evidence": [
+     {
+      "triple": "BR-220 deliveredTo CUST-AUR",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer",
+      "premises": [
+       {
+        "triple": "BR-220 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0076",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X forCustomer CUST-AUR",
+        "inferred": false,
+        "fact_id": "F0011",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "APR-002 approvedPart BR-180",
+      "inferred": false,
+      "fact_id": "F0188",
+      "source": "REG-ASL",
+      "quote": "APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,",
+      "valid_from": "2023-05-20",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "APR-003 approvedPart BR-310",
+      "inferred": false,
+      "fact_id": "F0195",
+      "source": "REG-ASL",
+      "quote": "APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,",
+      "valid_from": "2024-09-01",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "4.2 A supplier may deliver a part only if the approved supplier list contains an approval for that\nsupplier, that part, the receiving site and the customer."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "part": "BR-220",
+     "site": "PLT-BEI",
+     "customer": "CUST-AUR"
+    },
+    "owner": null,
+    "note": null
+   },
+   {
+    "rule": "R6",
+    "severity": "blocker",
+    "title": "Meccanica Chisone S.r.l. is not qualified for EN AW-6082-T6 (qualified for: EN AW-6061-T6, EN AW-6082-T5)",
+    "evidence": [
+     {
+      "triple": "BR-220 madeOf MAT-6082-T6",
+      "inferred": false,
+      "fact_id": "F0077",
+      "source": "REG-PARTS",
+      "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+      "valid_from": null,
+      "author": null
+     },
+     {
+      "triple": "CAP-C-01 capableMaterial MAT-6061-T6",
+      "inferred": false,
+      "fact_id": "F0329",
+      "source": "REG-CAPABILITIES",
+      "quote": "CAP-C-01,SUP-C,MAT-6061-T6,2023-03-15",
+      "valid_from": "2023-03-15",
+      "author": null
+     },
+     {
+      "triple": "CAP-C-02 capableMaterial MAT-6082-T5",
+      "inferred": false,
+      "fact_id": "F0332",
+      "source": "REG-CAPABILITIES",
+      "quote": "CAP-C-02,SUP-C,MAT-6082-T5,2024-07-01",
+      "valid_from": "2024-07-01",
+      "author": null
+     },
+     {
+      "triple": "BR-220 hasSpecialCharacteristic SC-BR220-YS",
+      "inferred": false,
+      "fact_id": "F0079",
+      "source": "REG-PARTS",
+      "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+      "valid_from": null,
+      "author": null
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "material": "MAT-6082-T6",
+     "capable": [
+      "MAT-6061-T6",
+      "MAT-6082-T5"
+     ]
+    },
+    "owner": null,
+    "note": "Same alloy EN AW-6082 (AlSi1MgMn), different temper: EN AW-6082-T5 is not EN AW-6082-T6. Typical yield 230 MPa is below the special characteristic minimum 250 MPa."
+   },
+   {
+    "rule": "R2",
+    "severity": "blocker",
+    "title": "SourceChange on BR-220 needs written customer approval (PPAP resubmission) before shipping, per CSR-AUR-R4",
+    "evidence": [
+     {
+      "triple": "BR-220 subjectTo CSR-AUR-R4",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer o imposes",
+      "premises": [
+       {
+        "triple": "BR-220 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0076",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X forCustomer CUST-AUR",
+        "inferred": false,
+        "fact_id": "F0011",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "CUST-AUR imposes CSR-AUR-R4",
+        "inferred": false,
+        "fact_id": "F0003",
+        "source": "REG-CUSTOMERS",
+        "quote": "CUST-AUR,Aurelia Automobili S.p.A.,MKT-EU,CSR-AUR-R3;CSR-AUR-R4",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "CSR-AUR-R4 requiresCustomerApprovalFor SourceChange",
+      "inferred": false,
+      "fact_id": "F0395",
+      "source": "CSR-AUR-R4",
+      "quote": "a change of source",
+      "valid_from": "2026-07-01",
+      "author": "Aurelia Automobili, supplier quality"
+     }
+    ],
+    "entities": {
+     "requirement": "CSR-AUR-R4",
+     "change_type": "SourceChange",
+     "customer": "CUST-AUR"
+    },
+    "owner": null,
+    "note": "CSR-AUR-R4 supersedes CSR-AUR-R3"
+   },
+   {
+    "rule": "R3",
+    "severity": "warning",
+    "title": "Meccanica Chisone S.r.l. has open 8D-25-031 on EN AW-6082 (AlSi1MgMn), the material of BR-220",
+    "evidence": [
+     {
+      "triple": "SUP-C hasIssue 8D-25-031",
+      "inferred": true,
+      "axiom": "hasIssue inverseOf concernsSupplier",
+      "premises": [
+       {
+        "triple": "8D-25-031 concernsSupplier SUP-C",
+        "inferred": false,
+        "fact_id": "F0424",
+        "source": "8D-25-031",
+        "quote": "Supplier: Meccanica Chisone (SUP-C)",
+        "valid_from": "2025-03-20",
+        "author": "PER-GALLO"
+       }
+      ]
+     },
+     {
+      "triple": "8D-25-031 concernsMaterial ALY-6082",
+      "inferred": false,
+      "fact_id": "F0425",
+      "source": "8D-25-031",
+      "quote": "EN AW-6082 material delivered by\nthe supplier",
+      "valid_from": "2025-03-20",
+      "author": "PER-GALLO"
+     },
+     {
+      "triple": "BR-220 madeOfAlloy ALY-6082",
+      "inferred": true,
+      "axiom": "property chain madeOf o temperOf",
+      "premises": [
+       {
+        "triple": "BR-220 madeOf MAT-6082-T6",
+        "inferred": false,
+        "fact_id": "F0077",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "MAT-6082-T6 temperOf ALY-6082",
+        "inferred": false,
+        "fact_id": "F0033",
+        "source": "REG-MATERIALS",
+        "quote": "MAT-6082-T6,EN AW-6082-T6,AlloyTemper,ALY-6082,,260",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "issue": "8D-25-031",
+     "material": "ALY-6082"
+    },
+    "owner": null,
+    "note": null
+   },
+   {
+    "rule": "R7",
+    "severity": "question",
+    "title": "No material certificate (EN 10204 3.1) from Meccanica Chisone S.r.l. for EN AW-6082-T6 on file. Not a violation: an open question.",
+    "evidence": [
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "Missing certificates are an open question for the supplier quality engineer."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "material": "MAT-6082-T6",
+     "missing": "material_certificate"
+    },
+    "owner": "PER-GALLO",
+    "note": null
+   }
+  ]
+ },
+ "main_after_audit": {
+  "change": {
+   "type": "SourceChange",
+   "part": "BR-220",
+   "to_supplier": "SUP-C",
+   "from_supplier": "SUP-B"
+  },
+  "as_of": "2026-11-14",
+  "findings": [
+   {
+    "rule": "R1b",
+    "severity": "blocker",
+    "title": "Meccanica Chisone S.r.l. has no approval for BR-220 at PLT-BEI for Aurelia Automobili S.p.A. (approved only for BR-180@PLT-BEI, BR-310@PLT-PIN)",
+    "evidence": [
+     {
+      "triple": "BR-220 deliveredTo CUST-AUR",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer",
+      "premises": [
+       {
+        "triple": "BR-220 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0076",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X forCustomer CUST-AUR",
+        "inferred": false,
+        "fact_id": "F0011",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "APR-002 approvedPart BR-180",
+      "inferred": false,
+      "fact_id": "F0188",
+      "source": "REG-ASL",
+      "quote": "APR-002,SUP-C,BR-180,PLT-BEI,CUST-AUR,approved,2023-05-20,,PER-BIANCHI,",
+      "valid_from": "2023-05-20",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "APR-003 approvedPart BR-310",
+      "inferred": false,
+      "fact_id": "F0195",
+      "source": "REG-ASL",
+      "quote": "APR-003,SUP-C,BR-310,PLT-PIN,CUST-NOR,approved,2024-09-01,,PER-BIANCHI,",
+      "valid_from": "2024-09-01",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "4.2 A supplier may deliver a part only if the approved supplier list contains an approval for that\nsupplier, that part, the receiving site and the customer."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "part": "BR-220",
+     "site": "PLT-BEI",
+     "customer": "CUST-AUR"
+    },
+    "owner": null,
+    "note": null
+   },
+   {
+    "rule": "R6",
+    "severity": "blocker",
+    "title": "Meccanica Chisone S.r.l. is not qualified for EN AW-6082-T6 (qualified for: EN AW-6061-T6, EN AW-6082-T5)",
+    "evidence": [
+     {
+      "triple": "BR-220 madeOf MAT-6082-T6",
+      "inferred": false,
+      "fact_id": "F0077",
+      "source": "REG-PARTS",
+      "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+      "valid_from": null,
+      "author": null
+     },
+     {
+      "triple": "CAP-C-01 capableMaterial MAT-6061-T6",
+      "inferred": false,
+      "fact_id": "F0329",
+      "source": "REG-CAPABILITIES",
+      "quote": "CAP-C-01,SUP-C,MAT-6061-T6,2023-03-15",
+      "valid_from": "2023-03-15",
+      "author": null
+     },
+     {
+      "triple": "CAP-C-02 capableMaterial MAT-6082-T5",
+      "inferred": false,
+      "fact_id": "F0332",
+      "source": "REG-CAPABILITIES",
+      "quote": "CAP-C-02,SUP-C,MAT-6082-T5,2024-07-01",
+      "valid_from": "2024-07-01",
+      "author": null
+     },
+     {
+      "triple": "BR-220 hasSpecialCharacteristic SC-BR220-YS",
+      "inferred": false,
+      "fact_id": "F0079",
+      "source": "REG-PARTS",
+      "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+      "valid_from": null,
+      "author": null
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "material": "MAT-6082-T6",
+     "capable": [
+      "MAT-6061-T6",
+      "MAT-6082-T5"
+     ]
+    },
+    "owner": null,
+    "note": "Same alloy EN AW-6082 (AlSi1MgMn), different temper: EN AW-6082-T5 is not EN AW-6082-T6. Typical yield 230 MPa is below the special characteristic minimum 250 MPa."
+   },
+   {
+    "rule": "R2",
+    "severity": "blocker",
+    "title": "SourceChange on BR-220 needs written customer approval (PPAP resubmission) before shipping, per CSR-AUR-R4",
+    "evidence": [
+     {
+      "triple": "BR-220 subjectTo CSR-AUR-R4",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer o imposes",
+      "premises": [
+       {
+        "triple": "BR-220 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0076",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X forCustomer CUST-AUR",
+        "inferred": false,
+        "fact_id": "F0011",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "CUST-AUR imposes CSR-AUR-R4",
+        "inferred": false,
+        "fact_id": "F0003",
+        "source": "REG-CUSTOMERS",
+        "quote": "CUST-AUR,Aurelia Automobili S.p.A.,MKT-EU,CSR-AUR-R3;CSR-AUR-R4",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "CSR-AUR-R4 requiresCustomerApprovalFor SourceChange",
+      "inferred": false,
+      "fact_id": "F0395",
+      "source": "CSR-AUR-R4",
+      "quote": "a change of source",
+      "valid_from": "2026-07-01",
+      "author": "Aurelia Automobili, supplier quality"
+     }
+    ],
+    "entities": {
+     "requirement": "CSR-AUR-R4",
+     "change_type": "SourceChange",
+     "customer": "CUST-AUR"
+    },
+    "owner": null,
+    "note": "CSR-AUR-R4 supersedes CSR-AUR-R3"
+   },
+   {
+    "rule": "R3",
+    "severity": "warning",
+    "title": "Meccanica Chisone S.r.l. has open 8D-25-031 on EN AW-6082 (AlSi1MgMn), the material of BR-220",
+    "evidence": [
+     {
+      "triple": "SUP-C hasIssue 8D-25-031",
+      "inferred": true,
+      "axiom": "hasIssue inverseOf concernsSupplier",
+      "premises": [
+       {
+        "triple": "8D-25-031 concernsSupplier SUP-C",
+        "inferred": false,
+        "fact_id": "F0424",
+        "source": "8D-25-031",
+        "quote": "Supplier: Meccanica Chisone (SUP-C)",
+        "valid_from": "2025-03-20",
+        "author": "PER-GALLO"
+       }
+      ]
+     },
+     {
+      "triple": "8D-25-031 concernsMaterial ALY-6082",
+      "inferred": false,
+      "fact_id": "F0425",
+      "source": "8D-25-031",
+      "quote": "EN AW-6082 material delivered by\nthe supplier",
+      "valid_from": "2025-03-20",
+      "author": "PER-GALLO"
+     },
+     {
+      "triple": "BR-220 madeOfAlloy ALY-6082",
+      "inferred": true,
+      "axiom": "property chain madeOf o temperOf",
+      "premises": [
+       {
+        "triple": "BR-220 madeOf MAT-6082-T6",
+        "inferred": false,
+        "fact_id": "F0077",
+        "source": "REG-PARTS",
+        "quote": "BR-220,\"Front subframe bracket, milled\",PRG-X,C,MAT-6082-T6,COAT-ANOD,SC-BR220-YS",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "MAT-6082-T6 temperOf ALY-6082",
+        "inferred": false,
+        "fact_id": "F0033",
+        "source": "REG-MATERIALS",
+        "quote": "MAT-6082-T6,EN AW-6082-T6,AlloyTemper,ALY-6082,,260",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "issue": "8D-25-031",
+     "material": "ALY-6082"
+    },
+    "owner": null,
+    "note": null
+   },
+   {
+    "rule": "R7",
+    "severity": "question",
+    "title": "No material certificate (EN 10204 3.1) from Meccanica Chisone S.r.l. for EN AW-6082-T6 on file. Not a violation: an open question.",
+    "evidence": [
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "Missing certificates are an open question for the supplier quality engineer."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "material": "MAT-6082-T6",
+     "missing": "material_certificate"
+    },
+    "owner": "PER-GALLO",
+    "note": null
+   },
+   {
+    "rule": "R4",
+    "severity": "info",
+    "title": "Supplier qualification of Meccanica Chisone S.r.l. was replaced: QS-C-2026 supersedes QS-C-2025 (was: conditional). This does not approve any part.",
+    "evidence": [
+     {
+      "triple": "QS-C-2026 qualifiedSupplier SUP-C",
+      "inferred": false,
+      "fact_id": "F0292",
+      "source": "REG-SUPPLIER_QUALIFICATION",
+      "quote": "QS-C-2026,SUP-C,approved,2026-11-06,,PER-BIANCHI,QS-C-2025,\"re-audit passed, score 86\"",
+      "valid_from": "2026-11-06",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "QS-C-2026 status approved",
+      "inferred": false,
+      "fact_id": "F0293",
+      "source": "REG-SUPPLIER_QUALIFICATION",
+      "quote": "QS-C-2026,SUP-C,approved,2026-11-06,,PER-BIANCHI,QS-C-2025,\"re-audit passed, score 86\"",
+      "valid_from": "2026-11-06",
+      "author": "PER-BIANCHI"
+     },
+     {
+      "triple": "policy QP-11",
+      "inferred": false,
+      "fact_id": null,
+      "source": "QP-11",
+      "quote": "4.1 A supplier audit qualifies the supplier as a company. It does not approve the supplier for any\npart."
+     }
+    ],
+    "entities": {
+     "supplier": "SUP-C",
+     "record": "QS-C-2026"
+    },
+    "owner": null,
+    "note": null
+   }
+  ]
+ },
+ "elv": {
+  "change": {
+   "type": "CoatingChange",
+   "part": "CL-115",
+   "new_coating": "COAT-ZN-YELLOW"
+  },
+  "as_of": "2026-11-14",
+  "findings": [
+   {
+    "rule": "R2",
+    "severity": "blocker",
+    "title": "CoatingChange on CL-115 needs written customer approval (PPAP resubmission) before shipping, per CSR-AUR-R4",
+    "evidence": [
+     {
+      "triple": "CL-115 subjectTo CSR-AUR-R4",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer o imposes",
+      "premises": [
+       {
+        "triple": "CL-115 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0108",
+        "source": "REG-PARTS",
+        "quote": "CL-115,\"Cable clip, spring steel\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X forCustomer CUST-AUR",
+        "inferred": false,
+        "fact_id": "F0011",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "CUST-AUR imposes CSR-AUR-R4",
+        "inferred": false,
+        "fact_id": "F0003",
+        "source": "REG-CUSTOMERS",
+        "quote": "CUST-AUR,Aurelia Automobili S.p.A.,MKT-EU,CSR-AUR-R3;CSR-AUR-R4",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "CSR-AUR-R4 requiresCustomerApprovalFor CoatingChange",
+      "inferred": false,
+      "fact_id": "F0398",
+      "source": "CSR-AUR-R4",
+      "quote": "a change\nof coating or surface treatment",
+      "valid_from": "2026-07-01",
+      "author": "Aurelia Automobili, supplier quality"
+     }
+    ],
+    "entities": {
+     "requirement": "CSR-AUR-R4",
+     "change_type": "CoatingChange",
+     "customer": "CUST-AUR"
+    },
+    "owner": null,
+    "note": "CSR-AUR-R4 supersedes CSR-AUR-R3"
+   },
+   {
+    "rule": "R2",
+    "severity": "blocker",
+    "title": "CoatingChange on CL-115 needs written customer approval (PPAP resubmission) before shipping, per CSR-NOR-R2",
+    "evidence": [
+     {
+      "triple": "CL-115 subjectTo CSR-NOR-R2",
+      "inferred": true,
+      "axiom": "property chain usedIn o forCustomer o imposes",
+      "premises": [
+       {
+        "triple": "CL-115 usedIn PRG-Y",
+        "inferred": false,
+        "fact_id": "F0109",
+        "source": "REG-PARTS",
+        "quote": "CL-115,\"Cable clip, spring steel\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-Y forCustomer CUST-NOR",
+        "inferred": false,
+        "fact_id": "F0019",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-Y,Nordhavn Fjell light van,CUST-NOR,MKT-EU,2024-10-01",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "CUST-NOR imposes CSR-NOR-R2",
+        "inferred": false,
+        "fact_id": "F0006",
+        "source": "REG-CUSTOMERS",
+        "quote": "CUST-NOR,Nordhavn Trucks AB,MKT-EU,CSR-NOR-R2",
+        "valid_from": null,
+        "author": null
+       }
+      ]
+     },
+     {
+      "triple": "CSR-NOR-R2 requiresCustomerApprovalFor CoatingChange",
+      "inferred": false,
+      "fact_id": "F0403",
+      "source": "CSR-NOR-R2",
+      "quote": "A change of coating requires Nordhavn approval",
+      "valid_from": "2025-03-01",
+      "author": "Nordhavn Trucks AB, purchasing quality"
+     }
+    ],
+    "entities": {
+     "requirement": "CSR-NOR-R2",
+     "change_type": "CoatingChange",
+     "customer": "CUST-NOR"
+    },
+    "owner": null,
+    "note": null
+   },
+   {
+    "rule": "R5",
+    "severity": "blocker",
+    "title": "Zinc 8 um with yellow chromate passivation contains Hexavalent chromium, Cr(VI), restricted by LAW-ELV for vehicles sold in the market of CL-115",
+    "evidence": [
+     {
+      "triple": "COAT-ZN-YELLOW containsSubstance CrVI",
+      "inferred": false,
+      "fact_id": "F0070",
+      "source": "REG-COATINGS",
+      "quote": "COAT-ZN-YELLOW,Zinc 8 um with yellow chromate passivation,Zinc;CrVI",
+      "valid_from": null,
+      "author": null
+     },
+     {
+      "triple": "LAW-ELV restricts CrVI",
+      "inferred": false,
+      "fact_id": "F0407",
+      "source": "LAW-ELV",
+      "quote": "hexavalent chromium other than in cases listed in",
+      "valid_from": "2000-10-21",
+      "author": "European Parliament and Council"
+     },
+     {
+      "triple": "CL-115 subjectToLaw LAW-ELV",
+      "inferred": true,
+      "axiom": "property chain usedIn o soldIn o hasLaw",
+      "premises": [
+       {
+        "triple": "CL-115 usedIn PRG-X",
+        "inferred": false,
+        "fact_id": "F0108",
+        "source": "REG-PARTS",
+        "quote": "CL-115,\"Cable clip, spring steel\",PRG-X;PRG-Y,E,MAT-C67S,COAT-ZNNI,",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "PRG-X soldIn MKT-EU",
+        "inferred": false,
+        "fact_id": "F0012",
+        "source": "REG-PROGRAMS",
+        "quote": "PRG-X,Aurelia Torre compact SUV,CUST-AUR,MKT-EU,2025-02-01",
+        "valid_from": null,
+        "author": null
+       },
+       {
+        "triple": "MKT-EU hasLaw LAW-ELV",
+        "inferred": true,
+        "axiom": "hasLaw inverseOf appliesInMarket",
+        "premises": [
+         {
+          "triple": "LAW-ELV appliesInMarket MKT-EU",
+          "inferred": false,
+          "fact_id": "F0406",
+          "source": "LAW-ELV",
+          "quote": "Member States shall ensure that materials and components of vehicles",
+          "valid_from": "2000-10-21",
+          "author": "European Parliament and Council"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "entities": {
+     "coating": "COAT-ZN-YELLOW",
+     "substance": "CrVI",
+     "law": "LAW-ELV"
+    },
+    "owner": null,
+    "note": null
+   }
+  ]
+ },
+ "silence": {
+  "change": {
+   "type": "ScheduleChange",
+   "part": "BR-220"
+  },
+  "as_of": "2026-11-14",
+  "findings": []
+ }
+}
