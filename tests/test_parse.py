@@ -87,9 +87,10 @@ def test_parse_with_fake_model(tmp_path, monkeypatch):
               "site": None, "new_material": None, "new_coating": None}
     request = parse(remark, as_of="2026-11-14", call=fake_call(answer), live=True)
     assert request["utterance"] == remark
-    assert request["part"] == "CL-115" and "to_supplier" not in request
-    assert request["unresolved"] == [{"field": "to_supplier", "text": "Viteria Lanzo", "reason": "not in suppliers",
-                                      "candidates": []}]
+    # A name in none of our records is passed to the rules verbatim (they ask "not in our supplier master").
+    assert request["part"] == "CL-115" and request["to_supplier"] == "Viteria Lanzo"
+    assert request["unresolved"] == [{"field": "to_supplier", "text": "Viteria Lanzo",
+                                      "reason": "not in our records: passed to the rules", "candidates": []}]
     assert request["parse_confidence"] == 0.5
 
 
@@ -132,7 +133,7 @@ def test_form_rejects(form):
 
 def test_form_unknown_name_is_unresolved():
     request = parse_form({"type": "SourceChange", "part": "BR-220", "to_supplier": "Viteria Lanzo"})
-    assert "to_supplier" not in request and request["unresolved"][0]["text"] == "Viteria Lanzo"
+    assert request["to_supplier"] == "Viteria Lanzo" and request["unresolved"][0]["text"] == "Viteria Lanzo"
 
 
 def test_accuracy_on_fixtures():
