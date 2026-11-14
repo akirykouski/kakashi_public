@@ -56,7 +56,7 @@ def gateway_call(model, system, prompt, schema, max_tokens=1200, schema_name="ou
 
 
 def cached_call(model, system, prompt, schema, fixtures_dir, live=False, call=None, note=None, max_tokens=1200):
-    """Return (output, meta). meta = {"source": "fixture"|"live", "recorded_by", "key"}.
+    """Return (output, meta). meta = {"source": "fixture"|"live", "recorded_by", "key", "usage"}.
 
     `call(model, system, prompt, schema) -> (output, usage)` replaces the gateway (tests, other recorders); its
     attribute `recorded_by` names it in the fixture. `note` is stored for a person reading the fixture.
@@ -66,7 +66,8 @@ def cached_call(model, system, prompt, schema, fixtures_dir, live=False, call=No
     if not live and os.path.exists(path):
         with open(path) as file:
             stored = json.load(file)
-        return stored["output"], {"source": "fixture", "recorded_by": stored.get("recorded_by"), "key": key}
+        return stored["output"], {"source": "fixture", "recorded_by": stored.get("recorded_by"), "key": key,
+                                  "usage": stored.get("usage") or {}}
     if call is None:
         load_dotenv()
         if not os.environ.get(KEY_NAME):
@@ -80,4 +81,4 @@ def cached_call(model, system, prompt, schema, fixtures_dir, live=False, call=No
     with open(path, "w") as file:
         json.dump({"note": note, "model": model, "recorded_by": recorded_by, "output": output, "usage": usage},
                   file, indent=1, ensure_ascii=False)
-    return output, {"source": "live", "recorded_by": recorded_by, "key": key}
+    return output, {"source": "live", "recorded_by": recorded_by, "key": key, "usage": usage or {}}
