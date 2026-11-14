@@ -1,8 +1,8 @@
 # Evaluation track: status
 
-Owner: Maksim (eval track). Updated 12:39 Rome. Protocol: `docs/methodology.md`. Every interpretation and deviation: `docs/benchmarks/CHANGES.md`.
+Owner: Maksim (eval track). Updated 12:41 Rome. Protocol: `docs/methodology.md`. Every interpretation and deviation: `docs/benchmarks/CHANGES.md`.
 
-**One line:** gold is frozen, the reported run of all five conditions is running now; results and the three sentences for the pitch land in `docs/benchmarks/RESULTS.md` by 15:00. Nothing is needed from the rest of the team.
+**One line:** reported run done; results, hypotheses and three sentences for the pitch are in `docs/benchmarks/RESULTS.md`. H1 PASS, H4 PASS (both worlds, at a tie; fails on world A), H2 FAIL, H3 not run.
 
 ## Done
 
@@ -20,11 +20,11 @@ A dry run on the unfrozen gold checked the pipeline; its numbers are never repor
 
 ## Running now
 
-Reported run on the frozen gold, all five conditions, both worlds → `eval/results/frozen/`.
+Nothing. Reported run finished: `eval/results/frozen/` (1650459).
 
 ## Next
 
-1. Score, decide H1–H4, write `docs/benchmarks/RESULTS.md` with the threats to validity and three sentences safe to say on stage (by 15:00).
+1. Done: `docs/benchmarks/RESULTS.md`.
 2. H3 (8× company size) on world M if time allows; otherwise reported as "not run".
 3. Ablations (methodology §4) only if everything above is done by 14:45.
 
