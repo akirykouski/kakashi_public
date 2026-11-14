@@ -1,0 +1,464 @@
+# Economic model v4 (14 Nov 2026, 16:00, KVA hackathon, track Decision models)
+
+Source of every number: `python3 econ/v4/model.py` (stdlib; ASSUMPTIONS dict with value, unit, marker, source). Generated tables are appended below. v4 = v3 plus three changes: (1) founders on a EUR 2,000/month stipend, (2) verified market price band for comparable QMS software, (3) problem evidence from team research (`econ/evidence/problem_evidence_2026-11-14.md`). Everything else is v3. Markers: [verified: source] / [declared] / [unverified]. **Not saved to Control8** (payload ready in `econ/v4/control8_payload.json`).
+
+## PITCH NUMBERS (copy into the pitch exactly; equals Control8)
+
+```
+Price: plant licence EUR 24,000 per plant per year; paid 8-week replay EUR 9,500, fully credited to the licence.
+Year 1 (billed): 3 paid pilots + 1 plant licence = EUR 43,000.
+Acquisition: outbound to supplier-quality directors, 16 meetings/yr, 8% to licence, EUR 992.50 per meeting -> CAC EUR 12,406.
+Margin: 70% on shared EU SaaS (54% dedicated instance; on-prem with a local model offered, cost not yet measured).
+Payback: 8.9 months on gross profit (6.2 on revenue), plus a 3-6 month sales cycle; LTV/CAC 4.5x (20% churn, 5-year cap).
+Funding: seed round of about EUR 230k to reach 5-6 licensed plants (ARR EUR 137k) by year 3; founders on EUR 2k/month stipend until then.
+```
+
+Measured vs estimate (say it aloud, not on the block): measured = LLM cost USD 0.0007 per change request, 1,589 IATF sites in Italy; price and funnel are estimates the paid pilot tests.
+
+**Funding-need sentence for the validation:** "We need a seed round of about EUR 230k to reach 5-6 licensed plants (ARR about EUR 137k) by year 3. That is the base case's largest cumulative loss, with the three founders on a EUR 2,000 a month stipend; it carries no buffer. With everything at its upside it is EUR 48k, and no case is profitable in year 1."
+
+## 0. What we know (v4)
+
+| Fact | Marker |
+|---|---|
+| 1,589 IATF sites in Italy, 93,713 worldwide | [verified: VDA QMC 23 Apr 2026] |
+| LLM cost USD 0.0007 per change request, ~USD 0.05 per document | [verified: our measurement 14 Nov] |
+| Inferred-blocker recall 0.90 vs 0.19 RAG baseline (synthetic, pre-registered) | [verified: our benchmark] |
+| **Failed change management caused 83% of significant supplier quality issues, FY22-FY24**; "silent change" includes sub-supplier changes | [verified: Astemo Supplier Change Management Guidebook rev 4.0, Dec 2025] |
+| **Consequences of an unapproved change at Adient:** written approval required >=180 days ahead; otherwise New Business Hold, notice to the IATF registrar, possible financial consequences | [verified: Adient Global Supplier Standards Manual rev 10.0, 2023] |
+| 10 independent practitioner threads describe supplier/sub-supplier changes arriving late or not at all (26 quotes, mostly one forum) | [verified: team research, docs/research/practitioner-voice.md]; counterpoint quote exists ("no issue with suppliers making changes without notification") |
+| Ford recall 18V-806: tier-3 changed a moulding process, tier-2 not told | [verified: NHTSA] |
+| **Comparable QMS software prices per year:** Arena median USD 55,970 (31 purchases), Greenlight Guru median USD 43,989, MasterControl median USD 115,673; mid-sized enterprise QMS USD 25-100k | [verified: Vendr; Monetizely Aug 2025] |
+| Sorting charged back at USD 30-50 per hour | one practitioner account [unverified as a general rate] |
+
+**Price vs market band:** our EUR 24k (about USD 27k) sits at the low end of the Monetizely band and below every Vendr median; EUR 30k upside is still below them. The band is verified; **our price is still [declared]: no buyer has said they would pay it.** The v1 forum remark (USD 35k called unjustified) stays as a counterpoint, not as our only price evidence.
+
+**Sorting sanity check:** the base sorting component of one escaped change is EUR 6,000 (5,000 pieces x EUR 1.20). At USD 30-50/h (EUR 26-44/h) that is about 140-230 sorter-hours, i.e. a few people for a week: plausible, so the component is not obviously inflated. It stays [unverified]: one account, and piece count and rate are our guesses.
+
+## 0b. What we do NOT know
+
+1. **Licence price EUR 24k and pilot EUR 9,500** [declared]: no buyer quote. Inside a verified market band, but nobody has said yes to it.
+2. **Funnel**: 18.75% meeting->pilot, 8% meeting->licence [unverified]. Cold outbound to quality directors may convert worse.
+3. **Churn 20%/yr** [unverified] and **support 8 h/plant/month** [declared]: v2 bear values used as base.
+4. **Change requests per plant** (60/month assumed) and **cost of one escaped change** (EUR 29,400 build-up) [unverified]. Break-even 0.8 caught changes/plant/yr at EUR 24k. Astemo's 83% is a share of issues at one customer, not a per-plant frequency; we do not convert it.
+5. **On-prem / local open-weight model**: supported by the product, cost null, recall on a local model not measured.
+6. **Sales cycle** 3-6 months [unverified]; payback figures exclude it.
+7. Serviceable share 35% of 1,589 IATF sites [unverified]. Piedmont 734 ANFIA firms are NOT IATF sites: upper bound only.
+8. **Founder stipend EUR 2,000/month** is a team decision [declared], not a market salary; when the seed round closes and pay rises to market (v3: EUR 5k loaded), the base funding need returns toward EUR 552k.
+9. Benchmark is synthetic; real-plant accuracy unknown. No public statement of willingness to pay found; Reddit/LinkedIn not read.
+
+## 1. Headline (Low / Base / High), from model.py v4
+
+| Metric | Low | Base | High |
+|---|---|---|---|
+| Licence per plant per year | EUR 24,000 | EUR 24,000 | EUR 30,000 (upside) |
+| Pilot (8 weeks, credited) | EUR 9,500 | EUR 9,500 | EUR 9,500 |
+| Year-1 pilots / licences billed | 0.8 / 0.26 | 3 / 1 | 5 (capped) / 1 |
+| **Year-1 revenue billed** | EUR 10,822 | **EUR 43,000** | EUR 68,000 |
+| Cost to serve per plant/yr | EUR 14,449 (dedicated, 12 h) | EUR 7,217 (shared) | EUR 3,543 |
+| Gross margin per plant | 40% | **70% shared / 54% dedicated** | 88% |
+| Variable CAC | EUR 33,904 | **EUR 12,406** | EUR 9,020 |
+| Payback on gross profit | 42.6 mo | **8.9 mo** | 4.1 mo |
+| Payback on licence revenue | 17.0 mo | **6.2 mo** | 3.6 mo |
+| LTV (GP, 5-yr cap, undiscounted) / CAC | 0.8x | **4.5x** (EUR 56.4k / 12.4k) | 12.0x |
+| Team + tools per year | EUR 84k | EUR 84k | EUR 84k |
+| Year-1 operating result | EUR -99.1k | **EUR -76.7k** | EUR -47.7k (no year-1 profit) |
+| Plants end yr 3 / ARR | 0.9 / EUR 22.6k | 5.7 / EUR 137.5k | 16.9 / EUR 508k |
+| Cumulative 3-yr result | EUR -308k | **EUR -227.8k** | EUR +316k (positive from year 2) |
+| **Funding need** (max cumulative loss) | EUR 308k | **EUR 228k** | EUR 48k |
+| Break-even caught changes/plant/yr | 3.5 | **0.8** | 0.2 |
+| Plants to cover team + tools (EUR 84k/yr) | 8.8 | 5.0 | 3.2 |
+
+Low = all bears at once (stress, not a forecast). Revenue is billed basis. Team = 3 founders x EUR 2,000/month stipend from year 1 [declared: team decision 14 Nov] + EUR 12k tools.
+
+**Reading:** unit economics are unchanged from v3 (70% margin, 8.9-month payback, 4.5x); only the fixed cost fell (EUR 192k -> 84k a year). At base pace the 5.7 plants of year 3 cover team and tools (5.0 needed), but the sellers hired in year 3 keep the year negative (EUR -84k), so base does not break even inside 3 years. Funding need EUR 228k (v3: 552k).
+
+## 2. Control8 entry and read-back (econ/v4/control8_payload.json, NOT saved)
+
+Lines and channel unchanged from v3: `plant_licence` licence_year EUR 24,000 x 1 (year) + `paid_pilot` project_fee EUR 9,500 x 2 (year). Channel: outbound, cplCents 99250, conversionPct 8, leadsPerPeriod 16. salesMachine empty (founders sell; stipend is fixed cost, in the note), adBudgetCents null. Only the note changed (items 1-3 of v4, markers + sources, 2,634 characters).
+
+| Read-back field | Value | Arithmetic |
+|---|---|---|
+| Annual revenue | **EUR 43,000** | 24,000 x 1 + 9,500 x 2 = model year-1 billed = pitch |
+| Blended CAC | **EUR 12,406** | 992.50 / 8% = model variable CAC |
+| New customers/yr | 1.28 | 16 x 8%: 1 billed in year 1, 0.28 in year 2 |
+| Payback | **6.2 mo on revenue**; **8.9 mo on gross profit** | Control8 has no unit-cost field; pitch states both |
+| First-year return | **2.7x** | 43,000 / (16 x 992.50 = 15,880); formula assumed |
+
+The founder stipend does not enter any Control8 field (no fixed-cost field), so the card read-back is identical to v3; it changes only the funding need, which is in the note and the pitch block.
+
+## 3. Claims NOT to make
+
+- "Validated" (any number).
+- **That change control is a top IATF audit finding** (VDA QMC Apr 2026 top-10 major nonconformities: 8.5.6 is NOT in the global top 10).
+- That the market band (Vendr, Monetizely) proves anyone will pay EUR 24k; it shows the category's price level only.
+- That Astemo's 83% applies to every plant, or any per-plant frequency derived from it.
+- That USD 30-50/h is the industry sorting rate (one account).
+- 87% margin, 28x LTV/CAC, 4.3-month payback, EUR 43k funding need (all v2); EUR 552k funding need (v3, founders at EUR 5k).
+- Any year-1 profit (no scenario has one).
+- "Piedmont 257 of 556" (mixes ANFIA firms with IATF sites).
+- Any cost of the local-model / on-prem option, or that benchmark recall holds on a local model.
+- TISAX readiness. The partner channel (IATF consultancies, ANFIA) as existing.
+- Also avoid: EUR 110k or 95k year 1, EUR 30k or 36k as the base price.
+
+## 4. Verify before 16:30: licence price
+
+Ask one supplier quality manager (mentor call): "Would you pay EUR 9,500 for an 8-week replay of last year's change requests, credited to a EUR 24,000 licence?" Record name, role, time, answer; mark `[verified: name, role, 14 Nov]` in the note before saving.
+
+## 5. Rubric self-score (KVA, Financial sustainability, weight 17 at gate 2)
+
+Anchors: 1 = no model in Control8; 4 = priced revenue line, volumes or acquisition missing; 7 = revenue lines with price and volume, channels with CPL and conversion, a payback the team can defend.
+
+**Score: 5 of 7 once saved (1 until saved).** Structure meets the 7 anchor (two priced lines with volume, one channel with CPL and conversion, payback computed and consistent with the card). Held below 7 by the rule "a [declared] fact can support a 4, not a 7": price [declared], funnel [unverified]. v4 strengthens the 5 (verified market band around the price, verified problem cost evidence, a funding need the team can carry) but does not lift the anchor: no buyer has stated the price. A buyer's answer today lifts it toward 6-7. Gate 1 (Willingness to invest) gains a source: buyers already spend USD 25-116k a year on QMS software.
+
+**Weakest number: the licence price EUR 24,000 (and the EUR 9,500 pilot) [declared].** Second: 8% meeting->licence [unverified]. Third: the EUR 2,000 stipend [declared], which carries the drop in funding need from 552k to 228k; say so if asked.
+
+## 6. What changed vs v3
+
+| Item | v3 | v4 |
+|---|---|---|
+| Founder pay | 3 x EUR 5,000/month loaded | 3 x EUR 2,000/month stipend until seed [declared] |
+| Team + tools per year | EUR 192k | EUR 84k |
+| Year-1 result (base) | EUR -184.7k | EUR -76.7k |
+| Funding need Low / Base / High | 632k / 552k / 191k | 308k / 228k / 48k |
+| Plants to cover team + tools (base) | 11.4 | 5.0 |
+| Price evidence | forum: USD 35k "unjustified" (only) | verified band Vendr/Monetizely + forum as counterpoint; price still [declared] |
+| Problem evidence | GM, Ford, NHTSA (recall level) | + Astemo 83%, Adient consequences, practitioner threads, sorting $30-50/h check |
+| Claims not to make | | + change control as top IATF finding; band as proof of WTP |
+| Unchanged | price, pilot, year-1 EUR 43,000, funnel 8%, CPL 99250 cents, CAC, margin, payback, LTV 5-yr cap, churn/support bear-as-base, delivery options incl. on-prem null | same |
+
+---
+
+# Appendix: generated output (model.py v4)
+
+# Business model output
+
+Generated by `docs/business/model.py` (stdlib only). Every input is in the ASSUMPTIONS dict at the top of that file with unit, source and confidence. Confidence: V verified, P portal or secondary, E estimate (brief 01 or ours), U unverified guess.
+
+## WHAT WE DO NOT KNOW (said first)
+
+1. **Plant volumes are unmeasured.** Change requests per plant per month (assumed 20 / 60 / 150) and how many of them hide a blocker are in no source we found. The pilot replays last year's requests to measure both.
+2. **Cost of one escaped change is our estimate**, built from sorting, expedite, engineering hours and chargeback inputs (all `U`). The verified harm figures (GM, Ford, NHTSA) are OEM or recall level and are not converted to a per-plant frequency.
+3. **The funnel rates are guesses** (8% contact to meeting, 18.75% to pilot, 42.7% to licence = 8% meeting to licence). No buyer interview exists. The price is [declared]: no buyer has said it. It sits inside/below the verified band of comparable QMS software (Vendr medians USD 44k-116k; Monetizely USD 25-100k); counterpoint: one forum called USD 35k unjustified; v4 tops out at EUR 30k.
+4. **Piedmont 734 is an ANFIA supply-chain firm count, not IATF.** It is not a subset of the 1,589 Italian IATF sites, so v3 keeps it out of SAM (upper bound only). The serviceable shares (70% x 50%) are guesses.
+5. **Tax incentive eligibility is not checked.** Whether a plant licence qualifies for the 180% deduction is for the buyer's adviser.
+
+## HEADLINE
+
+| Metric | Low | Base | High |
+|---|---|---|---|
+| Licence price per plant per year | EUR 24,000 | EUR 24,000 | EUR 30,000 |
+| Pilot price | EUR 9,500 | EUR 9,500 | EUR 9,500 |
+| Gross margin per licensed plant | 40% | 70% | 88% |
+| Variable CAC per licence customer | EUR 33,904 | EUR 12,406 | EUR 9,020 |
+| CAC payback on gross profit (variable CAC) | 42.6 mo | 8.9 mo | 4.1 mo |
+| CAC payback on licence revenue (variable CAC) | 17.0 mo | 6.2 mo | 3.6 mo |
+| LTV (gross profit, 5-year cap, undiscounted) / variable CAC | 0.8x | 4.5x | 12.0x |
+| Year-1 pilots / licences billed | 0.8 / 0.26 | 3.0 / 1.00 | 5.0 / 1.00 |
+| Year-1 revenue billed (pilots + licence net of pilot credit) | EUR 10,822 | EUR 43,000 | EUR 68,000 |
+| Year-1 operating result | EUR -99,133 | EUR -76,655 | EUR -47,737 |
+| CAC payback on gross profit, fully loaded, year 3 (seller salary included) | 28.6 mo | 20.9 mo | 6.2 mo |
+| Plants under licence, end of year 3 | 0.9 | 5.7 | 16.9 |
+| ARR at end of year 3 | EUR 22,583 | EUR 137,472 | EUR 508,167 |
+| Revenue in year 3 (licences + pilots) | EUR 37,902 | EUR 214,992 | EUR 660,015 |
+| Cumulative operating result, 3 years | EUR -308,212 | EUR -227,843 | EUR 316,001 |
+| Funding need (largest cumulative loss, 3 years) | EUR 308,212 | EUR 227,843 | EUR 47,737 |
+| Break-even caught issues per year per plant (base licence) | 3.5 | 0.8 | 0.2 |
+
+Low = every range input at its bear value, High = every range input at its bull value. All bears at once is a stress case, not a forecast. Revenue is BILLED basis (annual licence invoiced upfront, pilot fee credited against it); year-1 pilots capped at 5; year-1 licences billed capped at 1 (`licences_billed_y1`).
+
+## 1. MARKET (bottom-up, Italy first)
+
+| Layer | Count | Value at base price | Source key |
+|---|---|---|---|
+| World IATF 16949 sites (ceiling, not a target) | 93,713 | EUR 2,249,112,000 per year | `sites_world_iatf` |
+| Italy IATF sites | 1,589 | EUR 38,136,000 per year | `sites_italy_iatf` |
+| Serviceable share (OEM change burden 70% x budget and data ready 50%) | 35% | n/a | `share_oem_change_burden`, `share_budget_and_data_ready` |
+| Italy serviceable plants (SAM) | 556 | EUR 13,347,600 per year | derived |
+| Piedmont: ANFIA supply-chain firms, NOT IATF sites (upper bound only, NOT in SAM) | 734 | not valued | `sites_piedmont_anfia` |
+| 3-year sanity cap (5% of Italy SAM) | 28 plants | EUR 667,380 ARR | `som_cap_italy_3y` |
+
+Check: Base ends year 3 with 5.7 plants = 1.0% of Italy SAM; High 16.9 plants = 3.0%. High is inside the 5% cap of 28 plants.
+
+## 2. PRICING
+
+| Item | Low | Base | High | Source key |
+|---|---|---|---|---|
+| Pilot (8 weeks, credited to licence, replay of last year's change requests) | EUR 9,500 | EUR 9,500 | EUR 9,500 | `price_pilot` |
+| Licence per plant per year | EUR 24,000 | EUR 24,000 | EUR 30,000 | `price_licence` |
+
+COUNTERPOINT (`price_warning_usd`, v4: no longer the only price evidence): a practitioner forum called a USD 35,000 per year price unjustified. EUR 36k is about USD 41,000 at our round FX, so v3 dropped it. Base = EUR 24k (defended floor); EUR 30k is upside after a pilot shows caught issues. Pilot (EUR 9,500, credited) and licence are team estimates, not quotes from any buyer.
+MARKET BAND (v4) [verified: Vendr medians per year - Arena USD 55,970 (31 purchases), Greenlight Guru USD 43,989, MasterControl USD 115,673; Monetizely Aug 2025 - mid-sized enterprise QMS USD 25,000-100,000]. EUR 24k is about USD 27,000 at our round FX: inside the Monetizely band, at its low end, and below every Vendr median. The band shows plants already pay this order of money for quality software; it does NOT show anyone would pay OUR price, which stays [declared] until a buyer says it.
+
+Pricing logic at base cost to serve and base funnel (derived, no new inputs): the floor is set by margin and payback, the ceiling by the value of one avoided escaped change.
+
+| Licence per plant per year | Gross margin | Variable CAC payback | Fully loaded CAC payback, year 3 | Caught issues per year to pay it (base event cost) |
+|---|---|---|---|---|
+| EUR 20,000 | 64% | 11.6 mo | 27.4 mo | 0.7 |
+| EUR 24,000 | 70% | 8.9 mo | 20.9 mo | 0.8 |
+| EUR 30,000 | 76% | 6.5 mo | 15.4 mo | 1.0 |
+| EUR 36,000 | 80% | 5.2 mo | 12.2 mo | 1.2 |
+
+Reading: at EUR 20k the margin is 64% and fully loaded payback 27 months; EUR 36k is above the USD 35k a forum rejected. In the EUR 24k to 30k band: gross margin 70% to 76%, variable payback 7 to 9 months, fully loaded year-3 payback 15 to 21 months, and 0.8 to 1.0 avoided escaped changes a year (base estimate EUR 29,400, unverified) pay the licence. The pilot replay decides where in the band a plant sits.
+
+Buyer-side tax incentive (`ai_deduction_multiple`, `ires_rate`): Italy offers a 180% deduction on AI software up to EUR 2.5M, 2026-2028 (Law 199/2025, per brief 01 #numbers). If a plant licence qualified, a EUR 24,000 licence would cost the buyer about EUR 13,632 after IRES at 24%. Eligibility is unverified: a supporting argument, not part of any number above.
+
+## 3. UNIT ECONOMICS PER PLANT (steady state, per year)
+
+| Line | Low | Base | High | Source keys |
+|---|---|---|---|---|
+| LLM cost per change request (measured) | EUR 0.00616 | EUR 0.00062 | EUR 0.00044 | `llm_usd_per_request` |
+| LLM run cost per plant (60 requests per month) | EUR 4 | EUR 0 | EUR 0 | `requests_per_plant_month` |
+| LLM ingestion refresh per plant | EUR 165.0 | EUR 16.5 | EUR 2.2 | `docs_per_plant`, `llm_usd_per_doc`, `ingest_refresh_yearly` |
+| Infrastructure (Low = dedicated instance, Base = shared SaaS) | EUR 4,200 | EUR 480 | EUR 180 | `infra_per_plant_month` |
+| Support and ontology upkeep | EUR 10,080 | EUR 6,720 | EUR 3,360 | `support_hours_per_plant_month`, `rate_eur_per_hour` |
+| Cost of revenue per plant | EUR 14,449 | EUR 7,217 | EUR 3,543 | sum |
+| Revenue per plant | EUR 24,000 | EUR 24,000 | EUR 30,000 | `price_licence` |
+| Gross profit per plant | EUR 9,551 | EUR 16,783 | EUR 26,457 | derived |
+| Gross margin | 40% | 70% | 88% | derived |
+
+LLM cost: MEASURED today on Claude Haiku 5.5 via Vercel AI Gateway (USD 0.0007 per meeting/request, about USD 0.05 per document extracted). Haiku list price not looked up [unverified]; the cost is measured spend. The OWL RL + SHACL reasoning uses no tokens, so tokens are 0.2% of base cost of revenue. People and hosting set the margin, not the model.
+
+Pilot and onboarding:
+
+| Line | Low | Base | High | Source keys |
+|---|---|---|---|---|
+| Pilot delivery cost (onboarding days + hosting + tokens) | EUR 14,361 | EUR 5,146 | EUR 2,739 | `onboarding_days`, `rate_eur_per_day`, `pilot_months` |
+| Pilot price | EUR 9,500 | EUR 9,500 | EUR 9,500 | `price_pilot` |
+| Pilot margin | EUR -4,861 | EUR 4,354 | EUR 6,761 | derived |
+
+A pilot is priced to pay for its own onboarding. Where it loses money, the loss is counted in CAC. The pilot fee is credited against the first-year licence, so in the 3-year table the credit is netted from licence revenue.
+
+## 4. CAC AND PAYBACK (pilot-led sales)
+
+Funnel per licence customer: contact, meeting, paid pilot, licence.
+
+| Line | Low | Base | High | Source keys |
+|---|---|---|---|---|
+| Contacts per licence | 392 | 156 | 73 | `conv_contact_to_meeting`, `conv_meeting_to_pilot`, `conv_pilot_to_licence` |
+| Meetings per licence | 19.6 | 12.5 | 8.7 | same |
+| Pilots per licence | 2.9 | 2.3 | 2.0 | same |
+| Variable CAC (time and outreach cost, plus any pilot loss) | EUR 33,904 | EUR 12,406 | EUR 9,020 | `cost_per_contact`, `meeting_hours`, `pilot_mgmt_hours` |
+| Payback on gross profit | 42.6 mo | 8.9 mo | 4.1 mo | derived |
+| Gross-profit lifetime / variable CAC (undiscounted) | 0.8x | 4.5x | 12.0x | `churn_year` |
+
+Fully loaded CAC (seller salary, outreach and events divided by new licences in the year) is far higher early because year 1 signs few plants:
+
+| Year | Low | Base | High | Base payback on gross profit |
+|---|---|---|---|---|
+| Year 1 | EUR 45,098 | EUR 13,000 | EUR 14,500 | 9.3 mo |
+| Year 2 | EUR 50,980 | EUR 21,795 | EUR 12,850 | 15.6 mo |
+| Year 3 | EUR 22,745 | EUR 29,167 | EUR 13,707 | 20.9 mo |
+
+Two paybacks, both defended: 8.9 months on variable CAC (the cost of winning one more plant once sellers exist) and 20.9 months fully loaded in year 3 (seller salary included). Pilot fees are not credited against CAC; in base each pilot leaves EUR 4,354, which would lower both.
+
+## 5. THREE-YEAR SCENARIOS
+
+### Low
+
+| Year | Contacts | Pilots | New plants | Plants at year end | ARR at year end | Revenue | Gross margin | S&M | Team and tools | Operating result | Cumulative |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 100 | 0.8 | 0.3 | 0.3 | EUR 6,120 | EUR 10,822 | -34% | EUR 11,500 | EUR 84,000 | EUR -99,133 | EUR -99,133 |
+| 2 | 200 | 1.5 | 0.3 | 0.4 | EUR 10,404 | EUR 22,232 | -25% | EUR 13,000 | EUR 84,000 | EUR -102,573 | EUR -201,706 |
+| 3 | 300 | 2.2 | 0.6 | 0.9 | EUR 22,583 | EUR 37,902 | -21% | EUR 14,500 | EUR 84,000 | EUR -106,506 | EUR -308,212 |
+
+### Base
+
+| Year | Contacts | Pilots | New plants | Plants at year end | ARR at year end | Revenue | Gross margin | S&M | Team and tools | Operating result | Cumulative |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 200 | 3.0 | 1.0 | 1.0 | EUR 24,000 | EUR 43,000 | 47% | EUR 13,000 | EUR 84,000 | EUR -76,655 | EUR -76,655 |
+| 2 | 400 | 6.0 | 1.6 | 2.4 | EUR 56,640 | EUR 98,820 | 52% | EUR 34,000 | EUR 84,000 | EUR -67,088 | EUR -143,744 |
+| 3 | 800 | 12.0 | 3.8 | 5.7 | EUR 137,472 | EUR 214,992 | 52% | EUR 112,000 | EUR 84,000 | EUR -84,100 | EUR -227,843 |
+
+### High
+
+| Year | Contacts | Pilots | New plants | Plants at year end | ARR at year end | Revenue | Gross margin | S&M | Team and tools | Operating result | Cumulative |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 300 | 5.0 | 1.0 | 1.0 | EUR 30,000 | EUR 68,000 | 75% | EUR 14,500 | EUR 84,000 | EUR -47,737 | EUR -47,737 |
+| 2 | 600 | 16.2 | 5.7 | 6.6 | EUR 197,430 | EUR 297,360 | 77% | EUR 73,000 | EUR 84,000 | EUR 72,678 | EUR 24,941 |
+| 3 | 1000 | 27.0 | 11.0 | 16.9 | EUR 508,167 | EUR 660,015 | 80% | EUR 151,000 | EUR 84,000 | EUR 291,060 | EUR 316,001 |
+
+Funding need over 3 years (largest cumulative loss): Low EUR 308,212, Base EUR 227,843, High EUR 47,737. Plants needed for plant gross profit alone to cover team and tools: Low 8.8, Base 5.0, High 3.2. Revenue in years 1 and 2 is mostly one-off pilot fees; ARR is the recurring line.
+
+## 6. VALUE SIDE: what one caught change is worth to a supplier plant
+
+Verified harm figures (framing only; none is a per-plant frequency):
+
+| Fact | Number | Source key |
+|---|---|---|
+| GM ignition switch, part changed, part number unchanged | USD 900M over 2,190,934 vehicles, about USD 411 per vehicle (derived) | `gm_ignition_loss_usd`, `gm_ignition_vehicles` |
+| Ford recall 25V270000, unauthorized tooling change at a sub-supplier | 160,729 vehicles | `ford_25v270000_vehicles` |
+| US recalls caused by an unapproved or unverified change | 5.9% (CI 3.5-8.3%), lower bound, one reviewer | `nhtsa_change_share` |
+| US recalls that start at a supplier | 40.5% | `nhtsa_supplier_share` |
+| Downtime of a large OEM plant (Siemens 2024) | USD 2.3M per hour: OEM loss, reaches a supplier only as penalties. NOT USED in any calculation | `siemens_downtime_usd_hour` |
+
+Supplier-side cost of ONE escaped unapproved change (our estimate; every component is an assumption):
+
+| Component | Low | Base | High | Source keys |
+|---|---|---|---|---|
+| 100% sorting | EUR 600 | EUR 6,000 | EUR 40,000 | `sort_pieces`, `sort_cost_per_piece` |
+| Expedite and premium freight | EUR 2,000 | EUR 5,000 | EUR 15,000 | `expedite_eur` |
+| Engineering and quality hours (8D, re-approval) | EUR 4,200 | EUR 8,400 | EUR 17,500 | `eng_hours_per_event` |
+| Customer chargeback | EUR 0 | EUR 10,000 | EUR 60,000 | `chargeback_eur` |
+| **Total per event** | EUR 6,800 | EUR 29,400 | EUR 132,500 | sum |
+| **Break-even: caught issues per year to pay a EUR 24,000 licence** | 3.5 | 0.8 | 0.2 | licence price / cost per event |
+
+A caught issue means a real blocker a human would otherwise have missed and that would have cost money. The pilot counts these on last year's requests. Break-even in caught issues per year, licence price x cost per escaped event:
+
+| Licence per year \ cost per event | EUR 8,000 | EUR 15,000 | EUR 30,000 | EUR 60,000 | EUR 150,000 |
+|---|---|---|---|---|---|
+| EUR 24,000 | 3.0 | 1.6 | 0.8 | 0.4 | 0.2 |
+| EUR 30,000 | 3.8 | 2.0 | 1.0 | 0.5 | 0.2 |
+
+Secondary value, NOT in break-even (`review_minutes_saved`): 15 minutes saved per request x 60 requests per month = EUR 12,600 per plant per year at base. The product never says approved, so we do not sell it as speed.
+
+## 7. SENSITIVITY
+
+### 7a. ARR at end of year 3: price x adoption (share of Italy SAM)
+
+Italy SAM = 556 plants. Adoption = share of those plants under licence at end of year 3. Base scenario lands at 1.0%.
+
+| Licence per plant per year \ adoption | 0.5% (3 plants) | 1.0% (6 plants) | 2.0% (11 plants) | 5.0% (28 plants) |
+|---|---|---|---|---|
+| EUR 20,000 | EUR 55,615 | EUR 111,230 | EUR 222,460 | EUR 556,150 |
+| EUR 24,000 | EUR 66,738 | EUR 133,476 | EUR 266,952 | EUR 667,380 |
+| EUR 30,000 | EUR 83,422 | EUR 166,845 | EUR 333,690 | EUR 834,225 |
+| EUR 36,000 | EUR 100,107 | EUR 200,214 | EUR 400,428 | EUR 1,001,070 |
+| EUR 40,000 | EUR 111,230 | EUR 222,460 | EUR 444,920 | EUR 1,112,300 |
+
+## 8. FIELDS FOR THE ECONOMIC MODEL (Control8 `update_economic_model`)
+
+Schema as described in prep/research-archive/kva-8hack-skill/plugins/8hack/skills/hack-economic-model/SKILL.md: revenue lines with price (integer cents), volume (units billed in the period), period, recurring flag; channels with cost per lead, conversion share, leads per period; sellers (count, monthly cost); cost to serve goes in the note. The vocabulary (allowed units, periods, channel names) is returned by `get_economic_model` at runtime and is NOT in any file we have; check it before saving.
+
+| Field | Value (Base) | Source key |
+|---|---|---|
+| Line 1: pilot, price | EUR 9,500 = 950000 cents, recurring: no | `price_pilot` |
+| Line 1: volume (pilots started per year) | year 1: 3; year 2: 6; year 3: 12 | derived |
+| Line 2: licence per plant, price | EUR 24,000 = 2400000 cents, recurring: yes, period: year | `price_licence` |
+| Line 2: volume (plants billed in the year, average) | year 1: 0.5; year 2: 1.7; year 3: 4.0; run-rate at end of year 3: 5.7 | derived |
+| Channel: direct outreach to supplier quality directors, cost per lead (lead = meeting held), all variable acquisition cost incl. pilot management time | EUR 992 = 99250 cents (outreach and meeting only: EUR 468) | `cost_per_contact`, `conv_contact_to_meeting`, `meeting_hours`, `pilot_mgmt_hours` |
+| Channel: conversion, lead to licence customer | 8.0% | `conv_meeting_to_pilot`, `conv_pilot_to_licence` |
+| Channel: leads per year (meetings held) | year 1: 16; year 2: 32; year 3: 64 | `contacts_y1`, `contacts_y2`, `contacts_y3` |
+| Sellers (founders cover the first 300 contacts a year) | year 1: 0.00; year 2: 0.25; year 3: 1.25 at EUR 6,000 per month | `seller_cost_year`, `founder_contacts_year` |
+| Cost to serve one plant per year | EUR 7,217; gross margin 70% | section 3 |
+
+With the all-in cost per lead, Control8's lead cost / conversion = EUR 12,406, equal to our variable CAC. Seller salaries are entered separately as sellers, so Control8's blended CAC may move toward our fully loaded figure (section 4); its exact formula is not in our files. Leads x conversion gives 5 licences a year at year-3 pace; the model books 4 in year 3 because half of each year's pilots sign the following year.
+
+## 9. v2 ADDITIONS
+
+### 9a. Delivery options (same base everything else)
+
+| Option | Infra per plant per year | Cost of revenue | Gross margin | Variable CAC payback |
+|---|---|---|---|---|
+| A shared EU SaaS (BASE) | EUR 480 | EUR 7,217 | 70% | 8.9 mo |
+| B dedicated per-plant instance | EUR 4,200 | EUR 10,937 | 54% | 11.4 mo |
+
+| C on-prem, LOCAL open-weight model (OpenAI-compatible endpoint via LLM_BASE_URL / LLM_MODEL) | null | null | null | null |
+
+C is supported by the product today (LLM_BASE_URL / LLM_MODEL point the pipeline at any OpenAI-compatible endpoint; quotes are verified by code, not by the model) but its cost is NOT measured [unverified]: customer hardware, GPU or CPU inference, and our install/support time are unknown, and benchmark recall on a local model is NOT measured. Left null on purpose.
+
+Base = A: the measured container (1.2 s at 47k facts, one python:3.12-slim image) needs no per-plant hardware, and pilots replay documents the plant chooses to share. B is offered as a priced option (a surcharge of about EUR 3,700/yr would hold margin) for plants that require nothing to leave their perimeter.
+
+### 9b. Break-even caught changes per plant per year
+
+| Escaped-change cost | Licence 24k (base) | 30k (upside) |
+|---|---|---|
+| EUR 6,800 | 3.53 | 4.41 |
+| EUR 29,400 | 0.82 | 1.02 |
+| EUR 132,500 | 0.18 | 0.23 |
+
+Base escaped-change cost EUR 29,400 [unverified]: 0.82 caught changes per plant per year pay the licence.
+
+### 9c. Funnel sensitivity (base otherwise; contact->meeting x meeting->pilot x pilot->licence)
+
+| Funnel | Lead->licence | Variable CAC | Payback on GP | LTV/CAC (5-yr cap) |
+|---|---|---|---|---|
+| bear 5/15/34% | 5.1% | EUR 19,608 | 14.0 mo | 2.9x |
+| base 8/18.75/42.7% | 8.0% | EUR 12,406 | 8.9 mo | 4.5x |
+| bull 12/22.5/51% | 11.5% | EUR 9,020 | 6.4 mo | 6.3x |
+| v2 base 8/25/50% (for reference) | 12.5% | EUR 9,340 | 6.7 mo | 6.0x |
+
+### 9d. Assumption markers (KVA vocabulary)
+
+| Key | Value | Unit | Marker | Source |
+|---|---|---|---|---|
+| `sites_world_iatf` | 93713 | sites | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (VDA QMC, 23 Apr 2026) |
+| `sites_italy_iatf` | 1589 | sites | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (VDA QMC, 23 Apr 2026) |
+| `sites_piedmont_anfia` | 734 | firms | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (Osservatorio ANFIA, Oct 2026). ANFIA supply-chain firms incl. design/engineering/service fir |
+| `firms_italy_components` | 2110 | firms | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (Osservatorio ANFIA, Oct 2026) |
+| `share_oem_change_burden` | 0.7 | share of sites | [unverified] | assumption: share of IATF sites that ship to an OEM or tier-1 under customer-specific change approval (PPAP, Stellantis 8.5.6.1 style). IATF |
+| `share_budget_and_data_ready` | 0.5 | share of sites | [unverified] | assumption: share with a quality team large enough to run the tool, documents in digital form and a software budget line of EUR 24-36k. No c |
+| `som_cap_italy_3y` | 0.05 | share of SAM | [unverified] | assumption: no single-product vendor passes 5% of a serviceable plant base in 3 years from a standing start; used only as a sanity cap on th |
+| `price_pilot` | 9500 | EUR per pilot | [declared] | assumption: v3 (review B, CONSOLIDATED): paid 8-week replay EUR 9,500, 100% credited against the year-1 licence; lowest barrier without a re |
+| `price_licence` | 24000 | EUR per plant per year | [declared] | docs/prep/01-brief-kva-hackathon.html #market (licence EUR 24-36k labelled estimate). v3: base = 24k defended floor, 30k upside only (High), |
+| `price_warning_usd` | 35000 | USD per year | [verified] | docs/prep/01-brief-kva-hackathon.html #market: COUNTERPOINT (v4: no longer the only price evidence): a practitioner forum (Elsmar Cove) call |
+| `qms_price_arena_usd` | 55970 | USD per year (median, 31 purchases) | [verified] | docs/research/online-confirmation.md (team research 14 Nov; econ/evidence/problem_evidence_2026-11-14.md): Vendr, Arena median contract |
+| `qms_price_greenlight_usd` | 43989 | USD per year (median) | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Vendr, Greenlight Guru median contract |
+| `qms_price_mastercontrol_usd` | 115673 | USD per year (median) | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Vendr, MasterControl median contract |
+| `qms_band_low_usd` | 25000 | USD per year | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Monetizely Aug 2025, mid-sized enterprise QMS low end |
+| `qms_band_high_usd` | 100000 | USD per year | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Monetizely Aug 2025, mid-sized enterprise QMS high end |
+| `pilot_months` | 2 | months | [unverified] | assumption: v3: 8-week paid replay of last year's change requests (onboarding inside the 8 weeks) |
+| `pilot_credit_share` | 1.0 | share of pilot fee | [declared] | assumption: v3: pilot fee fully credited against the first-year licence of the same plant [declared] |
+| `pilots_y1_cap` | 5 | pilots | [declared] | assumption: v3 (review B): no more than 5 paid pilots in year 1 for 3 founders without a reference customer; caps High |
+| `licences_billed_y1` | 1 | licences | [declared] | assumption: v3: 1 licence billed in year 1 (16 meetings x 8% = 1.28 decisions; the rest signs in year 2) [declared] |
+| `ltv_cap_years` | 5 | years | [declared] | assumption: v3 (review A): LTV counts at most 5 years of gross profit, undiscounted |
+| `eur_per_usd` | 0.88 | EUR per USD | [unverified] | assumption: round FX rate for conversions only; not looked up for 14 Nov 2026 |
+| `llm_usd_per_request` | 0.0007 | USD per change request / meeting | [verified] | docs/measure: our measurement, 14 Nov: meeting mode, Claude Haiku 5.5 via Vercel AI Gateway, 10 of 14 lines filtered by code, 6 model calls  |
+| `llm_usd_per_doc` | 0.05 | USD per document extracted | [verified] | docs/measure: our measurement, 14 Nov: Adient manual ~32k in + 9k out tokens = 'a few cents'; 0.05 is our upper reading |
+| `haiku_price_note` | 0 | n/a | [unverified] | assumption: Haiku 5.5 list price per MTok NOT looked up today (timebox); cost above is measured spend, not price x tokens |
+| `build_day_llm_usd` | 0.03 | USD | [verified] | docs/measure: our measurement, 14 Nov: whole build day incl. demo recordings |
+| `llm_price_in` | 2.0 | USD per MTok input | [verified] | https://platform.claude.com/docs/en/about-claude/pricing (fetched 2026-11-13): Claude Sonnet 5.5 base input |
+| `llm_price_out` | 10.0 | USD per MTok output | [verified] | https://platform.claude.com/docs/en/about-claude/pricing (fetched 2026-11-13): Claude Sonnet 5.5 base output |
+| `requests_per_plant_month` | 60 | change requests per plant per month | [unverified] | assumption: UNMEASURED. Range 20-150 for a plant with ~15 active programs; prep found no plant-level count (docs/plan/00-analysis.md section |
+| `tokens_in_per_request` | 25000 | input tokens per request | [unverified] | assumption: request text, candidate documents for the part, graph neighbourhood, schema prompt |
+| `tokens_out_per_request` | 4000 | output tokens per request | [unverified] | assumption: structured parse plus proposed conflicts with quotes |
+| `llm_call_multiplier` | 2.0 | x | [unverified] | assumption: retries and the quote-verification pass re-send context; the reasoning itself (OWL RL + SHACL) uses no tokens (docs/plan/00-anal |
+| `docs_per_plant` | 1500 | documents | [unverified] | assumption: drawings, control plans, 8Ds, audit reports, customer requirement extracts, approvals for one plant |
+| `tokens_per_doc` | 8000 | input tokens | [unverified] | assumption: average document incl. tables |
+| `ingest_output_ratio` | 0.15 | output/input | [unverified] | assumption: extracted facts with quotes |
+| `ingest_refresh_yearly` | 0.25 | share of docs re-ingested per year | [unverified] | assumption: revisions and new documents |
+| `infra_per_plant_month` | 40 | EUR per plant per month | [unverified] | assumption: BASE = shared EU SaaS: one python:3.12-slim container answers in 0.05-1.2 s (measured 14 Nov, 569-47k facts), so one small insta |
+| `infra_dedicated_month` | 350 | EUR per plant per month | [unverified] | assumption: OPTION B dedicated per-plant EU instance or customer tenant (v1 base): runs inside the customer tenant or a dedicated EU instanc |
+| `support_hours_per_plant_month` | 8 | hours | [unverified] | assumption: v3: v2 bear (8 h) taken as base (review A); ontology upkeep, rule edits, user questions [declared] |
+| `rate_eur_per_hour` | 70 | EUR per hour | [unverified] | assumption: loaded cost of an engineer in Italy |
+| `onboarding_days` | 10 | person-days per first plant | [unverified] | assumption: TARGET with self-serve onboarding (drop a folder of plant documents, the system drafts facts with quotes, a quality engineer con |
+| `rate_eur_per_day` | 500 | EUR per person-day | [unverified] | assumption: loaded cost, about 7 x rate_eur_per_hour |
+| `contacts_y1` | 200 | outreach contacts | [unverified] | assumption: part-time founder outreach starting after the hackathon; one seller-equivalent does about 400 a year |
+| `contacts_y2` | 400 | outreach contacts | [unverified] | assumption: one seller |
+| `contacts_y3` | 800 | outreach contacts | [unverified] | assumption: two sellers |
+| `contacts_per_seller_year` | 400 | contacts per seller-year | [unverified] | assumption |
+| `conv_contact_to_meeting` | 0.08 | share | [unverified] | assumption: cold outreach to supplier quality directors; warm intros from ANFIA or the Turin cluster would beat it |
+| `conv_meeting_to_pilot` | 0.1875 | share | [unverified] | assumption: v3: 3 pilots of 16 meetings in year 1 (CONSOLIDATED) |
+| `conv_pilot_to_licence` | 0.4266666666666667 | share | [unverified] | assumption: v3: set so meeting->licence = 8% (review B; 18.75% x 42.7%); the number the pilot produces |
+| `pilot_to_licence_lag` | 0.5 | share signing in the year the pilot starts | [unverified] | assumption: 3 month pilot plus 3 month procurement; the rest signs next year |
+| `cost_per_contact` | 15 | EUR | [unverified] | assumption: data, tooling, 10 minutes of founder time |
+| `meeting_hours` | 4 | hours per meeting held | [unverified] | assumption: prep, meeting, follow-up |
+| `pilot_mgmt_hours` | 40 | hours per pilot | [unverified] | assumption: scoping, weekly reviews, contract |
+| `seller_cost_year` | 72000 | EUR per seller-year | [unverified] | assumption: EUR 6k per month loaded |
+| `events_year` | 10000 | EUR per year | [unverified] | assumption: plant-quality events, ANFIA and Turin cluster |
+| `churn_year` | 0.2 | share of plants lost per year | [unverified] | assumption: v3: v2 bear (20%) taken as base (review A); no reference customer yet |
+| `team_fte` | 3 | FTE | [declared] | docs/plan/00-analysis.md C22 (team of three) |
+| `team_fte_y1` | 3 | paid FTE in year 1 | [unverified] | assumption: v3 (review A): 3 founders paid from year 1; v4: at EUR 2k/month stipend [declared] |
+| `team_fte_y2` | 3 | paid FTE in year 2 | [unverified] | assumption: v3: 3 founders paid [declared] |
+| `founder_contacts_year` | 300 | contacts per year | [unverified] | assumption: founder-led sales; sellers are hired only for contacts above this |
+| `team_cost_month` | 2000 | EUR per FTE per month | [declared] | assumption: v4: team decision 14 Nov - founders on a minimum stipend until a seed round (v3: EUR 5,000 loaded) [declared] |
+| `tools_year` | 12000 | EUR per year | [unverified] | assumption: SaaS, security audit, legal |
+| `sort_pieces` | 5000 | pieces | [unverified] | assumption: pieces in stock, in transit or at the customer needing 100% sorting after an unapproved material or source change is found |
+| `sort_cost_per_piece` | 1.2 | EUR per piece | [unverified] | assumption: 100% inspection, third-party sorting of small parts. v4 sanity check: base sorting EUR 6,000 = about 136-227 sorter-hours at USD |
+| `sort_chargeback_usd_hour_low` | 30 | USD per sorter-hour | [declared] | docs/research/practitioner-voice.md (team research 14 Nov): sorting charged back at USD 30-50/h in ONE practitioner account (Elsmar Cove); o |
+| `sort_chargeback_usd_hour_high` | 50 | USD per sorter-hour | [declared] | docs/research/practitioner-voice.md: same single practitioner account |
+| `astemo_failed_change_share` | 0.83 | share of significant supplier quality issues | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Astemo Supplier Change Management Guidebook rev 4.0 (Dec 2025): 83% of signific |
+| `adient_notice_days` | 180 | days | [verified] | docs/research/online-confirmation.md (team research 14 Nov): Adient Global Supplier Standards Manual rev 10.0 (2023): written approval >=180 |
+| `expedite_eur` | 5000 | EUR per event | [unverified] | assumption: premium freight and overtime to keep the customer line fed |
+| `eng_hours_per_event` | 120 | hours | [unverified] | assumption: 8D, containment, customer meetings, re-approval submission |
+| `chargeback_eur` | 10000 | EUR per event | [unverified] | assumption: customer debit note or penalty. Supplier-side downtime cost is NOT sourced; the USD 2.3M/h Siemens figure is OEM loss and is nev |
+| `review_minutes_saved` | 15 | minutes per request | [unverified] | assumption: engineer no longer hunts the documents by hand for each change request. NOT used in break-even |
+| `ires_rate` | 0.24 | rate | [unverified] | assumption: standard Italian corporate income tax rate (IRES); confirm with a tax adviser |
+| `ai_deduction_multiple` | 1.8 | x of cost deductible | [declared] | docs/prep/01-brief-kva-hackathon.html #numbers (180% up to EUR 2.5M, 2026-2028, Law 199/2025). Whether a plant licence qualifies is NOT chec |
+| `gm_ignition_loss_usd` | 900000000 | USD | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (GM reporting, NHTSA recall DB). Supplier changed the part, part number unchanged |
+| `gm_ignition_vehicles` | 2190934 | vehicles | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers |
+| `ford_25v270000_vehicles` | 160729 | vehicles | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (Ford 2025 recall 25V270000, unauthorized tooling change at a sub-supplier) |
+| `nhtsa_change_share` | 0.059 | share of recalls | [verified] | prep/research-archive/nhtsa-change-recalls/ (975 sampled, 206 read; CI 3.5-8.3% per archived rerun, see prep/research-archive/README.md Repr |
+| `nhtsa_supplier_share` | 0.405 | share of recalls | [verified] | prep/research-archive/nhtsa-change-recalls/ (same sample, supplier-originated) |
+| `siemens_downtime_usd_hour` | 2300000 | USD per hour | [verified] | docs/prep/01-brief-kva-hackathon.html #numbers (Siemens 2024, survey of 181, large OEM plants). OEM loss, NOT supplier cost: excluded from e |
+
