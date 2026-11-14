@@ -1,0 +1,40 @@
+{
+ "note": "Last spring Dora moved the HB-620 casting to their second cell, and that went through PPAP fine.",
+ "model": "anthropic/claude-haiku-5.5",
+ "recorded_by": "vercel-ai-gateway anthropic/claude-haiku-5.5",
+ "output": {
+  "is_change_proposal": false,
+  "reason": "The line reports a change that already happened (moving the HB-620 casting to a second cell) rather than proposing a new change to be decided."
+ },
+ "usage": {
+  "completion_tokens": 61,
+  "prompt_tokens": 488,
+  "total_tokens": 549,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 0,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null,
+   "image_tokens": 0
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": 0,
+   "cache_write_tokens": null,
+   "cached_tokens": 0,
+   "image_tokens": null,
+   "text_tokens": null,
+   "video_tokens": 0
+  },
+  "cost": 7.93e-05,
+  "is_byok": false,
+  "cost_details": {
+   "upstream_inference_cost": null,
+   "upstream_inference_prompt_cost": 0,
+   "upstream_inference_completions_cost": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "market_cost": 7.93e-05,
+  "gateway_cost": 7.93e-05
+ }
+}

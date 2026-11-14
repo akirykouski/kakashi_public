@@ -47,6 +47,8 @@ def norm(text):
 def check_key(body):
     as_of = body.get("as_of") or ""
     drop = ",".join(sorted(body.get("drop_rows") or []))
+    if "line" in body:  # #32 POST /api/meeting/line
+        return f"meeting|{norm(body['line'])}|{as_of}"
     if body.get("remark"):
         return f"remark|{norm(body['remark'])}|{as_of}|{drop}"
     if body.get("scenario"):
@@ -99,11 +101,11 @@ class Recorder:
         self.save(key, payload)
         return payload
 
-    def check(self, body):
+    def check(self, body, path="/api/check"):
         key = check_key(body)
         if key in self.index:
             return None
-        payload = self.call("/api/check", body)
+        payload = self.call(path, body)
         if payload.get("error"):
             self.failures.append((key, payload["error"]))
             return None
@@ -152,12 +154,50 @@ def record_all(recorder, records_limit=40):
         recorder.check({"request": request})
         for row in droppable:
             recorder.check({"request": request, "drop_rows": [row]})
+    # 3b. meeting mode (#32): every line of the demo transcript, and the re-check of an open card that a later
+    # line triggers (mirrors recheckOpenCards in web/static/meeting.js)
+    record_meeting(recorder)
     # 4. the impact report (#29) of every superseded document a card shows
     for doc in sorted(recorder.impact_docs):
         recorder.get(f"/api/impact?doc={urllib.parse.quote(doc)}")
     # 5. the records list last, so it shows the checks above
     recorder.get(f"/api/records?limit={records_limit}")
     return len(scenarios), len(requests)
+
+
+def card_entities(request):
+    suppliers = [request.get(field) for field in ("to_supplier", "from_supplier") if request.get(field)]
+    return suppliers or [request["part"]] if request.get("part") else suppliers
+
+
+def record_meeting(recorder):
+    demo = recorder.get("/api/meeting/demo")
+    if not demo:
+        return
+    open_cards = []
+    for item in demo["lines"]:
+        body = {"line": item["text"], "speaker": item.get("speaker"), "as_of": item.get("as_of")}
+        key = check_key(body)
+        payload = recorder.check(body, path="/api/meeting/line")
+        if payload is None and key in recorder.index:
+            payload = json.loads((OUT / recorder.index[key]).read_text(encoding="utf-8"))
+        if not payload:
+            continue
+        if payload.get("flagged") and payload.get("card"):
+            open_cards.append(payload["card"]["request"])
+            continue
+        named = set(payload.get("mentions") or [])
+        for index, request in enumerate(open_cards):
+            as_of = item.get("as_of")
+            if not as_of or not request.get("as_of") or as_of <= request["as_of"]:
+                continue
+            if not named & set(card_entities(request)):
+                continue
+            fresh = recorder.check({"request": request_of(request), "as_of": as_of})
+            if fresh is None:
+                fresh = json.loads((OUT / recorder.index[check_key({"request": request_of(request), "as_of": as_of})])
+                                   .read_text(encoding="utf-8"))
+            open_cards[index] = fresh["card"]["request"]
 
 
 # ---- server ----------------------------------------------------------------------------------------------------

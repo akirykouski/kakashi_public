@@ -19,6 +19,7 @@ const Fallback = (function makeFallback() {
   function checkKey(body) {
     let asOf = body.as_of || "";
     const drop = [...(body.drop_rows || [])].sort().join(",");
+    if (body.line !== undefined) return `meeting|${norm(body.line)}|${asOf}`;  // #32 POST /api/meeting/line
     if (body.remark) return `remark|${norm(body.remark)}|${asOf}|${drop}`;
     if (body.scenario) return `scenario|${body.scenario}|${asOf}|${drop}`;
     const request = body.request || body.form || {};

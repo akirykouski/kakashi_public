@@ -16,6 +16,8 @@ and the model key stays on the server (core/llm.py reads .env).
     GET  /api/table     ?drop=D2,D5   decision table + coverage check + rules_version
     GET  /api/records   ?limit=50     decision records, newest first
     GET  /api/impact    ?doc=CSR-AUR-R3   what a superseded document affects (core/impact.py, #29)
+    POST /api/meeting/line  {line, speaker?, as_of?} -> {flagged, reason, stage, mentions, card?}  (#32, core/meeting.py)
+    GET  /api/meeting/demo  the demo transcript (data/meetings/demo_meeting.jsonl)
 
 Written 14 Nov 2026 (workstream UI).
 """
@@ -39,7 +41,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core import check, decision, impact, oida, parse, rules  # noqa: E402
+from core import check, decision, impact, meeting, oida, parse, rules  # noqa: E402
 from core.contracts import CHANGE_TYPES, Card, ChangeRequest  # noqa: E402
 from core.project import Projection  # noqa: E402
 
@@ -297,6 +299,58 @@ def handle_impact(query):
     return {"impact": impact.impact(doc, facts=facts), "labels": labels()}
 
 
+# ---- meeting mode (#32) ------------------------------------------------------------------------------------
+
+def classify_line(line):
+    """core.meeting.classify with the same hard timeout as the parser. Raises ParseFailed."""
+    future = _parse_pool.submit(meeting.classify, line)
+    try:
+        return future.result(timeout=PARSE_TIMEOUT_S)
+    except FutureTimeout:
+        raise ParseFailed("timeout", f"Model gateway did not answer in {PARSE_TIMEOUT_S} s.")
+    except Exception as error:
+        reason, message = classify_parse_error(error)
+        raise ParseFailed(reason, message)
+
+
+def handle_meeting_line(body):
+    """One transcript line -> classification; a flagged line goes through parse -> check. Never a card for a line
+    the model did not flag; a line that could not be classified says so."""
+    line = " ".join(str(body.get("line") or "").split())
+    if not line:
+        raise ValueError("send {line, speaker?, as_of?}")
+    as_of = body.get("as_of") or check.DEFAULT_AS_OF
+    response = {"line": line, "speaker": body.get("speaker"), "as_of": as_of, "flagged": False, "classified": True}
+    try:
+        result = classify_line(line)
+    except ParseFailed as failure:
+        gate = meeting.prefilter(line)
+        response.update({"classified": False, "reason": f"not classified: {failure}", "stage": "model",
+                         "mentions": gate["mentions"]})
+        return response
+    response.update({"flagged": result["is_change_proposal"], "reason": result["reason"], "stage": result["stage"],
+                     "mentions": result["mentions"]})
+    if not response["flagged"]:
+        return response
+    try:
+        request = parse_remark(line, as_of)
+    except ParseFailed as failure:
+        response["card_error"] = f"flagged, but the line was not parsed: {failure}"
+        return response
+    if body.get("speaker"):
+        request["speaker"] = body["speaker"]
+    if not request.get("type") or not request.get("part"):
+        response.update({"request": request, "labels": labels(),
+                         "card_error": "flagged, but the parser found no change type or part: a person reads it"})
+        return response
+    response.update(run_check(request))
+    return response
+
+
+def handle_meeting_demo():
+    return {"lines": meeting.load_demo(), "people": people()}
+
+
 # ---- HTTP -------------------------------------------------------------------------------------------------
 
 class Handler(BaseHTTPRequestHandler):
@@ -344,6 +398,8 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_json(handle_table(query))
             elif url.path == "/api/records":
                 self.send_json(handle_records(query))
+            elif url.path == "/api/meeting/demo":
+                self.send_json(handle_meeting_demo())
             elif url.path == "/api/impact":
                 with LOCK:
                     self.send_json(handle_impact(query))
@@ -354,12 +410,15 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         url = urlparse(self.path)
-        if url.path != "/api/check":
+        if url.path not in ("/api/check", "/api/meeting/line"):
             self.send_json({"error": "not found"}, 404)
             return
         try:
             length = int(self.headers.get("Content-Length") or 0)
             body = json.loads(self.rfile.read(length) or b"{}")
+            if url.path == "/api/meeting/line":
+                self.handle_line(body)
+                return
             refusal = remark_budget_refusal(body, self.client_address[0])
             if refusal:
                 self.send_json({"error": refusal}, 429)
@@ -370,6 +429,17 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(parse_failure_payload(failure, body), 503)
         except Exception as error:
             self.send_json({"error": f"{type(error).__name__}: {error}"}, 400)
+
+
+    def handle_line(self, body):
+        line = str(body.get("line") or "")
+        if meeting.prefilter(line)["passed"]:  # only lines that may reach the model count against the budget
+            refusal = remark_budget_refusal({"remark": line}, self.client_address[0])
+            if refusal:
+                self.send_json({"error": refusal}, 429)
+                return
+        with LOCK:
+            self.send_json(handle_meeting_line(body))
 
 
 # ---- public deployment guard: remarks may call the model on the team key, so cap them ----------------------
